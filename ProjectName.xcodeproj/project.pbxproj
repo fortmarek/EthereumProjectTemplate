@@ -116,7 +116,7 @@
 		B4AB848D1AE6E386004BAF1A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B4AB848F1AE6E388004BAF1A /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B4AB84901AE6E389004BAF1A /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
-		B4ABA1DC195193330069FAD4 /* Rekola.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rekola.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4ABA1DC195193330069FAD4 /* ProjectName.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectName.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4ABA1DF195193330069FAD4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B4ABA1E1195193330069FAD4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B4ABA1E3195193330069FAD4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -272,7 +272,7 @@
 		B4ABA1DD195193330069FAD4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B4ABA1DC195193330069FAD4 /* Rekola.app */,
+				B4ABA1DC195193330069FAD4 /* ProjectName.app */,
 				B4ABA1FD195193330069FAD4 /* Tests.xctest */,
 			);
 			name = Products;
@@ -354,9 +354,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B4ABA1DB195193330069FAD4 /* Rekola */ = {
+		B4ABA1DB195193330069FAD4 /* ProjectName */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B4ABA20E195193330069FAD4 /* Build configuration list for PBXNativeTarget "Rekola" */;
+			buildConfigurationList = B4ABA20E195193330069FAD4 /* Build configuration list for PBXNativeTarget "ProjectName" */;
 			buildPhases = (
 				DA7614A5875F454D8BC409AE /* Check Pods Manifest.lock */,
 				B4ABA1D8195193330069FAD4 /* Sources */,
@@ -371,9 +371,9 @@
 			dependencies = (
 				B433E4A51951FF35006BEBF1 /* PBXTargetDependency */,
 			);
-			name = Rekola;
+			name = ProjectName;
 			productName = ProjectName;
-			productReference = B4ABA1DC195193330069FAD4 /* Rekola.app */;
+			productReference = B4ABA1DC195193330069FAD4 /* ProjectName.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B4ABA1FC195193330069FAD4 /* Tests */ = {
@@ -414,7 +414,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B4ABA1D7195193330069FAD4 /* Build configuration list for PBXProject "Rekola" */;
+			buildConfigurationList = B4ABA1D7195193330069FAD4 /* Build configuration list for PBXProject "ProjectName" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -428,7 +428,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B4ABA1DB195193330069FAD4 /* Rekola */,
+				B4ABA1DB195193330069FAD4 /* ProjectName */,
 				B4ABA1FC195193330069FAD4 /* Tests */,
 				B47537031951FB3900DB8D6D /* EnviromentSwitch */,
 			);
@@ -594,7 +594,7 @@
 		};
 		B4ABA203195193330069FAD4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B4ABA1DB195193330069FAD4 /* Rekola */;
+			target = B4ABA1DB195193330069FAD4 /* ProjectName */;
 			targetProxy = B4ABA202195193330069FAD4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -671,7 +671,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0F2477C39DCE66EC69ACED7E /* Pods.appstore.xcconfig */;
 			buildSettings = {
-				ACK_BUNDLEID = com.czechtourism.landofstoriesexpo;
+				ACK_BUNDLEID = cz.ackee.enterprise.projectName;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
@@ -686,9 +686,10 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Project-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = Rekola;
+				PRODUCT_NAME = ProjectName;
 				PROVISIONING_PROFILE = "7711c35b-aaca-4c6f-98f9-732fecf25640";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = AppStore;
@@ -816,7 +817,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D3795ADD4F12A6412E2E6D16 /* Pods.development.xcconfig */;
 			buildSettings = {
-				ACK_BUNDLEID = cz.ackee.enterprise.los.dev;
+				ACK_BUNDLEID = cz.ackee.enterprise.projectName.dev;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
@@ -831,10 +832,11 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Project-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = Rekola;
+				PRODUCT_NAME = ProjectName;
 				PROVISIONING_PROFILE = "547d33ad-ab05-4ef2-bdc0-79b5e435a950";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Development;
@@ -843,7 +845,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 75F02EF16C46A63434D5FFBB /* Pods.adhoc.xcconfig */;
 			buildSettings = {
-				ACK_BUNDLEID = cz.ackee.enterprise.los.beta;
+				ACK_BUNDLEID = cz.ackee.enterprise.projectName.beta;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
@@ -858,9 +860,10 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Project-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = Rekola;
+				PRODUCT_NAME = ProjectName;
 				PROVISIONING_PROFILE = "43dbbcae-180f-4cb3-ad93-76fd1d00cecf";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = AdHoc;
@@ -920,7 +923,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = AdHoc;
 		};
-		B4ABA1D7195193330069FAD4 /* Build configuration list for PBXProject "Rekola" */ = {
+		B4ABA1D7195193330069FAD4 /* Build configuration list for PBXProject "ProjectName" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B4ABA20C195193330069FAD4 /* Development */,
@@ -930,7 +933,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = AdHoc;
 		};
-		B4ABA20E195193330069FAD4 /* Build configuration list for PBXNativeTarget "Rekola" */ = {
+		B4ABA20E195193330069FAD4 /* Build configuration list for PBXNativeTarget "ProjectName" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B4ABA20F195193330069FAD4 /* Development */,
