@@ -11,71 +11,72 @@ import Alamofire
 import ReactiveCocoa
 import Argo
 
-
-enum Router : URLRequestConvertible {
-    
-    static let baseURL = Environment.baseURL
-    
-    
-    case Login(dictionary: [String:AnyObject])
-    case Bikes(dictionary: [String:Double])
-    
-    
-    var method : Alamofire.Method {
-        switch self {
-        case .Login:
-            return .POST
-            
-        case .Bikes:
-            return .GET
-        }
-    }
-    
-    var path : String {
-        switch self {
-        case .Login:
-            return "/accounts/mine/login"
-        case .Bikes:
-            return "/bikes/all"
-        }
-    }
-    
-    var URLRequest : NSURLRequest {
-        let URL = NSURL(string: Router.baseURL)!
-        
-        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-        mutableURLRequest.HTTPMethod = method.rawValue
-        
-        if let key = NSUserDefaults.standardUserDefaults().stringForKey("apiKey") {
-            mutableURLRequest.setValue(key, forHTTPHeaderField: "X-Api-Key")
-        }
-        
-        switch self {
-            
-        case .Login(let params):
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: params).0
-            
-            
-        default:
-            return mutableURLRequest
-        }
-        
-    }
-    
-    
-}
-
-let API = RekolaAPI._instance
+let API = ProjectNameAPI._instance //convenience access to api singleton
 
 struct APIErrorKeys {
 	static let response = "FailingRequestResponse"
 	static let responseData = "FailingRequestResponseData"
 }
 
-class RekolaAPI {
+class ProjectNameAPI {
 
-	static let _instance = RekolaAPI()
+	static let _instance = ProjectNameAPI()
 	private init() {}
+	
+	enum Router : URLRequestConvertible {
+		
+		static let baseURL = Environment.baseURL
+		
+		
+		case Login(dictionary: [String:AnyObject])
+		case Bikes(dictionary: [String:Double])
+		
+		
+		var method : Alamofire.Method {
+			switch self {
+			case .Login:
+				return .POST
+				
+			case .Bikes:
+				return .GET
+			}
+		}
+		
+		var path : String {
+			switch self {
+			case .Login:
+				return "/accounts/mine/login"
+			case .Bikes:
+				return "/bikes/all"
+			}
+		}
+		
+		var URLRequest : NSURLRequest {
+			let URL = NSURL(string: Router.baseURL)!
+			
+			let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
+			mutableURLRequest.HTTPMethod = method.rawValue
+			
+			if let key = NSUserDefaults.standardUserDefaults().stringForKey("apiKey") {
+				mutableURLRequest.setValue(key, forHTTPHeaderField: "X-Api-Key")
+			}
+			
+			switch self {
+				
+			case .Login(let params):
+				return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: params).0
+				
+				
+			default:
+				return mutableURLRequest
+			}
+			
+		}
+		
+		
+	}
+
+	
 
 	typealias AuthHandler = (error: NSError) -> SignalProducer<AnyObject, NSError>?
 	
@@ -91,7 +92,7 @@ class RekolaAPI {
 		return nil
 	}
 	
-	private func call<T>(route: Router, var authHandler: AuthHandler? = RekolaAPI.authHandler, action: (AnyObject -> (SignalProducer<T,NSError>))) -> SignalProducer<T,NSError> {
+	private func call<T>(route: Router, var authHandler: AuthHandler? = ProjectNameAPI.authHandler, action: (AnyObject -> (SignalProducer<T,NSError>))) -> SignalProducer<T,NSError> {
         var signal = SignalProducer<T,NSError> { sink, disposable in
             
             Alamofire.request(route)
@@ -158,18 +159,7 @@ class RekolaAPI {
             
         }
     }
-    
-    func bikes(latitude: Double, longitude: Double) -> SignalProducer<[Bike],NSError> {
-        return call(Router.Bikes(dictionary: ["lat": latitude, "lng" : longitude])) { data in
-            let signal : SignalProducer<Bike,NSError> = rac_decodeByOne(data)
-            return signal
-                |> on(next : { item in
-                    println(item)
-                })
-                |> collect
-        }
-    }
-    
+	
 }
 
 

@@ -26,22 +26,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         
      //   Flurry.startSession("")
         
-        
-        let producer = API.login("josef.gattermayer@ackee.cz", password: "AckeeTest") |> then(API.bikes(49, longitude: 14))
-		producer.start(error: { [weak self] error in
-			self?.handleError(error)
-		})
-        
+		API.login("josef.gattermayer@ackee.cz", password: "CoDelaPepaViOSSablone?")
+//			|> then(API.projectData("params"))
+			|> start(error: { [weak self] error in
+				self?.handleError(error)
+				})
+		
         
         let vc = UINavigationController(rootViewController: ViewController())
-        let vc2 = UINavigationController(rootViewController: ViewController())
-        let vc3 = UINavigationController(rootViewController: ViewController())
-        
         let item = TabItem(controller: vc, images: UIImage.toggleImage(UIImage.ImagesForToggle.Lock))
-        let item2 = TabItem(controller: vc2, images: UIImage.toggleImage(UIImage.ImagesForToggle.Map))
-        let item3 = TabItem(controller: vc3, images: UIImage.toggleImage(UIImage.ImagesForToggle.Profile))
-        
-        let tabbar = ACKTabBarController(items: [item,item2,item3])
+        let tabbar = ACKTabBarController(items: [item])
+		
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.rootViewController = tabbar
         window?.makeKeyAndVisible()

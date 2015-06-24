@@ -30,7 +30,6 @@
 		B433E4AF195300A4006BEBF1 /* environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = B433E4AA19530092006BEBF1 /* environment.plist */; };
 		B433E4B219530FD0006BEBF1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B433E4B119530FD0006BEBF1 /* Images.xcassets */; };
 		B433E4B419539281006BEBF1 /* XCTextCase.m in Sources */ = {isa = PBXBuildFile; fileRef = B47536F21951A15A00DB8D6D /* XCTextCase.m */; };
-		B44456EF1B34493100597A66 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44456EE1B34493100597A66 /* MapViewModel.swift */; };
 		B44456F11B3462FA00597A66 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44456F01B3462FA00597A66 /* TabBarController.swift */; };
 		B4A0BA8F1AD4972300715A9F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A0BA8E1AD4972300715A9F /* Theme.swift */; };
 		B4AB848C1AE6E386004BAF1A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B4AB848E1AE6E386004BAF1A /* Localizable.strings */; };
@@ -101,7 +100,6 @@
 		B433E4A919530092006BEBF1 /* environment-Development.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "environment-Development.plist"; sourceTree = "<group>"; };
 		B433E4AA19530092006BEBF1 /* environment.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = environment.plist; sourceTree = "<group>"; };
 		B433E4B119530FD0006BEBF1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		B44456EE1B34493100597A66 /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		B44456F01B3462FA00597A66 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B47536F21951A15A00DB8D6D /* XCTextCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCTextCase.m; sourceTree = "<group>"; };
 		B47536F51951A84E00DB8D6D /* ProjectHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectHeader.h; sourceTree = "<group>"; };
@@ -246,13 +244,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		B47536F81951AAF600DB8D6D /* UI */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = UI;
-			sourceTree = "<group>";
-		};
 		B47536F91951AAFC00DB8D6D /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -310,10 +301,8 @@
 				B4EE778C1B28A5AA00ED956B /* Extensions */,
 				B433E4A619530092006BEBF1 /* Environment */,
 				B47536F91951AAFC00DB8D6D /* Services */,
-				B47536F81951AAF600DB8D6D /* UI */,
-				B4EE778A1B2871D700ED956B /* ViewModel */,
-				B4EE778B1B2871F100ED956B /* View */,
 				B4EE77891B2871C800ED956B /* Model */,
+				B4EE778B1B2871F100ED956B /* View */,
 				B47536F61951A87A00DB8D6D /* Controllers */,
 				B47536F41951A82C00DB8D6D /* Headers */,
 				B4ECD6111AD477910099D516 /* AppDelegate.swift */,
@@ -339,14 +328,6 @@
 				B4EE779E1B29072800ED956B /* Model.swift */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		B4EE778A1B2871D700ED956B /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				B44456EE1B34493100597A66 /* MapViewModel.swift */,
-			);
-			name = ViewModel;
 			sourceTree = "<group>";
 		};
 		B4EE778B1B2871F100ED956B /* View */ = {
@@ -587,7 +568,6 @@
 				B4EE77901B28A61700ED956B /* RACHelpers.swift in Sources */,
 				B4EE778F1B28A61700ED956B /* UIKitExtensions.swift in Sources */,
 				B4EE779F1B29072800ED956B /* Model.swift in Sources */,
-				B44456EF1B34493100597A66 /* MapViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
