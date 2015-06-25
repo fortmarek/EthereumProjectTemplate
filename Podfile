@@ -1,7 +1,7 @@
 # Podfile
 
 platform :ios, '8.0'
-xcodeproj 'Rekola', 'AdHoc' => :release,'AppStore' => :release, 'Development' => :debug
+xcodeproj 'ProjectName', 'AdHoc' => :release,'AppStore' => :release, 'Development' => :debug
 
 
 pod 'ACKategories', :git => 'https://github.com/AckeeCZ/ACKategories.git'
