@@ -108,7 +108,8 @@ private class LogViewController : UIViewController {
 			let url = NSURL(fileURLWithPath: path)!
 			let data = NSData(contentsOfURL: url)!
 			let text = NSString(data: data, encoding: NSUTF8StringEncoding)! as String
-			let trimmed = text.substringWithRange(Range<String.Index>(start: advance(text.endIndex, -length), end: text.endIndex))
+			let l = min(length, count(text))
+			let trimmed = text.substringWithRange(Range<String.Index>(start: advance(text.endIndex, -l), end: text.endIndex))
 			return trimmed ?? ""
 		}
 		return ""
