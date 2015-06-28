@@ -23,9 +23,14 @@
 /* Begin PBXBuildFile section */
 		2C11B62737F94D37BC3FA5B5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E8AEF0CA62243AAB2D73904 /* libPods.a */; };
 		6D0BE16A1B3AC49F0030E6AC /* ArgoExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0BE1691B3AC49F0030E6AC /* ArgoExtensions.swift */; };
+		6D1A302B1B3C53B300A07F3A /* MBSwizzler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1A302A1B3C53B300A07F3A /* MBSwizzler.swift */; };
 		6D1A3AFD1B3AD61800EC8E47 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1A3AFC1B3AD61800EC8E47 /* Environment.swift */; };
 		6D1A3B011B3AF9E200EC8E47 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D1A3B001B3AF9E200EC8E47 /* Launch.storyboard */; };
 		6D7861D51B397903009F8865 /* UIResponder+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7861D41B397903009F8865 /* UIResponder+Errors.swift */; };
+		6D95BB7C1B3BF4EC00B00B19 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D95BB7B1B3BF4EC00B00B19 /* Logger.swift */; };
+		6D95BB7F1B3BF81100B00B19 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D95BB7D1B3BF81100B00B19 /* CocoaLumberjack.framework */; };
+		6D95BB801B3BF81100B00B19 /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D95BB7E1B3BF81100B00B19 /* CocoaLumberjackSwift.framework */; };
+		6DFDD0621B3C5126005D08EA /* KeyboardLayoutGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD0611B3C5126005D08EA /* KeyboardLayoutGuide.swift */; };
 		B4020772195199490027B407 /* BDDTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = B4ABA24F195196930069FAD4 /* BDDTestCase.m */; };
 		B433E4AE19530092006BEBF1 /* environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = B433E4AA19530092006BEBF1 /* environment.plist */; };
 		B433E4AF195300A4006BEBF1 /* environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = B433E4AA19530092006BEBF1 /* environment.plist */; };
@@ -91,9 +96,14 @@
 		0E8AEF0CA62243AAB2D73904 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F2477C39DCE66EC69ACED7E /* Pods.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.appstore.xcconfig; path = "Pods/Target Support Files/Pods/Pods.appstore.xcconfig"; sourceTree = "<group>"; };
 		6D0BE1691B3AC49F0030E6AC /* ArgoExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgoExtensions.swift; sourceTree = "<group>"; };
+		6D1A302A1B3C53B300A07F3A /* MBSwizzler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MBSwizzler.swift; path = Source/MBSwizzler.swift; sourceTree = SOURCE_ROOT; };
 		6D1A3AFC1B3AD61800EC8E47 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		6D1A3B001B3AF9E200EC8E47 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		6D7861D41B397903009F8865 /* UIResponder+Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIResponder+Errors.swift"; sourceTree = "<group>"; };
+		6D95BB7B1B3BF4EC00B00B19 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		6D95BB7D1B3BF81100B00B19 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
+		6D95BB7E1B3BF81100B00B19 /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjackSwift.framework; path = Carthage/Build/iOS/CocoaLumberjackSwift.framework; sourceTree = "<group>"; };
+		6DFDD0611B3C5126005D08EA /* KeyboardLayoutGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutGuide.swift; sourceTree = "<group>"; };
 		75F02EF16C46A63434D5FFBB /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
 		ABA3E22A1E6F145A094D2DF0 /* Pods-Tests.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.development.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.development.xcconfig"; sourceTree = "<group>"; };
 		B215BAF68D134DF9BE4C6B93 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,6 +168,8 @@
 				B4ABA1E2195193330069FAD4 /* CoreGraphics.framework in Frameworks */,
 				B4ABA1E4195193330069FAD4 /* UIKit.framework in Frameworks */,
 				B4ABA1E0195193330069FAD4 /* Foundation.framework in Frameworks */,
+				6D95BB7F1B3BF81100B00B19 /* CocoaLumberjack.framework in Frameworks */,
+				6D95BB801B3BF81100B00B19 /* CocoaLumberjackSwift.framework in Frameworks */,
 				2C11B62737F94D37BC3FA5B5 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,6 +188,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6D1A302C1B3C557400A07F3A /* MBSwizzler */ = {
+			isa = PBXGroup;
+			children = (
+				6D1A302A1B3C53B300A07F3A /* MBSwizzler.swift */,
+			);
+			name = MBSwizzler;
+			sourceTree = "<group>";
+		};
 		AA37FF02289B5276089C0F6E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,6 +233,7 @@
 		B433E4B319530FD7006BEBF1 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				6D1A302C1B3C557400A07F3A /* MBSwizzler */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -281,6 +302,8 @@
 		B4ABA1DE195193330069FAD4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6D95BB7D1B3BF81100B00B19 /* CocoaLumberjack.framework */,
+				6D95BB7E1B3BF81100B00B19 /* CocoaLumberjackSwift.framework */,
 				B4EE77931B28E3F500ED956B /* Argo.framework */,
 				B4EE77941B28E3F500ED956B /* Runes.framework */,
 				B4A8008C1B28688600453A28 /* ReactiveCocoa.framework */,
@@ -347,6 +370,8 @@
 				B4EE778D1B28A61700ED956B /* UIKitExtensions.swift */,
 				B4EE778E1B28A61700ED956B /* RACHelpers.swift */,
 				6D0BE1691B3AC49F0030E6AC /* ArgoExtensions.swift */,
+				6D95BB7B1B3BF4EC00B00B19 /* Logger.swift */,
+				6DFDD0611B3C5126005D08EA /* KeyboardLayoutGuide.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -517,6 +542,8 @@
 				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Runes.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Argo.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjack.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjackSwift.framework",
 			);
 			outputPaths = (
 			);
@@ -561,13 +588,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D1A302B1B3C53B300A07F3A /* MBSwizzler.swift in Sources */,
 				B4A0BA8F1AD4972300715A9F /* Theme.swift in Sources */,
+				6DFDD0621B3C5126005D08EA /* KeyboardLayoutGuide.swift in Sources */,
 				B4EE77921B28D1AA00ED956B /* APIService.swift in Sources */,
 				6D7861D51B397903009F8865 /* UIResponder+Errors.swift in Sources */,
 				6D1A3AFD1B3AD61800EC8E47 /* Environment.swift in Sources */,
 				6D0BE16A1B3AC49F0030E6AC /* ArgoExtensions.swift in Sources */,
 				B44456F11B3462FA00597A66 /* TabBarController.swift in Sources */,
 				B4F14CA61B20502000DDBE9B /* ViewController.swift in Sources */,
+				6D95BB7C1B3BF4EC00B00B19 /* Logger.swift in Sources */,
 				B4ECD6121AD477910099D516 /* AppDelegate.swift in Sources */,
 				B4EE77901B28A61700ED956B /* RACHelpers.swift in Sources */,
 				B4EE778F1B28A61700ED956B /* UIKitExtensions.swift in Sources */,

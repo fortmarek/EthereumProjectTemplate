@@ -43,11 +43,13 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B4ABA1DB195193330069FAD4"
-            BuildableName = "Rekola.app"
+            BuildableName = "ProjectName.app"
             BlueprintName = "ProjectName"
             ReferencedContainer = "container:ProjectName.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -57,13 +59,14 @@
       buildConfiguration = "Development"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B4ABA1DB195193330069FAD4"
-            BuildableName = "Rekola.app"
+            BuildableName = "ProjectName.app"
             BlueprintName = "ProjectName"
             ReferencedContainer = "container:ProjectName.xcodeproj">
          </BuildableReference>
