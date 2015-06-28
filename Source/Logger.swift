@@ -27,7 +27,7 @@ private func configure() {
 	xcodeLogger.logFormatter = LongLogFormatter()
 	DDLog.addLogger(xcodeLogger)
 	
-	if Environment.scheme == .Development/*.AdHoc*/{
+	if Environment.scheme == .AdHoc{
 		if let window = UIApplication.sharedApplication().keyWindow {
 			let rec = UITapGestureRecognizer(actionBlock: { rec in
 				if let rootVC = window.rootViewController {
