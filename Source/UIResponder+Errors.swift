@@ -22,7 +22,7 @@ public class DefaultErrorHandler : NSObject, ErrorHandlerType, UIAlertViewDelega
 	var pendingCompletions : [NSObject : ErrorHandlerCompletion] = [:]
 	
 	public func errorHandlingStep(error: NSError, severity: ErrorSeverity, sender: AnyObject?, userInfo: [NSObject: AnyObject]?, completion: ErrorHandlerCompletion?) -> (hasCompletion: Bool, stop: Bool) {
-		println("Error: \(error), severity: \(severity), sender: \(sender), userInfo: \(userInfo)")
+		logE("Error: \(error), severity: \(severity), sender: \(sender), userInfo: \(userInfo)")
 		
 		var hasCompletion = false
 		func presentError(_ messagePrefix: String = "") {
@@ -43,7 +43,7 @@ public class DefaultErrorHandler : NSObject, ErrorHandlerType, UIAlertViewDelega
 			presentError()
 		case .UserAction:
 			let message = "An error that requires user action was not handled, the app may misbehave."
-			print("message")
+			logE("\(message)")
 			if isAdHoc() {
 				presentError(message)
 			}
