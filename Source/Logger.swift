@@ -121,6 +121,11 @@ private class LogViewController : UIViewController {
 		textView.text = t
 		textView.becomeFirstResponder()
 		UIPasteboard.generalPasteboard().string = t
+		self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancel:")
+	}
+	
+	private func cancel(sender: AnyObject?) {
+		navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
 	}
 	
 	private override func viewDidAppear(animated: Bool) {
