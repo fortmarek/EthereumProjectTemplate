@@ -129,7 +129,6 @@ extension UIViewController {
 				|> start(next: { height in
 				c.constraint.updateOffset(-height)
 				view.setNeedsLayout()
-				view.layoutIfNeeded()
 			})
 		}else{
 			logA("Appdelegate is nil or not of class AppDelegate")
