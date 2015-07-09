@@ -12,98 +12,6 @@ import SnapKit
 import ReactiveCocoa
 //TODO: change to UILayoutGuide for ios9
 
-
-
-
-extension AppDelegate {
-	
-	private static var key : Selector { return Selector("keyboardHeight") }
-	
-	private struct AssociatedKeys {
-		static var KeyboardHeight = "keyboardHeight"
-	}
-	
-	var keyboardHeight : MutableProperty<CGFloat>! {
-		if let storage = objc_getAssociatedObject(self, &AssociatedKeys.KeyboardHeight) as? MutableProperty<CGFloat> {
-			return storage
-		}else {
-			logA("keyboardHeight was accessed before it was setup. Did you forget to call setupKeyboardLayoutGuide() in AppDelegate?")
-			return nil
-		}
-	}
-	
-	//	var keyboardLayoutGuide : UIView! {
-	//		if let g = objc_getAssociatedObject(self, &key) as? UIView {
-	//			return g
-	//		}else {
-	//			logA("Key window's keyboardLayoutGuide property was accessed before it was setup. Did you forget to call window?.setupKeyboardLayoutGuide() in AppDelegate?")
-	//			return nil
-	//		}
-	//	}
-	
-	func setupKeyboardLayoutGuide() {
-		let storage = MutableProperty<CGFloat>(0)
-		objc_setAssociatedObject(self, &AssociatedKeys.KeyboardHeight, storage, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
-		
-		//		let guide = UIView()
-		//		addSubview(guide)
-		//		var c : ConstraintDescriptionEditable!
-		//		guide.snp_makeConstraints { make in
-		//			make.height.equalTo(0)
-		//			make.left.right.equalTo(self)
-		//			c = make.bottom.equalTo(self).offset(0)
-		//		}
-		//		objc_setAssociatedObject(self, &key, guide, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC)) //held strongly, cant do weak ref easily
-		
-		let show = NSNotificationCenter.defaultCenter().rac_addObserverForName(UIKeyboardWillShowNotification, object: nil).toSignalProducer()
-			|> ignoreError
-			|> map { (note : AnyObject?) -> (height: CGFloat, duration: Double, curve: UIViewAnimationCurve)? in
-				if let userInfo = (note as? NSNotification)?.userInfo {
-					let rect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
-					let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! Double
-					let curve = UIViewAnimationCurve(rawValue: (userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue)!
-					return (height: rect.size.height, duration: duration, curve: curve)
-				}
-				return nil
-			}
-			|> ignoreNil
-		
-		let hide = NSNotificationCenter.defaultCenter().rac_addObserverForName(UIKeyboardWillHideNotification, object: nil).toSignalProducer()
-			|> ignoreError
-			|> map { (note : AnyObject?) -> (height: CGFloat, duration: Double, curve: UIViewAnimationCurve)? in
-				if let userInfo = (note as? NSNotification)?.userInfo {
-					let rect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
-					let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! Double
-					let curve = UIViewAnimationCurve(rawValue: (userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue)!
-					return (height: rect.size.height, duration: duration, curve: curve)
-				}
-				return nil
-			}
-			|> ignoreNil
-		//		let changeFrame = NSNotificationCenter.defaultCenter().rac_addObserverForName(UIKeyboardDidChangeFrameNotification, object: nil).toSignalProducer()
-		//		|> ignoreError
-		//		|> map { (note : AnyObject?) -> CGFloat? in
-		//			if let rectValue = (note as? NSNotification)?.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-		//				return rectValue.CGRectValue().height
-		//			}
-		//			return nil
-		//			}
-		//			|> ignoreNil
-		
-		
-		let height = merge([show, hide/*, changeFrame*/])
-		height.start(next: {
-			UIView.beginAnimations(nil, context: nil)
-			UIView.setAnimationDuration($0.duration)
-			UIView.setAnimationCurve($0.curve)
-			self.keyboardHeight.value = $0.height
-			UIApplication.sharedApplication().keyWindow!.layoutIfNeeded() //TODO: dont layout whole window, let every vc layout its view. Currently, this would cause a deadlock on org.reactivecocoa.ReactiveCocoa.SignalProducer.buffer but should be fixed in future versions of rac
-			UIView.commitAnimations()
-		})
-	}
-	
-}
-
 private var onceToken: dispatch_once_t = 0
 
 extension UIViewController {
@@ -127,30 +35,55 @@ extension UIViewController {
 	
 	@objc func kblg_setView(view: UIView) {
 		kblg_setView(view)
-		if self.isKindOfClass(NSClassFromString("UIStatusBarViewController")) { //Private class initialized before appdelegate lifecycle methods get called. TODO: this is fragile code that may break in the future, find another way to make sure keyboardLayoutGuide is initialized in time
-			return
-		}
+		
 		let guide = UIView()
 		view.addSubview(guide)
 		var c : ConstraintDescriptionEditable!
-		guide.snp_makeConstraints { make in
-			make.left.right.equalTo(view)
+		guide.snp_remakeConstraints { make in
 			make.height.equalTo(0)
+			make.left.right.equalTo(view)
 			c = make.bottom.equalTo(view).offset(0)
 		}
-		objc_setAssociatedObject(self, &AssociatedKeys.KeyboardLayoutGuide, guide, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC)) //held strongy, cant do weak ref easily
-		if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate {
-			delegate.keyboardHeight.producer
-				|> start(next: { height in
-					let origin = view.frame.origin.y
-					
-					c.constraint.updateOffset(-height)
-					//				view.setNeedsLayout()
-					//TODO whole window is layed out when height changes
-				})
-		}else{
-			logA("Appdelegate is nil or not of class AppDelegate")
-		}
+		
+		objc_setAssociatedObject(self, &AssociatedKeys.KeyboardLayoutGuide, guide, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC)) //held strongly, cant do weak ref easily
+		
+		let show = NSNotificationCenter.defaultCenter().rac_addObserverForName(UIKeyboardWillShowNotification, object: nil).toSignalProducer()
+			|> ignoreError
+			|> map { (note : AnyObject?) -> (height: CGFloat, duration: Double, curve: UIViewAnimationCurve)? in
+				if let userInfo = (note as? NSNotification)?.userInfo {
+					let rect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+					let rectInSelf = view.convertRect(rect, fromView: UIApplication.sharedApplication().keyWindow)
+					let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! Double
+					let curve = UIViewAnimationCurve(rawValue: (userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue)!
+					return (height: view.bounds.size.height - rectInSelf.origin.y, duration: duration, curve: curve)
+				}
+				return nil
+			}
+			|> ignoreNil
+		
+		let hide = NSNotificationCenter.defaultCenter().rac_addObserverForName(UIKeyboardWillHideNotification, object: nil).toSignalProducer()
+			|> ignoreError
+			|> map { (note : AnyObject?) -> (height: CGFloat, duration: Double, curve: UIViewAnimationCurve)? in
+				if let userInfo = (note as? NSNotification)?.userInfo {
+					let rect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+					let rectInSelf = view.convertRect(rect, fromView: UIApplication.sharedApplication().keyWindow)
+					let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! Double
+					let curve = UIViewAnimationCurve(rawValue: (userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue)!
+					return (height: view.bounds.size.height - rectInSelf.origin.y, duration: duration, curve: curve)
+				}
+				return nil
+			}
+			|> ignoreNil
+		
+		let height = merge([show, hide/*, changeFrame*/])
+		height.start(next: {
+			c.constraint.updateOffset(-$0.height)
+			UIView.animateWithDuration($0.duration) {
+				view.layoutIfNeeded()
+			}
+		})
+		
+		
 		
 		let appear = rac_signalForSelector("viewWillAppear:").toSignalProducer()
 			|> ignoreError
@@ -162,9 +95,9 @@ extension UIViewController {
 		
 		viewIsActive.start(next: {
 			if $0 {
-				c.constraint.activate()
+				c?.constraint.activate()
 			}else{
-				c.constraint.deactivate()
+				c?.constraint.deactivate()
 			}
 		})
 	}
