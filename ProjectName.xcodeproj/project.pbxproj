@@ -11,7 +11,7 @@
 			isa = PBXAggregateTarget;
 			buildConfigurationList = B47537041951FB3900DB8D6D /* Build configuration list for PBXAggregateTarget "EnviromentSwitch" */;
 			buildPhases = (
-				B475370A1951FB4C00DB8D6D /* Preprocess Plist */,
+				B475370A1951FB4C00DB8D6D /* EnvironmentSwitch */,
 			);
 			dependencies = (
 			);
@@ -64,19 +64,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B433E4A41951FF35006BEBF1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B4ABA1D4195193330069FAD4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B47537031951FB3900DB8D6D;
-			remoteInfo = EnviromentSwitch;
-		};
 		B4ABA202195193330069FAD4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B4ABA1D4195193330069FAD4 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = B4ABA1DB195193330069FAD4;
 			remoteInfo = ProjectName;
+		};
+		B4C88DFA1B53D61B00AB6CA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B4ABA1D4195193330069FAD4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B47537031951FB3900DB8D6D;
+			remoteInfo = EnviromentSwitch;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -389,12 +389,12 @@
 				B4ABA1DA195193330069FAD4 /* Resources */,
 				2E600C0607B3427BAB1CA8DE /* Copy Pods Resources */,
 				B4ECD6281AD4820D0099D516 /* CopyFiles */,
-				B4A800961B2869F700453A28 /* ShellScript */,
+				B4A800961B2869F700453A28 /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				B433E4A51951FF35006BEBF1 /* PBXTargetDependency */,
+				B4C88DFB1B53D61B00AB6CA2 /* PBXTargetDependency */,
 			);
 			name = ProjectName;
 			productName = ProjectName;
@@ -407,9 +407,9 @@
 			buildPhases = (
 				AA29B81FC8F44906ACC0141A /* Check Pods Manifest.lock */,
 				B4ABA1F9195193330069FAD4 /* Sources */,
+				DB8CB86D442148B9B5E4A6AD /* Copy Pods Resources */,
 				B4ABA1FA195193330069FAD4 /* Frameworks */,
 				B4ABA1FB195193330069FAD4 /* Resources */,
-				DB8CB86D442148B9B5E4A6AD /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -515,21 +515,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		B475370A1951FB4C00DB8D6D /* Preprocess Plist */ = {
+		B475370A1951FB4C00DB8D6D /* EnvironmentSwitch */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Preprocess Plist";
+			name = EnvironmentSwitch;
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "dir=${PROJECT_DIR}\necho \"Starting environment configuration for project: \" $dir\n\n# environment variable from value passed in to xcodebuild.\n# if not specified, we default to DEV\nenv=${ACK_ENVIRONMENT}\nif [ -z \"$env\" ]\nthen\nenv=\"Development\"\nfi\necho \"Using $env environment\"\n\n# copy the environment-specific file\necho \"cp $dir/environment/environment-$env.plist $dir/environment/environment.plist\"\ncp $dir/environment/environment-$env.plist $dir/environment/environment.plist\n\n#write environment to environment.plist\n`/usr/libexec/PlistBuddy -c \"Add :scheme string $env\" \"$dir/environment/environment.plist\"`\n# app settings\nappName=`/usr/libexec/PlistBuddy -c \"Print :appName\" \"$dir/environment/environment.plist\"`\n\nif [ $CONFIGURATION != Development && $CONFIGURATION != AppStore ]; then\necho \"Bumping build number...\"\nplist=${PROJECT_DIR}/Source/Project-Info.plist\necho $plist\n# increment the build number (ie 115 to 116)\nbuildnum=$(git rev-list HEAD --count)\nif [[ \"${buildnum}\" == \"\" ]]; then\necho \"No build number in $plist\"\nfi\n\nbuildnum=$(expr $buildnum + 1)\n/usr/libexec/Plistbuddy -c \"Set CFBundleVersion $buildnum\" \"${plist}\"\necho \"Bumped build number to $buildnum\"\n\nappName=\"$appName $buildnum\"\n\n\nelse\necho $CONFIGURATION \" build - Not bumping build number.\"\nfi\n\n\n# Build the preprocess file\ncd ${PROJECT_DIR}/environment/\n\npreprocessFile=\"environment_preprocess.h\"\necho \"Creating header file\"\n\necho -e \"//-----------------------------------------\" > $preprocessFile\necho -e \"// Auto generated file\" >> $preprocessFile\necho -e \"// Created $buildDate\" >> $preprocessFile\necho -e \"//-----------------------------------------\" >> $preprocessFile\necho -e \"\" >> $preprocessFile\necho -e \"#define ACK_ENVIRONMENT              $env\" >> $preprocessFile\necho -e \"#define ACK_ENVIRONMENT_VERSION  $buildnum\" >> $preprocessFile\necho -e \"#define ACK_ENVIRONMENT_APP_NAME     $appName\" >> $preprocessFile\n\n# dump out file to build log\ncat $preprocessFile\n\n# Force the system to process the plist file\necho \"Touching plist at: \"${PROJECT_DIR}/Source/Project-Info.plist\ntouch ${PROJECT_DIR}/Source/Project-Info.plist\n\n# done\necho \"Done.\"";
+			shellScript = "dir=${PROJECT_DIR}\necho \"Starting environment configuration for project: \" $dir\n\n# environment variable from value passed in to xcodebuild.\n# if not specified, we default to DEV\nenv=${ACK_ENVIRONMENT}\nif [ -z \"$env\" ]; then\nenv=\"Development\"\nfi\necho \"Using $env environment\"\n\n#copy\necho \"Copying $dir/environment/environment-$env.plist\"\ncp $dir/environment/environment-$env.plist $dir/environment/environment.plist\n\n#write environment to environment.plist\n`/usr/libexec/PlistBuddy -c \"Add :scheme string $env\" \"$dir/environment/environment.plist\"`\n\n\n# app settings\nappName=`/usr/libexec/PlistBuddy -c \"Print :appName\" \"$dir/environment/environment.plist\"`\necho \"Bumping build number...\"\nplist=${PROJECT_DIR}/Source/Project-Info.plist\necho $plist\n\n# increment the build number (ie 115 to 116)\nbuildnum=$(git rev-list HEAD --count)\n\nif [[ \"${buildnum}\" == \"\" ]]; then\n    echo \"No build number in $plist\"\nfi\n\nbuildnum=$(expr $buildnum + 1)\necho \"Setting build number to $buildnum\"\n\nif [ $CONFIGURATION == AdHoc ]; then\n    appName=\"$appName $buildnum\"\nfi\n\necho \"AppName is $appName\"\n\n\n# Build the preprocess file\ncd ${PROJECT_DIR}/environment/\n\npreprocessFile=\"environment_preprocess.h\"\necho \"Creating header file\"\n\necho -e \"//-----------------------------------------\" > $preprocessFile\necho -e \"// Auto generated file\" >> $preprocessFile\necho -e \"// Created $buildDate\" >> $preprocessFile\necho -e \"//-----------------------------------------\" >> $preprocessFile\necho -e \"\" >> $preprocessFile\necho -e \"#define ACK_ENVIRONMENT              $env\" >> $preprocessFile\necho -e \"#define ACK_ENVIRONMENT_VERSION  $buildnum\" >> $preprocessFile\necho -e \"#define ACK_ENVIRONMENT_APP_NAME     $appName\" >> $preprocessFile\n\n# dump out file to build log\ncat $preprocessFile\n\n# Force the system to process the plist file\necho \"Touching plist at: \"${PROJECT_DIR}/Source/Project-Info.plist\ntouch ${PROJECT_DIR}/Source/Project-Info.plist\n\n# done\necho \"Done.\"";
 		};
-		B4A800961B2869F700453A28 /* ShellScript */ = {
+		B4A800961B2869F700453A28 /* Copy Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -545,6 +545,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjack.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjackSwift.framework",
 			);
+			name = "Copy Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -617,15 +618,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B433E4A51951FF35006BEBF1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B47537031951FB3900DB8D6D /* EnviromentSwitch */;
-			targetProxy = B433E4A41951FF35006BEBF1 /* PBXContainerItemProxy */;
-		};
 		B4ABA203195193330069FAD4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B4ABA1DB195193330069FAD4 /* ProjectName */;
 			targetProxy = B4ABA202195193330069FAD4 /* PBXContainerItemProxy */;
+		};
+		B4C88DFB1B53D61B00AB6CA2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B47537031951FB3900DB8D6D /* EnviromentSwitch */;
+			targetProxy = B4C88DFA1B53D61B00AB6CA2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

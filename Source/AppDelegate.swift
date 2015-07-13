@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 	
 	
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+
 		
 		#if !DEBUG
 			//BITHockeyManager.sharedHockeyManager().configureWithIdentifier("", delegate: self)
@@ -33,6 +34,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 				self?.handleError(error)
 				})
 		
+
+
+			
+        logD(Environment.scheme.rawValue)
+
 		
 		let vc = UINavigationController(rootViewController: ViewController())
 		let item = TabItem(controller: vc, images: UIImage.toggleImage(UIImage.ImagesForToggle.Lock))
@@ -45,14 +51,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 		window?.tintColor = UIColor.whiteColor()
 		
 		
-		println("stuff")
+		/*println("stuff")
 		log("testlog")
 		println("morestuff")
 		logE("error")
 		logD("nenechavejte debug hlasky v logu :D")
 		for i in 1...100 {
 			logE("\(i)")
-		}
+		}*/
 		
 		
 		return true
