@@ -9,13 +9,6 @@
 import Foundation
 
 
-extension UIImage {
-    //tady bude enum z wwwdc
-    
-    
-    //tady enum + funkce na toggle 
-    
-}
 
 extension UIFont {
     

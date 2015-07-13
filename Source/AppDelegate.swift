@@ -18,23 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 	
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-		setupKeyboardLayoutGuide()
-		
-		#if !DEBUG
-			//BITHockeyManager.sharedHockeyManager().configureWithIdentifier("", delegate: self)
-			// BITHockeyManager.sharedHockeyManager().startManager()
-			//  BITHockeyManager.sharedHockeyManager().authenticator.authenticateInstallation()
-			//  BITHockeyManager.sharedHockeyManager().crashManager.crashManagerStatus = BITCrashManagerStatus.AutoSend
-		#endif
-		
-		//   Flurry.startSession("")
-		
-		API.login("josef.gattermayer@ackee.cz", password: "CoDelaPepaViOSSablone?")
-			//			|> then(API.projectData("params"))
-			|> start(error: { [weak self] error in
-				self?.handleError(error)
-				})
-		
+			
+        logD(Environment.scheme.rawValue)
 		
 		let vc = UINavigationController(rootViewController: ViewController())
 		let item = TabItem(controller: vc, images: UIImage.toggleImage(UIImage.ImagesForToggle.Lock))
@@ -47,14 +32,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 		window?.tintColor = UIColor.whiteColor()
 		
 		
-		println("stuff")
+		/*println("stuff")
 		log("testlog")
 		println("morestuff")
 		logE("error")
 		logD("nenechavejte debug hlasky v logu :D")
 		for i in 1...100 {
 			logE("\(i)")
-		}
+		}*/
 		
 		
 		return true
