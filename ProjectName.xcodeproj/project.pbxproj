@@ -530,7 +530,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH=${PATH}:/usr/local/bin/\nmogenerator -m Source/Model.xcdatamodeld/Model.xcdatamodel -O Source --template-var arc=true";
+			shellScript = "PATH=${PATH}:/usr/local/bin/\nmogenerator -m Source/Model.xcdatamodeld/Model.xcdatamodel -O Source --template-var arc=true --template-path motemplates";
 		};
 		AA29B81FC8F44906ACC0141A /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
