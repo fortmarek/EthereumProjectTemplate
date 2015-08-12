@@ -3,29 +3,17 @@
 
 #import "_<$managedObjectClassName$>.h"
 
-<$if noninheritedAttributes.@count > 0$>
 const struct <$managedObjectClassName$>Attributes <$managedObjectClassName$>Attributes = {<$foreach Attribute noninheritedAttributes do$>
 	.<$Attribute.name$> = @"<$Attribute.name$>",<$endforeach do$>
 };
-<$endif$>
 
-<$if noninheritedRelationships.@count > 0$>
 const struct <$managedObjectClassName$>Relationships <$managedObjectClassName$>Relationships = {<$foreach Relationship noninheritedRelationships do$>
 	.<$Relationship.name$> = @"<$Relationship.name$>",<$endforeach do$>
 };
-<$endif$>
 
-<$if noninheritedFetchedProperties.@count > 0$>
 const struct <$managedObjectClassName$>FetchedProperties <$managedObjectClassName$>FetchedProperties = {<$foreach FetchedProperty noninheritedFetchedProperties do$>
 	.<$FetchedProperty.name$> = @"<$FetchedProperty.name$>",<$endforeach do$>
 };
-<$endif$>
-
-<$if hasUserInfoKeys$>
-const struct <$managedObjectClassName$>UserInfo <$managedObjectClassName$>UserInfo = {<$foreach UserInfo userInfoKeyValues do$>
-	.<$UserInfo.key$> = @"<$UserInfo.value$>",<$endforeach do$>
-};
-<$endif$>
 
 @implementation <$managedObjectClassName$>ID
 @end
@@ -74,22 +62,18 @@ const struct <$managedObjectClassName$>UserInfo <$managedObjectClassName$>UserIn
 	return [result <$Attribute.scalarAccessorMethodName$>];
 }
 
-<$if ! Attribute.isReadonly$>
 - (void)set<$Attribute.name.initialCapitalString$>Value:(<$Attribute.scalarAttributeType$>)value_ {
-	[self set<$Attribute.name.initialCapitalString$>:<$if TemplateVar.literals$>@(value_)<$else$>[NSNumber <$Attribute.scalarFactoryMethodName$>value_]<$endif$>];
+	[self set<$Attribute.name.initialCapitalString$>:[NSNumber <$Attribute.scalarFactoryMethodName$>value_]];
 }
-<$endif$>
 
-<$if Attribute.name != "type"$>
 - (<$Attribute.scalarAttributeType$>)primitive<$Attribute.name.initialCapitalString$>Value {
 	NSNumber *result = [self primitive<$Attribute.name.initialCapitalString$>];
 	return [result <$Attribute.scalarAccessorMethodName$>];
 }
 
 - (void)setPrimitive<$Attribute.name.initialCapitalString$>Value:(<$Attribute.scalarAttributeType$>)value_ {
-	[self setPrimitive<$Attribute.name.initialCapitalString$>:<$if TemplateVar.literals$>@(value_)<$else$>[NSNumber <$Attribute.scalarFactoryMethodName$>value_]<$endif$>];
+	[self setPrimitive<$Attribute.name.initialCapitalString$>:[NSNumber <$Attribute.scalarFactoryMethodName$>value_]];
 }
-<$endif$>
 <$endif$>
 <$endif$>
 <$endforeach do$>
@@ -159,8 +143,8 @@ const struct <$managedObjectClassName$>UserInfo <$managedObjectClassName$>UserIn
 				result = [results objectAtIndex:0];
 				break;
 			default:
-				NSLog(@"WARN fetch request <$FetchRequest.name$>: 0 or 1 objects expected, %lu found (substitutionVariables:%@, results:%@)",
-					(unsigned long)[results count],
+				NSLog(@"WARN fetch request <$FetchRequest.name$>: 0 or 1 objects expected, %u found (substitutionVariables:%@, results:%@)",
+					(unsigned)[results count],
 					substitutionVariables,
 					results);
 		}
@@ -230,67 +214,3 @@ const struct <$managedObjectClassName$>UserInfo <$managedObjectClassName$>UserIn
 #endif
 <$endif$>
 @end
-
-<$foreach Relationship noninheritedRelationships do$><$if Relationship.isToMany$><$if Relationship.jr_isOrdered$>
-@implementation _<$managedObjectClassName$> (<$Relationship.name.initialCapitalString$>CoreDataGeneratedAccessors)
-- (void)add<$Relationship.name.initialCapitalString$>:(<$Relationship.immutableCollectionClassName$>*)value_ {
-	[self.<$Relationship.name$>Set unionOrderedSet:value_];
-}
-- (void)remove<$Relationship.name.initialCapitalString$>:(<$Relationship.immutableCollectionClassName$>*)value_ {
-	[self.<$Relationship.name$>Set minusOrderedSet:value_];
-}
-- (void)add<$Relationship.name.initialCapitalString$>Object:(<$Relationship.destinationEntity.managedObjectClassName$>*)value_ {
-	[self.<$Relationship.name$>Set addObject:value_];
-}
-- (void)remove<$Relationship.name.initialCapitalString$>Object:(<$Relationship.destinationEntity.managedObjectClassName$>*)value_ {
-	[self.<$Relationship.name$>Set removeObject:value_];
-}
-- (void)insertObject:(<$Relationship.destinationEntity.managedObjectClassName$>*)value in<$Relationship.name.initialCapitalString$>AtIndex:(NSUInteger)idx {
-    NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:idx];
-    [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:@"<$Relationship.name$>"];
-    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self <$Relationship.name$>]];
-    [tmpOrderedSet insertObject:value atIndex:idx];
-    [self setPrimitiveValue:tmpOrderedSet forKey:@"<$Relationship.name$>"];
-    [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:@"<$Relationship.name$>"];
-}
-- (void)removeObjectFrom<$Relationship.name.initialCapitalString$>AtIndex:(NSUInteger)idx {
-    NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:idx];
-    [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:@"<$Relationship.name$>"];
-    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self <$Relationship.name$>]];
-    [tmpOrderedSet removeObjectAtIndex:idx];
-    [self setPrimitiveValue:tmpOrderedSet forKey:@"<$Relationship.name$>"];
-    [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:@"<$Relationship.name$>"];
-}
-- (void)insert<$Relationship.name.initialCapitalString$>:(NSArray *)value atIndexes:(NSIndexSet *)indexes {
-    [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:@"<$Relationship.name$>"];
-    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self <$Relationship.name$>]];
-    [tmpOrderedSet insertObjects:value atIndexes:indexes];
-    [self setPrimitiveValue:tmpOrderedSet forKey:@"<$Relationship.name$>"];
-    [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:@"<$Relationship.name$>"];
-}
-- (void)remove<$Relationship.name.initialCapitalString$>AtIndexes:(NSIndexSet *)indexes {
-    [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:@"<$Relationship.name$>"];
-    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self <$Relationship.name$>]];
-    [tmpOrderedSet removeObjectsAtIndexes:indexes];
-    [self setPrimitiveValue:tmpOrderedSet forKey:@"<$Relationship.name$>"];
-    [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:@"<$Relationship.name$>"];
-}
-- (void)replaceObjectIn<$Relationship.name.initialCapitalString$>AtIndex:(NSUInteger)idx withObject:(<$Relationship.destinationEntity.managedObjectClassName$>*)value {
-    NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:idx];
-    [self willChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:@"<$Relationship.name$>"];
-    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self <$Relationship.name$>]];
-    [tmpOrderedSet replaceObjectAtIndex:idx withObject:value];
-    [self setPrimitiveValue:tmpOrderedSet forKey:@"<$Relationship.name$>"];
-    [self didChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:@"<$Relationship.name$>"];
-}
-- (void)replace<$Relationship.name.initialCapitalString$>AtIndexes:(NSIndexSet *)indexes with<$Relationship.name.initialCapitalString$>:(NSArray *)value {
-    [self willChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:@"<$Relationship.name$>"];
-    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self <$Relationship.name$>]];
-    [tmpOrderedSet replaceObjectsAtIndexes:indexes withObjects:value];
-    [self setPrimitiveValue:tmpOrderedSet forKey:@"<$Relationship.name$>"];
-    [self didChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:@"<$Relationship.name$>"];
-}
-@end
-<$endif$><$endif$><$endforeach do$>
-
-
