@@ -29,6 +29,6 @@ extension UITableView {
 extension UICollectionView {
 	func dequeCellForIndexPath<T where T : UICollectionViewCell>(indexPath: NSIndexPath) -> T {
 		registerClass(T.classForCoder(), forCellWithReuseIdentifier: T.cellIdentifier)
-		return dequeueReusableCellWithIdentifier(T.cellIdentifier, forIndexPath: indexPath) as! T
+		return dequeueReusableCellWithReuseIdentifier(T.cellIdentifier, forIndexPath: indexPath) as! T
 	}
 }
