@@ -1,3 +1,4 @@
+//remove this if the app doesnt use a tabbar, we dont have a better place to put it than skeleton
 //
 //  TabBarController.swift
 //  Rekola
@@ -39,13 +40,13 @@ protocol ACKTabBar : class {
 
 class TabItem : UIButton, ACKTabBarItem {
 	
-	var selectedBackgroundColor : UIColor = .rekolaGreenColor()
-	var deselectedBackgroundColor : UIColor = .rekolaGreenColor()
+	var selectedBackgroundColor : UIColor = .gayColor()
+	var deselectedBackgroundColor : UIColor = .gayColor()
 	
 	required init(controller: UIViewController, images: (UIImage!, UIImage!) ) {
 		self.viewController = controller
 		super.init(frame: CGRectZero)
-		self.setBackgroundImage(UIImage(color:selectedBackgroundColor), forState: UIControlState.Selected | UIControlState.Highlighted)
+		self.setBackgroundImage(UIImage(color:selectedBackgroundColor), forState: [UIControlState.Selected, UIControlState.Highlighted])
 		self.setBackgroundImage(UIImage(color:deselectedBackgroundColor), forState: UIControlState.Normal)
 		self.setImage(images.0, forState: UIControlState.Selected)
 		self.setImage(images.1, forState: UIControlState.Normal)
@@ -58,7 +59,7 @@ class TabItem : UIButton, ACKTabBarItem {
 		
 	}
 	
-	required init(coder aDecoder: NSCoder) {
+	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
@@ -135,7 +136,7 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
 		
 	}
 	
-	required init(coder aDecoder: NSCoder) {
+	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
@@ -155,7 +156,7 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
 		var last:  UIView? = nil
 		for item in items {
 			tabbar.addSubview(item.view)
-			item.view.snp_makeConstraints({ (make) -> Void in
+			item.view.snp_makeConstraints { make in
 				make.bottom.top.equalTo(tabbar)
 				if let last = last {
 					make.left.equalTo(last.snp_right)
@@ -164,7 +165,7 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
 				}
 				make.width.equalTo(tabbar).dividedBy(items.count)
 				
-			})
+			}
 			last = item.view
 		}
 		self.tabBarView = tabbar

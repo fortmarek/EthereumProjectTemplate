@@ -35,11 +35,10 @@ extension UIViewController {
 			c = make.bottom.equalTo(view).offset(0)
 		}
 		
-		objc_setAssociatedObject(self, &AssociatedKeys.KeyboardLayoutGuide, guide, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC)) //held strongly, cant do weak ref easily
-		
+		objc_setAssociatedObject(self, &AssociatedKeys.KeyboardLayoutGuide, guide, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN) //held strongly, cant do weak ref easily
 		let show = NSNotificationCenter.defaultCenter().rac_addObserverForName(UIKeyboardWillShowNotification, object: nil).toSignalProducer()
-			|> ignoreError
-			|> map { (note : AnyObject?) -> (height: CGFloat, duration: Double, curve: UIViewAnimationCurve)? in
+			.ignoreError()
+			.map { (note : AnyObject?) -> (height: CGFloat, duration: Double, curve: UIViewAnimationCurve)? in
 				if let userInfo = (note as? NSNotification)?.userInfo {
 					let rect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
 					let rectInSelf = view.convertRect(rect, fromView: UIApplication.sharedApplication().keyWindow)
@@ -49,11 +48,11 @@ extension UIViewController {
 				}
 				return nil
 			}
-			|> ignoreNil
+			.ignoreNil()
 		
 		let hide = NSNotificationCenter.defaultCenter().rac_addObserverForName(UIKeyboardWillHideNotification, object: nil).toSignalProducer()
-			|> ignoreError
-			|> map { (note : AnyObject?) -> (height: CGFloat, duration: Double, curve: UIViewAnimationCurve)? in
+			.ignoreError()
+			.map { (note : AnyObject?) -> (height: CGFloat, duration: Double, curve: UIViewAnimationCurve)? in
 				if let userInfo = (note as? NSNotification)?.userInfo {
 					let rect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
 					let rectInSelf = view.convertRect(rect, fromView: UIApplication.sharedApplication().keyWindow)
@@ -63,33 +62,33 @@ extension UIViewController {
 				}
 				return nil
 			}
-			|> ignoreNil
+			.ignoreNil()
 		
 		let height = merge([show, hide/*, changeFrame*/])
-		height.start(next: {
+		height.startWithNext {
 			c.constraint.updateOffset(-$0.height)
 			UIView.animateWithDuration($0.duration) {
 				view.layoutIfNeeded()
 			}
-		})
+		}
 		
 		
 		
 		let appear = rac_signalForSelector("viewWillAppear:").toSignalProducer()
-			|> ignoreError
-			|> map { _ in true }
+			.ignoreError()
+			.map { _ in true }
 		let disappear = rac_signalForSelector("viewDidDisappear:").toSignalProducer()
-			|> ignoreError
-			|> map { _ in false }
+			.ignoreError()
+			.map { _ in false }
 		let viewIsActive = merge([appear, disappear])
 		
-		viewIsActive.start(next: {
+		viewIsActive.startWithNext {
 			if $0 {
 				c?.constraint.activate()
 			}else{
 				c?.constraint.deactivate()
 			}
-		})
+		}
 	}
 	
 }

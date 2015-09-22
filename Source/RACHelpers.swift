@@ -1,24 +1,20 @@
 //
-//  RACHelpers.swift
-//  TodaysReactiveMenu
+//  File.swift
+//  AudioGuide
 //
-//  Created by Steffen Damtoft Sommer on 25/05/15.
-//  Copyright (c) 2015 steffendsommer. All rights reserved.
+//  Created by Petr Šíma on Sep/17/15.
+//  Copyright © 2015 Ackee s.r.o. All rights reserved.
 //
 
 import ReactiveCocoa
-import Argo
 
-public func ignoreError<T, E>(signalProducer: SignalProducer<T, E>) -> SignalProducer<T, NoError> {
-    return signalProducer
-        |> catch { _ in
-            SignalProducer<T, NoError>.empty
-        }
+extension SignalProducerType {
+	public func ignoreError() -> SignalProducer<T, NoError> {
+		return flatMapError { _ in SignalProducer.empty }
+	}
 }
 
 public func merge<T, E>(signals: [SignalProducer<T, E>]) -> SignalProducer<T, E> {
-    return SignalProducer<SignalProducer<T, E>, E>(values: signals)
-        |> flatten(.Merge)
+	let producers =  SignalProducer<SignalProducer<T, E>, E>(values: signals)
+	return producers.flatten(.Merge)
 }
-
-

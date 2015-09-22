@@ -9,7 +9,7 @@
 import UIKit
 import ReactiveCocoa
 
-struct AssociationKey {
+private struct AssociationKey {
   static var hidden: UInt8 = 1
   static var alpha: UInt8 = 2
   static var text: UInt8 = 3
@@ -17,24 +17,24 @@ struct AssociationKey {
 }
 
 // lazily creates a gettable associated property via the given factory
-func lazyAssociatedProperty<T: AnyObject>(host: AnyObject, key: UnsafePointer<Void>, factory: ()->T) -> T {
+func lazyAssociatedProperty<T: AnyObject>(host: AnyObject, _ key: UnsafePointer<Void>, factory: ()->T) -> T {
   var associatedProperty = objc_getAssociatedObject(host, key) as? T
   
   if associatedProperty == nil {
     associatedProperty = factory()
-    objc_setAssociatedObject(host, key, associatedProperty, UInt(OBJC_ASSOCIATION_RETAIN))
+    objc_setAssociatedObject(host, key, associatedProperty, .OBJC_ASSOCIATION_RETAIN)
   }
   return associatedProperty!
 }
 
-func lazyMutableProperty<T>(host: AnyObject, key: UnsafePointer<Void>, setter: T -> (), getter: () -> T) -> MutableProperty<T> {
-  return lazyAssociatedProperty(host, key) {
-    var property = MutableProperty<T>(getter())
+func lazyMutableProperty<T>(host: AnyObject, _ key: UnsafePointer<Void>, _ setter: T -> (), _ getter: () -> T) -> MutableProperty<T> {
+	return lazyAssociatedProperty(host, key) {
+    let property = MutableProperty<T>(getter())
     property.producer
-      .start(next: {
+      .startWithNext {
         newValue in
         setter(newValue)
-      })
+      }
     return property
   }
 }
@@ -67,17 +67,17 @@ extension UITextField {
       
       self.addTarget(self, action: "changed", forControlEvents: UIControlEvents.EditingChanged)
       
-      var property = MutableProperty<String>(self.text ?? "")
+      let property = MutableProperty<String>(self.text ?? "")
       property.producer
-        .start(next: {
+        .startWithNext {
           newValue in
           self.text = newValue
-        })
+        }
       return property
     }
   }
   
   func changed() {
-    rac_text.value = self.text
+    rac_text.value = self.text ?? ""
   }
 }

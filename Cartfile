@@ -1,5 +1,6 @@
-github "ReactiveCocoa/ReactiveCocoa" "v3.0-beta.8"
-github "SnapKit/SnapKit"
-github "Alamofire/Alamofire" >= 1.2
-github "thoughtbot/Argo"
-github "CocoaLumberjack/CocoaLumberjack"
+github "ReactiveCocoa/ReactiveCocoa" ~> 4.0
+github "SnapKit/SnapKit" ~> 0.15.0
+github "Alamofire/Alamofire" ~> 2.0.1
+github "CocoaLumberjack/CocoaLumberjack" "swift_2.0"
+#github "Wolox/ReactiveArray" "v0.2.0"
+#github "thoughtbot/Argo"

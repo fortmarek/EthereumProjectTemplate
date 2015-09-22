@@ -23,27 +23,27 @@ private func configure() {
 	let xcodeLogger = DDTTYLogger.sharedInstance()
 	xcodeLogger.colorsEnabled = true
 	xcodeLogger.setForegroundColor(UIColor.whiteColor(), backgroundColor: nil, forFlag:DDLogFlag.Info)
-	xcodeLogger.setForegroundColor(UIColor(hexString: "#FF69B4"), backgroundColor: nil, forFlag: DDLogFlag.Debug)
+//	xcodeLogger.setForegroundColor(UIColor(hexString: "#FF69B4"), backgroundColor: nil, forFlag: DDLogFlag.Debug)
 	xcodeLogger.logFormatter = LongLogFormatter()
 	DDLog.addLogger(xcodeLogger)
 	
 	if Environment.scheme == .AdHoc{
 		if let window = UIApplication.sharedApplication().keyWindow {
-			let rec = UITapGestureRecognizer(actionBlock: { rec in
-				if let rootVC = window.rootViewController {
-					let logVC = LogViewController()
-					let navC = UINavigationController(rootViewController: logVC)
-					rootVC.presentViewController(navC, animated: true, completion: nil)
-				}else{
-					logE("window detected debug gesture, but there is no root view controller.")
-				}
-			})
-			rec.numberOfTouchesRequired = 4
-			rec.numberOfTapsRequired = 2
-			rec.cancelsTouchesInView = false
-			rec.delaysTouchesBegan = false
-			rec.delaysTouchesEnded = false
-			window.addGestureRecognizer(rec)
+//			let rec = UITapGestureRecognizer(actionBlock: { rec in
+//				if let rootVC = window.rootViewController {
+//					let logVC = LogViewController()
+//					let navC = UINavigationController(rootViewController: logVC)
+//					rootVC.presentViewController(navC, animated: true, completion: nil)
+//				}else{
+//					logE("window detected debug gesture, but there is no root view controller.")
+//				}
+//			})
+//			rec.numberOfTouchesRequired = 4
+//			rec.numberOfTapsRequired = 2
+//			rec.cancelsTouchesInView = false
+//			rec.delaysTouchesBegan = false
+//			rec.delaysTouchesEnded = false
+//			window.addGestureRecognizer(rec)
 		}else{
 			logE("cant configure log gesture because there is no window")
 		}
@@ -56,31 +56,37 @@ enum Logger {
 	static var loggingIsAsync = true
 }
 
-func logA<T>(@autoclosure value: () -> T, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__) {
+//TODO: use noescapes correctly
+
+func logA<T>(@autoclosure value: () -> T, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UInt = __LINE__) {
 	if(!isConfigured) { configure() }
-	SwiftLogMacro(Logger.loggingIsAsync, .Error, flag: .Error, context: 0, file: file, function: function, line: line, tag: nil, string: toDebugString(value()))
+	let val = value()
+	SwiftLogMacro(Logger.loggingIsAsync, level: .Error, flag: .Error, context: 0, file: file, function: function, line: line, tag: nil, string: String(reflecting: val))
 	return
 }
 
-func log<T>(@autoclosure value: () -> T, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__) {
+func log<T>(@autoclosure value: () -> T, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UInt = __LINE__) {
 	if(!isConfigured) { configure() }
-	SwiftLogMacro(Logger.loggingIsAsync, .Info, flag: .Info, context: 0, file: file, function: function, line: line, tag: nil, string: toDebugString(value()))
+	let val = value()
+	SwiftLogMacro(Logger.loggingIsAsync, level: .Info, flag: .Info, context: 0, file: file, function: function, line: line, tag: nil, string: String(reflecting: val))
 }
 
-func logE<T>(@autoclosure error: () -> T, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__) {
+func logE<T>(@autoclosure error: () -> T, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UInt = __LINE__) {
 	if(!isConfigured) { configure() }
-	SwiftLogMacro(Logger.loggingIsAsync, .Warning, flag: .Warning, context: 0, file: file, function: function, line: line, tag: nil, string: toDebugString(error()))
+	let val = error()
+	SwiftLogMacro(Logger.loggingIsAsync, level: .Warning, flag: .Warning, context: 0, file: file, function: function, line: line, tag: nil, string: String(reflecting: val))
 }
 
-func logD<T>(@autoclosure value: () -> T, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__) {
+func logD<T>(@autoclosure value: () -> T, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UInt = __LINE__) {
 	if(!isConfigured) { configure() }
-	SwiftLogMacro(Logger.loggingIsAsync, .Debug, flag: .Debug, context: 0, file: file, function: function, line: line, tag: nil, string: toDebugString(value()))
+	let val = value()
+	SwiftLogMacro(Logger.loggingIsAsync, level: .Debug, flag: .Debug, context: 0, file: file, function: function, line: line, tag: nil, string: String(reflecting: val))
 }
 
 
 class LongLogFormatter : NSObject, DDLogFormatter {
  @objc func formatLogMessage(logMessage: DDLogMessage!) -> String! {
-	return "\(logMessage.file.lastPathComponent.stringByDeletingPathExtension).\(logMessage.function).line\(logMessage.line): \(logMessage.message)"
+	return "\(((logMessage.file as NSString).lastPathComponent as NSString).stringByDeletingPathExtension).\(logMessage.function).line\(logMessage.line): \(logMessage.message)"
 	}
 }
 
@@ -105,11 +111,11 @@ private class LogViewController : UIViewController {
 	private func getLogWithMaxLength(length: Int) -> String {
 		if let file = fileLogger.logFileManager.sortedLogFileInfos().last as? DDLogFileInfo {
 			let path = file.filePath
-			let url = NSURL(fileURLWithPath: path)!
+			let url = NSURL(fileURLWithPath: path)
 			let data = NSData(contentsOfURL: url)!
 			let text = NSString(data: data, encoding: NSUTF8StringEncoding)! as String
-			let l = min(length, count(text))
-			let trimmed = text.substringWithRange(Range<String.Index>(start: advance(text.endIndex, -l), end: text.endIndex))
+			let l = min(length, text.characters.count)
+			let trimmed = text.substringWithRange(Range<String.Index>(start: text.endIndex.advancedBy(-l), end: text.endIndex))
 			return trimmed ?? ""
 		}
 		return ""

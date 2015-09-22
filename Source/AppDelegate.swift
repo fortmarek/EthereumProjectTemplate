@@ -28,18 +28,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 		
 		//   Flurry.startSession("")
 		
-		API.login("josef.gattermayer@ackee.cz", password: "CoDelaPepaViOSSablone?")
-			//			|> then(API.projectData("params"))
-			|> start(error: { [weak self] error in
-				self?.handleError(error)
-				})
-		
-
-
-			
+//		API.login("josef.gattermayer@ackee.cz", password: "CoDelaPepaViOSSablone?")
+//			//			|> then(API.projectData("params"))
+//			|> start(error: { [weak self] error in
+//				self?.handleError(error)
+//				})
         logD(Environment.scheme.rawValue)
-
-		
+	
 		let vc = UINavigationController(rootViewController: ViewController())
 		let item = TabItem(controller: vc, images: UIImage.toggleImage(UIImage.ImagesForToggle.Lock))
 		let tabbar = ACKTabBarController(items: [item])
@@ -49,18 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 		window?.rootViewController = tabbar
 		window?.makeKeyAndVisible()
 		window?.tintColor = UIColor.whiteColor()
-		
-		
-		/*println("stuff")
-		log("testlog")
-		println("morestuff")
-		logE("error")
-		logD("nenechavejte debug hlasky v logu :D")
-		for i in 1...100 {
-			logE("\(i)")
-		}*/
-		
-		
+	
 		return true
 	}
 	

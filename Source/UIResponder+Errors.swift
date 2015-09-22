@@ -25,7 +25,7 @@ public class DefaultErrorHandler : NSObject, ErrorHandlerType, UIAlertViewDelega
 		logE("Error: \(error), severity: \(severity), sender: \(sender), userInfo: \(userInfo)")
 		
 		var hasCompletion = false
-		func presentError(_ messagePrefix: String = "") {
+		func presentError(messagePrefix: String = "") {
 			let alert = UIAlertView(title: "Error", message: "\(messagePrefix) \(error)" , delegate: self, cancelButtonTitle: NSLocalizedString("OK",comment: ""))
 			alert.show()
 			if let completion = completion {

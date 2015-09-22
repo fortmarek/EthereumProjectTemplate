@@ -22,8 +22,8 @@ extension UIFont {
     
     class func printAllFonts() {
         for item in UIFont.familyNames() {
-            let names = UIFont.fontNamesForFamilyName(item as! String)
-            println("\(item): \(names)")
+            let names = UIFont.fontNamesForFamilyName(item )
+            print("\(item): \(names)")
         }
     }
 }
@@ -33,22 +33,10 @@ extension UIFont {
 
 extension UIColor {
     
-    class func mainColor() -> UIColor! {
-        return UIColor(hex: 0x0000000)
-    }
-    
-    class func rekolaGreenColor() -> UIColor! {
-        return UIColor(hex: 0x7d8d38)
-    }
-    
-    class func rekolaPinkColor() -> UIColor! {
-        return UIColor(hex: 0xfd349c)
-    }
-    
-    class func rekolaGreyColor() -> UIColor! {
-        return UIColor(hex: 0xececec)
-    }
-    
+	class func gayColor() -> UIColor {
+		return UIColor(hex: 0xFF1493)
+	}
+	
 }
 
 extension UIImage {
@@ -74,9 +62,9 @@ extension UIImage {
     /**
     Toggle on/off on UIButton image.
     
-    :param: name enum of names of the images.
+    - parameter name: enum of names of the images.
     
-    :returns: tuple of images with on/off postfix.
+    - returns: tuple of images with on/off postfix.
     */
     class func toggleImage(name: ImagesForToggle) -> (on: UIImage!, off: UIImage!) {
         let imageOn = UIImage(named: name.rawValue + "On")
@@ -91,34 +79,9 @@ extension UIImage {
 
 */
 class Theme {
-    class func blueButton() -> UIButton? {
+    class func blueButton() -> UIButton {
         let button = UIButton()
         button.backgroundColor = UIColor.blueColor()
-        return button
-    }
-    
-    class func pinkButton() -> UIButton? {
-        let button = UIButton()
-        button.backgroundColor = UIColor.rekolaPinkColor()
-        return button
-    }
-    
-    class func greenButton() -> UIButton? {
-        let button = UIButton()
-        button.backgroundColor = UIColor.rekolaGreenColor()
-        return button
-    }
-    
-    class func greenBorderButton() -> UIButton? {
-        let button = UIButton()
-        button.layer.borderColor = UIColor.rekolaGreenColor().CGColor
-        button.setTitleColor(UIColor.rekolaGreenColor(), forState: .Normal)
-        return button
-    }
-    
-    class func whiteButton() -> UIButton? {
-        let button = UIButton()
-        button.setTitleColor(UIColor.rekolaGreenColor(), forState: .Normal)
         return button
     }
 }

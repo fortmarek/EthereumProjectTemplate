@@ -16,7 +16,7 @@ pod 'FlurrySDK'
 #pod 'MagicalRecord', '~> 2.2'
 #pod 'SVProgressHUD', :head
 #pod 'SDWebImage', '~> 3.6'
-
+pod 'Reachability'
 
 
 
