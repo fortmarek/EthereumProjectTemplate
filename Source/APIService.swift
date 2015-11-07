@@ -83,8 +83,8 @@ class ProjectNameAPI {
 						let userInfo = (error as NSError).userInfo
 						newInfo.addEntriesFromDictionary(userInfo)
 						let newInfoImmutable = newInfo.copy() as! NSDictionary
-						let newError = NSError(domain: (error as NSError).domain, code: (error as NSError).code, userInfo: newInfoImmutable as? [NSObject : AnyObject])
-						sendError(sink, newError)
+						let newError = NSError(domain: (error as NSError).domain, code: (error as NSError).code, userInfo: newInfoImmutable as [NSObject : AnyObject])
+						sink.sendFailed(newError)
 						return
 					}
                 if let json = data {
@@ -93,12 +93,12 @@ class ProjectNameAPI {
 							let str =  action(jsonString)
 							str.start(sink)
 						}catch {
-							sendError(sink, error as NSError)
+							sink.sendFailed(error as! NSError)
 							return
 						}
 						return
 					}
-					sendError(sink, NSError(domain: "", code: 0, userInfo: nil))//shouldnt get here
+					sink.sendFailed(NSError(domain: "", code: 0, userInfo: nil))//shouldnt get here
             }
             return
         }

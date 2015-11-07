@@ -8,7 +8,7 @@
 
 import UIKit
 import ReactiveCocoa
-import CocoaLumberjackSwift
+import HockeySDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate {
@@ -33,7 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 //			|> start(error: { [weak self] error in
 //				self?.handleError(error)
 //				})
-        logD(Environment.scheme.rawValue)
 	
 		let vc = UINavigationController(rootViewController: ViewController())
 		let item = TabItem(controller: vc, images: UIImage.toggleImage(UIImage.ImagesForToggle.Lock))

@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Ackee s.r.o. All rights reserved.
 //
 
-import Foundation
-
+import UIKit
+import ACKategories
 
 
 extension UIFont {

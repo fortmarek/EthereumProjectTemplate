@@ -9,6 +9,7 @@
 import Foundation
 import ReactiveCocoa
 import ObjectiveC
+import Reachability
 
 private struct AssociationKeys {
  static var statusKey : UInt8 = 0
@@ -22,20 +23,20 @@ extension Reachability {
 					.ignoreError()
 		}else{
 			let newProducer = SignalProducer<NetworkStatus, NoError>({ (sink, dis) -> () in
-				sendNext(sink, self.currentReachabilityStatus())
+				sink.sendNext(self.currentReachabilityStatus())
 				let oldRBlock = self.reachableBlock
 				self.reachableBlock = { r in
 					if oldRBlock != nil {
 						oldRBlock(r)
 					}
-					sendNext(sink, r.currentReachabilityStatus())
+					sink.sendNext(r.currentReachabilityStatus())
 				}
 				let oldUnRBlock = self.unreachableBlock
 				self.unreachableBlock = { r in
 					if oldUnRBlock != nil {
 						oldUnRBlock(r)
 					}
-					sendNext(sink, r.currentReachabilityStatus())
+					sink.sendNext(r.currentReachabilityStatus())
 				}
 			})
 			let racSignal = toRACSignal(newProducer

@@ -213,7 +213,7 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
 		self.items[self.selectedIndex].deselect()
 		self.transitionFromViewController(selectedController, toViewController: newC, duration: 0.25, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
 			newC.view.snp_makeConstraints { make in
-				make.center.width.height.equalTo(containerView)
+				make.center.width.height.equalTo(self.containerView)
 			}
 			
 			}) { (finished) in

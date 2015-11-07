@@ -7,17 +7,19 @@ use_frameworks!
 
 pod 'ACKategories', :git => 'https://github.com/AckeeCZ/ACKategories.git'
 pod 'HockeySDK'
-pod 'FlurrySDK'
+#pod 'FlurrySDK'
 
 
 #pod 'SVProgressHUD'
-#pod 'SnapKit'
-#pod 'AlamoFire'
+pod 'SnapKit'
+pod 'Alamofire'
+pod 'ReactiveCocoa', '4.0.0-alpha-3'
+pod 'Reachability'
 
 #pod 'MagicalRecord', '~> 2.2'
 #pod 'SVProgressHUD', :head
 #pod 'SDWebImage', '~> 3.6'
-pod 'Reachability'
+#pod 'Reachability'
 
 
 
