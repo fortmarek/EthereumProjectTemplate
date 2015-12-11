@@ -1,0 +1,48 @@
+PODS:
+  - ACKategories (2.3)
+  - Alamofire (3.1.3)
+  - HockeySDK (3.8.5):
+    - HockeySDK/AllFeaturesLib (= 3.8.5)
+  - HockeySDK/AllFeaturesLib (3.8.5)
+  - Reachability (3.2)
+  - ReactiveCocoa (4.0.0-alpha-3):
+    - ReactiveCocoa/UI (= 4.0.0-alpha-3)
+    - Result (~> 0.6-beta.4)
+  - ReactiveCocoa/Core (4.0.0-alpha-3):
+    - ReactiveCocoa/no-arc
+    - Result (~> 0.6-beta.4)
+  - ReactiveCocoa/no-arc (4.0.0-alpha-3):
+    - Result (~> 0.6-beta.4)
+  - ReactiveCocoa/UI (4.0.0-alpha-3):
+    - ReactiveCocoa/Core
+    - Result (~> 0.6-beta.4)
+  - Result (0.6.0-beta.6)
+  - SnapKit (0.18.0)
+
+DEPENDENCIES:
+  - ACKategories (from `https://github.com/AckeeCZ/ACKategories.git`)
+  - Alamofire
+  - HockeySDK
+  - Reachability
+  - ReactiveCocoa (= 4.0.0-alpha-3)
+  - SnapKit
+
+EXTERNAL SOURCES:
+  ACKategories:
+    :git: https://github.com/AckeeCZ/ACKategories.git
+
+CHECKOUT OPTIONS:
+  ACKategories:
+    :commit: 32ed2332f3d1ce2179475b79a62d1b182a4a6ce9
+    :git: https://github.com/AckeeCZ/ACKategories.git
+
+SPEC CHECKSUMS:
+  ACKategories: 829cc669cb71fad789347a6cd684eec07e4c2638
+  Alamofire: 9f93b56389e48def9220dd57d1f44b1927229a5a
+  HockeySDK: dd11a2b9da3372fd025643bee5bc10c8c613d169
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  ReactiveCocoa: f03dcfd385b0e4ee5b7a323f5e0b146a498e12d3
+  Result: dc390d0b58f9ec43fcd536f1ebdd130803cc6cbc
+  SnapKit: e1f090a6d47b1dd4bd89b73f72b6746a7835ef3c
+
+COCOAPODS: 0.39.0
