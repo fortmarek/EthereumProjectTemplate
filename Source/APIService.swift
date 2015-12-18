@@ -24,7 +24,7 @@ class ProjectNameAPI {
 	
 	enum Router : URLRequestConvertible {
 		
-		static let baseURL = Environment.baseURL
+		static let baseURL = Environment.Api.baseURL
 		case Login(dictionary: [String:AnyObject])
 		
 		var method : Alamofire.Method {

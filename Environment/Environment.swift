@@ -20,6 +20,17 @@ enum Environment {
 	}
 	static var scheme : Scheme { return Scheme(rawValue: plist["scheme"]! as! String) ?? .Undefined }
 	static var appName : String { return plist["appName"]! as! String }
-	static var baseURL : String { return plist["baseURL"]! as! String }
+    
+    enum Api {
+        private static let apiDict = plist["api"] as! [String : AnyObject]
+        
+        static var baseURL : String { return apiDict["baseURL"] as! String }
+    }
 	
+    enum Hockey {
+        private static let hockeyDict = plist["hockey"] as! [String : AnyObject]
+        
+        static var identifier : String { return hockeyDict["identifier"] as! String }
+        static var allowLogging : Bool { return hockeyDict["allowLogging"] as? Bool ?? true }
+    }
 }

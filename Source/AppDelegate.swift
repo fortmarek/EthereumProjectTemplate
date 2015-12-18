@@ -18,13 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 	
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-		
-		#if !DEBUG
-			//BITHockeyManager.sharedHockeyManager().configureWithIdentifier("", delegate: self)
-			// BITHockeyManager.sharedHockeyManager().startManager()
-			//  BITHockeyManager.sharedHockeyManager().authenticator.authenticateInstallation()
-			//  BITHockeyManager.sharedHockeyManager().crashManager.crashManagerStatus = BITCrashManagerStatus.AutoSend
-		#endif
+        if Environment.Hockey.identifier.characters.count == 0 {
+            NSException(name: "Illegal state exception", reason: "Hockey app is not configured.", userInfo: nil).raise()
+        }
+        
+        if Environment.Hockey.allowLogging {
+            BITHockeyManager.sharedHockeyManager().configureWithIdentifier(Environment.Hockey.identifier, delegate: self)
+            BITHockeyManager.sharedHockeyManager().startManager()
+            BITHockeyManager.sharedHockeyManager().authenticator.authenticateInstallation()
+            BITHockeyManager.sharedHockeyManager().crashManager.crashManagerStatus = .AutoSend
+        }
 		
 		//   Flurry.startSession("")
 		

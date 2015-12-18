@@ -4,5 +4,17 @@
 <dict>
 	<key>appName</key>
 	<string>Ackee</string>
+	<key>api</key>
+	<dict>
+		<key>baseURL</key>
+		<string>https://www.google.com/api</string>
+	</dict>
+	<key>hockey</key>
+	<dict>
+		<key>identifier</key>
+		<string></string>
+		<key>allowLogging</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
