@@ -14,7 +14,7 @@ pod 'HockeySDK'
 pod 'SnapKit'
 pod 'Alamofire'
 pod 'ReactiveCocoa', '4.0.0-alpha-3'
-pod 'Reachability'
+#pod 'Reachability'
 
 #pod 'MagicalRecord', '~> 2.2'
 #pod 'SVProgressHUD', :head
