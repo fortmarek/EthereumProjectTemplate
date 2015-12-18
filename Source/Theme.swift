@@ -40,23 +40,8 @@ extension UIColor {
 }
 
 extension UIImage {
-    enum ImageIdentifier: String {
-        case LockOff = "LockOff"
-        case LockOn = "LockOn"
-        case MapOff = "MapOff"
-        case MapOn = "MapOn"
-        case ProfileOff = "ProfileOff"
-        case ProfileOn = "ProfileOn"
-    }
-    
-    convenience init!(imageIdentifier: ImageIdentifier) {
-        self.init(named: imageIdentifier.rawValue)
-    }
-    
     enum ImagesForToggle: String {
         case Lock = "Lock"
-        case Map = "Map"
-        case Profile = "Profile"
     }
     
     /**
