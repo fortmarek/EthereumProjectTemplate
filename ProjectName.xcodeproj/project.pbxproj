@@ -18,6 +18,17 @@
 			name = mogenerator;
 			productName = mogenerator;
 		};
+		69D5B7F41C24861E008F1A30 /* SwiftGen */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 69D5B7F51C24861E008F1A30 /* Build configuration list for PBXAggregateTarget "SwiftGen" */;
+			buildPhases = (
+				69D5B7F91C24863C008F1A30 /* Generate enums */,
+			);
+			dependencies = (
+			);
+			name = SwiftGen;
+			productName = SwiftGen;
+		};
 		B47537031951FB3900DB8D6D /* EnviromentSwitch */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = B47537041951FB3900DB8D6D /* Build configuration list for PBXAggregateTarget "EnviromentSwitch" */;
@@ -33,6 +44,8 @@
 
 /* Begin PBXBuildFile section */
 		69148E261B78C01100D83C0E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 69148E241B78C01100D83C0E /* Model.xcdatamodeld */; };
+		69D5B7FC1C248694008F1A30 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D5B7FA1C248694008F1A30 /* Images.swift */; };
+		69D5B7FD1C248694008F1A30 /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D5B7FB1C248694008F1A30 /* LocalizedStrings.swift */; };
 		6D1A302B1B3C53B300A07F3A /* MBSwizzler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1A302A1B3C53B300A07F3A /* MBSwizzler.swift */; };
 		6D1A3AFD1B3AD61800EC8E47 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1A3AFC1B3AD61800EC8E47 /* Environment.swift */; };
 		6D1A3B011B3AF9E200EC8E47 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D1A3B001B3AF9E200EC8E47 /* Launch.storyboard */; };
@@ -98,6 +111,8 @@
 /* Begin PBXFileReference section */
 		0F2477C39DCE66EC69ACED7E /* Pods.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.appstore.xcconfig; path = "Pods/Target Support Files/Pods/Pods.appstore.xcconfig"; sourceTree = "<group>"; };
 		69148E251B78C01100D83C0E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		69D5B7FA1C248694008F1A30 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		69D5B7FB1C248694008F1A30 /* LocalizedStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		6D0BE1691B3AC49F0030E6AC /* ArgoExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgoExtensions.swift; sourceTree = "<group>"; };
 		6D1A302A1B3C53B300A07F3A /* MBSwizzler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MBSwizzler.swift; path = Source/MBSwizzler.swift; sourceTree = SOURCE_ROOT; };
 		6D1A3AFC1B3AD61800EC8E47 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -182,6 +197,8 @@
 			isa = PBXGroup;
 			children = (
 				69D5B7F31C2485CD008F1A30 /* Managed */,
+				69D5B7FA1C248694008F1A30 /* Images.swift */,
+				69D5B7FB1C248694008F1A30 /* LocalizedStrings.swift */,
 			);
 			path = Generated;
 			sourceTree = "<group>";
@@ -450,6 +467,9 @@
 					69148E1E1B78BFE300D83C0E = {
 						CreatedOnToolsVersion = 6.4;
 					};
+					69D5B7F41C24861E008F1A30 = {
+						CreatedOnToolsVersion = 7.2;
+					};
 					B4ABA1DB195193330069FAD4 = {
 						DevelopmentTeam = PXDF48X6VX;
 					};
@@ -474,6 +494,7 @@
 				B4ABA1FC195193330069FAD4 /* Tests */,
 				B47537031951FB3900DB8D6D /* EnviromentSwitch */,
 				69148E1E1B78BFE300D83C0E /* mogenerator */,
+				69D5B7F41C24861E008F1A30 /* SwiftGen */,
 			);
 		};
 /* End PBXProject section */
@@ -546,6 +567,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "PATH=${PATH}:/usr/local/bin/\nmogenerator -m Source/Model.xcdatamodeld/Model.xcdatamodel -O Source --template-var arc=true --template-path motemplates";
+		};
+		69D5B7F91C24863C008F1A30 /* Generate enums */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate enums";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "swiftgen images --output \"Source/Generated/Images.swift\" \"Resources\"\nswiftgen strings --output \"Source/Generated/LocalizedStrings.swift\" \"Source/en.lproj/Localizable.strings\"";
 		};
 		AA29B81FC8F44906ACC0141A /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -638,8 +673,10 @@
 				6D1A3AFD1B3AD61800EC8E47 /* Environment.swift in Sources */,
 				B44456F11B3462FA00597A66 /* TabBarController.swift in Sources */,
 				B4F14CA61B20502000DDBE9B /* ViewController.swift in Sources */,
+				69D5B7FD1C248694008F1A30 /* LocalizedStrings.swift in Sources */,
 				B4ECD6121AD477910099D516 /* AppDelegate.swift in Sources */,
 				B4EE77901B28A61700ED956B /* RACHelpers.swift in Sources */,
+				69D5B7FC1C248694008F1A30 /* Images.swift in Sources */,
 				B4EE778F1B28A61700ED956B /* UIKitExtensions.swift in Sources */,
 				6D775D4D1B85DD32002F640D /* FoundationExtensions.swift in Sources */,
 			);
@@ -712,6 +749,27 @@
 			name = AdHoc;
 		};
 		69148E211B78BFE300D83C0E /* AppStore */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = AppStore;
+		};
+		69D5B7F61C24861E008F1A30 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Development;
+		};
+		69D5B7F71C24861E008F1A30 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = AdHoc;
+		};
+		69D5B7F81C24861E008F1A30 /* AppStore */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1003,6 +1061,15 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = AdHoc;
+		};
+		69D5B7F51C24861E008F1A30 /* Build configuration list for PBXAggregateTarget "SwiftGen" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				69D5B7F61C24861E008F1A30 /* Development */,
+				69D5B7F71C24861E008F1A30 /* AdHoc */,
+				69D5B7F81C24861E008F1A30 /* AppStore */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		B47537041951FB3900DB8D6D /* Build configuration list for PBXAggregateTarget "EnviromentSwitch" */ = {
 			isa = XCConfigurationList;

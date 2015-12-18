@@ -12,7 +12,7 @@
 	<key>hockey</key>
 	<dict>
 		<key>identifier</key>
-		<string></string>
+		<string>a</string>
 		<key>allowLogging</key>
 		<false/>
 	</dict>
