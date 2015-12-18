@@ -43,9 +43,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		69148E261B78C01100D83C0E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 69148E241B78C01100D83C0E /* Model.xcdatamodeld */; };
 		69D5B7FC1C248694008F1A30 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D5B7FA1C248694008F1A30 /* Images.swift */; };
 		69D5B7FD1C248694008F1A30 /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D5B7FB1C248694008F1A30 /* LocalizedStrings.swift */; };
+		69D5B8061C24877D008F1A30 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 69D5B8041C24877D008F1A30 /* Model.xcdatamodeld */; };
 		6D1A302B1B3C53B300A07F3A /* MBSwizzler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1A302A1B3C53B300A07F3A /* MBSwizzler.swift */; };
 		6D1A3AFD1B3AD61800EC8E47 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1A3AFC1B3AD61800EC8E47 /* Environment.swift */; };
 		6D1A3B011B3AF9E200EC8E47 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D1A3B001B3AF9E200EC8E47 /* Launch.storyboard */; };
@@ -110,9 +110,9 @@
 
 /* Begin PBXFileReference section */
 		0F2477C39DCE66EC69ACED7E /* Pods.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.appstore.xcconfig; path = "Pods/Target Support Files/Pods/Pods.appstore.xcconfig"; sourceTree = "<group>"; };
-		69148E251B78C01100D83C0E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		69D5B7FA1C248694008F1A30 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		69D5B7FB1C248694008F1A30 /* LocalizedStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
+		69D5B8051C24877D008F1A30 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		6D0BE1691B3AC49F0030E6AC /* ArgoExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgoExtensions.swift; sourceTree = "<group>"; };
 		6D1A302A1B3C53B300A07F3A /* MBSwizzler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MBSwizzler.swift; path = Source/MBSwizzler.swift; sourceTree = SOURCE_ROOT; };
 		6D1A3AFC1B3AD61800EC8E47 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -378,9 +378,9 @@
 		B4EE77891B2871C800ED956B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				69148E241B78C01100D83C0E /* Model.xcdatamodeld */,
+				69D5B8041C24877D008F1A30 /* Model.xcdatamodeld */,
 			);
-			name = Model;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		B4EE778B1B2871F100ED956B /* View */ = {
@@ -566,7 +566,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH=${PATH}:/usr/local/bin/\nmogenerator -m Source/Model.xcdatamodeld/Model.xcdatamodel -O Source --template-var arc=true --template-path motemplates";
+			shellScript = "PATH=${PATH}:/usr/local/bin/\nmogenerator -m Source/Model/Model.xcdatamodeld/Model.xcdatamodel --swift --human-dir Source/Model --machine-dir Source/Generated/Managed --template-var arc=true";
 		};
 		69D5B7F91C24863C008F1A30 /* Generate enums */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -664,13 +664,13 @@
 			files = (
 				6D1A302B1B3C53B300A07F3A /* MBSwizzler.swift in Sources */,
 				B4A0BA8F1AD4972300715A9F /* Theme.swift in Sources */,
-				69148E261B78C01100D83C0E /* Model.xcdatamodeld in Sources */,
 				79FB0C131C1AD2D50025C600 /* UIView+Spacer.swift in Sources */,
 				6D775D4B1B85DD13002F640D /* TableAndCollectionViewExtensions.swift in Sources */,
 				6DFDD0621B3C5126005D08EA /* KeyboardLayoutGuide.swift in Sources */,
 				B4EE77921B28D1AA00ED956B /* APIService.swift in Sources */,
 				6D7861D51B397903009F8865 /* UIResponder+Errors.swift in Sources */,
 				6D1A3AFD1B3AD61800EC8E47 /* Environment.swift in Sources */,
+				69D5B8061C24877D008F1A30 /* Model.xcdatamodeld in Sources */,
 				B44456F11B3462FA00597A66 /* TabBarController.swift in Sources */,
 				B4F14CA61B20502000DDBE9B /* ViewController.swift in Sources */,
 				69D5B7FD1C248694008F1A30 /* LocalizedStrings.swift in Sources */,
@@ -1114,12 +1114,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		69148E241B78C01100D83C0E /* Model.xcdatamodeld */ = {
+		69D5B8041C24877D008F1A30 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				69148E251B78C01100D83C0E /* Model.xcdatamodel */,
+				69D5B8051C24877D008F1A30 /* Model.xcdatamodel */,
 			);
-			currentVersion = 69148E251B78C01100D83C0E /* Model.xcdatamodel */;
+			currentVersion = 69D5B8051C24877D008F1A30 /* Model.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
