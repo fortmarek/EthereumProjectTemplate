@@ -31,11 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 		
 		//   Flurry.startSession("")
 		
-//		API.login("josef.gattermayer@ackee.cz", password: "CoDelaPepaViOSSablone?")
-//			//			|> then(API.projectData("params"))
-//			|> start(error: { [weak self] error in
-//				self?.handleError(error)
-//				})
+//        API.login("josef.gattermayer@ackee.cz", password: "CoDelaPepaViOSSablone?")
+//            //.then(API.projectData("params"))
+//            .startWithFailed { [weak self] error in
+//                self?.handleError(error)
+//        }
+
 	
 		let vc = UINavigationController(rootViewController: ViewController())
 		let item = TabItem(controller: vc, images: UIImage.toggleImage(UIImage.ImagesForToggle.Lock))

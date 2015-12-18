@@ -45,6 +45,12 @@ class ProjectNameAPI {
 			let URL = NSURL(string: Router.baseURL)!
 			let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
 			mutableURLRequest.HTTPMethod = method.rawValue
+            
+            // default version header should be always sent
+            if let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String {
+                mutableURLRequest.setValue(version, forHTTPHeaderField: "X-Version")
+            }
+            
 			if let key = NSUserDefaults.standardUserDefaults().stringForKey("apiKey") {
 				mutableURLRequest.setValue(key, forHTTPHeaderField: "X-Api-Key")
 			}
