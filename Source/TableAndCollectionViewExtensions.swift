@@ -13,9 +13,16 @@ extension UITableViewCell{
 		return NSStringFromClass(self)
 	}
 }
+
+extension UICollectionReusableView {
+    class var viewIdentifier : String {
+        return NSStringFromClass(self)
+    }
+}
+
 extension UICollectionViewCell{
 	class var cellIdentifier : String {
-		return NSStringFromClass(self)
+		return viewIdentifier
 	}
 }
 
