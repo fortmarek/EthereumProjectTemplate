@@ -100,3 +100,24 @@ extension UIActivityIndicatorView {
         return lazyMutableProperty(self, &AssociationKey.animating, { [unowned self] in $0 ? self.startAnimating() : self.stopAnimating() }, { [unowned self] in self.isAnimating() })
     }
 }
+
+extension UITextView {
+    public var rac_text : MutableProperty<String> {
+        return lazyAssociatedProperty(self, &AssociationKey.text) { [unowned self] in
+            NSNotificationCenter.defaultCenter().rac_addObserverForName(UITextViewTextDidChangeNotification, object: self)
+                .takeUntil(self.rac_willDeallocSignal())
+                .toSignalProducer()
+                .startWithNext { [unowned self] _ in
+                self.rac_text.value = self.text
+            }
+            
+            let property = MutableProperty<String>(self.text ?? "")
+            property.producer
+                .startWithNext { [unowned self]
+                    newValue in
+                    self.text = newValue
+            }
+            return property
+        }
+    }
+}
