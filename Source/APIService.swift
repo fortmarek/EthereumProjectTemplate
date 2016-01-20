@@ -76,7 +76,7 @@ class ProjectNameAPI {
 		return nil
 	}
 	
-    private func call<T>(route: Router, let authHandler: AuthHandler? = ProjectNameAPI.authHandler, action: (AnyObject -> (SignalProducer<T,NSError>))) -> SignalProducer<T,NSError> {
+    private func call<T>(route: Router, let authHandler: AuthHandler? = ProjectNameAPI.authHandler, useDisposables : Bool = true, action: (AnyObject -> (SignalProducer<T,NSError>))) -> SignalProducer<T,NSError> {
         let signal = SignalProducer<T,NSError> { sink, disposable in
             
             let request = Alamofire.request(route)
@@ -100,7 +100,9 @@ class ProjectNameAPI {
                             let str =  action(jsonString)
                             let actionDisposable = str.start(sink)
                             
-                            disposable.addDisposable(actionDisposable) // if disposed dispose running action
+                            if useDisposables {
+                                disposable.addDisposable(actionDisposable) // if disposed dispose running action
+                            }
                         }catch {
                             sink.sendFailed(error as! NSError)
                             return
@@ -110,8 +112,10 @@ class ProjectNameAPI {
                     sink.sendFailed(NSError(domain: "", code: 0, userInfo: nil))//shouldnt get here
             }
             
-            disposable.addDisposable { // if disposed cancel running request
-                request.cancel()
+            if useDisposables {
+                disposable.addDisposable { // if disposed cancel running request
+                    request.cancel()
+                }
             }
             
             return
