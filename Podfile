@@ -1,7 +1,7 @@
 # Podfile
 
 platform :ios, '8.0'
-xcodeproj 'ProjectName', 'AdHoc' => :release,'AppStore' => :release, 'Development' => :debug
+xcodeproj 'SampleTestingProject', 'AdHoc' => :release,'AppStore' => :release, 'Development' => :debug
 
 use_frameworks!
 
@@ -14,19 +14,22 @@ pod 'HockeySDK'
 pod 'SnapKit'
 pod 'Alamofire'
 pod 'ReactiveCocoa', '4.0.0-alpha-3'
+pod 'Argo', '~> 2.2'
+pod 'Curry', '~> 1.4'
+pod 'Swinject', '~> 1.0.0'
+
 #pod 'Reachability'
 
 #pod 'MagicalRecord', '~> 2.2'
 #pod 'SVProgressHUD', :head
-#pod 'SDWebImage', '~> 3.6'
+pod 'SDWebImage', '~> 3.6'
 #pod 'Reachability'
 
 
 
 target :Tests, :exclusive => true do
-    #pod 'Kiwi'
-    #pod 'Kiwi/XCTest'
-
+    pod 'Quick', '~> 0.8.0'
+    pod 'Nimble', '3.0.0'
 end
 
 post_install do |installer|

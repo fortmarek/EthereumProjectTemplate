@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B4ABA1DB195193330069FAD4"
-               BuildableName = "ProjectName.app"
-               BlueprintName = "ProjectName"
-               ReferencedContainer = "container:ProjectName.xcodeproj">
+               BuildableName = "SampleTestingProject.app"
+               BlueprintName = "SampleTestingProject"
+               ReferencedContainer = "container:SampleTestingProject.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,17 @@
                BlueprintIdentifier = "B4ABA1FC195193330069FAD4"
                BuildableName = "Tests.xctest"
                BlueprintName = "Tests"
-               ReferencedContainer = "container:ProjectName.xcodeproj">
+               ReferencedContainer = "container:SampleTestingProject.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ACD8E8041C568EEC00031D67"
+               BuildableName = "SampleTestingProjectTests.xctest"
+               BlueprintName = "SampleTestingProjectTests"
+               ReferencedContainer = "container:SampleTestingProject.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B4ABA1DB195193330069FAD4"
-            BuildableName = "ProjectName.app"
-            BlueprintName = "ProjectName"
-            ReferencedContainer = "container:ProjectName.xcodeproj">
+            BuildableName = "SampleTestingProject.app"
+            BlueprintName = "SampleTestingProject"
+            ReferencedContainer = "container:SampleTestingProject.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -67,9 +77,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B4ABA1DB195193330069FAD4"
-            BuildableName = "ProjectName.app"
-            BlueprintName = "ProjectName"
-            ReferencedContainer = "container:ProjectName.xcodeproj">
+            BuildableName = "SampleTestingProject.app"
+            BlueprintName = "SampleTestingProject"
+            ReferencedContainer = "container:SampleTestingProject.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -92,9 +102,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B4ABA1DB195193330069FAD4"
-            BuildableName = "ProjectName.app"
-            BlueprintName = "ProjectName"
-            ReferencedContainer = "container:ProjectName.xcodeproj">
+            BuildableName = "SampleTestingProject.app"
+            BlueprintName = "SampleTestingProject"
+            ReferencedContainer = "container:SampleTestingProject.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites tests='2' failures='0'>
+  <testsuite name='Tests.NetworkSpec' tests='1' failures='0'>
+    <testcase classname='Tests.NetworkSpec' name='Pixabay_api__eventually_load_image_entities_UserstomaskohoutDevelopmentiOSAckeeSampleTestingProjectprojectskeletonTestNetworkSpecswift_27' time='0.188'/>
+  </testsuite>
+  <testsuite name='XCTextCase' tests='1' failures='0'>
+    <testcase classname='XCTextCase' name='testExample' time='0.000'/>
+  </testsuite>
+</testsuites>

@@ -15,18 +15,18 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B4ABA1DB195193330069FAD4"
-               BuildableName = "ProjectName.app"
-               BlueprintName = "ProjectName"
-               ReferencedContainer = "container:ProjectName.xcodeproj">
+               BuildableName = "SampleTestingProject.app"
+               BlueprintName = "SampleTestingProject"
+               ReferencedContainer = "container:SampleTestingProject.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
+      buildConfiguration = "Development"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Development">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -35,7 +35,17 @@
                BlueprintIdentifier = "B4ABA1FC195193330069FAD4"
                BuildableName = "Tests.xctest"
                BlueprintName = "Tests"
-               ReferencedContainer = "container:ProjectName.xcodeproj">
+               ReferencedContainer = "container:SampleTestingProject.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ACD8E8041C568EEC00031D67"
+               BuildableName = "SampleTestingProjectTests.xctest"
+               BlueprintName = "SampleTestingProjectTests"
+               ReferencedContainer = "container:SampleTestingProject.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,20 +53,20 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B4ABA1DB195193330069FAD4"
-            BuildableName = "ProjectName.app"
-            BlueprintName = "ProjectName"
-            ReferencedContainer = "container:ProjectName.xcodeproj">
+            BuildableName = "SampleTestingProject.app"
+            BlueprintName = "SampleTestingProject"
+            ReferencedContainer = "container:SampleTestingProject.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
+      buildConfiguration = "Development"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Development"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
@@ -66,28 +76,28 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B4ABA1DB195193330069FAD4"
-            BuildableName = "ProjectName.app"
-            BlueprintName = "ProjectName"
-            ReferencedContainer = "container:ProjectName.xcodeproj">
+            BuildableName = "SampleTestingProject.app"
+            BlueprintName = "SampleTestingProject"
+            ReferencedContainer = "container:SampleTestingProject.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
+      buildConfiguration = "AdHoc"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "AdHoc"
       debugDocumentVersioning = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B4ABA1DB195193330069FAD4"
-            BuildableName = "ProjectName.app"
-            BlueprintName = "ProjectName"
-            ReferencedContainer = "container:ProjectName.xcodeproj">
+            BuildableName = "SampleTestingProject.app"
+            BlueprintName = "SampleTestingProject"
+            ReferencedContainer = "container:SampleTestingProject.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

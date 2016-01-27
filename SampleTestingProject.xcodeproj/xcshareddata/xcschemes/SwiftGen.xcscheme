@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0720"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "69148E1E1B78BFE300D83C0E"
-               BuildableName = "mogenerator"
-               BlueprintName = "mogenerator"
-               ReferencedContainer = "container:ProjectName.xcodeproj">
+               BlueprintIdentifier = "69D5B7F41C24861E008F1A30"
+               BuildableName = "SwiftGen"
+               BlueprintName = "SwiftGen"
+               ReferencedContainer = "container:SampleTestingProject.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "69148E1E1B78BFE300D83C0E"
-            BuildableName = "mogenerator"
-            BlueprintName = "mogenerator"
-            ReferencedContainer = "container:ProjectName.xcodeproj">
+            BlueprintIdentifier = "69D5B7F41C24861E008F1A30"
+            BuildableName = "SwiftGen"
+            BlueprintName = "SwiftGen"
+            ReferencedContainer = "container:SampleTestingProject.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -63,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "69148E1E1B78BFE300D83C0E"
-            BuildableName = "mogenerator"
-            BlueprintName = "mogenerator"
-            ReferencedContainer = "container:ProjectName.xcodeproj">
+            BlueprintIdentifier = "69D5B7F41C24861E008F1A30"
+            BuildableName = "SwiftGen"
+            BlueprintName = "SwiftGen"
+            ReferencedContainer = "container:SampleTestingProject.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

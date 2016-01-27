@@ -9,13 +9,16 @@
 import UIKit
 import ReactiveCocoa
 import HockeySDK
+import Swinject
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate {
 	
 	var window: UIWindow?
-	
-	
+    
+    
+    
+    
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
         if Environment.Hockey.identifier.characters.count == 0 {
@@ -28,23 +31,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
             BITHockeyManager.sharedHockeyManager().authenticator.authenticateInstallation()
             BITHockeyManager.sharedHockeyManager().crashManager.crashManagerStatus = .AutoSend
         }
-		
-		//   Flurry.startSession("")
-		
-//        API.login("josef.gattermayer@ackee.cz", password: "CoDelaPepaViOSSablone?")
-//            //.then(API.projectData("params"))
-//            .startWithFailed { [weak self] error in
-//                self?.handleError(error)
-//        }
-
-	
-		let vc = UINavigationController(rootViewController: ViewController())
-		let item = TabItem(controller: vc, images: UIImage.toggleImage(UIImage.ImagesForToggle.Lock))
-		let tabbar = ACKTabBarController(items: [item])
+        
+        
+        //Load App Container
+        let appContainer = AppContainer.container
+        
+        
+        //Resolve initial controller with all its dependencies
+        let controller = appContainer.resolve(ImagesTableViewController.self)!
+        
+		let vc = UINavigationController(rootViewController: controller)
 		
 		window = UIWindow(frame: UIScreen.mainScreen().bounds)
-
-		window?.rootViewController = tabbar
+        window?.rootViewController = vc
 		window?.makeKeyAndVisible()
 		window?.tintColor = UIColor.whiteColor()
 	
