@@ -148,8 +148,6 @@
 		ACD4798E1C5835BA00E85DD3 /* APIRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
 		ACD479901C5839FB00E85DD3 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		ACD479951C5919DB00E85DD3 /* AppContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
-		ACD8E8071C568EEC00031D67 /* SampleTestingProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTestingProjectTests.swift; sourceTree = "<group>"; };
-		ACD8E8091C568EEC00031D67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACD8E8131C569C1100031D67 /* ImagesTableViewModeling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesTableViewModeling.swift; sourceTree = "<group>"; };
 		ACD8E8151C569CAE00031D67 /* ImagesTableViewCellModeling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesTableViewCellModeling.swift; sourceTree = "<group>"; };
 		ACD8E8171C569D2800031D67 /* Pixabay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pixabay.swift; sourceTree = "<group>"; };
@@ -273,15 +271,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		ACD8E8061C568EEC00031D67 /* SampleTestingProjectTests */ = {
-			isa = PBXGroup;
-			children = (
-				ACD8E8071C568EEC00031D67 /* SampleTestingProjectTests.swift */,
-				ACD8E8091C568EEC00031D67 /* Info.plist */,
-			);
-			path = SampleTestingProjectTests;
-			sourceTree = "<group>";
-		};
 		ACD8E8221C57DD3100031D67 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -378,7 +367,6 @@
 				B4ABA24C195196930069FAD4 /* Test */,
 				B433E4B019530FD0006BEBF1 /* Resources */,
 				B433E4B319530FD7006BEBF1 /* Libs */,
-				ACD8E8061C568EEC00031D67 /* SampleTestingProjectTests */,
 				B4ABA1DE195193330069FAD4 /* Frameworks */,
 				B4ABA1DD195193330069FAD4 /* Products */,
 				AA37FF02289B5276089C0F6E /* Pods */,
