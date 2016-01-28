@@ -42,6 +42,8 @@ class ImagesTableViewController : UITableViewController {
         self.setupBindings()
         
         viewModel.loadImages.apply().start()
+        
+        
     }
     
     private func displayErrorMessage(errorMessage: String) {
