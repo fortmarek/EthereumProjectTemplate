@@ -1,8 +1,15 @@
 fastlane_version "1.53.0"
 
-default_platform :ios
 
+###########  Variables ############
+hockey_api_token = "90fc8b51202f48bf9aa9772a7238f946"
+
+
+
+default_platform :ios
 platform :ios do
+
+
 
 
 desc "Installs FixCode which disables the \"Fix Issue\" button in Xcode"
@@ -13,7 +20,7 @@ desc "Installs FixCode which disables the \"Fix Issue\" button in Xcode"
 end
 
 
-desc "Runs all the unit and ui tests"
+
 
 	before_all do
     ENV["SLACK_URL"] = "https://hooks.slack.com/services/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" # Webhook URL created in Slack
@@ -46,29 +53,39 @@ desc "Runs all the unit and ui tests"
 
   desc "Submit new **Beta** build to Hockey app"
   lane :beta do
-  	ensure_git_status_clean
+  	#ensure_git_status_clean
     snapshot
-    sigh
+    sigh(
+    	app_identifier: "cz.ackee.enterprise.*"
+    )
     gym(
 		  #workspace: "MyApp.xcworkspace",
-		  configuration: "Debug",
+		  #configuration: "Debug",
 		  scheme: "AppStore",
 		  #silent: true,
 		  clean: true,
 		  #output_directory: "path/to/dir", # Destination directory. Defaults to current directory.
 		  #output_name: "my-app.ipa",       # specify the name of the .ipa file to generate (including file extension)
-		  #sdk: "10.0"                     # use SDK as the name or path of the base SDK when building the project.
+		  #sdk: "10.0"         
+      # use SDK as the name or path of the base SDK when building the project.
 		)
+		hockey(
+			api_token: hockey_api_token,
+      notes: '',
+      notify: '0', # Means do not notify
+      status: '1', # Means do not make available for download
+    )
+    #deliver skip_deploy: true, force: true
   end
 
   desc "Deploy a new version to the App Store"
   lane :appstore do
-  	ensure_git_status_clean
+  	#ensure_git_status_clean
     snapshot
     sigh
     gym(
 		  #workspace: "MyApp.xcworkspace",
-		  configuration: "Debug",
+		  #configuration: "Debug",
 		  scheme: "AppStore",
 		  #silent: true,
 		  clean: true,

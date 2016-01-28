@@ -15,8 +15,6 @@ Installs FixCode which disables the "Fix Issue" button in Xcode
 ```
 fastlane ios analyze
 ```
-Runs all the unit and ui tests
-
 Runs linting (and eventually static analysis)
 ### ios test
 ```

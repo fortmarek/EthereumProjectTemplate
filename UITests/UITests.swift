@@ -37,10 +37,8 @@ class UITests: XCTestCase {
     }
     
     func testMainScreen() {
-        let tablesQuery = XCUIApplication().tables
-        tablesQuery.staticTexts["2880 x 2754"].tap()
-        tablesQuery.childrenMatchingType(.Cell).elementBoundByIndex(46).childrenMatchingType(.StaticText).matchingIdentifier("6016 x 4016").elementBoundByIndex(0).pressForDuration(0.4);
-        
+        //Wait for pictures to load (it could be done better - e.g. wait for uiimage to load or something)
+        sleep(2)
         snapshot("01MainScreen")
     }
     
