@@ -9,6 +9,5 @@
 import ReactiveCocoa
 
 protocol API {
-    init(network:Networking)
-    func loadImages(page: Int) -> SignalProducer<[ImageEntity],NSError>;
+    func loadImages(page: Int) -> SignalProducer<[ImageEntity],NSError>
 }

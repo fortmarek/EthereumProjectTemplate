@@ -62,6 +62,8 @@
 		ACD479961C5919DB00E85DD3 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD479951C5919DB00E85DD3 /* AppContainer.swift */; };
 		ACD4799E1C5A39E800E85DD3 /* UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD4799D1C5A39E800E85DD3 /* UITests.swift */; };
 		ACD479A71C5A3A0B00E85DD3 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD479A61C5A3A0B00E85DD3 /* SnapshotHelper.swift */; };
+		ACD479A91C5A61C700E85DD3 /* ImagesTableViewModelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD479A81C5A61C700E85DD3 /* ImagesTableViewModelSpec.swift */; };
+		ACD479AB1C5A635200E85DD3 /* DummyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD479AA1C5A635200E85DD3 /* DummyResponse.swift */; };
 		ACD8E8141C569C1100031D67 /* ImagesTableViewModeling.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD8E8131C569C1100031D67 /* ImagesTableViewModeling.swift */; };
 		ACD8E8161C569CAE00031D67 /* ImagesTableViewCellModeling.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD8E8151C569CAE00031D67 /* ImagesTableViewCellModeling.swift */; };
 		ACD8E8191C569D2800031D67 /* Pixabay.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD8E8171C569D2800031D67 /* Pixabay.swift */; };
@@ -161,6 +163,8 @@
 		ACD4799D1C5A39E800E85DD3 /* UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITests.swift; sourceTree = "<group>"; };
 		ACD4799F1C5A39E800E85DD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACD479A61C5A3A0B00E85DD3 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
+		ACD479A81C5A61C700E85DD3 /* ImagesTableViewModelSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesTableViewModelSpec.swift; sourceTree = SOURCE_ROOT; };
+		ACD479AA1C5A635200E85DD3 /* DummyResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DummyResponse.swift; sourceTree = "<group>"; };
 		ACD8E8131C569C1100031D67 /* ImagesTableViewModeling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesTableViewModeling.swift; sourceTree = "<group>"; };
 		ACD8E8151C569CAE00031D67 /* ImagesTableViewCellModeling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesTableViewCellModeling.swift; sourceTree = "<group>"; };
 		ACD8E8171C569D2800031D67 /* Pixabay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pixabay.swift; sourceTree = "<group>"; };
@@ -301,6 +305,15 @@
 			path = UITests;
 			sourceTree = "<group>";
 		};
+		ACD479AC1C5A687300E85DD3 /* ViewModelsTests */ = {
+			isa = PBXGroup;
+			children = (
+				ACD479AA1C5A635200E85DD3 /* DummyResponse.swift */,
+				ACD479A81C5A61C700E85DD3 /* ImagesTableViewModelSpec.swift */,
+			);
+			name = ViewModelsTests;
+			sourceTree = "<group>";
+		};
 		ACD8E8221C57DD3100031D67 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,12 +322,12 @@
 			name = Cells;
 			sourceTree = "<group>";
 		};
-		ACD8E82F1C581F1400031D67 /* API */ = {
+		ACD8E82F1C581F1400031D67 /* APITests */ = {
 			isa = PBXGroup;
 			children = (
 				ACD8E8301C581F2700031D67 /* NetworkSpec.swift */,
 			);
-			name = API;
+			name = APITests;
 			sourceTree = "<group>";
 		};
 		B433E4A619530092006BEBF1 /* Environment */ = {
@@ -454,7 +467,8 @@
 		B4ABA24C195196930069FAD4 /* Test */ = {
 			isa = PBXGroup;
 			children = (
-				ACD8E82F1C581F1400031D67 /* API */,
+				ACD479AC1C5A687300E85DD3 /* ViewModelsTests */,
+				ACD8E82F1C581F1400031D67 /* APITests */,
 				B4ABA24D195196930069FAD4 /* InfoPlist.strings */,
 				B4ABA250195196930069FAD4 /* ProjectTests-Info.plist */,
 				B47536F21951A15A00DB8D6D /* XCTextCase.m */,
@@ -761,7 +775,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "dir=${PROJECT_DIR}\necho \"Starting environment configuration for project: \" $dir\n\n# environment variable from value passed in to xcodebuild.\n# if not specified, we default to DEV\nenv=${ACK_ENVIRONMENT}\nif [ -z \"$env\" ]; then\nenv=\"Development\"\nfi\necho \"Using $env environment\"\n\n#copy\necho \"Copying $dir/environment/environment-$env.plist\"\ncp $dir/environment/environment-$env.plist $dir/environment/environment.plist\n\n#write environment to environment.plist\n`/usr/libexec/PlistBuddy -c \"Add :scheme string $env\" \"$dir/environment/environment.plist\"`\n\n\n# app settings\nappName=`/usr/libexec/PlistBuddy -c \"Print :appName\" \"$dir/environment/environment.plist\"`\necho \"Bumping build number...\"\nplist=${PROJECT_DIR}/Source/Project-Info.plist\necho $plist\n\n# increment the build number (ie 115 to 116)\nbuildnum=$(git rev-list HEAD --count)\n\nif [[ \"${buildnum}\" == \"\" ]]; then\n    echo \"No build number in $plist\"\nfi\n\nbuildnum=$(expr $buildnum + 1)\necho \"Setting build number to $buildnum\"\n\nif [ $CONFIGURATION == AdHoc ]; then\n    appName=\"$appName $buildnum\"\nfi\n\necho \"AppName is $appName\"\n\n\n# Build the preprocess file\ncd ${PROJECT_DIR}/environment/\n\npreprocessFile=\"environment_preprocess.h\"\necho \"Creating header file\"\n\necho -e \"//-----------------------------------------\" > $preprocessFile\necho -e \"// Auto generated file\" >> $preprocessFile\necho -e \"// Created $buildDate\" >> $preprocessFile\necho -e \"//-----------------------------------------\" >> $preprocessFile\necho -e \"\" >> $preprocessFile\necho -e \"#define ACK_ENVIRONMENT              $env\" >> $preprocessFile\necho -e \"#define ACK_ENVIRONMENT_VERSION  $buildnum\" >> $preprocessFile\necho -e \"#define ACK_ENVIRONMENT_APP_NAME     $appName\" >> $preprocessFile\n\n# dump out file to build log\ncat $preprocessFile\n\n# Force the system to process the plist file\necho \"Touching plist at: \"${PROJECT_DIR}/Source/Project-Info.plist\ntouch ${PROJECT_DIR}/Source/Project-Info.plist\n\n# done\necho \"Done.\"";
+			shellScript = "dir=${PROJECT_DIR}\necho \"Starting environment configuration for project: \" $dir\n\n# environment variable from value passed in to xcodebuild.\n# if not specified, we default to DEV\nenv=${ACK_ENVIRONMENT}\nif [ -z \"$env\" ]; then\nenv=\"Development\"\nfi\necho \"Using $env environment\"\n\n#copy\necho \"Copying $dir/environment/environment-$env.plist\"\ncp $dir/environment/environment-$env.plist $dir/environment/environment.plist\n\n#write environment to environment.plist\n`/usr/libexec/PlistBuddy -c \"Add :scheme string $env\" \"$dir/environment/environment.plist\"`\n\n\n# app settings\nappName=`/usr/libexec/PlistBuddy -c \"Print :appName\" \"$dir/environment/environment.plist\"`\necho \"Bumping build number...\"\nplist=${PROJECT_DIR}/Source/Project-Info.plist\necho $plist\n\n# increment the build number (ie 115 to 116)\n#buildnum=$(git rev-list HEAD --count)\n\n#if [[ \"${buildnum}\" == \"\" ]]; then\n#    echo \"No build number in $plist\"\n#fi\n\n#buildnum=$(expr $buildnum + 1)\n#echo \"Setting build number to $buildnum\"\n\n#if [ $CONFIGURATION == AdHoc ]; then\n#    appName=\"$appName $buildnum\"\n#fi\n\necho \"AppName is $appName\"\n\n\n# Build the preprocess file\ncd ${PROJECT_DIR}/environment/\n\n#preprocessFile=\"environment_preprocess.h\"\n#echo \"Creating header file\"\n\n#echo -e \"//-----------------------------------------\" > $preprocessFile\n#echo -e \"// Auto generated file\" >> $preprocessFile\n#echo -e \"// Created $buildDate\" >> $preprocessFile\n#echo -e \"//-----------------------------------------\" >> $preprocessFile\n#echo -e \"\" >> $preprocessFile\n#echo -e \"#define ACK_ENVIRONMENT              $env\" >> $preprocessFile\n#echo -e \"#define ACK_ENVIRONMENT_VERSION  $buildnum\" >> $preprocessFile\n#echo -e \"#define ACK_ENVIRONMENT_APP_NAME     $appName\" >> $preprocessFile\n\n# dump out file to build log\ncat $preprocessFile\n\n# Force the system to process the plist file\n#echo \"Touching plist at: \"${PROJECT_DIR}/Source/Project-Info.plist\n#touch ${PROJECT_DIR}/Source/Project-Info.plist\n\n# done\necho \"Done.\"";
 		};
 		B4A800961B2869F700453A28 /* Copy Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -848,6 +862,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B433E4B419539281006BEBF1 /* XCTextCase.m in Sources */,
+				ACD479AB1C5A635200E85DD3 /* DummyResponse.swift in Sources */,
+				ACD479A91C5A61C700E85DD3 /* ImagesTableViewModelSpec.swift in Sources */,
 				ACD8E8321C581FB700031D67 /* NetworkSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1130,9 +1146,9 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/Source/Project-Info.plist";
+				INFOPLIST_FILE = "Source/Project-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.aa;
 				PRODUCT_NAME = SampleTestingProject;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
@@ -1276,9 +1292,9 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/Source/Project-Info.plist";
+				INFOPLIST_FILE = "Source/Project-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.aa;
 				PRODUCT_NAME = SampleTestingProject;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
@@ -1304,9 +1320,9 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/Source/Project-Info.plist";
+				INFOPLIST_FILE = "Source/Project-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.aa;
 				PRODUCT_NAME = SampleTestingProject;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
@@ -1388,6 +1404,7 @@
 				ACD479A41C5A39E900E85DD3 /* AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = AdHoc;
 		};
 		B47537041951FB3900DB8D6D /* Build configuration list for PBXAggregateTarget "EnviromentSwitch" */ = {
 			isa = XCConfigurationList;

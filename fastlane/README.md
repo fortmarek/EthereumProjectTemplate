@@ -5,32 +5,31 @@ fastlane documentation
 sudo gem install fastlane
 ```
 # Available Actions
-## iOS
-### ios xcode
+### xcode
 ```
-fastlane ios xcode
+fastlane xcode
 ```
 Installs FixCode which disables the "Fix Issue" button in Xcode
-### ios analyze
+### analyze
 ```
-fastlane ios analyze
+fastlane analyze
 ```
 Runs linting (and eventually static analysis)
-### ios test
+### test
 ```
-fastlane ios test
+fastlane test
 ```
-Runs all the unit tests.
-### ios beta
+Runs all unit tests.
+### beta
 ```
-fastlane ios beta
+fastlane beta
 ```
 Submit new **Beta** build to Hockey app
-### ios appstore
+### appstore
 ```
-fastlane ios appstore
+fastlane appstore
 ```
-Deploy a new version to the App Store
+Deploy new version to the App Store (and also hockey app)
 
 ----
 

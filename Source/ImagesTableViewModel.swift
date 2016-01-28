@@ -25,12 +25,20 @@ class ImagesTableViewModel: ImagesTableViewModeling {
     
     var loadImages: Action<(), [ImageEntity], NSError> {
         return Action(enabledIf: canLoadImages) { _ in
-            self.api.loadImages(1)
+            self.loading.value = true
+            
+            return self.api.loadImages(1)
                 .observeOn(UIScheduler())
                 .on(
-                next: { images in
-                    self.cellModels.value = images.map{ ImagesTableViewCellModel(image:$0)}
-                })
+                    next: { images in
+                        self.cellModels.value = images.map{ ImagesTableViewCellModel(image:$0)}
+                        self.loading.value = false
+                    },
+                    failed:{ error in
+                        //TODO: change
+                        self.errorMessage.value = "There was an error"
+                    }
+            )
         }
     }
     

@@ -1,13 +1,16 @@
+
+
+#default_platform :ios
+#platform :ios do
+
+
+#Variables
+app_language = "English" #CHANGE
+app_name = "Sample Testing" # CHANGE
+hockey_api_token = "90fc8b51202f48bf9aa9772a7238f946" 
+enterprise_wildcard = "cz.ackee.enterprise.*" # Do not change if you don't have to (We don't want to create provisioning profile for every app)
+
 fastlane_version "1.53.0"
-
-
-###########  Variables ############
-hockey_api_token = "90fc8b51202f48bf9aa9772a7238f946"
-
-
-
-default_platform :ios
-platform :ios do
 
 
 
@@ -39,7 +42,7 @@ end
    		#)
   end
 
-  desc "Runs all the unit tests."
+  desc "Runs all unit tests."
   lane :test do
     
   	cocoapods
@@ -51,23 +54,30 @@ end
   
   end
 
+ 
+
+
+
   desc "Submit new **Beta** build to Hockey app"
   lane :beta do
+  	
   	#ensure_git_status_clean
-    snapshot
+   	
+  	build_number = number_of_commits
+		increment_build_number(build_number: build_number)
+
+		update_info_plist(
+			plist_path: "Source/Project-Info.plist",
+		  display_name: "#{app_name} #{build_number}",  
+		  app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+		)
+
     sigh(
-    	app_identifier: "cz.ackee.enterprise.*"
+    	app_identifier: enterprise_wildcard # Have to put wildcard here
     )
     gym(
-		  #workspace: "MyApp.xcworkspace",
-		  #configuration: "Debug",
 		  scheme: "AppStore",
-		  #silent: true,
 		  clean: true,
-		  #output_directory: "path/to/dir", # Destination directory. Defaults to current directory.
-		  #output_name: "my-app.ipa",       # specify the name of the .ipa file to generate (including file extension)
-		  #sdk: "10.0"         
-      # use SDK as the name or path of the base SDK when building the project.
 		)
 		hockey(
 			api_token: hockey_api_token,
@@ -75,30 +85,43 @@ end
       notify: '0', # Means do not notify
       status: '1', # Means do not make available for download
     )
-    #deliver skip_deploy: true, force: true
+
+    slack(
+        message: "New version uploaded to HockeyApp pyco!",
+        success: true
+      )
   end
 
-  desc "Deploy a new version to the App Store"
+  desc "Deploy new version to the App Store (and also hockey app)"
   lane :appstore do
+
+  	build_number = number_of_commits
+		increment_build_number(build_number: build_number)
+
   	#ensure_git_status_clean
+		produce(
+    	app_name: app_name,
+    	language: app_language,
+    )
+
     snapshot
     sigh
     gym(
-		  #workspace: "MyApp.xcworkspace",
-		  #configuration: "Debug",
 		  scheme: "AppStore",
-		  #silent: true,
 		  clean: true,
-		  #output_directory: "path/to/dir", # Destination directory. Defaults to current directory.
-		  #output_name: "my-app.ipa",       # specify the name of the .ipa file to generate (including file extension)
-		  #sdk: "10.0"                     # use SDK as the name or path of the base SDK when building the project.
 		)
-    # hockey(
-    #   notes: '',
-    #   notify: '0', # Means do not notify
-    #   status: '1', # Means do not make available for download
-    # )
-    # deliver skip_deploy: true, force: true
+		hockey(
+			api_token: hockey_api_token,
+      notes: '',
+      notify: '0', # Means do not notify
+      status: '1', # Means do not make available for download
+    )
+    deliver 
+
+    slack(
+        message: "Deployed new version to AppStore pyco!",
+        success: true
+      )
   end
 
   after_all do |lane|
@@ -106,7 +129,12 @@ end
   end
 
   error do |lane, exception|
-  
+  	if is_ci
+      slack(
+        message: exception.message,
+        success: false
+      )
+    end
   end
   
-end
+#end
