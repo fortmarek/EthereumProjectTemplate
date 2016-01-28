@@ -58,3 +58,18 @@ Carthage/Checkouts
 enviroment.plist
 environment_preprocess.h
 environment.plist
+
+
+#Fastlane
+
+# fastlane specific
+fastlane/report.xml
+
+# deliver temporary files
+fastlane/Preview.html
+
+# snapshot generated screenshots
+fastlane/screenshots
+
+# scan temporary files
+fastlane/test_output
