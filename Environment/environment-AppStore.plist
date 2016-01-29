@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>appName</key>
-	<string>Ackee</string>
 	<key>api</key>
 	<dict>
 		<key>baseURL</key>
 		<string>https://www.google.com/api</string>
 	</dict>
+	<key>appName</key>
+	<string>Ackee</string>
+	<key>hockey_identifier</key>
+	<string>dd8bd33331d549b8a90807631e3a0a98</string>
 </dict>
 </plist>
