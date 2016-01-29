@@ -103,37 +103,53 @@ fastlane_version "1.55.0"
   	# Load hockey app identifier from plist
   	hockey_identifier =  get_environment_plist_value(key: environment_plist_hockey_key, environment:options[:environment])
 
-    if hockey_identifier != ''
-    	Helper.log.info "Using public_identifier: #{hockey_identifier}"
-			
-			hockey(
-				api_token: hockey_api_token,
-	      public_identifier: hockey_identifier
-	    )
-		else
-			Helper.log.info "No public_identifier found, creating new Hockey app"
-			
-			hockey(
-				api_token: hockey_api_token
-	    )
+  	begin
+			if hockey_identifier != ''
+	    	Helper.log.info "Using public_identifier: #{hockey_identifier}"
+				
+	    	hockey(
+					api_token: hockey_api_token,
+		      public_identifier: hockey_identifier,
+		      notify: '0'
+		    )
+
+		  else
+				Helper.log.info "No public_identifier found, creating new Hockey app"
+				
+				hockey(
+					api_token: hockey_api_token,
+					notify: '0'
+		    )
+			end
+
+		rescue RuntimeError => e
+		 	# When the public_identifier is not found (e.g. App was deleted from hockey app) , try it one more time without it
+		 	if (e.message.include? "not found") && hockey_identifier != ''
+		 		Helper.log.warn "Hockey public_identifier #{hockey_identifier} not found on hockey server (possibly deleted), trying one more time without it"
+		 		
+		 		hockey_identifier = ''
+		 		retry
+		 	else
+		 		raise
+		 	end  
 		end
 
-		if is_ci
-			hockey_build = lane_context[SharedValues::HOCKEY_BUILD_INFORMATION] 
-			
-			#If there is hockey identifier, save it
-			hockey_build_public_identifier = hockey_build['public_identifier']
+		
+		hockey_build = lane_context[SharedValues::HOCKEY_BUILD_INFORMATION] 
+		
+		#If there is hockey identifier, save it
+		hockey_build_public_identifier = hockey_build['public_identifier']
 
-			if  hockey_build_public_identifier &&  hockey_identifier != hockey_build_public_identifier
-				Helper.log.info "Saving hockey identifier: #{hockey_build_public_identifier}"
-				set_environment_plist_value(key: environment_plist_hockey_key, value: hockey_build_public_identifier, environments: [options[:environment]])
+		if  hockey_build_public_identifier &&  hockey_identifier != hockey_build_public_identifier
+			Helper.log.info "Saving hockey identifier: #{hockey_build_public_identifier}"
+			set_environment_plist_value(key: environment_plist_hockey_key, value: hockey_build_public_identifier, environments: [options[:environment]])
 
+			if is_ci
 				#commit and push the saved hockey identifier
 				git_commit(path: "./#{environment_plist_directory}/",
 	        message: "Added hockey identifier (from Fastlane)")
 
 				push_to_git_remote
-
 			end
 
 		end
