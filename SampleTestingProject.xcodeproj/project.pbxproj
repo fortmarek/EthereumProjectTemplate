@@ -34,6 +34,7 @@
 			buildConfigurationList = B47537041951FB3900DB8D6D /* Build configuration list for PBXAggregateTarget "EnviromentSwitch" */;
 			buildPhases = (
 				B475370A1951FB4C00DB8D6D /* EnvironmentSwitch */,
+				ACD479AD1C5B924E00E85DD3 /* ShellScript */,
 			);
 			dependencies = (
 			);
@@ -748,6 +749,19 @@
 			shellPath = /bin/sh;
 			shellScript = "swiftgen images --output \"Source/Generated/Images.swift\" \"Resources\"\nswiftgen strings --output \"Source/Generated/LocalizedStrings.swift\" \"Source/en.lproj/Localizable.strings\"";
 		};
+		ACD479AD1C5B924E00E85DD3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "#!/usr/bin/env xcrun --sdk macosx swift\n#fastlane set_environment scheme:Development";
+		};
 		B176B7756B4681A18D598830 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -775,7 +789,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "dir=${PROJECT_DIR}\necho \"Starting environment configuration for project: \" $dir\n\n# environment variable from value passed in to xcodebuild.\n# if not specified, we default to DEV\nenv=${ACK_ENVIRONMENT}\nif [ -z \"$env\" ]; then\nenv=\"Development\"\nfi\necho \"Using $env environment\"\n\n#copy\necho \"Copying $dir/environment/environment-$env.plist\"\ncp $dir/environment/environment-$env.plist $dir/environment/environment.plist\n\n#write environment to environment.plist\n`/usr/libexec/PlistBuddy -c \"Add :scheme string $env\" \"$dir/environment/environment.plist\"`\n\n\n# app settings\nappName=`/usr/libexec/PlistBuddy -c \"Print :appName\" \"$dir/environment/environment.plist\"`\necho \"Bumping build number...\"\nplist=${PROJECT_DIR}/Source/Project-Info.plist\necho $plist\n\n# increment the build number (ie 115 to 116)\n#buildnum=$(git rev-list HEAD --count)\n\n#if [[ \"${buildnum}\" == \"\" ]]; then\n#    echo \"No build number in $plist\"\n#fi\n\n#buildnum=$(expr $buildnum + 1)\n#echo \"Setting build number to $buildnum\"\n\n#if [ $CONFIGURATION == AdHoc ]; then\n#    appName=\"$appName $buildnum\"\n#fi\n\necho \"AppName is $appName\"\n\n\n# Build the preprocess file\ncd ${PROJECT_DIR}/environment/\n\n#preprocessFile=\"environment_preprocess.h\"\n#echo \"Creating header file\"\n\n#echo -e \"//-----------------------------------------\" > $preprocessFile\n#echo -e \"// Auto generated file\" >> $preprocessFile\n#echo -e \"// Created $buildDate\" >> $preprocessFile\n#echo -e \"//-----------------------------------------\" >> $preprocessFile\n#echo -e \"\" >> $preprocessFile\n#echo -e \"#define ACK_ENVIRONMENT              $env\" >> $preprocessFile\n#echo -e \"#define ACK_ENVIRONMENT_VERSION  $buildnum\" >> $preprocessFile\n#echo -e \"#define ACK_ENVIRONMENT_APP_NAME     $appName\" >> $preprocessFile\n\n# dump out file to build log\ncat $preprocessFile\n\n# Force the system to process the plist file\n#echo \"Touching plist at: \"${PROJECT_DIR}/Source/Project-Info.plist\n#touch ${PROJECT_DIR}/Source/Project-Info.plist\n\n# done\necho \"Done.\"";
+			shellScript = "\n#env=${ACK_ENVIRONMENT}\n#pwd\n#whoami\n#test -e ~/.profile && source ~/.profile\n\n#fastlane set_environment scheme:Development\n\n#dir=${PROJECT_DIR}\n#echo \"Starting environment configuration for project: \" $dir\n\n# environment variable from value passed in to xcodebuild.\n# if not specified, we default to DEV\n#env=${ACK_ENVIRONMENT}\n#if [ -z \"$env\" ]; then\n#env=\"Development\"\n#fi\n#echo \"Using $env environment\"\n\n#copy\n#echo \"Copying $dir/environment/environment-$env.plist\"\n#cp $dir/environment/environment-$env.plist $dir/environment/environment.plist\n\n#write environment to environment.plist\n#`/usr/libexec/PlistBuddy -c \"Add :scheme string $env\" \"$dir/environment/environment.plist\"`\n\n\n# app settings\n#appName=`/usr/libexec/PlistBuddy -c \"Print :appName\" \"$dir/environment/environment.plist\"`\n#echo \"Bumping build number...\"\n#plist=${PROJECT_DIR}/Source/Project-Info.plist\n#echo $plist\n\n# increment the build number (ie 115 to 116)\n#buildnum=$(git rev-list HEAD --count)\n\n#if [[ \"${buildnum}\" == \"\" ]]; then\n#    echo \"No build number in $plist\"\n#fi\n\n#buildnum=$(expr $buildnum + 1)\n#echo \"Setting build number to $buildnum\"\n\n#if [ $CONFIGURATION == AdHoc ]; then\n#    appName=\"$appName $buildnum\"\n#fi\n\n#echo \"AppName is $appName\"\n\n\n# Build the preprocess file\n#cd ${PROJECT_DIR}/environment/\n\n#preprocessFile=\"environment_preprocess.h\"\n#echo \"Creating header file\"\n\n#echo -e \"//-----------------------------------------\" > $preprocessFile\n#echo -e \"// Auto generated file\" >> $preprocessFile\n#echo -e \"// Created $buildDate\" >> $preprocessFile\n#echo -e \"//-----------------------------------------\" >> $preprocessFile\n#echo -e \"\" >> $preprocessFile\n#echo -e \"#define ACK_ENVIRONMENT              $env\" >> $preprocessFile\n#echo -e \"#define ACK_ENVIRONMENT_VERSION  $buildnum\" >> $preprocessFile\n#echo -e \"#define ACK_ENVIRONMENT_APP_NAME     $appName\" >> $preprocessFile\n\n# dump out file to build log\n#cat $preprocessFile\n\n# Force the system to process the plist file\n#echo \"Touching plist at: \"${PROJECT_DIR}/Source/Project-Info.plist\n#touch ${PROJECT_DIR}/Source/Project-Info.plist\n\n# done\n#echo \"Done.\"";
 		};
 		B4A800961B2869F700453A28 /* Copy Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

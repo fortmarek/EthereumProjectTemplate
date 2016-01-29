@@ -30,6 +30,11 @@ Submit new **Beta** build to Hockey app
 fastlane appstore
 ```
 Deploy new version to the App Store (and also hockey app)
+### set_environment
+```
+fastlane set_environment
+```
+Sets environment.plist app_name and app_bundle_id according to scheme
 
 ----
 

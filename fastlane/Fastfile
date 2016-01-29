@@ -1,40 +1,43 @@
 
 
-#default_platform :ios
-#platform :ios do
+##################################### SETTINGS #####################################
 
-
-#Variables
 app_language = "English" #CHANGE
-app_name = "Sample Testing" # CHANGE
+
+app_name_dev = "Sample Testing Δ" # CHANGE
+app_name_beta = "Sample Testing β" # CHANGE
+app_name_appstore = "Sample Testing" # CHANGE
+
+app_identifier_dev = 'cz.ackee.enterprise.sampletesting.dev' #CHANGE
+app_identifier_beta = 'cz.ackee.enterprise.sampletesting.beta' #CHANGE
+app_identifier_appstore = 'cz.ackee.SampleTesting' #CHANGE
+
+slack_url = "https://hooks.slack.com/services/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" #Hook to channel you want to send all messages <-- #rokKvality
+
 hockey_api_token = "90fc8b51202f48bf9aa9772a7238f946" 
 enterprise_wildcard = "cz.ackee.enterprise.*" # Do not change if you don't have to (We don't want to create provisioning profile for every app)
 
-fastlane_version "1.53.0"
+
+####################################################################################
 
 
-
-
-desc "Installs FixCode which disables the \"Fix Issue\" button in Xcode"
-  lane :xcode do
-    install_xcode_plugin(
-      url: "https://github.com/fastlane/FixCode/releases/download/0.2.0/FixCode.xcplugin.zip"
-    )
-end
-
-
-
+fastlane_version "1.55.0"
 
 	before_all do
-    ENV["SLACK_URL"] = "https://hooks.slack.com/services/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" # Webhook URL created in Slack
-  end
+		ENV["SLACK_URL"] = slack_url # Webhook URL created in Slack
+	end
 
+	desc "Installs FixCode which disables the \"Fix Issue\" button in Xcode"
+	  lane :xcode do
+	    install_xcode_plugin(
+	      url: "https://github.com/fastlane/FixCode/releases/download/0.2.0/FixCode.xcplugin.zip"
+	    )
+	end
 
   desc "Runs linting (and eventually static analysis)"
   lane :analyze do
   	sh "utils/closure_leak_check.sh ../Source"
-    #return if test_disabled?
-   	#swiftlint(
+    #swiftlint(
    			#files option not in this version
    			#files: [
    			#	'AppDelegate.swift',
@@ -61,33 +64,32 @@ end
   desc "Submit new **Beta** build to Hockey app"
   lane :beta do
   	
-  	#ensure_git_status_clean
-   	
   	build_number = number_of_commits
 		increment_build_number(build_number: build_number)
 
-		update_info_plist(
-			plist_path: "Source/Project-Info.plist",
-		  display_name: "#{app_name} #{build_number}",  
-		  app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
-		)
-
     sigh(
-    	app_identifier: enterprise_wildcard # Have to put wildcard here
+    	app_identifier: enterprise_wildcard # Have to put wildcard here, otherwise new provisioning profile would be created
     )
+
+    #Setup environments, app identifier and app name
+    generate_environment(environment: "AdHoc")
+
     gym(
-		  scheme: "AppStore",
+    	scheme: "Development",
+		  configuration: "AdHoc",
 		  clean: true,
 		)
 		hockey(
 			api_token: hockey_api_token,
       notes: '',
-      notify: '0', # Means do not notify
-      status: '1', # Means do not make available for download
+      #notify: '0', # Means do not notify
+      #status: '0', # Means do not make available for download
     )
 
+		hockey_link = lane_context[SharedValues::HOCKEY_DOWNLOAD_LINK] 
+
     slack(
-        message: "New version uploaded to HockeyApp pyco!",
+        message: "New version uploaded to HockeyApp pyco! #{hockey_link}",
         success: true
       )
   end
@@ -100,12 +102,19 @@ end
 
   	#ensure_git_status_clean
 		produce(
+			app_identifier: app_identifier_appstore,
     	app_name: app_name,
     	language: app_language,
     )
 
     snapshot
-    sigh
+    sigh(
+    		app_identifier: app_identifier_appstore
+    	)
+
+    #Setup environments, app identifier and app name
+    generate_environment(environment: "AppStore")
+
     gym(
 		  scheme: "AppStore",
 		  clean: true,
@@ -123,6 +132,53 @@ end
         success: true
       )
   end
+
+  desc "Sets environment.plist app_name and app_bundle_id according to scheme"
+  lane :set_environment do |options|
+  	
+  	if options[:environment]
+  		generate_environment(options)
+  	else
+  		print "Missing scheme: in options"
+  	end
+  end
+
+  private_lane :generate_environment do |options|
+  		environment = options[:environment]
+
+			display_name = ""
+			app_identifier = ""
+
+  		if environment == "AppStore"
+  			display_name = app_name_appstore
+  			app_identifier = app_identifier_appstore
+  		elsif environment == "AdHoc"
+  			display_name = app_name_beta
+  			app_identifier = app_identifier_beta
+  		elsif environment == "Development"
+  			display_name = app_name_dev
+  			app_identifier = app_identifier_dev
+  		else 
+  			raise "Non-existent environment: #{environment}"
+  		end
+
+  		Helper.log.info "Setting environment for #{environment}"
+  		
+  		# Change environments according to scheme
+			sh "cp '../environment/environment-#{environment}.plist' '../environment/environment.plist'"
+
+  		Helper.log.info "Setting app name to #{display_name}"
+  		Helper.log.info "Setting app identifier to #{app_identifier}"
+  		
+			#TODO: update also product name?
+  		update_info_plist(
+				plist_path: "Source/Project-Info.plist",
+		  	display_name: display_name,  # Display name on local machine is always Dev name
+		  	app_identifier:  app_identifier # Identifier on local machine is always Dev
+			)
+  end
+
+
 
   after_all do |lane|
   
