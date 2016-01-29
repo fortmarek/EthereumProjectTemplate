@@ -263,7 +263,7 @@ fastlane_version "1.55.0"
   end
 
   after_all do |lane|
-  
+  	clean_build_artifacts
   end
 
   error do |lane, exception|
