@@ -28,9 +28,8 @@ enum Environment {
     }
 	
     enum Hockey {
-        private static let hockeyDict = plist["hockey"] as! [String : AnyObject]
         
-        static var identifier : String { return hockeyDict["identifier"] as! String }
-        static var allowLogging : Bool { return hockeyDict["allowLogging"] as? Bool ?? true }
+        static var identifier : String { return plist["hockey_identifier"] as! String }
+        static var allowLogging : Bool { return plist["hockey_allowLogging"] as? Bool ?? true }
     }
 }

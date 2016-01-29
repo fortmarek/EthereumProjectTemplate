@@ -12,13 +12,21 @@ app_identifier_dev = 'cz.ackee.enterprise.sampletesting.dev' #CHANGE
 app_identifier_beta = 'cz.ackee.enterprise.sampletesting.beta' #CHANGE
 app_identifier_appstore = 'cz.ackee.SampleTesting' #CHANGE
 
+inhouse_apple_id = 'enterprise@ackee.cz'
+connect_apple_id = 'ios@ackee.cz'
+
 slack_url = "https://hooks.slack.com/services/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" #Hook to channel you want to send all messages <-- #rokKvality
 
 hockey_api_token = "90fc8b51202f48bf9aa9772a7238f946" 
 enterprise_wildcard = "cz.ackee.enterprise.*" # Do not change if you don't have to (We don't want to create provisioning profile for every app)
 
 
+environment_plist_directory = "Environment"
+environment_plist_hockey_key = "hockey_identifier"
+
+
 ####################################################################################
+
 
 
 fastlane_version "1.55.0"
@@ -68,6 +76,7 @@ fastlane_version "1.55.0"
 		increment_build_number(build_number: build_number)
 
     sigh(
+    	username: inhouse_apple_id,
     	app_identifier: enterprise_wildcard # Have to put wildcard here, otherwise new provisioning profile would be created
     )
 
@@ -79,20 +88,52 @@ fastlane_version "1.55.0"
 		  configuration: "AdHoc",
 		  clean: true,
 		)
-		hockey(
-			api_token: hockey_api_token,
-      notes: '',
-      #notify: '0', # Means do not notify
-      #status: '0', # Means do not make available for download
-    )
 
-		hockey_link = lane_context[SharedValues::HOCKEY_DOWNLOAD_LINK] 
+    upload_to_hockey(environment: "AdHoc")
 
     slack(
         message: "New version uploaded to HockeyApp pyco! #{hockey_link}",
         success: true
       )
   end
+
+  lane :upload_to_hockey do |options|
+  	# Load hockey app identifier from plist
+  	hockey_identifier =  get_environment_plist_value(key: environment_plist_hockey_key, environment:options[:environment])
+
+    if hockey_identifier != ''
+    	Helper.log.info "Using public_identifier: #{hockey_identifier}"
+			
+			hockey(
+				api_token: hockey_api_token,
+	      public_identifier: hockey_identifier
+	    )
+		else
+			Helper.log.info "No public_identifier found, creating new Hockey app"
+			
+			hockey(
+				api_token: hockey_api_token
+	    )
+		end
+
+
+		hockey_link = lane_context[SharedValues::HOCKEY_DOWNLOAD_LINK] 
+		hockey_build = lane_context[SharedValues::HOCKEY_BUILD_INFORMATION] 
+		
+		#If there is hockey identifier, save it
+		hockey_build_public_identifier = hockey_build['public_identifier']
+
+		if  hockey_build_public_identifier &&  hockey_identifier != hockey_build_public_identifier
+			Helper.log.info "Saving hockey identifier: #{hockey_build_public_identifier}"
+			set_environment_plist_value(key: environment_plist_hockey_key, value: hockey_build_public_identifier, environments: ["AppStore", "AdHoc", "Development"])
+
+			git_commit(path: "./#{environment_plist_directory}/",
+        message: "Added hockey identifier (from Fastlane)")
+			
+			push_to_git_remote
+
+		end
+	end	
 
   desc "Deploy new version to the App Store (and also hockey app)"
   lane :appstore do
@@ -102,13 +143,15 @@ fastlane_version "1.55.0"
 
   	#ensure_git_status_clean
 		produce(
+			username: connect_apple_id,
 			app_identifier: app_identifier_appstore,
-    	app_name: app_name,
+    	app_name: app_name_appstore,
     	language: app_language,
     )
 
     snapshot
     sigh(
+    		username: connect_apple_id,
     		app_identifier: app_identifier_appstore
     	)
 
@@ -125,7 +168,9 @@ fastlane_version "1.55.0"
       notify: '0', # Means do not notify
       status: '1', # Means do not make available for download
     )
-    deliver 
+    deliver(
+    		username: connect_apple_id
+    	)
 
     slack(
         message: "Deployed new version to AppStore pyco!",
@@ -139,8 +184,19 @@ fastlane_version "1.55.0"
   	if options[:environment]
   		generate_environment(options)
   	else
-  		print "Missing scheme: in options"
+  		print "Missing environment: in options"
   	end
+  end
+
+  
+  # Sets value for given in key in selected environments
+  private_lane :set_environment_plist_value do |options|
+		options[:environments].each { |env| set_info_plist_value(path: "#{environment_plist_directory}/environment-#{env}.plist", key: options[:key], value: options[:value]) }
+  end
+
+  #Gets value for given key in environment
+  private_lane :get_environment_plist_value do |options|
+  		get_info_plist_value(path: "#{environment_plist_directory}/environment-#{options[:environment]}.plist", key: options[:key])
   end
 
   private_lane :generate_environment do |options|
@@ -165,7 +221,7 @@ fastlane_version "1.55.0"
   		Helper.log.info "Setting environment for #{environment}"
   		
   		# Change environments according to scheme
-			sh "cp '../environment/environment-#{environment}.plist' '../environment/environment.plist'"
+			sh "cp '../#{environment_plist_directory}/environment-#{environment}.plist' '../#{environment_plist_directory}/environment.plist'"
 
   		Helper.log.info "Setting app name to #{display_name}"
   		Helper.log.info "Setting app identifier to #{app_identifier}"
@@ -178,7 +234,13 @@ fastlane_version "1.55.0"
 			)
   end
 
+  lane :testing do
+  	#set_environment_plist_value(key: environment_plist_hockey_key, value: "tada", environments: ["Development", "AdHoc"])
+  	#hockey_identifier =  get_environment_plist_value(key: environment_plist_hockey_key, environment:"AdHoc")
 
+    
+
+  end
 
   after_all do |lane|
   

@@ -25,6 +25,11 @@ Runs all unit tests.
 fastlane beta
 ```
 Submit new **Beta** build to Hockey app
+### upload_to_hockey
+```
+fastlane upload_to_hockey
+```
+
 ### appstore
 ```
 fastlane appstore
@@ -35,6 +40,11 @@ Deploy new version to the App Store (and also hockey app)
 fastlane set_environment
 ```
 Sets environment.plist app_name and app_bundle_id according to scheme
+### testing
+```
+fastlane testing
+```
+
 
 ----
 
