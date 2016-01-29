@@ -91,6 +91,8 @@ fastlane_version "1.55.0"
 
     upload_to_hockey(environment: "AdHoc")
 
+    hockey_link = lane_context[SharedValues::HOCKEY_DOWNLOAD_LINK] 
+
     slack(
         message: "New version uploaded to HockeyApp pyco! #{hockey_link}",
         success: true
@@ -116,21 +118,23 @@ fastlane_version "1.55.0"
 	    )
 		end
 
-
-		hockey_link = lane_context[SharedValues::HOCKEY_DOWNLOAD_LINK] 
-		hockey_build = lane_context[SharedValues::HOCKEY_BUILD_INFORMATION] 
-		
-		#If there is hockey identifier, save it
-		hockey_build_public_identifier = hockey_build['public_identifier']
-
-		if  hockey_build_public_identifier &&  hockey_identifier != hockey_build_public_identifier
-			Helper.log.info "Saving hockey identifier: #{hockey_build_public_identifier}"
-			set_environment_plist_value(key: environment_plist_hockey_key, value: hockey_build_public_identifier, environments: ["AppStore", "AdHoc", "Development"])
-
-			git_commit(path: "./#{environment_plist_directory}/",
-        message: "Added hockey identifier (from Fastlane)")
+		if is_ci
+			hockey_build = lane_context[SharedValues::HOCKEY_BUILD_INFORMATION] 
 			
-			push_to_git_remote
+			#If there is hockey identifier, save it
+			hockey_build_public_identifier = hockey_build['public_identifier']
+
+			if  hockey_build_public_identifier &&  hockey_identifier != hockey_build_public_identifier
+				Helper.log.info "Saving hockey identifier: #{hockey_build_public_identifier}"
+				set_environment_plist_value(key: environment_plist_hockey_key, value: hockey_build_public_identifier, environments: [options[:environment]])
+
+				#commit and push the saved hockey identifier
+				git_commit(path: "./#{environment_plist_directory}/",
+	        message: "Added hockey identifier (from Fastlane)")
+
+				push_to_git_remote
+
+			end
 
 		end
 	end	

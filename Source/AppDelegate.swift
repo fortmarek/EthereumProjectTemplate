@@ -21,11 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
     
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-        if Environment.Hockey.identifier.characters.count == 0 {
+        /*if Environment.Hockey.identifier.characters.count == 0 {
             NSException(name: "Illegal state exception", reason: "Hockey app is not configured.", userInfo: nil).raise()
-        }
+        }*/
         
-        if Environment.Hockey.allowLogging {
+        if Environment.Hockey.identifier.characters.count != 0 && Environment.Hockey.allowLogging {
             BITHockeyManager.sharedHockeyManager().configureWithIdentifier(Environment.Hockey.identifier, delegate: self)
             BITHockeyManager.sharedHockeyManager().startManager()
             BITHockeyManager.sharedHockeyManager().authenticator.authenticateInstallation()
