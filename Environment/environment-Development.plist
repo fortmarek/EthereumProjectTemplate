@@ -5,7 +5,7 @@
 	<key>api</key>
 	<dict>
 		<key>baseURL</key>
-		<string>https://www.google.com/api</string>
+		<string>https://www.whostolemyunicorn.com/api/</string>
 	</dict>
 	<key>appName</key>
 	<string>Ackee Δ</string>

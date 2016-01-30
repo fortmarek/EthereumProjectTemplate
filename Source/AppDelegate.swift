@@ -36,9 +36,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         //Load App Container
         let appContainer = AppContainer.container
         
+        let locationManager = appContainer.resolve(LocationManager.self)!
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
         
         //Resolve initial controller with all its dependencies
-        let controller = appContainer.resolve(ImagesTableViewController.self)!
+        let controller = appContainer.resolve(LanguagesTableViewController.self)!
         
 		let vc = UINavigationController(rootViewController: controller)
 		

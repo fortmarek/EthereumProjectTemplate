@@ -9,5 +9,5 @@
 import ReactiveCocoa
 
 protocol API {
-    func loadImages(page: Int) -> SignalProducer<[ImageEntity],NSError>
+    func languages() -> SignalProducer<[LanguageEntity],NSError>
 }

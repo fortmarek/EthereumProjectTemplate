@@ -8,11 +8,11 @@
 
 import UIKit
 
-class ImagesTableViewController : UITableViewController {
+class LanguagesTableViewController : UITableViewController {
     
-    var viewModel: ImagesTableViewModeling!
+    var viewModel: LanguagesTableViewModeling!
     
-    required init(viewModel: ImagesTableViewModeling){
+    required init(viewModel: LanguagesTableViewModeling){
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -40,8 +40,10 @@ class ImagesTableViewController : UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupBindings()
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 44.0
         
-        viewModel.loadImages.apply().start()
+        viewModel.loadLanguages.apply().start()
         
         
     }
@@ -63,18 +65,28 @@ class ImagesTableViewController : UITableViewController {
 }
 
 // MARK: UITableViewDataSource
-extension ImagesTableViewController {
+extension LanguagesTableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.cellModels.value.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell:ImageTableViewCell = tableView.dequeCellForIndexPath(indexPath)
+        let cell:LanguageTableViewCell = tableView.dequeCellForIndexPath(indexPath)
         cell.viewModel = viewModel.cellModels.value[indexPath.row]
         
         return cell
     }
 }
 
-
+// MARK: UITableViewDelegate
+extension LanguagesTableViewController{
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let detailModel = viewModel.cellModels.value[indexPath.row]
+        
+        let controller = self.viewModel.detailFactory.create(detailModel)
+        
+        self.navigationController?.pushViewController(controller, animated: true)
+        
+    }
+}
 

@@ -8,9 +8,7 @@
 
 import ReactiveCocoa
 
-protocol ImagesTableViewCellModeling {
-    var id: Int { get }
-    var text: String { get }
-    var previewImageURL: NSURL { get }
-    
+protocol LanguageDetailModeling {
+    var name: String { get }
+    var flagURL : NSURL { get }
 }

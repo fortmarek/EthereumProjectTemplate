@@ -15,7 +15,7 @@ struct APIErrorKeys {
 	static let responseData = "FailingRequestResponseData"
 }
 
-class PixabayAPI: API {
+class UnicornAPI: API {
     
     //MARK: Dependencies
     private let network:Networking
@@ -28,22 +28,22 @@ class PixabayAPI: API {
 	enum Router : APIRouter {
 		
         //What with this?
-		static let baseURL = Pixabay.apiURL
+		static let baseURL = Environment.Api.baseURL
         
+        case Languages
         
-        case Images(page:Int)
 		
 		var method : Alamofire.Method {
 			switch self {
-			case .Images(_):
+            case .Languages:
 				return .GET
 			}
 		}
 		
 		var path : String {
 			switch self {
-			case .Images(let page):
-                return "?key=\(Pixabay.Config.apiKey)&image_type=photo&safesearch=1&per_page=50&page=\(page)"
+			case .Languages:
+                return "languages.json"
 			}
 		}
 		
@@ -78,9 +78,9 @@ class PixabayAPI: API {
 	
     
 
-    func loadImages(page: Int) -> SignalProducer<[ImageEntity],NSError>  {
-        return self.network.call(Router.Images(page: page), authHandler:nil, useDisposables: false) { data in
-            return rac_decodeWithRootKey("hits", object: data)
+    func languages() -> SignalProducer<[LanguageEntity],NSError>  {
+        return self.network.call(Router.Languages, authHandler:nil, useDisposables: false) { data in
+            return rac_decode(data)
         }
     }
 	
