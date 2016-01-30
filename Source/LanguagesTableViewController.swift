@@ -10,10 +10,12 @@ import UIKit
 
 class LanguagesTableViewController : UITableViewController {
     
-    var viewModel: LanguagesTableViewModeling!
+    let viewModel: LanguagesTableViewModeling!
+    let detailControllerFactory: LanguageDetailTableViewControllerFactory!
     
-    required init(viewModel: LanguagesTableViewModeling){
+    required init(viewModel: LanguagesTableViewModeling, detailControllerFactory: LanguageDetailTableViewControllerFactory ){
         self.viewModel = viewModel
+        self.detailControllerFactory = detailControllerFactory
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -83,8 +85,7 @@ extension LanguagesTableViewController{
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let detailModel = viewModel.cellModels.value[indexPath.row]
         
-        let controller = self.viewModel.container.resolve(LanguageDetailTableViewController.self, argument: detailModel)!
-        
+        let controller = self.detailControllerFactory(viewModel: detailModel)
         self.navigationController?.pushViewController(controller, animated: true)
         
     }

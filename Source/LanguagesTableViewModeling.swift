@@ -14,5 +14,4 @@ protocol LanguagesTableViewModeling {
     var errorMessage: MutableProperty<String?> { get }
     var loadLanguages: Action<(), (LanguageEntity, CLLocation?), NSError> { get }
     
-    var container: Container { get }
 }

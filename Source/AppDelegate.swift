@@ -21,56 +21,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
     
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-        /*if Environment.Hockey.identifier.characters.count == 0 {
-            NSException(name: "Illegal state exception", reason: "Hockey app is not configured.", userInfo: nil).raise()
-        }*/
-        
-        if Environment.Hockey.identifier.characters.count != 0 && Environment.Hockey.allowLogging {
-            BITHockeyManager.sharedHockeyManager().configureWithIdentifier(Environment.Hockey.identifier, delegate: self)
-            BITHockeyManager.sharedHockeyManager().startManager()
-            BITHockeyManager.sharedHockeyManager().authenticator.authenticateInstallation()
-            BITHockeyManager.sharedHockeyManager().crashManager.crashManagerStatus = .AutoSend
-        }
-        
-        
         //Load App Container
         let appContainer = AppContainer.container
         
+        //Start Hockey Manager
+        if Environment.Hockey.identifier.characters.count != 0 && Environment.Hockey.allowLogging {
+            let hockeyManager = appContainer.resolve(BITHockeyManager.self, argument: self)!
+            hockeyManager.startManager()
+            hockeyManager.authenticator.authenticateInstallation()
+            hockeyManager.crashManager.crashManagerStatus = .AutoSend
+        }
+        
+        //Start location manager
         let locationManager = appContainer.resolve(LocationManager.self)!
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
         
-        
-        /*let res = appContainer.resolve(SignalProducer<LanguagesTableViewController, NoError>.self)!
-        
-        res.startWithNext { controller in
-            print(controller)
-        }*/
-        
-        let factory = appContainer.resolve(detailTableViewControllerFactory.self)!
-        
-        class DetailModelStub: LanguageDetailModeling{
-            var name: String
-            var flagURL : NSURL
-            init(){
-                name = "lalal"
-                flagURL = NSURL(string:"www.google.com")!
-            }
-        }
-        
-        let model = factory(viewModel: DetailModelStub())
-        
-        
         //Resolve initial controller with all its dependencies
         let controller = appContainer.resolve(LanguagesTableViewController.self)!
         
-        
-        
-        
-        
-        
-		let vc = UINavigationController(rootViewController: controller)
+        let vc = UINavigationController(rootViewController: controller)
 		
 		window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.rootViewController = vc

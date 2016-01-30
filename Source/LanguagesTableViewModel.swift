@@ -83,7 +83,7 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
                             
                         }
                         
-                        self.cellModels.value = self.languages.map{ self.container.resolve(LanguageDetailModeling.self, argument: $0.language)!}
+                        self.cellModels.value = self.languages.map{ self.detailModelFactory(language: $0.language)}
                         
                         self.loading.value = false
                     },
@@ -100,13 +100,13 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
     private let api: API
     private let geocoder: Geocoding
     private let locationManager: LocationManager
-    let container: Container
+    private let detailModelFactory: LanguageDetailModelingFactory
     
-    init(api: API, geocoder: Geocoding, locationManager: LocationManager, container: Container) {
+    init(api: API, geocoder: Geocoding, locationManager: LocationManager, detailModelFactory: LanguageDetailModelingFactory) {
         self.api = api
         self.geocoder = geocoder
         self.languages = []
         self.locationManager = locationManager
-        self.container = container
+        self.detailModelFactory = detailModelFactory
     }
 }
