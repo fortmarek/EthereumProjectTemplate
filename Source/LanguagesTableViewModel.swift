@@ -8,6 +8,7 @@
 
 import ReactiveCocoa
 import CoreLocation
+import Swinject
 
 class LanguagesTableViewModel: LanguagesTableViewModeling {
     
@@ -82,7 +83,7 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
                             
                         }
                         
-                        self.cellModels.value = self.languages.map{ LanguageDetailModel(language:$0.language)}
+                        self.cellModels.value = self.languages.map{ self.container.resolve(LanguageDetailModeling.self, argument: $0.language)!}
                         
                         self.loading.value = false
                     },
@@ -99,13 +100,13 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
     private let api: API
     private let geocoder: Geocoding
     private let locationManager: LocationManager
-    let detailFactory: LanguageDetailTableViewControllerFactoring
+    let container: Container
     
-    init(api: API, geocoder: Geocoding, locationManager: LocationManager, detailFactory: LanguageDetailTableViewControllerFactoring) {
+    init(api: API, geocoder: Geocoding, locationManager: LocationManager, container: Container) {
         self.api = api
         self.geocoder = geocoder
         self.languages = []
         self.locationManager = locationManager
-        self.detailFactory = detailFactory
+        self.container = container
     }
 }

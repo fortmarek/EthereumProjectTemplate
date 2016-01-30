@@ -83,7 +83,7 @@ extension LanguagesTableViewController{
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let detailModel = viewModel.cellModels.value[indexPath.row]
         
-        let controller = self.viewModel.detailFactory.create(detailModel)
+        let controller = self.viewModel.container.resolve(LanguageDetailTableViewController.self, argument: detailModel)!
         
         self.navigationController?.pushViewController(controller, animated: true)
         

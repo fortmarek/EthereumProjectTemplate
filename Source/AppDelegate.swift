@@ -41,8 +41,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         locationManager.startUpdatingLocation()
         
         
+        
+        /*let res = appContainer.resolve(SignalProducer<LanguagesTableViewController, NoError>.self)!
+        
+        res.startWithNext { controller in
+            print(controller)
+        }*/
+        
+        let factory = appContainer.resolve(detailTableViewControllerFactory.self)!
+        
+        class DetailModelStub: LanguageDetailModeling{
+            var name: String
+            var flagURL : NSURL
+            init(){
+                name = "lalal"
+                flagURL = NSURL(string:"www.google.com")!
+            }
+        }
+        
+        let model = factory(viewModel: DetailModelStub())
+        
+        
         //Resolve initial controller with all its dependencies
         let controller = appContainer.resolve(LanguagesTableViewController.self)!
+        
+        
+        
+        
+        
         
 		let vc = UINavigationController(rootViewController: controller)
 		
