@@ -241,24 +241,16 @@ fastlane_version "1.55.0"
   		Helper.log.info "Setting environment for #{environment}"
   		
   		# Change environments according to scheme
-			sh "cp '../#{environment_plist_directory}/environment-#{environment}.plist' '../#{environment_plist_directory}/environment.plist'"
+			sh "./utils/replace_environment_plist.sh '#{environment}' ../#{environment_plist_directory}/" 
 
   		Helper.log.info "Setting app name to #{display_name}"
   		Helper.log.info "Setting app identifier to #{app_identifier}"
   		
-			#TODO: update also product name?
-  		update_info_plist(
-				plist_path: "Source/Project-Info.plist",
-		  	display_name: display_name,  # Display name on local machine is always Dev name
-		  	app_identifier:  app_identifier # Identifier on local machine is always Dev
-			)
+			sh "./utils/generate_preprocess_file.sh '#{display_name}' '#{app_identifier}' ../#{environment_plist_directory}/"
   end
 
   lane :testing do
-  	#set_environment_plist_value(key: environment_plist_hockey_key, value: "tada", environments: ["Development", "AdHoc"])
-  	#hockey_identifier =  get_environment_plist_value(key: environment_plist_hockey_key, environment:"AdHoc")
-
-    
+  	
 
   end
 
