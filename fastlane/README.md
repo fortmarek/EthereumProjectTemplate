@@ -35,6 +35,11 @@ fastlane upload_to_hockey
 fastlane appstore
 ```
 Deploy new version to the App Store (and also hockey app)
+### templates
+```
+fastlane templates
+```
+Installs xcode file templates for Quick and Ackee
 ### set_environment
 ```
 fastlane set_environment

@@ -126,7 +126,7 @@ class LanguagesTableViewModelSpec: QuickSpec {
             
             context("when user location is turned off") {
                 
-                it("does not load geocoding when user location is turned off") {
+                it("does not load geocoding") {
                     class GeocoderMock: Geocoding {
                         var loaded = false
                         func locationForCountryAbbreviation(abbr: String) -> SignalProducer<CLLocation?, NSError>{

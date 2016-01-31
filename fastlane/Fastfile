@@ -71,7 +71,8 @@ fastlane_version "1.55.0"
 
   desc "Submit new **Beta** build to Hockey app"
   lane :beta do
-  	
+  	cocoapods
+
   	build_number = number_of_commits
 		increment_build_number(build_number: build_number)
 
@@ -157,6 +158,7 @@ fastlane_version "1.55.0"
 
   desc "Deploy new version to the App Store (and also hockey app)"
   lane :appstore do
+  	cocoapods
 
   	build_number = number_of_commits
 		increment_build_number(build_number: build_number)
@@ -182,12 +184,9 @@ fastlane_version "1.55.0"
 		  scheme: "AppStore",
 		  clean: true,
 		)
-		hockey(
-			api_token: hockey_api_token,
-      notes: '',
-      notify: '0', # Means do not notify
-      status: '1', # Means do not make available for download
-    )
+		
+		upload_to_hockey(environment: "AppStore")
+
     deliver(
     		username: connect_apple_id
     	)
@@ -197,6 +196,58 @@ fastlane_version "1.55.0"
         success: true
       )
   end
+
+  desc "Installs xcode file templates for Quick and Ackee"
+  lane :templates do |options|
+  		#Location of iPhone Templates for reference
+  		#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Templates/File Templates/
+  		install_dir = File.expand_path("~/Library/Developer/Xcode/Templates/File Templates")
+  		
+  		if ! File.exists? install_dir
+  			Helper.log.info "Creating File Template Xcode directory #{install_dir}"
+  			FileUtils.mkdir_p install_dir
+  		end
+
+
+		  src_dir = File.expand_path("../../FileTemplates", __FILE__)
+		  template_folders = Dir.entries(src_dir)
+
+		  template_folders.each do |template_folder|
+		  	template_folder_path = "#{src_dir}/#{template_folder}"
+
+		  	if File.directory?(template_folder_path) 
+
+		  		xctemplates = Dir.entries(template_folder_path).select{ |e| File.extname(e) == ".xctemplate"  }
+		  		
+		  		install_folder_path = "#{install_dir}/#{template_folder}/"
+					FileUtils.mkdir_p install_folder_path
+
+		  		xctemplates.each do |xctemplate|
+		  			src_template_path = "#{template_folder_path}/#{xctemplate}"
+		  			
+		  			if File.exists? "#{install_folder_path}/#{xctemplate}"
+		  				Helper.log.info "Removing template #{xctemplate}"
+		  				FileUtils.rm_rf "#{install_folder_path}/#{xctemplate}"
+		  			end
+
+		  			Helper.log.info "Installing template #{xctemplate} in folder #{install_folder_path}"
+		  			FileUtils.cp_r src_template_path, install_folder_path
+		  		end
+
+				end 
+			end
+		  
+		  
+
+
+		    # if File.exists? install_dir
+		    #   raise "Quick templates are already installed at #{install_dir}"
+		    # else
+		    #   mkdir_p install_dir
+		    #   cp_r src_dir, install_dir
+		    # end
+		  
+  end	
 
   desc "Sets environment.plist app_name and app_bundle_id according to scheme"
   lane :set_environment do |options|
