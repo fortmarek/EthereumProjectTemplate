@@ -20,25 +20,27 @@ class NetworkSpec: QuickSpec {
         
         beforeEach {
             network = Network()
-            api = PixabayAPI(network: network)
+            api = UnicornAPI(network: network)
         }
         
-        describe("Pixabay api") {
-            it("eventually load image entities") {
-                var images: [ImageEntity]?
+
+        
+        describe("Unicron api") {
+            it("eventually load language entities") {
+                var languages: [LanguageEntity]?
                 var networkError: NSError?;
                 
-                api.loadImages(0)
+                api.languages()
                     .on(
                         next: { data in
-                            images = data
+                            languages = data
                         },
                         failed:{ error in
                             networkError = error
                     })
                     .start()
                 
-                expect(images).toEventuallyNot(beNil(), timeout: 5)
+                expect(languages).toEventuallyNot(beNil(), timeout: 5)
                 expect(networkError).toEventually(beNil(), timeout: 5)
                 
             }

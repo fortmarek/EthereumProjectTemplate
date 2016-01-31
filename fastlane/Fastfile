@@ -58,7 +58,7 @@ fastlane_version "1.55.0"
     
   	cocoapods
     #if is_ci
-      scan(scheme:"Development", skip_slack: false)
+      scan(scheme:"Development", skip_slack: true)
     #else
       #scan(scheme:"Development")
     #end
