@@ -86,12 +86,20 @@ class LanguageDetailViewController: UIViewController {
         self.playIndicator = playIndicator
     }
     
+    //var closure:(()->())?
+    
     func setupBindings(){
         self.titleLabel.rac_text <~ viewModel.name
         
         viewModel.flagURL.producer.startWithNext({[weak self] url in
             self?.imageView.sd_setImageWithURL(url)
         })
+
+// Test leak check
+//        self.closure = { _ in
+//            let s = self
+//            return
+//        }
         
         self.sentenceLabel.rac_text <~ viewModel.sentence
         

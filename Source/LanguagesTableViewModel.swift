@@ -8,7 +8,14 @@
 
 import ReactiveCocoa
 import CoreLocation
-import Swinject
+
+protocol LanguagesTableViewModeling {
+    var cellModels: MutableProperty<[LanguageDetailViewModeling]> { get }
+    var loading: MutableProperty<Bool>{ get }
+    var errorMessage: MutableProperty<String?> { get }
+    var loadLanguages: Action<(), [LanguageEntity], NSError> { get }
+    
+}
 
 class LanguagesTableViewModel: LanguagesTableViewModeling {
     
@@ -22,11 +29,22 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
     private let locationManager: LocationManager
     private let detailModelFactory: LanguageDetailModelingFactory
     
+    
     init(api: API, geocoder: Geocoding, locationManager: LocationManager, detailModelFactory: LanguageDetailModelingFactory) {
         self.api = api
         self.geocoder = geocoder
         self.locationManager = locationManager
         self.detailModelFactory = detailModelFactory
+        
+        self.setupBindings()
+    }
+    
+    func setupBindings(){
+        //Uncomment to test the memory leak test
+//        self.loading.producer.startWithNext { _ in
+//            let api = self.api
+//            
+//        }
     }
     
     

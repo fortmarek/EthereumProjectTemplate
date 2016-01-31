@@ -27,16 +27,16 @@ class LanguagesTableViewController : UIViewController {
     func setupBindings(){
         
         viewModel.cellModels.producer
-            .on(next: { _ in
-                self.tableView.reloadData()
+            .on(next: {[weak self] _ in
+                self?.tableView.reloadData()
             })
             .start()
         
         
         viewModel.errorMessage.producer
-            .on(next: { errorMessage in
+            .on(next: {[weak self] errorMessage in
                 if let errorMessage = errorMessage {
-                    self.displayErrorMessage(errorMessage)
+                    self?.displayErrorMessage(errorMessage)
                 }
             })
             .start()
@@ -44,7 +44,7 @@ class LanguagesTableViewController : UIViewController {
         
         activityIndicator.rac_animating <~ viewModel.loading.producer
         tableView.rac_hidden <~ viewModel.loading.producer
-        
+
     }
     
     override func loadView() {
@@ -80,7 +80,7 @@ class LanguagesTableViewController : UIViewController {
         
         viewModel.loadLanguages.apply().start()
         
-       
+
     }
     
     override func viewWillAppear(animated: Bool) {

@@ -11,7 +11,8 @@ import ReactiveCocoa
 
 @testable import SampleTestingProject
 
-/// Specificatios of ImageTableViewModel
+/// Specificatios of LanguagesTableViewModel
+
 class LanguagesTableViewModelSpec: QuickSpec {
     
     // MARK: Stub
@@ -169,7 +170,14 @@ class LanguagesTableViewModelSpec: QuickSpec {
                 }
             }
             
-            
+            itBehavesLike("object without leaks"){
+                MemoryLeakContext{
+                        let viewModel = LanguagesTableViewModel(api: GoodStubUnicornApi(), geocoder: ErrorGeocoderStub(), locationManager: LocationManagerStub(), detailModelFactory: self.detailFactory)
+                        viewModel.loadLanguages.apply().start()
+                        
+                        return viewModel
+                }
+            }
         }
     }
 }

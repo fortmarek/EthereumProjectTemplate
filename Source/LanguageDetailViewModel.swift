@@ -1,13 +1,24 @@
 //
-//  ImageSearchTableViewCellModel.swift
-//  SwinjectMVVMExample
+//  LanguageDetailViewModel.swift
+//  SampleTestingProject
 //
-//  Created by Yoichi Tagaya on 8/22/15.
-//  Copyright © 2015 Swinject Contributors. All rights reserved.
+//  Created by Tomas Kohout on 1/25/16.
+//  Copyright © 2016 Ackee s.r.o. All rights reserved.
 //
 
 import ReactiveCocoa
 import AVFoundation
+
+protocol LanguageDetailViewModeling {
+    var name: MutableProperty<String> { get }
+    var sentence: MutableProperty<String> { get }
+    var flagURL : MutableProperty<NSURL> { get }
+    var canPlaySentence: MutableProperty<Bool> { get }
+    var isSpeaking: MutableProperty<Bool> { get }
+    
+    var playSentence: Action<UIButton, (), NSError> {get}
+    
+}
 
 class LanguageDetailViewModel:  LanguageDetailViewModeling {
     let name: MutableProperty<String>
@@ -39,6 +50,7 @@ class LanguageDetailViewModel:  LanguageDetailViewModeling {
         if let code = language.language_code where self.synthetizer.canSpeakLanguage(code) {
             canPlaySentence <~ self.synthetizer.isSpeaking.producer.map{!$0}
         }
+        
         isSpeaking <~ self.synthetizer.isSpeaking
     }
     

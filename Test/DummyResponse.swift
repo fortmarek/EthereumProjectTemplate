@@ -15,7 +15,7 @@ let dummyResponse: [LanguageEntity] = {
         sentence: "Who stole my unicorn?",
         flag: NSURL(string: "http://somewhere.com")!,
         not_right: nil,
-        language_code: nil
+        language_code: "en-EN"
     )
     
     
