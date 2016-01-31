@@ -14,11 +14,14 @@ class LanguageTableViewCell: UITableViewCell {
     weak var flagImageView: UIImageView!
     weak var nameLabel: UILabel!
     
-    internal var viewModel: LanguageDetailModeling? {
+    internal var viewModel: LanguageDetailViewModeling? {
         didSet {
             if let viewModel = viewModel {
-                nameLabel.text = viewModel.name
-                flagImageView.sd_setImageWithURL(viewModel.flagURL)
+                nameLabel.rac_text <~ viewModel.name
+                
+                viewModel.flagURL.producer.startWithNext({[weak self] url in
+                    self?.flagImageView.sd_setImageWithURL(url)
+                })
             }
             else {
                 flagImageView.image = nil

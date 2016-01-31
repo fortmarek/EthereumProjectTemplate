@@ -9,9 +9,9 @@ import ReactiveCocoa
 import Swinject
 
 protocol LanguagesTableViewModeling {
-    var cellModels: MutableProperty<[LanguageDetailModeling]> { get }
+    var cellModels: MutableProperty<[LanguageDetailViewModeling]> { get }
     var loading: MutableProperty<Bool>{ get }
     var errorMessage: MutableProperty<String?> { get }
-    var loadLanguages: Action<(), (LanguageEntity, CLLocation?), NSError> { get }
+    var loadLanguages: Action<(), [LanguageEntity], NSError> { get }
     
 }

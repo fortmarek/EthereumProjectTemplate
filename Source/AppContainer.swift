@@ -9,11 +9,11 @@
 import Swinject
 import CoreLocation
 import HockeySDK
-
+import AVFoundation
 
 //Factories definition
-typealias LanguageDetailTableViewControllerFactory = (viewModel:LanguageDetailModeling) -> LanguageDetailTableViewController
-typealias LanguageDetailModelingFactory = (language:LanguageEntity) -> LanguageDetailModeling
+typealias LanguageDetailTableViewControllerFactory = (viewModel:LanguageDetailViewModeling) -> LanguageDetailViewController
+typealias LanguageDetailModelingFactory = (language:LanguageEntity) -> LanguageDetailViewModeling
 
 class AppContainer {
     
@@ -37,6 +37,9 @@ class AppContainer {
             return hockeyManager
         }.inObjectScope(.Container)
         
+        container.register(SpeechSynthetizing.self){ _ in SpeechSynthetizer() }.inObjectScope(.Container)
+        
+        
         // ---- View models
         container.register(LanguagesTableViewModeling.self) { r in
             return LanguagesTableViewModel(
@@ -50,7 +53,7 @@ class AppContainer {
         // Factory for creating detail model
         container.register(LanguageDetailModelingFactory.self) { r in
             return { language in
-                return LanguageDetailModel(language: language)
+                return LanguageDetailViewModel(language: language, synthetizer: r.resolve(SpeechSynthetizing.self)!)
             }
         }
         
@@ -66,7 +69,7 @@ class AppContainer {
         //Factory for detail controller
         container.register(LanguageDetailTableViewControllerFactory.self){ r in
             return { viewModel in
-                return LanguageDetailTableViewController(viewModel: viewModel)
+                return LanguageDetailViewController(viewModel: viewModel)
             }
         }
         

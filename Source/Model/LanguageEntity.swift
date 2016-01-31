@@ -16,6 +16,7 @@ struct LanguageEntity {
     var sentence: String
     var flag: NSURL
     var not_right: Bool?
+    var language_code: String?
     
 }
 
@@ -32,6 +33,7 @@ extension LanguageEntity: Decodable {
             <*> json <| "sentence"
             <*> json <| "flag"
             <*> json <|? "not_right"
+            <*> json <|? "language_code"
     }
 }
 

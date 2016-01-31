@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 		window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.rootViewController = vc
 		window?.makeKeyAndVisible()
-		window?.tintColor = UIColor.whiteColor()
+		window?.tintColor = UIColor.blackColor()
 	
 		return true
 	}
