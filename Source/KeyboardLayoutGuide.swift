@@ -11,6 +11,8 @@ import ObjectiveC
 import SnapKit
 import ReactiveCocoa
 //TODO: change to UILayoutGuide for ios9
+// swiftlint:disable force_cast
+// swiftlint:disable function_body_length
 
 private var onceToken: dispatch_once_t = 0
 
@@ -85,7 +87,7 @@ extension UIViewController {
 		viewIsActive.startWithNext {
 			if $0 {
 				c?.constraint.activate()
-			}else {
+			} else {
 				c?.constraint.deactivate()
 			}
 		}

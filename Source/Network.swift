@@ -43,7 +43,7 @@ class Network: Networking {
                             if useDisposables {
                                 disposable.addDisposable(actionDisposable) // if disposed dispose running action
                             }
-                        }catch {
+                        } catch {
                             sink.sendFailed(error as! NSError)
                             return
                         }
@@ -65,11 +65,11 @@ class Network: Networking {
             return signal.flatMapError { error in
                 if let handlingCall = handler(error: error) {
                     return handlingCall.then(signal)
-                }else {
+                } else {
                     return SignalProducer(error: error)
                 }
             }
-        }else {
+        } else {
             return signal
         }
     }

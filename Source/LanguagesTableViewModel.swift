@@ -63,7 +63,7 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
             return self.api.languages().flatMap(.Latest) { languages -> SignalProducer<[LanguageEntity], NSError> in
                     if let userLocation = self.locationManager.location {
                         return self.sortLanguageByDistanceFromUserLocation(languages.filter {$0.abbr.characters.first != "_"}, userLocation: userLocation)
-                    }else {
+                    } else {
                         //Continue if we don't have user location
                         return SignalProducer<[LanguageEntity], NSError> {sink, disposable in
                             sink.sendNext(languages)
@@ -77,7 +77,7 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
                     },
                     failed: { error in
                         self.loading.value = false
-                        self.errorMessage.value = "Something happened"
+                        self.errorMessage.value = L10n.LanguageTableNetworkErrorMessage.string
                     })
         }
     }

@@ -108,7 +108,7 @@ public func rac_decodeByOne<T: Decodable where T == T.DecodedType>(object: AnyOb
     }
 }
 
-func handleError(e:DecodeError)->NSError {
+func handleError(e:DecodeError) -> NSError {
 
     switch e {
     case .MissingKey(let k):
@@ -130,7 +130,7 @@ extension NSURL : Decodable {
         case .String(let s):
             if let url = NSURL(string: s) {
                 return .Success(url)
-            } else if let url = NSURL(string: s.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!) {
+            } else if let url = NSURL(string: s.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!) {
                 return .Success(url)
             }
 

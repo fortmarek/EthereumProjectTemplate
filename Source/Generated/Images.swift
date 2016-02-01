@@ -4,7 +4,12 @@ import Foundation
 import UIKit
 
 extension UIImage {
-  enum Asset: String {
+  enum Asset : String {
+    case Icon_60 = "Icon-60"
+    case Icon_72 = "Icon-72"
+    case Icon_Small_50 = "Icon-Small-50"
+    case Icon = "Icon"
+    case ITunesArtwork = "iTunesArtwork"
     case LockOff = "LockOff"
     case LockOn = "LockOn"
 

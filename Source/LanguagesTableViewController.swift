@@ -90,8 +90,8 @@ class LanguagesTableViewController: UIViewController {
     }
 
     private func displayErrorMessage(errorMessage: String) {
-        let title = NSLocalizedString("ImageSearchTableViewController_ErrorAlertTitle", comment: "Error alert title.")
-        let dismissButtonText = NSLocalizedString("ImageSearchTableViewController_DismissButtonTitle", comment: "Dismiss button title on an alert.")
+        let title = L10n.LanguageTableNetworkErrorTitle.string
+        let dismissButtonText = L10n.LanguageTableNetworkErrorDismiss.string
         let message = errorMessage
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: dismissButtonText, style: .Default) { _ in

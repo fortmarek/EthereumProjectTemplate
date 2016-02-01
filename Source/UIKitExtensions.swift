@@ -20,7 +20,7 @@ private struct AssociationKey {
 }
 
 // lazily creates a gettable associated property via the given factory
-func lazyAssociatedProperty<T: AnyObject>(host: AnyObject, _ key: UnsafePointer<Void>, factory: ()->T) -> T {
+func lazyAssociatedProperty<T: AnyObject>(host: AnyObject, _ key: UnsafePointer<Void>, factory: () -> T) -> T {
     var associatedProperty = objc_getAssociatedObject(host, key) as? T
 
     if associatedProperty == nil {

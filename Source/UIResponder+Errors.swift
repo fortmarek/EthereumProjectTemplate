@@ -8,7 +8,7 @@
 
 import UIKit
 
-public typealias ErrorHandlerCompletion = (res: ErrorHandlingResult, handledBy: ErrorHandlerType)->Void
+public typealias ErrorHandlerCompletion = (res: ErrorHandlingResult, handledBy: ErrorHandlerType) -> Void
 
 public protocol ErrorHandlerType {
 
