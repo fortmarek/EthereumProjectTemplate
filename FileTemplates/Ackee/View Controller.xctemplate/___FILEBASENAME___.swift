@@ -1,22 +1,22 @@
 //
-//  ViewController.swift
-//  SampleTestingProject
+//  ___FILENAME___
+//  ___PROJECTNAME___
 //
-//  Created by Tomas Kohout on 2/1/16.
-//  Copyright © 2016 Ackee s.r.o. All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//___COPYRIGHT___
 //
 
 import UIKit
 import ReactiveCocoa
 
-class ViewController: UIViewController {
+class ___FILEBASENAMEASIDENTIFIER___: ___VARIABLE_controllerSubclass___ {
     
     //MARK: Dependencies
-    let viewModel:ViewModeling
+    let viewModel:___VARIABLE_viewModel___
     
     
     //MARK: Initialization
-    required init(viewModel:ViewModeling){
+    required init(viewModel:___VARIABLE_viewModel___){
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

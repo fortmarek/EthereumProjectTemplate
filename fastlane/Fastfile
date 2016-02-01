@@ -17,7 +17,7 @@ connect_apple_id = 'ios@ackee.cz'
 
 slack_url = "https://hooks.slack.com/services/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" #Hook to channel you want to send all messages <-- #rokKvality
 
-hockey_api_token = "90fc8b51202f48bf9aa9772a7238f946" 
+hockey_api_token = "90fc8b51202f48bf9aa9772a7238f946" # NOT app id, token for hockey uploads
 enterprise_wildcard = "cz.ackee.enterprise.*" # Do not change if you don't have to (We don't want to create provisioning profile for every app)
 
 
@@ -40,6 +40,8 @@ fastlane_version "1.55.0"
 	    install_xcode_plugin(
 	      url: "https://github.com/fastlane/FixCode/releases/download/0.2.0/FixCode.xcplugin.zip"
 	    )
+      templates
+      snippets
 	end
 
   desc "Runs linting (and eventually static analysis)"
@@ -87,7 +89,6 @@ fastlane_version "1.55.0"
     gym(
     	scheme: "Development",
 		  configuration: "AdHoc",
-		  clean: true,
 		)
 
     upload_to_hockey(environment: "AdHoc")
@@ -237,18 +238,38 @@ fastlane_version "1.55.0"
 
 				end 
 			end
-		  
-		  
-
-
-		    # if File.exists? install_dir
-		    #   raise "Quick templates are already installed at #{install_dir}"
-		    # else
-		    #   mkdir_p install_dir
-		    #   cp_r src_dir, install_dir
-		    # end
-		  
   end	
+
+  lane :snippets do
+    install_dir = File.expand_path("~/Library/Developer/Xcode/UserData/CodeSnippets")
+    if ! File.exists? install_dir
+        Helper.log.info "Creating Code Snippets Xcode directory #{install_dir}"
+        FileUtils.mkdir_p install_dir
+      end
+
+      src_dir = File.expand_path("../../CodeSnippets", __FILE__)
+      code_snippets =  Dir.entries(src_dir).select{ |e| File.extname(e) == ".codesnippet"  }
+
+      code_snippets.select.each do |snippet|
+        src_snippet_path = "#{src_dir}/#{snippet}"
+
+        if File.exists? "#{install_dir}/#{snippet}"
+          Helper.log.info "Removing code snippet #{snippet}"
+          FileUtils.rm_rf "#{snippet}/#{snippet}"
+        end
+
+        Helper.log.info "Installing code snippet #{snippet}"
+        FileUtils.cp_r src_snippet_path, install_dir
+      end
+
+  end
+
+  desc "Create new screenshots for the App Store in all languages and device types"
+  desc "Additionally, this will add device frames around the screenshots"
+  lane :screenshots do
+    snapshot(skip_open_summary: false)
+    frameit(white: true)
+  end
 
   desc "Sets environment.plist app_name and app_bundle_id according to scheme"
   lane :set_environment do |options|
@@ -307,7 +328,7 @@ fastlane_version "1.55.0"
   end
 
   after_all do |lane|
-  	clean_build_artifacts
+  	#clean_build_artifacts
   end
 
   error do |lane, exception|

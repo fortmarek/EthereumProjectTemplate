@@ -10,11 +10,11 @@
 #   "iPad Pro"
  ])
 
-languages([
-  "en-US",
+#languages([
+#  "en-US",
 #  "de-DE",
 #  "it-IT"
-])
+#])
 
 # Arguments to pass to the app on launch. See https://github.com/fastlane/snapshot#launch_arguments
 # launch_arguments("-favColor red")

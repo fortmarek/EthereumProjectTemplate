@@ -37,9 +37,39 @@ class UITests: XCTestCase {
     }
     
     func testMainScreen() {
-        //Wait for pictures to load (it could be done better - e.g. wait for uiimage to load or something)
-        sleep(2)
-        snapshot("01MainScreen")
+        
+        let app = XCUIApplication()
+        
+        //Wait for pictures to load
+        let images = app.images
+        let stoppedLoading = NSPredicate(format: "count != 0")
+        
+        
+        expectationForPredicate(stoppedLoading, evaluatedWithObject: images, handler: nil)
+        waitForExpectationsWithTimeout(5, handler: nil)
+        
+        //Tap the allow location popup
+        if (app.alerts.count > 0) {
+            app.alerts.elementBoundByIndex(0).buttons.elementBoundByIndex(1).tap()
+        }
+        
+        snapshot("01MainScreenList")
+        
+        let tablesQuery = app.tables
+        tablesQuery.cells.elementBoundByIndex(0).tap()
+        
+        snapshot("02DetailScreenFirst")
+        
+        let backButton = app.navigationBars["SampleTestingProject.LanguageDetailView"].childrenMatchingType(.Button).matchingIdentifier("Back").elementBoundByIndex(0)
+        backButton.tap()
+        
+        
+        tablesQuery.cells.elementBoundByIndex(1).tap()
+        
+        snapshot("03DetailScreenSecond")
+        
+        backButton.tap()
+        
     }
     
 }

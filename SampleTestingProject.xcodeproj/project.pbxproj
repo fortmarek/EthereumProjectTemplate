@@ -59,8 +59,6 @@
 		AC5D4BA81C5E86C700F8CD21 /* LanguageDetailViewModelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D4BA71C5E86C700F8CD21 /* LanguageDetailViewModelSpec.swift */; };
 		AC5D4BAA1C5EAC3B00F8CD21 /* MemoryLeakConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D4BA91C5EAC3B00F8CD21 /* MemoryLeakConfiguration.swift */; };
 		AC5D4BAD1C5EB04700F8CD21 /* LanguagesViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D4BAC1C5EB04700F8CD21 /* LanguagesViewControllerSpec.swift */; };
-		ACAA3A911C5EFB32003ECE85 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA3A901C5EFB32003ECE85 /* ViewController.swift */; };
-		ACAA3A931C5EFB41003ECE85 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA3A921C5EFB41003ECE85 /* ViewModel.swift */; };
 		ACD4798B1C582BFC00E85DD3 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD4798A1C582BFC00E85DD3 /* Network.swift */; };
 		ACD4798D1C582D1F00E85DD3 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD4798C1C582D1F00E85DD3 /* Networking.swift */; };
 		ACD4798F1C5835BA00E85DD3 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD4798E1C5835BA00E85DD3 /* APIRouter.swift */; };
@@ -163,8 +161,6 @@
 		AC5D4BA71C5E86C700F8CD21 /* LanguageDetailViewModelSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageDetailViewModelSpec.swift; sourceTree = "<group>"; };
 		AC5D4BA91C5EAC3B00F8CD21 /* MemoryLeakConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryLeakConfiguration.swift; sourceTree = "<group>"; };
 		AC5D4BAC1C5EB04700F8CD21 /* LanguagesViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguagesViewControllerSpec.swift; sourceTree = "<group>"; };
-		ACAA3A901C5EFB32003ECE85 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		ACAA3A921C5EFB41003ECE85 /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		ACD4798A1C582BFC00E85DD3 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		ACD4798C1C582D1F00E85DD3 /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		ACD4798E1C5835BA00E85DD3 /* APIRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
@@ -286,9 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				ACD8E82D1C58151A00031D67 /* LanguageDetailViewModel.swift */,
-				ACAA3A901C5EFB32003ECE85 /* ViewController.swift */,
 				ACD8E81B1C569DB200031D67 /* LanguagesTableViewModel.swift */,
-				ACAA3A921C5EFB41003ECE85 /* ViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -888,14 +882,12 @@
 				ACD479961C5919DB00E85DD3 /* AppContainer.swift in Sources */,
 				ACD8E82C1C580D6A00031D67 /* ArgoExtensions.swift in Sources */,
 				69D5B7FD1C248694008F1A30 /* LocalizedStrings.swift in Sources */,
-				ACAA3A931C5EFB41003ECE85 /* ViewModel.swift in Sources */,
 				ACD8E8211C57D91300031D67 /* LanguageEntity.swift in Sources */,
 				ACD479CC1C5D4D6800E85DD3 /* SpeechSynthetizer.swift in Sources */,
 				B4ECD6121AD477910099D516 /* AppDelegate.swift in Sources */,
 				ACD8E82B1C57E03300031D67 /* UnicornAPI.swift in Sources */,
 				B4EE77901B28A61700ED956B /* RACHelpers.swift in Sources */,
 				69D5B7FC1C248694008F1A30 /* Images.swift in Sources */,
-				ACAA3A911C5EFB32003ECE85 /* ViewController.swift in Sources */,
 				ACD479BE1C5C13A200E85DD3 /* Geocoder.swift in Sources */,
 				ACD479C21C5C14BE00E85DD3 /* Geocoding.swift in Sources */,
 				B4EE778F1B28A61700ED956B /* UIKitExtensions.swift in Sources */,

@@ -40,6 +40,18 @@ Deploy new version to the App Store (and also hockey app)
 fastlane templates
 ```
 Installs xcode file templates for Quick and Ackee
+### snippets
+```
+fastlane snippets
+```
+
+### screenshots
+```
+fastlane screenshots
+```
+Create new screenshots for the App Store in all languages and device types
+
+Additionally, this will add device frames around the screenshots
 ### set_environment
 ```
 fastlane set_environment

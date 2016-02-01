@@ -38,6 +38,31 @@ fastlane analyze
 Kompletní seznam všech metod zde:
 [Fastlane README](fastlane/README.md)
 
+
+## Nastavení
+Všechny konstanty se nastavují ve fastlane/Fastfile
+
+Jdu sem pokud chci zmenit:
+
+**app_name** pro dev/beta/appstore
+
+**app_identifier** pro dev/beta/appstore
+
+**slack_url**  channel hook pro posilani zprav o testech, uploadech atd ...
+
+**inhouse/connect app identifier** username pro podepisovani a posilani buildu 
+
+Pokud změním app_name, app_identifier zavolám
+
+```
+fastlane xcode
+```
+
+aby se mi updatnul xcode. 
+
+V xcode už ideálně nic neměním.
+
+
 # Testování
 
 Používáme framework **Quick** 
@@ -73,10 +98,13 @@ class ViewModelSpec: QuickSpec {
 ```
 
 **describe** - co testujeme
+
 **context** - vstupni podminky
+
 **it** - samotny test je tady
 
 Myslenka je abych pri failujicim testu vedel co se presne deje. Zaroven syntaxe quicku vede k tomu aby programator popisovat chovani aplikace (Behaviour Driven Testing).  Z jednotlivych popisku se pak vytvori dlouhy nazev xctest v tomhle pripade:
+
 ```
 View_model__on_network_error__sets_errorMessage_property
 ```
@@ -104,6 +132,7 @@ Pokud chci delat neco casove narocnejsiho napr. vytvoreni in-memory databaze pou
 Mam view model co zavisi na CLLocationManager a chci otestovat co stane kdyz se zmeni poloha
 
 Pokud udelam neco takoveho:
+
 ```
 	class ViewModel: ViewModeling{
 		static let locationManager: CLLocationManager = {
@@ -111,6 +140,7 @@ Pokud udelam neco takoveho:
 	    }() 
 	}
 ```
+
 tak ViewModel nemuzu otestovat, protoze nemam zpusob jak se dostat k locationManageru. Misto toho si ho predam jako zavislost.
 
 ```
@@ -132,6 +162,7 @@ extension CLLocationManager:LocationManager{}
 ``` 
 
 A pri testovani uz jen predam nejaky svuj mock:
+
 ```
 class LocationManagerMock: LocationManager{
     var location: CLLocation? = nil
@@ -166,10 +197,12 @@ Pak uz se jenom zavola
 ```
 itBehavesLike("something edible") { ["edible": cod] }
 ```
+
 A na predanem objektu se spusti vsechny testy z konfigurace
 
 
 Typickym prikladem je testovani jestli objekt leakuje, konfigurace je v: **MemoryLeakConfiguration.swift**, coz muze byt obcas hodne uzitecny. Staci pridat v closure vytvoreni objektu ktery se ma otestovat. 
+
 ```
 itBehavesLike("object without leaks"){
 	MemoryLeakContext{
@@ -177,10 +210,12 @@ itBehavesLike("object without leaks"){
      }
 }
 ```
+
 Vevnitr se netestuje nic slozityho, jenom se objektu odeberou reference na nej a testuje se jestli bude nil.
 
 
 Daji se tak testovat i viewcontrollery:
+
 ```
 itBehavesLike("object without leaks"){
    MemoryLeakContext{
@@ -235,6 +270,7 @@ class ImageSearch: ImageSearching{
 ```
 
 API:
+
 ```
 class SomeAPI: API{
 	init(network: Networking)
@@ -242,6 +278,7 @@ class SomeAPI: API{
 ```
 
 Network:
+
 ```
 class Network: Networking{
 	init(baseURL: String, jsonSerializer: JSONSerializing)
@@ -257,6 +294,7 @@ init(){
 ```
 
 Mohl bych si API a ImageResizer predat jako zavislost
+
 ```
 init(api: API, imageResizer: ImageResizing){
 	ImageSearch(api: api, imageResizer: resizer)
@@ -296,9 +334,13 @@ container.register(AnimalType.self) { _ in Cat() }
     .inObjectScope(.Container)
 ```
 
-ObjectScope.Container - Singleton
-ObjectScope.None - vzdy se vytvori novy objekt
-ObjectScope.Graph (Default) - pres container.resolve() se vytvari novy ale primo ve vytvarejicich closure (pres r.resolve()) se sdileji
+- ObjectScope.Container - Singleton
+- ObjectScope.None - vzdy se vytvori novy objekt
+- ObjectScope.Graph (Default) - pres container.resolve() se vytvari novy ale primo ve vytvarejicich closure (pres r.resolve()) se sdileji
+
+Typicky se container inicializuje v AppDelegate, ale pokud je toho tam víc hůř se v tom orientuje.
+
+Proto jsem jsem to dal do speciální třídy `AppContainer`
 
 
 ##Factories
@@ -385,6 +427,57 @@ coz prekopiruje vsechny templaty do xcode slozky.
 #Snippety
 
 TODO: Asi bych udelal neco podobnyho pro snippety, zacal jsem je ted docela pouzivat.
+
+#Snapshot
+Fastlane nám taky dokáže ulehčit pořízování snapshotů.
+
+Dejme tomu že chci pořídit screenshoty aplikace ve 3 různých jazycích na 3 zařízeních. To je práce tak na hodinu. A musím to dělat znova s každou verzí.
+
+
+Místo toho použiju snapshot
+
+
+Napřed je potřeba napsat UI Test
+A přidat `snapshot("JmenoVyslednehoSouboruSeScreenshotem")` na mista kde chci vyfotit obrazovku
+
+```
+func testMainScreen() {
+        let app = XCUIApplication()
+        
+        //Wait for pictures to load
+        let images = app.images
+        let stoppedLoading = NSPredicate(format: "count != 0")
+        
+        expectationForPredicate(stoppedLoading, evaluatedWithObject: images, handler: nil)
+        waitForExpectationsWithTimeout(5, handler: nil)
+        
+		snapshot("01MainScreenList")
+        
+        let tablesQuery = app.tables
+        tablesQuery.cells.elementBoundByIndex(0).tap()
+        
+        snapshot("02DetailScreenFirst")
+    }
+```
+
+Pro nahrání interakcí s aplikací můžu použít record funkci v XCode (když otevřu uitest je to vlevo dole)
+
+Pak už jenom zavolám
+
+```
+fastlane screenshots
+```
+
+který mi spustí testy a vygeneruje mi obrázky ve složce fastlane/screenshots
+na nich ještě zavolá `frameit` který screenshotům přidá iPhone/iPad rámečky 
+
+Pokud zavolám
+
+```
+fastlane appstore
+```
+
+fastlane automaticky screenshoty vygeneruje a pošle je do iTunes Connect
 
 #K Aplikaci
 
