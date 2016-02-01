@@ -16,53 +16,53 @@ struct APIErrorKeys {
 }
 
 class UnicornAPI: API {
-    
+
     //MARK: Dependencies
-    private let network:Networking
-    
-    
-    required init(network:Networking) {
+    private let network: Networking
+
+
+    required init(network: Networking) {
         self.network = network
     }
-	
-	enum Router : APIRouter {
-		
+
+	enum Router: APIRouter {
+
         //What with this?
 		static let baseURL = Environment.Api.baseURL
-        
+
         case Languages
-        
-		
-		var method : Alamofire.Method {
+
+
+		var method: Alamofire.Method {
 			switch self {
             case .Languages:
 				return .GET
 			}
 		}
-		
-		var path : String {
+
+		var path: String {
 			switch self {
 			case .Languages:
                 return "languages.json"
 			}
 		}
-		
-		var URLRequest : NSMutableURLRequest {
-            
+
+		var URLRequest: NSMutableURLRequest {
+
             let URL = NSURL(string: Router.baseURL)!
             let mutableURLRequest = self.requestForURL(NSURL(string: path, relativeToURL:URL)!, method: method)
-            
-            
+
+
 			switch self {
 			default:
 				return mutableURLRequest
 			}
 		}
 	}
-	
+
     typealias AuthHandler = (error: NSError) -> SignalProducer<AnyObject, NSError>?
-	
-    
+
+
 	private static func authHandler(error: NSError) -> SignalProducer<AnyObject, NSError>? { //instance method cant be used as default parameter of call, this solution is ok as long as RekolaAPI is a singleton
 		if let response = error.userInfo[APIErrorKeys.response] as? NSHTTPURLResponse {
 			switch response.statusCode {
@@ -75,20 +75,13 @@ class UnicornAPI: API {
 		}
 		return nil
 	}
-	
-    
 
-    func languages() -> SignalProducer<[LanguageEntity],NSError>  {
+
+
+    func languages() -> SignalProducer<[LanguageEntity],NSError> {
         return self.network.call(Router.Languages, authHandler:nil, useDisposables: false) { data in
             return rac_decode(data)
         }
     }
-	
+
 }
-
-
-
-
-
-
-

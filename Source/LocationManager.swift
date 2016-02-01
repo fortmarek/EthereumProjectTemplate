@@ -8,13 +8,12 @@
 
 import CoreLocation
 
-protocol LocationManager{
+protocol LocationManager {
     func startUpdatingLocation()
     func requestWhenInUseAuthorization()
     var location: CLLocation? { get }
 }
 
-extension CLLocationManager:LocationManager{
-    
-}
+extension CLLocationManager:LocationManager {
 
+}

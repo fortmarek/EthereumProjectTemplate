@@ -17,16 +17,16 @@ struct LanguageEntity {
     var flag: NSURL
     var not_right: Bool?
     var language_code: String?
-    
+
 }
 
 // MARK: Decodable
 
 extension LanguageEntity: Decodable {
 
-    
+
     static func decode(json: JSON) -> Decoded<LanguageEntity> {
-        
+
         return curry(self.init)
             <^> json <| "abbr"
             <*> json <| "name"
@@ -36,4 +36,3 @@ extension LanguageEntity: Decodable {
             <*> json <|? "language_code"
     }
 }
-

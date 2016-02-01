@@ -10,21 +10,21 @@ import AddressBook
 
 class Geocoder: Geocoding {
     let geocoder: CLGeocoder
-    
-    init(){
+
+    init() {
         self.geocoder = CLGeocoder()
     }
-    
+
     func locationForCountryAbbreviation(abbr: String) -> SignalProducer<CLLocation?, NSError> {
-        
-        return SignalProducer<CLLocation?, NSError>{ sink, disposable in
-            
-            let checkAddress:[NSObject:AnyObject] = [
+
+        return SignalProducer<CLLocation?, NSError> { sink, disposable in
+
+            let checkAddress: [NSObject:AnyObject] = [
                 kABPersonAddressCountryKey:abbr
             ]
 
-            
-            self.geocoder.geocodeAddressDictionary(checkAddress){ (placemarks:[CLPlacemark]?, error) -> Void in
+
+            self.geocoder.geocodeAddressDictionary(checkAddress) { (placemarks: [CLPlacemark]?, error) -> Void in
                 sink.sendNext(placemarks?.first?.location)
                 sink.sendCompleted()
             }

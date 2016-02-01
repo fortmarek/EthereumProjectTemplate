@@ -47,12 +47,12 @@ fastlane_version "1.55.0"
   desc "Runs linting (and eventually static analysis)"
   lane :analyze do
   	sh "utils/closure_leak_check.sh ../Source"
-    #swiftlint(
+    swiftlint(
    			#files option not in this version
    			#files: [
-   			#	'AppDelegate.swift',
+   			#	'Source',
    			#]
-   		#)
+   	)
   end
 
   desc "Runs all unit tests."

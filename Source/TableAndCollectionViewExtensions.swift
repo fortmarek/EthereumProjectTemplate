@@ -8,20 +8,20 @@
 
 import UIKit
 
-extension UITableViewCell{
-	class var cellIdentifier : String {
+extension UITableViewCell {
+	class var cellIdentifier: String {
 		return NSStringFromClass(self)
 	}
 }
 
 extension UICollectionReusableView {
-    class var viewIdentifier : String {
+    class var viewIdentifier: String {
         return NSStringFromClass(self)
     }
 }
 
-extension UICollectionViewCell{
-	class var cellIdentifier : String {
+extension UICollectionViewCell {
+	class var cellIdentifier: String {
 		return viewIdentifier
 	}
 }

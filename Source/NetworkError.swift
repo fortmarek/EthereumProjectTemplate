@@ -17,31 +17,31 @@
 //
 //    /// International data roaming turned off.
 //    case InternationalRoamingOff
-//    
+//
 //    /// Unauthorized by server
 //    case Unauthorized
-//    
+//
 //    /// Cannot reach the server.
 //    case NotReachedServer
-//    
+//
 //    /// Bad Request
 //    case BadRequest
 //
 //    /// Server Error
 //    case ServerError
-//    
+//
 //    /// Connection is lost.
 //    case ConnectionLost
 //
 //    /// Incorrect data returned from the server.
 //    case IncorrectDataReturned
-//    
+//
 //    internal init(response: NSHTTPURLResponse?) {
 //        guard let response = response else{
 //            self = .NotReachedServer
 //            return
 //        }
-//        
+//
 //        if (response.statusCode ==  401){
 //            self = .Unauthorized
 //        }else if  (400..<500).contains(response.statusCode) {
@@ -52,9 +52,9 @@
 //            self = .Unknown
 //        }
 //    }
-//        
+//
 //        /*
-//        
+//
 //            switch error.code {
 //            case NSURLErrorUnknown:
 //                self = .Unknown
@@ -120,8 +120,8 @@
 //        else {
 //            self = .Unknown
 //        }*/
-//    
-//    
+//
+//
 //    public var description: String {
 //        let text: String
 //        switch self {
@@ -144,7 +144,7 @@
 //        case .ServerError:
 //            text = NSLocalizedString("NetworkError_ServerError", comment: "Error description")
 //        }
-//        
+//
 //        return text
 //    }
 //}

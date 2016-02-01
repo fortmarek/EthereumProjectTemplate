@@ -15,30 +15,30 @@ import ReactiveCocoa
 private var onceToken: dispatch_once_t = 0
 
 extension UIViewController {
-	
+
 	private struct AssociatedKeys {
 		static var KeyboardLayoutGuide = "keyboardLayoutGuide"
 	}
-	
-	var keyboardLayoutGuide : UIView! {
+
+	var keyboardLayoutGuide: UIView! {
 		return objc_getAssociatedObject(self, &AssociatedKeys.KeyboardLayoutGuide) as! UIView
 	}
-	
+
 	func setupKeyboardLayoutGuide() {
 		let view = self.view
 		let guide = UIView()
 		view.addSubview(guide)
-		var c : ConstraintDescriptionEditable!
+		var c: ConstraintDescriptionEditable!
 		guide.snp_remakeConstraints { make in
 			make.height.equalTo(0)
 			make.left.right.equalTo(view)
 			c = make.bottom.equalTo(view).offset(0)
 		}
-		
+
 		objc_setAssociatedObject(self, &AssociatedKeys.KeyboardLayoutGuide, guide, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN) //held strongly, cant do weak ref easily
 		let show = NSNotificationCenter.defaultCenter().rac_addObserverForName(UIKeyboardWillShowNotification, object: nil).toSignalProducer()
 			.ignoreError()
-			.map { (note : AnyObject?) -> (height: CGFloat, duration: Double, curve: UIViewAnimationCurve)? in
+			.map { (note: AnyObject?) -> (height: CGFloat, duration: Double, curve: UIViewAnimationCurve)? in
 				if let userInfo = (note as? NSNotification)?.userInfo {
 					let rect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
 					let rectInSelf = view.convertRect(rect, fromView: UIApplication.sharedApplication().keyWindow)
@@ -49,10 +49,10 @@ extension UIViewController {
 				return nil
 			}
 			.ignoreNil()
-		
+
 		let hide = NSNotificationCenter.defaultCenter().rac_addObserverForName(UIKeyboardWillHideNotification, object: nil).toSignalProducer()
 			.ignoreError()
-			.map { (note : AnyObject?) -> (height: CGFloat, duration: Double, curve: UIViewAnimationCurve)? in
+			.map { (note: AnyObject?) -> (height: CGFloat, duration: Double, curve: UIViewAnimationCurve)? in
 				if let userInfo = (note as? NSNotification)?.userInfo {
 					let rect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
 					let rectInSelf = view.convertRect(rect, fromView: UIApplication.sharedApplication().keyWindow)
@@ -63,7 +63,7 @@ extension UIViewController {
 				return nil
 			}
 			.ignoreNil()
-		
+
 		let height = merge([show, hide/*, changeFrame*/])
 		height.startWithNext {
 			c.constraint.updateOffset(-$0.height)
@@ -71,9 +71,9 @@ extension UIViewController {
 				view.layoutIfNeeded()
 			}
 		}
-		
-		
-		
+
+
+
 		let appear = rac_signalForSelector("viewWillAppear:").toSignalProducer()
 			.ignoreError()
 			.map { _ in true }
@@ -81,14 +81,14 @@ extension UIViewController {
 			.ignoreError()
 			.map { _ in false }
 		let viewIsActive = merge([appear, disappear])
-		
+
 		viewIsActive.startWithNext {
 			if $0 {
 				c?.constraint.activate()
-			}else{
+			}else {
 				c?.constraint.deactivate()
 			}
 		}
 	}
-	
+
 }

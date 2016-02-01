@@ -571,6 +571,7 @@
 				B4ECD6281AD4820D0099D516 /* CopyFiles */,
 				B4A800961B2869F700453A28 /* Copy Frameworks */,
 				64D20A36C299ED98D79BC372 /* Embed Pods Frameworks */,
+				AC734C911C5FF0C50001C606 /* Swift Lint */,
 			);
 			buildRules = (
 			);
@@ -773,6 +774,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "swiftgen images --output \"Source/Generated/Images.swift\" \"Resources\"\nswiftgen strings --output \"Source/Generated/LocalizedStrings.swift\" \"Source/en.lproj/Localizable.strings\"";
+		};
+		AC734C911C5FF0C50001C606 /* Swift Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Swift Lint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"SwiftLint does not exist, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		ACD479AD1C5B924E00E85DD3 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;

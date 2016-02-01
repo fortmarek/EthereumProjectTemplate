@@ -7,6 +7,6 @@
 //
 import ReactiveCocoa
 
-protocol Geocoding{
+protocol Geocoding {
     func locationForCountryAbbreviation(abbr: String) -> SignalProducer<CLLocation?, NSError>
 }

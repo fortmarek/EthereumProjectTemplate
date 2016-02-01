@@ -12,16 +12,16 @@ import ObjectiveC
 import Reachability
 
 private struct AssociationKeys {
- static var statusKey : UInt8 = 0
+ static var statusKey: UInt8 = 0
 }
 
 extension Reachability {
-	var rac_status : SignalProducer<NetworkStatus, NoError> {
+	var rac_status: SignalProducer<NetworkStatus, NoError> {
 		if let signalProducer = (objc_getAssociatedObject(self, &AssociationKeys.statusKey) as? RACSignal)?.toSignalProducer() {
 			return signalProducer
 					.map { NetworkStatus(rawValue: ($0 as! NSNumber).integerValue)! }
 					.ignoreError()
-		}else{
+		}else {
 			let newProducer = SignalProducer<NetworkStatus, NoError>({ (sink, dis) -> () in
 				sink.sendNext(self.currentReachabilityStatus())
 				let oldRBlock = self.reachableBlock
