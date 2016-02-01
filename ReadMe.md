@@ -99,7 +99,7 @@ Pokud chci delat neco casove narocnejsiho napr. vytvoreni in-memory databaze pou
   }
 ```
 
-##Mocking
+## Mocking
 
 Mam view model co zavisi na CLLocationManager a chci otestovat co stane kdyz se zmeni poloha
 
@@ -142,7 +142,7 @@ beforeEach {
 }
 ```
 
-##SharedExample
+## SharedExample
 Pokud nejaka kriteria pouzivam vicekrat, muzu si usetrit psani a pouzit Configuration. 
 
 ```
@@ -266,7 +266,7 @@ init(api: API, imageResizer: ImageResizing){
 To ale znamena predavani dalsich zavislosti, a spousta psani kodu. A kazda dalsi vrstva si musi zavislosti predavat. Pri vetsim mnozstvi zavislosti pak nepisu nic jinyho nez injekty.
 
 
-##Swinject
+## Swinject
 https://github.com/Swinject/Swinject
 
 Misto  toho si zavislosti nadefinuju vsechny na jednom miste:
@@ -301,7 +301,7 @@ ObjectScope.None - vzdy se vytvori novy objekt
 ObjectScope.Graph (Default) - pres container.resolve() se vytvari novy ale primo ve vytvarejicich closure (pres r.resolve()) se sdileji
 
 
-##Factories
+## Factories
 
 Tohle je fajn, ale to nam uplne neresi problem s vytvarenim novych objektu uvnitr zavislosti
 
@@ -365,7 +365,7 @@ Z toho vim, ze se pripojuje k API, deje se tam geocoding, pouziva se lokace a pu
 Pozn: Samozrejme nepocitam ze bysme vsude pouzivali Factory pro kazdej pushnutej controller, tohle je trochu extremni pripad. Zalezi na tom co chci testovat, a pocitam ze controllery budeme testovat minimalne.
 
 
-#Templaty
+# Templaty
 
 Vzhledem k tomu ze vytvareni ViewControlleru s ViewModelem delame furt dokola, udelal jsem na to File Template. 
 
@@ -386,9 +386,6 @@ coz prekopiruje vsechny templaty do xcode slozky.
 
 TODO: Asi bych udelal neco podobnyho pro snippety, zacal jsem je ted docela pouzivat.
 
-#K Aplikaci
+# K Aplikaci
 
 Kdyby jste se divili k cemu je vlastne ta example aplikace, kouknete sem: http://whostolemyunicorn.com/
-
-
-
