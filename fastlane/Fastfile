@@ -182,6 +182,7 @@ fastlane_version "1.55.0"
 
     gym(
 		  scheme: "AppStore",
+      configuration: "AppStore",
 		  clean: true,
 		)
 		
