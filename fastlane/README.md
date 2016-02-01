@@ -25,26 +25,11 @@ Runs all unit tests.
 fastlane beta
 ```
 Submit new **Beta** build to Hockey app
-### upload_to_hockey
-```
-fastlane upload_to_hockey
-```
-
 ### appstore
 ```
 fastlane appstore
 ```
 Deploy new version to the App Store (and also hockey app)
-### templates
-```
-fastlane templates
-```
-Installs xcode file templates for Quick and Ackee
-### snippets
-```
-fastlane snippets
-```
-
 ### screenshots
 ```
 fastlane screenshots
@@ -57,11 +42,6 @@ Additionally, this will add device frames around the screenshots
 fastlane set_environment
 ```
 Sets environment.plist app_name and app_bundle_id according to scheme
-### testing
-```
-fastlane testing
-```
-
 
 ----
 

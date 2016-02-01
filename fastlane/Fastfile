@@ -47,30 +47,21 @@ fastlane_version "1.55.0"
   desc "Runs linting (and eventually static analysis)"
   lane :analyze do
   	sh "utils/closure_leak_check.sh ../Source"
-    swiftlint(
-   			#files option not in this version
-   			#files: [
-   			#	'Source',
-   			#]
-   	)
+    swiftlint
   end
 
   desc "Runs all unit tests."
   lane :test do
-    
   	cocoapods
-    #if is_ci
-      scan(scheme:"Development", skip_slack: true)
-    #else
-      #scan(scheme:"Development")
-    #end
   
+    if is_ci
+      scan(scheme:"Development", skip_slack: false)
+    else
+      scan(scheme:"Development")
+    end
   end
 
  
-
-
-
   desc "Submit new **Beta** build to Hockey app"
   lane :beta do
   	cocoapods
@@ -101,62 +92,7 @@ fastlane_version "1.55.0"
       )
   end
 
-  lane :upload_to_hockey do |options|
-  	# Load hockey app identifier from plist
-  	hockey_identifier =  get_environment_plist_value(key: environment_plist_hockey_key, environment:options[:environment])
-
-  	begin
-			if hockey_identifier != ''
-	    	Helper.log.info "Using public_identifier: #{hockey_identifier}"
-				
-	    	hockey(
-					api_token: hockey_api_token,
-		      public_identifier: hockey_identifier,
-		      notify: '0'
-		    )
-
-		  else
-				Helper.log.info "No public_identifier found, creating new Hockey app"
-				
-				hockey(
-					api_token: hockey_api_token,
-					notify: '0'
-		    )
-			end
-
-		rescue RuntimeError => e
-		 	# When the public_identifier is not found (e.g. App was deleted from hockey app) , try it one more time without it
-		 	if (e.message.include? "not found") && hockey_identifier != ''
-		 		Helper.log.warn "Hockey public_identifier #{hockey_identifier} not found on hockey server (possibly deleted), trying one more time without it"
-		 		
-		 		hockey_identifier = ''
-		 		retry
-		 	else
-		 		raise
-		 	end  
-		end
-
-		
-		hockey_build = lane_context[SharedValues::HOCKEY_BUILD_INFORMATION] 
-		
-		#If there is hockey identifier, save it
-		hockey_build_public_identifier = hockey_build['public_identifier']
-
-		if  hockey_build_public_identifier &&  hockey_identifier != hockey_build_public_identifier
-			Helper.log.info "Saving hockey identifier: #{hockey_build_public_identifier}"
-			set_environment_plist_value(key: environment_plist_hockey_key, value: hockey_build_public_identifier, environments: [options[:environment]])
-
-			if is_ci
-				#commit and push the saved hockey identifier
-				git_commit(path: "./#{environment_plist_directory}/",
-	        message: "Added hockey identifier (from Fastlane)")
-
-				push_to_git_remote
-			end
-
-		end
-	end	
-
+  
   desc "Deploy new version to the App Store (and also hockey app)"
   lane :appstore do
   	cocoapods
@@ -199,8 +135,64 @@ fastlane_version "1.55.0"
       )
   end
 
-  desc "Installs xcode file templates for Quick and Ackee"
-  lane :templates do |options|
+  private_lane :upload_to_hockey do |options|
+    # Load hockey app identifier from plist
+    hockey_identifier =  get_environment_plist_value(key: environment_plist_hockey_key, environment:options[:environment])
+
+    begin
+      if hockey_identifier != ''
+        Helper.log.info "Using public_identifier: #{hockey_identifier}"
+        
+        hockey(
+          api_token: hockey_api_token,
+          public_identifier: hockey_identifier,
+          notify: '0'
+        )
+
+      else
+        Helper.log.info "No public_identifier found, creating new Hockey app"
+        
+        hockey(
+          api_token: hockey_api_token,
+          notify: '0'
+        )
+      end
+
+    rescue RuntimeError => e
+      # When the public_identifier is not found (e.g. App was deleted from hockey app) , try it one more time without it
+      if (e.message.include? "not found") && hockey_identifier != ''
+        Helper.log.warn "Hockey public_identifier #{hockey_identifier} not found on hockey server (possibly deleted), trying one more time without it"
+        
+        hockey_identifier = ''
+        retry
+      else
+        raise
+      end  
+    end
+
+    
+    hockey_build = lane_context[SharedValues::HOCKEY_BUILD_INFORMATION] 
+    
+    #If there is hockey identifier, save it
+    hockey_build_public_identifier = hockey_build['public_identifier']
+
+    if  hockey_build_public_identifier &&  hockey_identifier != hockey_build_public_identifier
+      Helper.log.info "Saving hockey identifier: #{hockey_build_public_identifier}"
+      set_environment_plist_value(key: environment_plist_hockey_key, value: hockey_build_public_identifier, environments: [options[:environment]])
+
+      if is_ci
+        #commit and push the saved hockey identifier
+        git_commit(path: "./#{environment_plist_directory}/",
+          message: "Added hockey identifier (from Fastlane)")
+
+        push_to_git_remote
+      end
+
+    end
+  end 
+
+  desc "Installs xcode file templates"
+  private_lane :templates do |options|
   		#Location of iPhone Templates for reference
   		#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Templates/File Templates/
   		install_dir = File.expand_path("~/Library/Developer/Xcode/Templates/File Templates")
@@ -240,7 +232,9 @@ fastlane_version "1.55.0"
 			end
   end	
 
-  lane :snippets do
+
+  desc "Installs xcode code snippets"
+  private_lane :snippets do
     install_dir = File.expand_path("~/Library/Developer/Xcode/UserData/CodeSnippets")
     if ! File.exists? install_dir
         Helper.log.info "Creating Code Snippets Xcode directory #{install_dir}"
@@ -261,7 +255,6 @@ fastlane_version "1.55.0"
         Helper.log.info "Installing code snippet #{snippet}"
         FileUtils.cp_r src_snippet_path, install_dir
       end
-
   end
 
   desc "Create new screenshots for the App Store in all languages and device types"
@@ -273,7 +266,6 @@ fastlane_version "1.55.0"
 
   desc "Sets environment.plist app_name and app_bundle_id according to scheme"
   lane :set_environment do |options|
-  	
   	if options[:environment]
   		generate_environment(options)
   	else
@@ -292,6 +284,8 @@ fastlane_version "1.55.0"
   		get_info_plist_value(path: "#{environment_plist_directory}/environment-#{options[:environment]}.plist", key: options[:key])
   end
 
+
+  desc "Switches environment and generates preproccess file"
   private_lane :generate_environment do |options|
   		environment = options[:environment]
 
@@ -320,11 +314,6 @@ fastlane_version "1.55.0"
   		Helper.log.info "Setting app identifier to #{app_identifier}"
   		
 			sh "./utils/generate_preprocess_file.sh '#{display_name}' '#{app_identifier}' ../#{environment_plist_directory}/"
-  end
-
-  lane :testing do
-  	
-
   end
 
   after_all do |lane|
