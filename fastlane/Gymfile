@@ -10,6 +10,6 @@
 
 # sdk "iphoneos9.0"
 
-#output_directory "./outputs/"
-#output_name "App.ipa"
+output_directory "./outputs/"
+output_name "App.ipa"
 clean true
