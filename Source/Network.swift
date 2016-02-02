@@ -14,8 +14,8 @@ class Network: Networking {
 
 
 
-    func call<T>(route: APIRouter, authHandler: AuthHandler?, useDisposables: Bool = true, action: (AnyObject -> (SignalProducer<T,NSError>))) -> SignalProducer<T,NSError> {
-        let signal = SignalProducer<T,NSError> { sink, disposable in
+    func call<T>(route: APIRouter, authHandler: AuthHandler?, useDisposables: Bool = true, action: (AnyObject -> (SignalProducer<T, NSError>))) -> SignalProducer<T, NSError> {
+        let signal = SignalProducer<T, NSError> { sink, disposable in
 
             let request = Alamofire.request(route)
 

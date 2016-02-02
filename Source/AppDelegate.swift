@@ -12,7 +12,7 @@ import HockeySDK
 import Swinject
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, BITHockeyManagerDelegate {
 
 	var window: UIWindow?
 

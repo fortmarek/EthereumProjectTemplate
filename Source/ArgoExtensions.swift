@@ -28,7 +28,7 @@ extension DecodeError { //Argo errors
     }
 }
 
-public func rac_decode<T: Decodable where T == T.DecodedType>(object: AnyObject) -> SignalProducer<T,NSError> {
+public func rac_decode<T: Decodable where T == T.DecodedType>(object: AnyObject) -> SignalProducer<T, NSError> {
     return SignalProducer { sink, disposable in
 
         let decoded: Decoded<T> = decode(object)
@@ -76,7 +76,7 @@ public func rac_decodeWithRootKey<T: Decodable where T == T.DecodedType>(rootKey
 
 }
 
-public func rac_decodeWithRootKey<T: Decodable where T == T.DecodedType>(rootKey: String, object: AnyObject) -> SignalProducer<T,NSError> {
+public func rac_decodeWithRootKey<T: Decodable where T == T.DecodedType>(rootKey: String, object: AnyObject) -> SignalProducer<T, NSError> {
     return SignalProducer { sink, disposable in
 
         let decoded: Decoded<T> = decodeWithRootKey(rootKey, object)

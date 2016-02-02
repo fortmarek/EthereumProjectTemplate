@@ -14,5 +14,5 @@ import ReactiveCocoa
 typealias AuthHandler = (error: NSError) -> SignalProducer<AnyObject, NSError>?
 
 protocol Networking {
-    func call<T>(route: APIRouter, authHandler: AuthHandler?, useDisposables: Bool, action: (AnyObject -> (SignalProducer<T,NSError>))) -> SignalProducer<T,NSError>
+    func call<T>(route: APIRouter, authHandler: AuthHandler?, useDisposables: Bool, action: (AnyObject -> (SignalProducer<T, NSError>))) -> SignalProducer<T, NSError>
 }
