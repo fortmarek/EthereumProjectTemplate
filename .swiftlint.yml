@@ -1,6 +1,6 @@
 disabled_rules: # rule identifiers to exclude from running
-  - colon
-  - comma
+  #- colon
+  #- comma
   - control_statement
   - line_length
   - variable_name

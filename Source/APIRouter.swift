@@ -10,11 +10,11 @@ import Foundation
 import Alamofire
 
 protocol APIRouter: URLRequestConvertible {
-    func requestForURL(url: NSURL, method:Alamofire.Method) -> NSMutableURLRequest
+    func requestForURL(url: NSURL, method: Alamofire.Method) -> NSMutableURLRequest
 }
 
 extension APIRouter {
-    func requestForURL(url: NSURL, method:Alamofire.Method) -> NSMutableURLRequest {
+    func requestForURL(url: NSURL, method: Alamofire.Method) -> NSMutableURLRequest {
         let mutableURLRequest = NSMutableURLRequest(URL: url)
         mutableURLRequest.HTTPMethod = method.rawValue
 

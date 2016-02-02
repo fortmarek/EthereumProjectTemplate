@@ -14,8 +14,8 @@ class LanguagesTableViewController: UIViewController {
     let viewModel: LanguagesTableViewModeling!
     let detailControllerFactory: LanguageDetailTableViewControllerFactory!
 
-    weak var activityIndicator:UIActivityIndicatorView!
-    weak var tableView:UITableView!
+    weak var activityIndicator: UIActivityIndicatorView!
+    weak var tableView: UITableView!
 
     required init(viewModel: LanguagesTableViewModeling, detailControllerFactory: LanguageDetailTableViewControllerFactory ) {
         self.viewModel = viewModel
@@ -112,7 +112,7 @@ extension LanguagesTableViewController: UITableViewDataSource {
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell:LanguageTableViewCell = tableView.dequeCellForIndexPath(indexPath)
+        let cell: LanguageTableViewCell = tableView.dequeCellForIndexPath(indexPath)
         cell.viewModel = viewModel.cellModels.value[indexPath.row]
 
         return cell

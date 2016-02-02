@@ -20,7 +20,7 @@ protocol LanguageDetailViewModeling {
 
 }
 
-class LanguageDetailViewModel:  LanguageDetailViewModeling {
+class LanguageDetailViewModel: LanguageDetailViewModeling {
     let name: MutableProperty<String>
     let flagURL: MutableProperty<NSURL>
     let sentence: MutableProperty<String>
@@ -28,9 +28,9 @@ class LanguageDetailViewModel:  LanguageDetailViewModeling {
     var canPlaySentence: MutableProperty<Bool>
     var isSpeaking: MutableProperty<Bool>
 
-    private let language:LanguageEntity
+    private let language: LanguageEntity
 
-    private let synthetizer:SpeechSynthetizing
+    private let synthetizer: SpeechSynthetizing
 
     internal init(language: LanguageEntity, synthetizer: SpeechSynthetizing) {
         self.language = language

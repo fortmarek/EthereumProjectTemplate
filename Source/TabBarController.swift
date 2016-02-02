@@ -153,7 +153,7 @@ class ACKTabBarController: UIViewController, ACKTabBar {
 			make.height.equalTo(42)
 		}
 
-		var last:  UIView? = nil
+		var last: UIView? = nil
 		for item in items {
 			tabbar.addSubview(item.view)
 			item.view.snp_makeConstraints { make in
