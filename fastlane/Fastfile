@@ -36,7 +36,7 @@ inhouse_certificate_git = "git@gitlab.ack.ee:Ackee/ios-inhouse-certificates.git"
 
 
 
-fastlane_version "1.55.0"
+fastlane_version "1.57.0"
 
 	before_all do
 		ENV["SLACK_URL"] = slack_url # Webhook URL created in Slack
@@ -77,7 +77,7 @@ fastlane_version "1.55.0"
   	build_number = number_of_commits
 		increment_build_number(build_number: build_number)
 
-    #Change to match later (non limited by 1 certificate)
+    #Change to match later (now limited by 1 certificate)
     sigh(
     	username: inhouse_apple_id,
     	app_identifier: enterprise_wildcard # Have to put wildcard here, otherwise new provisioning profile would be created
@@ -295,7 +295,7 @@ fastlane_version "1.55.0"
   desc "Sets environment.plist app_name and app_bundle_id according to scheme"
   lane :switch_environment do |options|
   	if options[:environment]
-  		setup_environment(options)
+      setup_environment(options)
   	else
   		raise "Missing environment: in options"
   	end
@@ -343,15 +343,20 @@ fastlane_version "1.55.0"
   		
       update_info_plist(
         plist_path: "Source/Project-Info.plist",
-        display_name: display_name,
-        app_identifier:  app_identifier
+        display_name: display_name
+        
+      )
+
+      update_app_identifier(
+          app_identifier:  app_identifier,
+          plist_path: "Source/Project-Info.plist"
       )
 
 			#sh "./utils/generate_preprocess_file.sh '#{display_name}' '#{app_identifier}' ../#{environment_plist_directory}/"
   end
 
   after_all do |lane|
-    if !is_ci
+    if !is_ci && "#{lane}" != "switch_environment"
       #Implicitly set environment to Development on local machine
       setup_environment(environment: "Development")
     end
