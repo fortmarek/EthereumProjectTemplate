@@ -82,7 +82,7 @@ fastlane_version "1.57.0"
     #Change to match later (now limited by 1 certificate)
     sigh(
     	username: inhouse_apple_id,
-    	app_identifier: enterprise_wildcard # Have to put wildcard here, otherwise new provisioning profile would be created
+    	app_identifier: app_identifier_beta # Have to put wildcard here, otherwise new provisioning profile would be created
     )
 
     #Setup environments, app identifier and app name
