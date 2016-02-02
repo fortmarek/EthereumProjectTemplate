@@ -2,19 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>appName</key>
-	<string>Ackee β</string>
 	<key>api</key>
 	<dict>
 		<key>baseURL</key>
-		<string>https://www.google.com/api</string>
+		<string>https://www.whostolemyunicorn.com/api/</string>
 	</dict>
-	<key>hockey</key>
-	<dict>
-		<key>identifier</key>
-		<string></string>
-		<key>allowLogging</key>
-		<true/>
-	</dict>
+	<key>appName</key>
+	<string>Ackee β</string>
+	<key>hockey_allowLogging</key>
+	<false/>
+	<key>hockey_identifier</key>
+	<string>80b6f2116d9e4b8fb7ff861c0911f58d</string>
 </dict>
 </plist>

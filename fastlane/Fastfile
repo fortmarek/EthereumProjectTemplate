@@ -1,0 +1,369 @@
+
+
+##################################### SETTINGS #####################################
+
+app_language = "English" #CHANGE
+
+app_name_dev = "Sample Testing Δ" # CHANGE
+app_name_beta = "Sample Testing β" # CHANGE
+app_name_appstore = "Sample Testing" # CHANGE
+
+app_identifier_dev = 'cz.ackee.enterprise.sampletesting.dev' #CHANGE
+app_identifier_beta = 'cz.ackee.enterprise.sampletesting.beta' #CHANGE
+app_identifier_appstore = 'cz.ackee.SampleTesting' #CHANGE
+
+inhouse_apple_id = 'enterprise@ackee.cz'
+#inhouse_team_id = '' <-- use if more teams in inhouse account
+
+connect_apple_id = 'ios@ackee.cz' #CHANGE if using client account
+connect_team_id = '3SMVP6VZP8' #<-- CHANGE if more team 
+
+slack_url = "https://hooks.slack.com/services/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" #Hook to channel you want to send all messages <-- #rokKvality
+
+hockey_api_token = "90fc8b51202f48bf9aa9772a7238f946" # NOT app id, token for hockey uploads
+enterprise_wildcard = "cz.ackee.enterprise.*" # Do not change if you don't have to (We don't want to create provisioning profile for every app)
+
+
+environment_plist_directory = "Environment"
+environment_plist_hockey_key = "hockey_identifier"
+
+
+production_certificate_git = "git@gitlab.ack.ee:Ackee/ios-production-certificates.git"
+inhouse_certificate_git = "git@gitlab.ack.ee:Ackee/ios-inhouse-certificates.git"
+
+
+####################################################################################
+
+
+
+fastlane_version "1.55.0"
+
+	before_all do
+		ENV["SLACK_URL"] = slack_url # Webhook URL created in Slack
+	end
+
+	desc "Installs FixCode which disables the \"Fix Issue\" button in Xcode"
+	  lane :xcode do
+	    install_xcode_plugin(
+	      url: "https://github.com/fastlane/FixCode/releases/download/0.2.0/FixCode.xcplugin.zip"
+	    )
+      templates
+      snippets
+      
+	end
+
+  desc "Runs linting (and eventually static analysis)"
+  lane :analyze do
+  	sh "utils/closure_leak_check.sh ../Source"
+    swiftlint
+  end
+
+  desc "Runs all unit tests."
+  lane :test do
+  	cocoapods
+  
+    if is_ci
+      scan(scheme:"Development", skip_slack: false)
+    else
+      scan(scheme:"Development")
+    end
+  end
+
+ 
+  desc "Submit new **Beta** build to Hockey app"
+  lane :beta do
+  	cocoapods
+
+  	build_number = number_of_commits
+		increment_build_number(build_number: build_number)
+
+    #Change to match later (non limited by 1 certificate)
+    sigh(
+    	username: inhouse_apple_id,
+    	app_identifier: enterprise_wildcard # Have to put wildcard here, otherwise new provisioning profile would be created
+    )
+
+    #Setup environments, app identifier and app name
+    setup_environment(environment: "AdHoc")
+
+    gym(
+    	scheme: "Development",
+		  configuration: "AdHoc",
+		)
+
+    if !is_ci
+      upload_to_hockey(environment: "AdHoc")
+
+      hockey_link = lane_context[SharedValues::HOCKEY_DOWNLOAD_LINK] 
+
+      slack(
+          message: "New version uploaded to HockeyApp! #{hockey_link}",
+          success: true
+        )
+    end
+  end
+
+  
+  desc "Deploy new version to the App Store (and also hockey app)"
+  lane :appstore do |options|
+  	cocoapods
+
+  	build_number = number_of_commits
+		increment_build_number(build_number: build_number)
+
+  	#ensure_git_status_clean
+		produce(
+			username: connect_apple_id,
+			app_identifier: app_identifier_appstore,
+    	app_name: app_name_appstore,
+    	language: app_language,
+      team_id: connect_team_id,
+      itc_team_id: connect_team_id
+    )
+
+    if !options[:skip_snapshot]
+      snapshot
+    end
+
+    match(
+    		username: connect_apple_id,
+    		app_identifier: app_identifier_appstore,
+        team_id: connect_team_id,
+        type: "appstore",
+        git_url: production_certificate_git
+    	)
+
+    #Setup environments, app identifier and app name
+    setup_environment(environment: "AppStore")
+
+    gym(
+		  scheme: "AppStore",
+      configuration: "AppStore",
+		  clean: true,
+		)
+		
+		upload_to_hockey(environment: "AppStore")
+
+    if is_ci 
+      deliver(
+    		username: connect_apple_id,
+        team_id: connect_team_id,
+        force: true
+    	)
+    else
+      deliver(
+        username: connect_apple_id,
+        team_id: connect_team_id,
+      )
+    end
+
+    slack(
+        message: "Deployed new version to AppStore!",
+        success: true
+      )
+  end
+
+  private_lane :upload_to_hockey do |options|
+    # Load hockey app identifier from plist
+    hockey_identifier =  get_environment_plist_value(key: environment_plist_hockey_key, environment:options[:environment])
+
+    begin
+      if hockey_identifier != ''
+        Helper.log.info "Using public_identifier: #{hockey_identifier}"
+        
+        hockey(
+          api_token: hockey_api_token,
+          public_identifier: hockey_identifier,
+          notify: '0'
+        )
+
+      else
+        Helper.log.info "No public_identifier found, creating new Hockey app"
+        
+        hockey(
+          api_token: hockey_api_token,
+          notify: '0'
+        )
+      end
+
+    rescue RuntimeError => e
+      # When the public_identifier is not found (e.g. App was deleted from hockey app) , try it one more time without it
+      if (e.message.include? "not found") && hockey_identifier != ''
+        Helper.log.warn "Hockey public_identifier #{hockey_identifier} not found on hockey server (possibly deleted), trying one more time without it"
+        
+        hockey_identifier = ''
+        retry
+      else
+        raise
+      end  
+    end
+
+    
+    hockey_build = lane_context[SharedValues::HOCKEY_BUILD_INFORMATION] 
+    
+    #If there is hockey identifier, save it
+    hockey_build_public_identifier = hockey_build['public_identifier']
+
+    if  hockey_build_public_identifier &&  hockey_identifier != hockey_build_public_identifier
+      Helper.log.info "Saving hockey identifier: #{hockey_build_public_identifier}"
+      set_environment_plist_value(key: environment_plist_hockey_key, value: hockey_build_public_identifier, environments: [options[:environment]])
+
+      if is_ci
+        #commit and push the saved hockey identifier
+        git_commit(path: "./#{environment_plist_directory}/",
+          message: "Added hockey identifier (from Fastlane)")
+
+        push_to_git_remote
+      end
+
+    end
+  end 
+
+  desc "Installs xcode file templates"
+  private_lane :templates do |options|
+  		#Location of iPhone Templates for reference
+  		#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Templates/File Templates/
+  		install_dir = File.expand_path("~/Library/Developer/Xcode/Templates/File Templates")
+  		
+  		if ! File.exists? install_dir
+  			Helper.log.info "Creating File Template Xcode directory #{install_dir}"
+  			FileUtils.mkdir_p install_dir
+  		end
+
+
+		  src_dir = File.expand_path("../../FileTemplates", __FILE__)
+		  template_folders = Dir.entries(src_dir)
+
+		  template_folders.each do |template_folder|
+		  	template_folder_path = "#{src_dir}/#{template_folder}"
+
+		  	if File.directory?(template_folder_path) 
+
+		  		xctemplates = Dir.entries(template_folder_path).select{ |e| File.extname(e) == ".xctemplate"  }
+		  		
+		  		install_folder_path = "#{install_dir}/#{template_folder}/"
+					FileUtils.mkdir_p install_folder_path
+
+		  		xctemplates.each do |xctemplate|
+		  			src_template_path = "#{template_folder_path}/#{xctemplate}"
+		  			
+		  			if File.exists? "#{install_folder_path}/#{xctemplate}"
+		  				Helper.log.info "Removing template #{xctemplate}"
+		  				FileUtils.rm_rf "#{install_folder_path}/#{xctemplate}"
+		  			end
+
+		  			Helper.log.info "Installing template #{xctemplate} in folder #{install_folder_path}"
+		  			FileUtils.cp_r src_template_path, install_folder_path
+		  		end
+
+				end 
+			end
+  end	
+
+
+  desc "Installs xcode code snippets"
+  private_lane :snippets do
+    install_dir = File.expand_path("~/Library/Developer/Xcode/UserData/CodeSnippets")
+    if ! File.exists? install_dir
+        Helper.log.info "Creating Code Snippets Xcode directory #{install_dir}"
+        FileUtils.mkdir_p install_dir
+      end
+
+      src_dir = File.expand_path("../../CodeSnippets", __FILE__)
+      code_snippets =  Dir.entries(src_dir).select{ |e| File.extname(e) == ".codesnippet"  }
+
+      code_snippets.select.each do |snippet|
+        src_snippet_path = "#{src_dir}/#{snippet}"
+
+        if File.exists? "#{install_dir}/#{snippet}"
+          Helper.log.info "Removing code snippet #{snippet}"
+          FileUtils.rm_rf "#{snippet}/#{snippet}"
+        end
+
+        Helper.log.info "Installing code snippet #{snippet}"
+        FileUtils.cp_r src_snippet_path, install_dir
+      end
+  end
+
+  desc "Create new screenshots for the App Store in all languages and device types"
+  desc "Additionally, this will add device frames around the screenshots"
+  lane :screenshots do
+    snapshot(skip_open_summary: false)
+    frameit(white: true)
+  end
+
+  desc "Sets environment.plist app_name and app_bundle_id according to scheme"
+  lane :switch_environment do |options|
+  	if options[:environment]
+  		setup_environment(options)
+  	else
+  		raise "Missing environment: in options"
+  	end
+  end
+
+  
+  # Sets value for given in key in selected environments
+  private_lane :set_environment_plist_value do |options|
+		options[:environments].each { |env| set_info_plist_value(path: "#{environment_plist_directory}/environment-#{env}.plist", key: options[:key], value: options[:value]) }
+  end
+
+  #Gets value for given key in environment
+  private_lane :get_environment_plist_value do |options|
+  		get_info_plist_value(path: "#{environment_plist_directory}/environment-#{options[:environment]}.plist", key: options[:key])
+  end
+
+
+  desc "Switches environment and sets app_name and app_identifier in plist"
+  private_lane :setup_environment do |options|
+  		environment = options[:environment]
+
+			display_name = ""
+			app_identifier = ""
+
+  		if environment == "AppStore"
+  			display_name = app_name_appstore
+  			app_identifier = app_identifier_appstore
+  		elsif environment == "AdHoc"
+  			display_name = app_name_beta
+  			app_identifier = app_identifier_beta
+  		elsif environment == "Development"
+  			display_name = app_name_dev
+  			app_identifier = app_identifier_dev
+  		else 
+  			raise "Non-existent environment: #{environment}"
+  		end
+
+  		Helper.log.info "Setting environment for #{environment}"
+  		
+  		# Change environments according to scheme
+			sh "./utils/replace_environment_plist.sh '#{environment}' ../#{environment_plist_directory}/" 
+
+  		Helper.log.info "Setting app name to #{display_name}"
+  		Helper.log.info "Setting app identifier to #{app_identifier}"
+  		
+      update_info_plist(
+        plist_path: "Source/Project-Info.plist",
+        display_name: display_name,
+        app_identifier:  app_identifier
+      )
+
+			#sh "./utils/generate_preprocess_file.sh '#{display_name}' '#{app_identifier}' ../#{environment_plist_directory}/"
+  end
+
+  after_all do |lane|
+    if !is_ci
+      #Implicitly set environment to Development on local machine
+      setup_environment(environment: "Development")
+    end
+  end
+
+  error do |lane, exception|
+  	if is_ci
+      slack(
+        message: exception.message,
+        success: false
+      )
+    end
+  end
+  
+#end

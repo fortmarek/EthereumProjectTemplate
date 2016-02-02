@@ -14,15 +14,15 @@ private struct AssociationKey {
     static var alpha: UInt8 = 2
     static var text: UInt8 = 3
     static var image: UInt8 = 4
-    static var enabled : UInt8 = 5
-    static var animating : UInt8 = 6
-    static var selected : UInt8 = 7
+    static var enabled: UInt8 = 5
+    static var animating: UInt8 = 6
+    static var selected: UInt8 = 7
 }
 
 // lazily creates a gettable associated property via the given factory
-func lazyAssociatedProperty<T: AnyObject>(host: AnyObject, _ key: UnsafePointer<Void>, factory: ()->T) -> T {
+func lazyAssociatedProperty<T: AnyObject>(host: AnyObject, _ key: UnsafePointer<Void>, factory: () -> T) -> T {
     var associatedProperty = objc_getAssociatedObject(host, key) as? T
-    
+
     if associatedProperty == nil {
         associatedProperty = factory()
         objc_setAssociatedObject(host, key, associatedProperty, .OBJC_ASSOCIATION_RETAIN)
@@ -46,7 +46,7 @@ extension UIView {
     public var rac_alpha: MutableProperty<CGFloat> {
         return lazyMutableProperty(self, &AssociationKey.alpha, { [unowned self] in self.alpha = $0 }, { [unowned self] in self.alpha  })
     }
-    
+
     public var rac_hidden: MutableProperty<Bool> {
         return lazyMutableProperty(self, &AssociationKey.hidden, { [unowned self] in self.hidden = $0 }, { [unowned self] in self.hidden  })
     }
@@ -67,9 +67,9 @@ extension UILabel {
 extension UITextField {
     public var rac_text: MutableProperty<String> {
         return lazyAssociatedProperty(self, &AssociationKey.text) {
-            
+
             self.addTarget(self, action: "changed", forControlEvents: UIControlEvents.EditingChanged)
-            
+
             let property = MutableProperty<String>(self.text ?? "")
             property.producer
                 .startWithNext { [unowned self]
@@ -79,18 +79,18 @@ extension UITextField {
             return property
         }
     }
-    
+
     func changed() {
         rac_text.value = self.text ?? ""
     }
 }
 
 extension UIControl {
-    public var rac_enabled : MutableProperty<Bool> {
+    public var rac_enabled: MutableProperty<Bool> {
         return lazyMutableProperty(self, &AssociationKey.enabled, { [unowned self] in self.enabled = $0 }, { [unowned self] in self.enabled })
     }
-    
-    public var rac_selected : MutableProperty<Bool> {
+
+    public var rac_selected: MutableProperty<Bool> {
         return lazyMutableProperty(self, &AssociationKey.selected, { [unowned self] in self.selected = $0 }, { [unowned self] in self.selected })
     }
 }
@@ -102,7 +102,7 @@ extension UIActivityIndicatorView {
 }
 
 extension UITextView {
-    public var rac_text : MutableProperty<String> {
+    public var rac_text: MutableProperty<String> {
         return lazyAssociatedProperty(self, &AssociationKey.text) { [unowned self] in
             NSNotificationCenter.defaultCenter().rac_addObserverForName(UITextViewTextDidChangeNotification, object: self)
                 .takeUntil(self.rac_willDeallocSignal())
@@ -110,7 +110,7 @@ extension UITextView {
                 .startWithNext { [unowned self] _ in
                 self.rac_text.value = self.text
             }
-            
+
             let property = MutableProperty<String>(self.text ?? "")
             property.producer
                 .startWithNext { [unowned self]

@@ -22,7 +22,7 @@ extension  UIView {
         }
         return v
     }
-    
+
     func createVSpacer(height height: CGFloat, priority: Int = 999) -> UIView {
         return createSpacer(size: height, axis: .Vertical, priority: priority)
     }
