@@ -42,11 +42,6 @@ Additionally, this will add device frames around the screenshots
 fastlane switch_environment
 ```
 Sets environment.plist app_name and app_bundle_id according to scheme
-### badge
-```
-fastlane badge
-```
-
 
 ----
 
