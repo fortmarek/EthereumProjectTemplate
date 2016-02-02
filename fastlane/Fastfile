@@ -355,6 +355,18 @@ fastlane_version "1.57.0"
 			#sh "./utils/generate_preprocess_file.sh '#{display_name}' '#{app_identifier}' ../#{environment_plist_directory}/"
   end
 
+  lane :badge do
+    ensure_git_status_clean
+
+    badge(shield: "#{get_version_number}-#{number_of_commits}-blue")
+
+    reset_git_repo(
+      
+      files: [
+        "./Resources/Images.xcassets/AppIcon.appiconset/"
+      ])
+  end
+
   after_all do |lane|
     if !is_ci && "#{lane}" != "switch_environment"
       #Implicitly set environment to Development on local machine
