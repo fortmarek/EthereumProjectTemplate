@@ -127,7 +127,7 @@ Pokud chci delat neco casove narocnejsiho napr. vytvoreni in-memory databaze pou
   }
 ```
 
-## Mocking
+##Mocking
 
 Mam view model co zavisi na CLLocationManager a chci otestovat co stane kdyz se zmeni poloha
 
@@ -173,7 +173,7 @@ beforeEach {
 }
 ```
 
-## SharedExample
+##SharedExample
 Pokud nejaka kriteria pouzivam vicekrat, muzu si usetrit psani a pouzit Configuration. 
 
 ```
@@ -304,7 +304,7 @@ init(api: API, imageResizer: ImageResizing){
 To ale znamena predavani dalsich zavislosti, a spousta psani kodu. A kazda dalsi vrstva si musi zavislosti predavat. Pri vetsim mnozstvi zavislosti pak nepisu nic jinyho nez injekty.
 
 
-## Swinject
+##Swinject
 https://github.com/Swinject/Swinject
 
 Misto  toho si zavislosti nadefinuju vsechny na jednom miste:
@@ -342,7 +342,8 @@ Typicky se container inicializuje v AppDelegate, ale pokud je toho tam víc hů�
 
 Proto jsem jsem to dal do speciální třídy `AppContainer`
 
-## Factories
+
+##Factories
 
 Tohle je fajn, ale to nam uplne neresi problem s vytvarenim novych objektu uvnitr zavislosti
 
@@ -406,7 +407,7 @@ Z toho vim, ze se pripojuje k API, deje se tam geocoding, pouziva se lokace a pu
 Pozn: Samozrejme nepocitam ze bysme vsude pouzivali Factory pro kazdej pushnutej controller, tohle je trochu extremni pripad. Zalezi na tom co chci testovat, a pocitam ze controllery budeme testovat minimalne.
 
 
-# Templaty
+#Templaty
 
 Vzhledem k tomu ze vytvareni ViewControlleru s ViewModelem delame furt dokola, udelal jsem na to File Template. 
 
@@ -427,6 +428,80 @@ coz prekopiruje vsechny templaty do xcode slozky.
 
 TODO: Asi bych udelal neco podobnyho pro snippety, zacal jsem je ted docela pouzivat.
 
-# K Aplikaci
+#Snapshot
+Fastlane nám taky dokáže ulehčit pořízování snapshotů.
+
+Dejme tomu že chci pořídit screenshoty aplikace ve 3 různých jazycích na 3 zařízeních. To je práce tak na hodinu. A musím to dělat znova s každou verzí.
+
+
+Místo toho použiju snapshot
+
+
+Napřed je potřeba napsat UI Test
+A přidat `snapshot("JmenoVyslednehoSouboruSeScreenshotem")` na mista kde chci vyfotit obrazovku
+
+```
+func testMainScreen() {
+        let app = XCUIApplication()
+        
+        //Wait for pictures to load
+        let images = app.images
+        let stoppedLoading = NSPredicate(format: "count != 0")
+        
+        expectationForPredicate(stoppedLoading, evaluatedWithObject: images, handler: nil)
+        waitForExpectationsWithTimeout(5, handler: nil)
+        
+		snapshot("01MainScreenList")
+        
+        let tablesQuery = app.tables
+        tablesQuery.cells.elementBoundByIndex(0).tap()
+        
+        snapshot("02DetailScreenFirst")
+    }
+```
+
+Pro nahrání interakcí s aplikací můžu použít record funkci v XCode (když otevřu uitest je to vlevo dole)
+
+Pak už jenom zavolám
+
+```
+fastlane screenshots
+```
+
+který mi spustí testy a vygeneruje mi obrázky ve složce fastlane/screenshots
+na nich ještě zavolá `frameit` který screenshotům přidá iPhone/iPad rámečky 
+
+Pokud zavolám
+
+```
+fastlane appstore
+```
+
+fastlane automaticky screenshoty vygeneruje a pošle je do iTunes Connect
+
+#Swiftlint
+
+Když zbuilduju aplikaci, swiftlint mi automaticky zkontroluje `Source` a zobrazi mi warningy
+
+Seznam povolenych a zakazanych pravidel nastavim v `.swiftlint.yml`
+
+Pokud ho z nejakyho duvodu nechci spoustet vyhodim Swiftlint Run Phase u Project targetu
+
+Pokud chci opravit nalezene chyby (ty co jsou opravitelne)
+
+```
+swiftlint autocorrect
+```
+
+#Todos
+- match
+- lepsi prace s NSError
+- Networking
+- Groot 
+
+#K Aplikaci
 
 Kdyby jste se divili k cemu je vlastne ta example aplikace, kouknete sem: http://whostolemyunicorn.com/
+
+
+
