@@ -84,9 +84,10 @@ class LanguageDetailViewController: UIViewController {
         }
 
         self.playIndicator = playIndicator
+        
     }
 
-    //var closure:(()->())?
+//    var closure:(()->())?
 
     func setupBindings() {
         self.titleLabel.rac_text <~ viewModel.name

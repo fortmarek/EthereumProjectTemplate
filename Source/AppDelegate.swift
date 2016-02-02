@@ -26,7 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BITHockeyManagerDelegate 
 
         //Start Hockey Manager
         if Environment.Hockey.identifier.characters.count != 0 && Environment.Hockey.allowLogging {
-            let hockeyManager = appContainer.resolve(BITHockeyManager.self, argument: self)!
+            let hockeyManager = BITHockeyManager.sharedHockeyManager()
+            hockeyManager.configureWithIdentifier(Environment.Hockey.identifier, delegate: self)
             hockeyManager.startManager()
             hockeyManager.authenticator.authenticateInstallation()
             hockeyManager.crashManager.crashManagerStatus = .AutoSend

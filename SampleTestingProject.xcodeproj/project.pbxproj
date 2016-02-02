@@ -626,7 +626,7 @@
 						TestTargetID = B4ABA1DB195193330069FAD4;
 					};
 					B4ABA1DB195193330069FAD4 = {
-						DevelopmentTeam = PXDF48X6VX;
+						DevelopmentTeam = 3SMVP6VZP8;
 					};
 					B4ABA1FC195193330069FAD4 = {
 						TestTargetID = B4ABA1DB195193330069FAD4;
@@ -1203,11 +1203,11 @@
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.aa;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.beta;
 				PRODUCT_NAME = SampleTestingProject;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = AppStore;
@@ -1344,12 +1344,12 @@
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.aa;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.beta;
 				PRODUCT_NAME = SampleTestingProject;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Development;
@@ -1369,11 +1369,11 @@
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.aa;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.beta;
 				PRODUCT_NAME = SampleTestingProject;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = AdHoc;

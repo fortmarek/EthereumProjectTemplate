@@ -13,7 +13,10 @@ app_identifier_beta = 'cz.ackee.enterprise.sampletesting.beta' #CHANGE
 app_identifier_appstore = 'cz.ackee.SampleTesting' #CHANGE
 
 inhouse_apple_id = 'enterprise@ackee.cz'
-connect_apple_id = 'ios@ackee.cz'
+#inhouse_team_id = '' <-- use if more teams in inhouse account
+
+connect_apple_id = 'ios@ackee.cz' #CHANGE if using client account
+connect_team_id = '3SMVP6VZP8' #<-- CHANGE if more team 
 
 slack_url = "https://hooks.slack.com/services/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" #Hook to channel you want to send all messages <-- #rokKvality
 
@@ -23,6 +26,10 @@ enterprise_wildcard = "cz.ackee.enterprise.*" # Do not change if you don't have 
 
 environment_plist_directory = "Environment"
 environment_plist_hockey_key = "hockey_identifier"
+
+
+production_certificate_git = "git@gitlab.ack.ee:Ackee/ios-production-certificates.git"
+inhouse_certificate_git = "git@gitlab.ack.ee:Ackee/ios-inhouse-certificates.git"
 
 
 ####################################################################################
@@ -42,6 +49,7 @@ fastlane_version "1.55.0"
 	    )
       templates
       snippets
+      
 	end
 
   desc "Runs linting (and eventually static analysis)"
@@ -75,26 +83,28 @@ fastlane_version "1.55.0"
     )
 
     #Setup environments, app identifier and app name
-    generate_environment(environment: "AdHoc")
+    setup_environment(environment: "AdHoc")
 
     gym(
     	scheme: "Development",
 		  configuration: "AdHoc",
 		)
 
-    upload_to_hockey(environment: "AdHoc")
+    if !is_ci
+      upload_to_hockey(environment: "AdHoc")
 
-    hockey_link = lane_context[SharedValues::HOCKEY_DOWNLOAD_LINK] 
+      hockey_link = lane_context[SharedValues::HOCKEY_DOWNLOAD_LINK] 
 
-    slack(
-        message: "New version uploaded to HockeyApp pyco! #{hockey_link}",
-        success: true
-      )
+      slack(
+          message: "New version uploaded to HockeyApp! #{hockey_link}",
+          success: true
+        )
+    end
   end
 
   
   desc "Deploy new version to the App Store (and also hockey app)"
-  lane :appstore do
+  lane :appstore do |options|
   	cocoapods
 
   	build_number = number_of_commits
@@ -106,16 +116,24 @@ fastlane_version "1.55.0"
 			app_identifier: app_identifier_appstore,
     	app_name: app_name_appstore,
     	language: app_language,
+      team_id: connect_team_id,
+      itc_team_id: connect_team_id
     )
 
-    snapshot
-    sigh(
+    if !options[:skip_snapshot]
+      snapshot
+    end
+
+    match(
     		username: connect_apple_id,
-    		app_identifier: app_identifier_appstore
+    		app_identifier: app_identifier_appstore,
+        team_id: connect_team_id,
+        type: "appstore",
+        git_url: production_certificate_git
     	)
 
     #Setup environments, app identifier and app name
-    generate_environment(environment: "AppStore")
+    setup_environment(environment: "AppStore")
 
     gym(
 		  scheme: "AppStore",
@@ -125,12 +143,21 @@ fastlane_version "1.55.0"
 		
 		upload_to_hockey(environment: "AppStore")
 
-    deliver(
-    		username: connect_apple_id
+    if is_ci 
+      deliver(
+    		username: connect_apple_id,
+        team_id: connect_team_id,
+        force: true
     	)
+    else
+      deliver(
+        username: connect_apple_id,
+        team_id: connect_team_id,
+      )
+    end
 
     slack(
-        message: "Deployed new version to AppStore pyco!",
+        message: "Deployed new version to AppStore!",
         success: true
       )
   end
@@ -265,11 +292,11 @@ fastlane_version "1.55.0"
   end
 
   desc "Sets environment.plist app_name and app_bundle_id according to scheme"
-  lane :set_environment do |options|
+  lane :switch_environment do |options|
   	if options[:environment]
-  		generate_environment(options)
+  		setup_environment(options)
   	else
-  		print "Missing environment: in options"
+  		raise "Missing environment: in options"
   	end
   end
 
@@ -285,8 +312,8 @@ fastlane_version "1.55.0"
   end
 
 
-  desc "Switches environment and generates preproccess file"
-  private_lane :generate_environment do |options|
+  desc "Switches environment and sets app_name and app_identifier in plist"
+  private_lane :setup_environment do |options|
   		environment = options[:environment]
 
 			display_name = ""
@@ -313,11 +340,20 @@ fastlane_version "1.55.0"
   		Helper.log.info "Setting app name to #{display_name}"
   		Helper.log.info "Setting app identifier to #{app_identifier}"
   		
-			sh "./utils/generate_preprocess_file.sh '#{display_name}' '#{app_identifier}' ../#{environment_plist_directory}/"
+      update_info_plist(
+        plist_path: "Source/Project-Info.plist",
+        display_name: display_name,
+        app_identifier:  app_identifier
+      )
+
+			#sh "./utils/generate_preprocess_file.sh '#{display_name}' '#{app_identifier}' ../#{environment_plist_directory}/"
   end
 
   after_all do |lane|
-  	#clean_build_artifacts
+    if !is_ci
+      #Implicitly set environment to Development on local machine
+      setup_environment(environment: "Development")
+    end
   end
 
   error do |lane, exception|

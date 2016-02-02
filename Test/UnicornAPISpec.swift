@@ -36,8 +36,8 @@ class UnicornAPISpec: QuickSpec {
                     })
                     .start()
                 
-                expect(languages).toEventuallyNot(beNil(), timeout: 5)
-                expect(networkError).toEventually(beNil(), timeout: 5)
+                expect(languages).toEventuallyNot(beNil(), timeout: 10)
+                expect(networkError).toEventually(beNil(), timeout: 10)
                 
             }
         }

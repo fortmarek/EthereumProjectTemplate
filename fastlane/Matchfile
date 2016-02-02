@@ -1,4 +1,4 @@
-git_url "git@gitlab.ack.ee:Ackee/ios-certificates.git"
+#git_url "git@gitlab.ack.ee:Ackee/ios-production-certificates.git"
 
 type "development" # The default type, can be: appstore, adhoc or development
 

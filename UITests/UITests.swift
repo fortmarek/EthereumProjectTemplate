@@ -46,7 +46,7 @@ class UITests: XCTestCase {
         
         
         expectationForPredicate(stoppedLoading, evaluatedWithObject: images, handler: nil)
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
         
         //Tap the allow location popup
         if (app.alerts.count > 0) {

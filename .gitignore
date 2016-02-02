@@ -76,3 +76,6 @@ fastlane/test_output
 
 #taken screenshots
 screenshots
+
+#build output
+/outputs
