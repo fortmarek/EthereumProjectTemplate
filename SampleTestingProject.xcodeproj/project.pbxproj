@@ -29,18 +29,6 @@
 			name = SwiftGen;
 			productName = SwiftGen;
 		};
-		B47537031951FB3900DB8D6D /* EnviromentSwitch */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = B47537041951FB3900DB8D6D /* Build configuration list for PBXAggregateTarget "EnviromentSwitch" */;
-			buildPhases = (
-				B475370A1951FB4C00DB8D6D /* EnvironmentSwitch */,
-				ACD479AD1C5B924E00E85DD3 /* Run Script */,
-			);
-			dependencies = (
-			);
-			name = EnviromentSwitch;
-			productName = EnviromentSwitch;
-		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -128,13 +116,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = B4ABA1DB195193330069FAD4;
 			remoteInfo = ProjectName;
-		};
-		B4C88DFA1B53D61B00AB6CA2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B4ABA1D4195193330069FAD4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B47537031951FB3900DB8D6D;
-			remoteInfo = EnviromentSwitch;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -632,11 +613,11 @@
 				B4A800961B2869F700453A28 /* Copy Frameworks */,
 				64D20A36C299ED98D79BC372 /* Embed Pods Frameworks */,
 				AC734C911C5FF0C50001C606 /* Swift Lint */,
+				ACF8D67C1C624E570098E8EB /* Environment Switch */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				B4C88DFB1B53D61B00AB6CA2 /* PBXTargetDependency */,
 			);
 			name = SampleTestingProject;
 			productName = ProjectName;
@@ -714,7 +695,6 @@
 				B4ABA1FC195193330069FAD4 /* Tests */,
 				ACD4799A1C5A39E800E85DD3 /* UITests */,
 				ACF8DA161C62374C00D74377 /* APITests */,
-				B47537031951FB3900DB8D6D /* EnviromentSwitch */,
 				69148E1E1B78BFE300D83C0E /* mogenerator */,
 				69D5B7F41C24861E008F1A30 /* SwiftGen */,
 			);
@@ -925,19 +905,19 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"SwiftLint does not exist, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
-		ACD479AD1C5B924E00E85DD3 /* Run Script */ = {
+		ACF8D67C1C624E570098E8EB /* Environment Switch */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Run Script";
+			name = "Environment Switch";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "#!/usr/bin/env bash\n#fastlane set_environment environment:Development";
+			shellPath = /bin/sh;
+			shellScript = "env=${ACK_ENVIRONMENT}\ndir=${PROJECT_DIR}\n\n$dir/fastlane/utils/replace_environment_plist.sh $env $dir/Environment/\n";
 		};
 		B176B7756B4681A18D598830 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -953,20 +933,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
-		};
-		B475370A1951FB4C00DB8D6D /* EnvironmentSwitch */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = EnvironmentSwitch;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "env=${ACK_ENVIRONMENT}\ndir=${PROJECT_DIR}\n\n$dir/fastlane/utils/replace_environment_plist.sh $env $dir/Environment/\n";
 		};
 		B4A800961B2869F700453A28 /* Copy Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1101,11 +1067,6 @@
 			isa = PBXTargetDependency;
 			target = B4ABA1DB195193330069FAD4 /* SampleTestingProject */;
 			targetProxy = B4ABA202195193330069FAD4 /* PBXContainerItemProxy */;
-		};
-		B4C88DFB1B53D61B00AB6CA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B47537031951FB3900DB8D6D /* EnviromentSwitch */;
-			targetProxy = B4C88DFA1B53D61B00AB6CA2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1534,27 +1495,6 @@
 			};
 			name = AppStore;
 		};
-		B47537051951FB3900DB8D6D /* Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Development;
-		};
-		B47537061951FB3900DB8D6D /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = AdHoc;
-		};
-		B47537071951FB3900DB8D6D /* AppStore */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = AppStore;
-		};
 		B4ABA20C195193330069FAD4 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1759,16 +1699,6 @@
 				ACF8DA1F1C62374C00D74377 /* Development */,
 				ACF8DA201C62374C00D74377 /* AdHoc */,
 				ACF8DA211C62374C00D74377 /* AppStore */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = AdHoc;
-		};
-		B47537041951FB3900DB8D6D /* Build configuration list for PBXAggregateTarget "EnviromentSwitch" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B47537051951FB3900DB8D6D /* Development */,
-				B47537061951FB3900DB8D6D /* AdHoc */,
-				B47537071951FB3900DB8D6D /* AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = AdHoc;
