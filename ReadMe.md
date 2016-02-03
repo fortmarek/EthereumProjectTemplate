@@ -158,7 +158,7 @@ Pokud chci delat neco casove narocnejsiho napr. vytvoreni in-memory databaze pou
   }
 ```
 
-##Mocking
+## Mocking
 
 Mam view model co zavisi na CLLocationManager a chci otestovat co stane kdyz se zmeni poloha
 
@@ -204,7 +204,7 @@ beforeEach {
 }
 ```
 
-##SharedExample
+## SharedExample
 Pokud nejaka kriteria pouzivam vicekrat, muzu si usetrit psani a pouzit Configuration. 
 
 ```
@@ -374,7 +374,7 @@ Typicky se container inicializuje v AppDelegate, ale pokud je toho tam víc hů�
 Proto jsem jsem to dal do speciální třídy `AppContainer`
 
 
-##Factories
+## Factories
 
 Tohle je fajn, ale to nam uplne neresi problem s vytvarenim novych objektu uvnitr zavislosti
 
@@ -466,7 +466,7 @@ fastlane xcode
 ```
 
 
-#Snapshot
+# Snapshot
 Fastlane nám taky dokáže ulehčit pořízování snapshotů.
 
 Dejme tomu že chci pořídit screenshoty aplikace ve 3 různých jazycích na 3 zařízeních. To je práce tak na hodinu. A musím to dělat znova s každou verzí.
@@ -536,9 +536,6 @@ swiftlint autocorrect
 - Networking
 - Groot 
 
-#K Aplikaci
+# K Aplikaci
 
 Kdyby jste se divili k cemu je vlastne ta example aplikace, kouknete sem: http://whostolemyunicorn.com/
-
-
-
