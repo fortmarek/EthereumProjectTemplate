@@ -1203,7 +1203,7 @@
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.beta;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.dev;
 				PRODUCT_NAME = SampleTestingProject;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
@@ -1344,7 +1344,7 @@
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.beta;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.dev;
 				PRODUCT_NAME = SampleTestingProject;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
@@ -1369,7 +1369,7 @@
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.beta;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.dev;
 				PRODUCT_NAME = SampleTestingProject;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
