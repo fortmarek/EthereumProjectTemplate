@@ -231,7 +231,7 @@ fastlane_version "1.55.0"
   		end
 
 
-		  src_dir = File.expand_path("../../FileTemplates", __FILE__)
+		  src_dir = File.expand_path("./userdata/FileTemplates", __FILE__)
 		  template_folders = Dir.entries(src_dir)
 
 		  template_folders.each do |template_folder|
@@ -269,7 +269,7 @@ fastlane_version "1.55.0"
         FileUtils.mkdir_p install_dir
       end
 
-      src_dir = File.expand_path("../../CodeSnippets", __FILE__)
+      src_dir = File.expand_path("./userdata/CodeSnippets", __FILE__)
       code_snippets =  Dir.entries(src_dir).select{ |e| File.extname(e) == ".codesnippet"  }
 
       code_snippets.select.each do |snippet|
