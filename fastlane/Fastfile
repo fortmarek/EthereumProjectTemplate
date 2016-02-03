@@ -82,14 +82,16 @@ fastlane_version "1.57.0"
     #Change to match later (now limited by 1 certificate)
     sigh(
     	username: inhouse_apple_id,
-    	app_identifier: app_identifier_beta # Have to put wildcard here, otherwise new provisioning profile would be created
+    	app_identifier: enterprise_wildcard, # Have to put wildcard here, otherwise new provisioning profile would be created
+      output_path: "outputs",
+      provisioning_name: "Ackee Enterprise Wildcard Distribution"
     )
 
     #Setup environments, app identifier and app name
     setup_environment(environment: "AdHoc")
 
     #Setup badge for beta
-    badge(shield: "#{get_version_number}-#{number_of_commits}-blue")
+    badge(shield: "#{get_version_number}-#{number_of_commits}-blue", dark: true)
 
     begin
       gym(
