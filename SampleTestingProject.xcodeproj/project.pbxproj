@@ -1180,7 +1180,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_PREFIX_HEADER = environment/environment_preprocess.h;
 				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
@@ -1202,6 +1201,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
+				INFOPLIST_PREFIX_HEADER = "";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.beta;
 				PRODUCT_NAME = SampleTestingProject;
@@ -1285,7 +1285,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_PREFIX_HEADER = environment/environment_preprocess.h;
 				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1321,7 +1320,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_PREFIX_HEADER = environment/environment_preprocess.h;
 				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
@@ -1343,6 +1341,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
+				INFOPLIST_PREFIX_HEADER = "";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.beta;
 				PRODUCT_NAME = SampleTestingProject;
@@ -1368,6 +1367,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
+				INFOPLIST_PREFIX_HEADER = "";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.beta;
 				PRODUCT_NAME = SampleTestingProject;
