@@ -20,7 +20,7 @@
 # launch_arguments("-favColor red")
 
 # The name of the scheme which contains the UI Tests
-scheme "Development"
+scheme "UITests"
 
 # Where should the resulting screenshots be stored?
 output_directory "./screenshots"

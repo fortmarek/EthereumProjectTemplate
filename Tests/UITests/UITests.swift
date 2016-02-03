@@ -36,7 +36,7 @@ class UITests: XCTestCase {
         super.tearDown()
     }
     
-    func DISABLED_testMainScreen() {
+    func testMainScreen() {
         
         let app = XCUIApplication()
         

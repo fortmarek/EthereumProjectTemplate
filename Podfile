@@ -25,11 +25,22 @@ pod 'Swinject', '~> 1.0.0'
 pod 'SDWebImage', '~> 3.6'
 #pod 'Reachability'
 
-
-
-target :Tests, :exclusive => true do
+def testing_pods
     pod 'Quick', '~> 0.9.0'
     pod 'Nimble', '3.1.0'
+end
+    
+
+target :Tests, :exclusive => true do
+    testing_pods
+end
+
+target :UITests, :exclusive => true do
+    testing_pods
+end
+
+target :APITests, :exclusive => true do
+    testing_pods
 end
 
 post_install do |installer|

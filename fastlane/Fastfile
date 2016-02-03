@@ -58,15 +58,29 @@ fastlane_version "1.57.0"
     swiftlint
   end
 
-  desc "Runs all unit tests."
-  lane :test do
+  desc "Runs unit, api and ui tests."
+  lane :test do |options|
   	cocoapods
   
-    if is_ci
-      scan(scheme:"Development", skip_slack: false)
-    else
-      scan(scheme:"Development")
+    skip_slack = true
+    open_report = true
+    if is_ci?
+      skip_slack = false
+      open_report = false
     end
+
+    if options[:type] == "api"
+      scheme = "APITests"
+    elsif options[:type] == "ui"
+      scheme = "UITests"
+    elsif options[:type] == "unit"
+      scheme = "Development"
+    else
+      scheme = "AppStore"
+    end
+
+    scan(scheme:scheme, skip_slack: skip_slack, open_report: open_report)
+
   end
 
  
@@ -248,7 +262,7 @@ fastlane_version "1.57.0"
   		end
 
 
-		  src_dir = File.expand_path("./userdata/FileTemplates", __FILE__)
+		  src_dir = File.expand_path("../userdata/FileTemplates", __FILE__)
 		  template_folders = Dir.entries(src_dir)
 
 		  template_folders.each do |template_folder|
@@ -286,7 +300,7 @@ fastlane_version "1.57.0"
         FileUtils.mkdir_p install_dir
       end
 
-      src_dir = File.expand_path("./userdata/CodeSnippets", __FILE__)
+      src_dir = File.expand_path("../userdata/CodeSnippets", __FILE__)
       code_snippets =  Dir.entries(src_dir).select{ |e| File.extname(e) == ".codesnippet"  }
 
       code_snippets.select.each do |snippet|
