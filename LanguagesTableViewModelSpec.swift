@@ -178,6 +178,16 @@ class LanguagesTableViewModelSpec: QuickSpec {
                         return viewModel
                 }
             }
+            
+            it("persists its loadLanguages property") {
+                var executing : [Bool] = []
+                viewModel.loadLanguages.executing.producer
+                    .startWithNext {
+                    executing.append($0)
+                }
+                viewModel.loadLanguages.apply().start()
+                expect(executing).toEventually(equal([false,true,false]))
+            }
         }
     }
 }

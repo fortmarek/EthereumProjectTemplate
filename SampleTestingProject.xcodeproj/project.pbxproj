@@ -55,6 +55,8 @@
 		6D775D4D1B85DD32002F640D /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D775D4C1B85DD32002F640D /* FoundationExtensions.swift */; };
 		6D7861D51B397903009F8865 /* UIResponder+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7861D41B397903009F8865 /* UIResponder+Errors.swift */; };
 		6DFDD0621B3C5126005D08EA /* KeyboardLayoutGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD0611B3C5126005D08EA /* KeyboardLayoutGuide.swift */; };
+		79A24AE01C637162007C7DDB /* Disposing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A24ADF1C637162007C7DDB /* Disposing.swift */; };
+		79A24AE31C63739F007C7DDB /* DisposingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A24AE21C63739F007C7DDB /* DisposingSpec.swift */; };
 		79FB0C131C1AD2D50025C600 /* UIView+Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FB0C121C1AD2D50025C600 /* UIView+Spacer.swift */; };
 		AC5D4BA81C5E86C700F8CD21 /* LanguageDetailViewModelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D4BA71C5E86C700F8CD21 /* LanguageDetailViewModelSpec.swift */; };
 		AC5D4BAA1C5EAC3B00F8CD21 /* MemoryLeakConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D4BA91C5EAC3B00F8CD21 /* MemoryLeakConfiguration.swift */; };
@@ -155,6 +157,8 @@
 		6D95BB7E1B3BF81100B00B19 /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjackSwift.framework; path = Carthage/Build/iOS/CocoaLumberjackSwift.framework; sourceTree = "<group>"; };
 		6DFDD0611B3C5126005D08EA /* KeyboardLayoutGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutGuide.swift; sourceTree = "<group>"; };
 		75F02EF16C46A63434D5FFBB /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
+		79A24ADF1C637162007C7DDB /* Disposing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposing.swift; sourceTree = "<group>"; };
+		79A24AE21C63739F007C7DDB /* DisposingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisposingSpec.swift; sourceTree = "<group>"; };
 		79FB0C121C1AD2D50025C600 /* UIView+Spacer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Spacer.swift"; sourceTree = "<group>"; };
 		9D377152CF3F1EC98C175EB2 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABA3E22A1E6F145A094D2DF0 /* Pods-Tests.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.development.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.development.xcconfig"; sourceTree = "<group>"; };
@@ -285,6 +289,14 @@
 				ACD8E81B1C569DB200031D67 /* LanguagesTableViewModel.swift */,
 			);
 			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		79A24AE11C637380007C7DDB /* ExtensionsTests */ = {
+			isa = PBXGroup;
+			children = (
+				79A24AE21C63739F007C7DDB /* DisposingSpec.swift */,
+			);
+			name = ExtensionsTests;
 			sourceTree = "<group>";
 		};
 		AA37FF02289B5276089C0F6E /* Pods */ = {
@@ -494,6 +506,7 @@
 		B4ABA24C195196930069FAD4 /* Test */ = {
 			isa = PBXGroup;
 			children = (
+				79A24AE11C637380007C7DDB /* ExtensionsTests */,
 				AC85287E1C5EBFF700624388 /* ModelTests */,
 				AC5D4BAE1C5EB04B00F8CD21 /* ViewTests */,
 				AC5D4BAB1C5EAC4400F8CD21 /* Shared */,
@@ -534,6 +547,7 @@
 				6DFDD0611B3C5126005D08EA /* KeyboardLayoutGuide.swift */,
 				6D775D4C1B85DD32002F640D /* FoundationExtensions.swift */,
 				6D40F8391BB18D0D0079C917 /* Reachability+RAC.swift */,
+				79A24ADF1C637162007C7DDB /* Disposing.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -909,6 +923,7 @@
 				6D775D4D1B85DD32002F640D /* FoundationExtensions.swift in Sources */,
 				ACD4798D1C582D1F00E85DD3 /* Networking.swift in Sources */,
 				ACD4798B1C582BFC00E85DD3 /* Network.swift in Sources */,
+				79A24AE01C637162007C7DDB /* Disposing.swift in Sources */,
 				ACD8E81C1C569DB200031D67 /* LanguagesTableViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -920,6 +935,7 @@
 				AC5D4BAA1C5EAC3B00F8CD21 /* MemoryLeakConfiguration.swift in Sources */,
 				ACD479AB1C5A635200E85DD3 /* DummyResponse.swift in Sources */,
 				AC5D4BA81C5E86C700F8CD21 /* LanguageDetailViewModelSpec.swift in Sources */,
+				79A24AE31C63739F007C7DDB /* DisposingSpec.swift in Sources */,
 				ACD479A91C5A61C700E85DD3 /* LanguagesTableViewModelSpec.swift in Sources */,
 				AC5D4BAD1C5EB04700F8CD21 /* LanguagesViewControllerSpec.swift in Sources */,
 				ACD8E8321C581FB700031D67 /* UnicornAPISpec.swift in Sources */,
