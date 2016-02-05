@@ -45,6 +45,11 @@ fastlane screenshots
 fastlane analyze
 ```
 
+### Zkopíruje skeleton do nové složky, nastaví jméno, promaže git a nastaví git remote
+```
+fastlane copy
+```
+
 Kompletní seznam všech metod zde:
 [Fastlane README](fastlane/README.md)
 

@@ -29,6 +29,17 @@
 			name = SwiftGen;
 			productName = SwiftGen;
 		};
+		AC8F26401C64EC3A0011DC49 /* EnvironmentSwitch */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = AC8F26441C64EC3B0011DC49 /* Build configuration list for PBXAggregateTarget "EnvironmentSwitch" */;
+			buildPhases = (
+				AC8F26451C64EC500011DC49 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = EnvironmentSwitch;
+			productName = EnvironmentSwitch;
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -96,6 +107,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		AC8F26461C64EC6A0011DC49 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B4ABA1D4195193330069FAD4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AC8F26401C64EC3A0011DC49;
+			remoteInfo = EnvironmentSwitch;
+		};
 		ACD479A01C5A39E800E85DD3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B4ABA1D4195193330069FAD4 /* Project object */;
@@ -613,11 +631,11 @@
 				B4A800961B2869F700453A28 /* Copy Frameworks */,
 				64D20A36C299ED98D79BC372 /* Embed Pods Frameworks */,
 				AC734C911C5FF0C50001C606 /* Swift Lint */,
-				ACF8D67C1C624E570098E8EB /* Environment Switch */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AC8F26471C64EC6A0011DC49 /* PBXTargetDependency */,
 			);
 			name = SampleTestingProject;
 			productName = ProjectName;
@@ -662,6 +680,9 @@
 					69D5B7F41C24861E008F1A30 = {
 						CreatedOnToolsVersion = 7.2;
 					};
+					AC8F26401C64EC3A0011DC49 = {
+						CreatedOnToolsVersion = 7.2;
+					};
 					ACD4799A1C5A39E800E85DD3 = {
 						CreatedOnToolsVersion = 7.2;
 						TestTargetID = B4ABA1DB195193330069FAD4;
@@ -697,6 +718,7 @@
 				ACF8DA161C62374C00D74377 /* APITests */,
 				69148E1E1B78BFE300D83C0E /* mogenerator */,
 				69D5B7F41C24861E008F1A30 /* SwiftGen */,
+				AC8F26401C64EC3A0011DC49 /* EnvironmentSwitch */,
 			);
 		};
 /* End PBXProject section */
@@ -905,14 +927,13 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"SwiftLint does not exist, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
-		ACF8D67C1C624E570098E8EB /* Environment Switch */ = {
+		AC8F26451C64EC500011DC49 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Environment Switch";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1053,6 +1074,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		AC8F26471C64EC6A0011DC49 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AC8F26401C64EC3A0011DC49 /* EnvironmentSwitch */;
+			targetProxy = AC8F26461C64EC6A0011DC49 /* PBXContainerItemProxy */;
+		};
 		ACD479A11C5A39E800E85DD3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B4ABA1DB195193330069FAD4 /* SampleTestingProject */;
@@ -1135,6 +1161,27 @@
 			name = AdHoc;
 		};
 		69D5B7F81C24861E008F1A30 /* AppStore */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = AppStore;
+		};
+		AC8F26411C64EC3B0011DC49 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Development;
+		};
+		AC8F26421C64EC3B0011DC49 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = AdHoc;
+		};
+		AC8F26431C64EC3B0011DC49 /* AppStore */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1682,6 +1729,15 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = AdHoc;
+		};
+		AC8F26441C64EC3B0011DC49 /* Build configuration list for PBXAggregateTarget "EnvironmentSwitch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC8F26411C64EC3B0011DC49 /* Development */,
+				AC8F26421C64EC3B0011DC49 /* AdHoc */,
+				AC8F26431C64EC3B0011DC49 /* AppStore */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		ACD479A51C5A39E900E85DD3 /* Build configuration list for PBXNativeTarget "UITests" */ = {
 			isa = XCConfigurationList;

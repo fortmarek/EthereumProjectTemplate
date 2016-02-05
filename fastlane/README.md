@@ -19,7 +19,7 @@ Runs linting (and eventually static analysis)
 ```
 fastlane test
 ```
-Runs all unit tests.
+Runs unit, api and ui tests.
 ### beta
 ```
 fastlane beta
@@ -42,6 +42,11 @@ Additionally, this will add device frames around the screenshots
 fastlane switch_environment
 ```
 Sets environment.plist app_name and app_bundle_id according to scheme
+### copy
+```
+fastlane copy
+```
+Copies and renames the project into new directory
 
 ----
 
