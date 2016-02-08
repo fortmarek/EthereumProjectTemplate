@@ -131,6 +131,8 @@ fastlane_version "1.57.0"
           "./Resources/Images.xcassets/AppIcon.appiconset/"
       ])
     end
+
+    
   end
 
   
@@ -192,6 +194,8 @@ fastlane_version "1.57.0"
           message: "Deployed new version to AppStore!",
           success: true
         )
+
+
   end
 
   private_lane :upload_to_hockey do |options|
@@ -511,7 +515,9 @@ fastlane_version "1.57.0"
       setup_environment(environment: "Development")
     end
 
-    
+    if is_ci? && ("#{lane}" == "appstore" || "#{lane}" == "beta")
+      reset_git_repo
+    end
   end
 
   error do |lane, exception|
