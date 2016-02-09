@@ -144,6 +144,9 @@ fastlane_version "1.57.0"
     	build_number = number_of_commits
   		increment_build_number(build_number: build_number)
 
+      #Setup environments, app identifier and app name
+      setup_environment(environment: "AppStore")
+      
     	#ensure_git_status_clean
   		produce(
   			username: connect_apple_id,
@@ -165,9 +168,6 @@ fastlane_version "1.57.0"
           type: "appstore",
           git_url: production_certificate_git
       	)
-
-      #Setup environments, app identifier and app name
-      setup_environment(environment: "AppStore")
 
       gym(
   		  scheme: "AppStore",
