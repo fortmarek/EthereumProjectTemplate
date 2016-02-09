@@ -543,7 +543,7 @@ fastlane_version "1.57.0"
     end
   end
 
-  private_lane after_success_error do |options|
+  private_lane :after_success_error do |options|
     if !is_ci && "#{options[:lane]}" != "switch_environment"
       #Implicitly set environment to Development on local machine
       setup_environment(environment: "Development")
