@@ -1517,9 +1517,9 @@
 				INFOPLIST_FILE = "Source/Project-Info.plist";
 				INFOPLIST_PREFIX_HEADER = "";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = SampleTestingProject;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "$(sigh_cz.ackee.SampleTesting_appstore)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1636,7 +1636,7 @@
 				INFOPLIST_FILE = "Source/Project-Info.plist";
 				INFOPLIST_PREFIX_HEADER = "";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = SampleTestingProject;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
@@ -1662,7 +1662,7 @@
 				INFOPLIST_FILE = "Source/Project-Info.plist";
 				INFOPLIST_PREFIX_HEADER = "";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = SampleTestingProject;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
