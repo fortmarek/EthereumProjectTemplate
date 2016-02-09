@@ -146,7 +146,7 @@ fastlane_version "1.57.0"
 
       #Setup environments, app identifier and app name
       setup_environment(environment: "AppStore")
-      
+
     	#ensure_git_status_clean
   		produce(
   			username: connect_apple_id,
@@ -175,7 +175,9 @@ fastlane_version "1.57.0"
   		  clean: true,
   		)
   		
-  		upload_to_hockey(environment: "AppStore")
+      if !is_ci
+  		  upload_to_hockey(environment: "AppStore")
+      end
 
       if is_ci 
         deliver(
