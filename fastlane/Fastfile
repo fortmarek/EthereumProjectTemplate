@@ -13,7 +13,7 @@ app_identifier_beta = 'cz.ackee.enterprise.sampletesting.beta' #CHANGE
 app_identifier_appstore = 'cz.ackee.SampleTesting' #CHANGE
 
 inhouse_apple_id = 'enterprise@ackee.cz'
-#inhouse_team_id = '' <-- use if more teams in inhouse account
+inhouse_team_id = 'PXDF48X6VX' 
 
 connect_apple_id = 'ios@ackee.cz' #CHANGE if using client account
 connect_team_id = '3SMVP6VZP8' #<-- CHANGE if more team 
@@ -93,13 +93,17 @@ fastlane_version "1.57.0"
   	build_number = number_of_commits
 		increment_build_number(build_number: build_number)
 
-    #Change to match later (now limited by 1 certificate)
+    #TODO: Change to match later (now limited by 1 certificate)
     sigh(
     	username: inhouse_apple_id,
     	app_identifier: enterprise_wildcard, # Have to put wildcard here, otherwise new provisioning profile would be created
-      output_path: "outputs",
-      provisioning_name: "Ackee Enterprise Wildcard Distribution"
+      output_path: "outputs"
     )
+
+    update_project_provisioning(
+       profile: lane_context[SharedValues::SIGH_PROFILE_PATH], # Have to pass Profile path to force use this profile instead whatever is set in xcode
+       build_configuration: "AdHoc"
+     )
 
     #Setup environments, app identifier and app name
     setup_environment(environment: "AdHoc")
@@ -111,6 +115,8 @@ fastlane_version "1.57.0"
       gym(
       	scheme: "Development",
   		  configuration: "AdHoc",
+        provisioning_profile_path: lane_context[SharedValues::SIGH_PROFILE_PATH],
+        export_team_id: inhouse_team_id
   		)
 
       if !is_ci
@@ -157,7 +163,7 @@ fastlane_version "1.57.0"
         itc_team_id: connect_team_id
       )
 
-      if !options[:skip_snapshot]
+      if options[:skip_snapshot] == true
         snapshot
       end
 
@@ -168,6 +174,18 @@ fastlane_version "1.57.0"
           type: "appstore",
           git_url: production_certificate_git
       	)
+
+      
+      # To force provisioning profile on the build we have to update it in the project info file
+      # This is necessary because we have two accounts (one for enterprise, one for itunes connect)
+      # If somebody picks different team in the xcode project settings it would not build, but crash on entitlements error
+      UUID =  ENV["sigh_#{app_identifier_appstore}_appstore"]
+      profile = File.expand_path("~/Library/MobileDevice/Provisioning\ Profiles/#{UUID}.mobileprovision") #This is dirty, because Xcode might change location of profiles, but so far only work-around
+
+      update_project_provisioning(
+        profile: profile, # Have to pass Profile path to force use this profile instead whatever is set in xcode
+        build_configuration: "AppStore"
+       )
 
       gym(
   		  scheme: "AppStore",
@@ -512,23 +530,30 @@ fastlane_version "1.57.0"
   end
 
   after_all do |lane|
-    if !is_ci && "#{lane}" != "switch_environment"
-      #Implicitly set environment to Development on local machine
-      setup_environment(environment: "Development")
-    end
-
-    if is_ci? && ("#{lane}" == "appstore" || "#{lane}" == "beta")
-      reset_git_repo
-    end
+    after_success_error(lane: lane)
   end
 
   error do |lane, exception|
-  	if is_ci
+    after_success_error(lane: lane)
+    if is_ci
       slack(
         message: exception.message,
         success: false
       )
     end
   end
+
+  private_lane after_success_error do |options|
+    if !is_ci && "#{options[:lane]}" != "switch_environment"
+      #Implicitly set environment to Development on local machine
+      setup_environment(environment: "Development")
+    end
+
+    if is_ci? && ("#{options[:lane]}" == "appstore" || "#{options[:lane]}" == "beta")
+      reset_git_repo
+    end
+  end
+
+
   
 #end
