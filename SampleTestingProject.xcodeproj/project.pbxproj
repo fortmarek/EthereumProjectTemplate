@@ -692,7 +692,7 @@
 						TestTargetID = B4ABA1DB195193330069FAD4;
 					};
 					B4ABA1DB195193330069FAD4 = {
-						DevelopmentTeam = PXDF48X6VX;
+						DevelopmentTeam = 3SMVP6VZP8;
 					};
 					B4ABA1FC195193330069FAD4 = {
 						TestTargetID = B4ABA1DB195193330069FAD4;
@@ -1738,6 +1738,7 @@
 				AC8F26431C64EC3B0011DC49 /* AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = AdHoc;
 		};
 		ACD479A51C5A39E900E85DD3 /* Build configuration list for PBXNativeTarget "UITests" */ = {
 			isa = XCConfigurationList;
