@@ -105,7 +105,7 @@ fastlane_version "1.57.0"
     setup_environment(environment: "AdHoc")
 
     #Setup badge for beta
-    badge(shield: "#{get_version_number}-#{number_of_commits}-blue", dark: true)
+    #badge(shield: "#{get_version_number}-#{number_of_commits}-blue", dark: true)
 
     begin
       gym(
@@ -126,10 +126,10 @@ fastlane_version "1.57.0"
 
     ensure
       #reset badge app icon
-      reset_git_repo( #called only after ensure_git_status_clean
-        files: [
-          "./Resources/Images.xcassets/AppIcon.appiconset/"
-      ])
+      # reset_git_repo( #called only after ensure_git_status_clean
+      #   files: [
+      #     "./Resources/Images.xcassets/AppIcon.appiconset/"
+      # ])
     end
 
     
