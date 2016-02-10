@@ -86,7 +86,7 @@ fastlane_version "1.57.0"
  
   desc "Submit new **Beta** build to Hockey app"
   lane :beta do
-    ensure_git_status_clean
+    #ensure_git_status_clean
 
   	cocoapods
 
@@ -144,7 +144,7 @@ fastlane_version "1.57.0"
   
   desc "Deploy new version to the App Store (and also hockey app)"
   lane :appstore do |options|
-      ensure_git_status_clean
+      #ensure_git_status_clean
     	cocoapods
 
     	build_number = number_of_commits
@@ -163,7 +163,7 @@ fastlane_version "1.57.0"
         itc_team_id: connect_team_id
       )
 
-      if options[:skip_snapshot] == true
+      if !options[:skip_snapshot]
         snapshot
       end
 
@@ -549,9 +549,9 @@ fastlane_version "1.57.0"
       setup_environment(environment: "Development")
     end
 
-    if is_ci? && ("#{options[:lane]}" == "appstore" || "#{options[:lane]}" == "beta")
-      reset_git_repo
-    end
+    # if is_ci? && ("#{options[:lane]}" == "appstore" || "#{options[:lane]}" == "beta")
+    #   reset_git_repo
+    # end
   end
 
 

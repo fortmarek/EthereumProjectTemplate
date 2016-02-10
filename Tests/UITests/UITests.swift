@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import Nimble
 
 class UITests: XCTestCase {
         
@@ -41,12 +42,12 @@ class UITests: XCTestCase {
         let app = XCUIApplication()
         
         //Wait for pictures to load
-        let images = app.images
-        let stoppedLoading = NSPredicate(format: "count != 0")
+        //let images = app.images
         
         
-        expectationForPredicate(stoppedLoading, evaluatedWithObject: images, handler: nil)
-        waitForExpectationsWithTimeout(10, handler: nil)
+        expect(app.tables.cells).toEventuallyNot(beNil(), timeout:10)
+        expect(app.images).toEventuallyNot(beNil(), timeout:10)
+        
         
         //Tap the allow location popup
         if (app.alerts.count > 0) {
