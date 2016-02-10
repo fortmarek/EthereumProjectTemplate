@@ -163,6 +163,8 @@ Pokud chci delat neco casove narocnejsiho napr. vytvoreni in-memory databaze pou
   }
 ```
 
+
+
 ## Mocking
 
 Mam view model co zavisi na CLLocationManager a chci otestovat co stane kdyz se zmeni poloha
@@ -264,6 +266,25 @@ itBehavesLike("object without leaks"){
    }
 }
 ```
+
+## Testing Troubleshooting
+Xcode má občas svoje dny a komplikuje nám testování. Tady je pár věcí který se můžou stát:
+
+Xcode hlásí že nemůže načíst Quick, Nimble nebo jiný framework. Pokud ale spustím testy, vše proběhne v pořádku.
+
+* Podívám se jestli mám vybraný správný scheme (`Development` pro Unit Testy, `APITests` pro APITesty, a `UITests` pro UITesty)
+* Pokud se pořád nechytá, udělám Clean a Build `Development` scheme a také testovací scheme.
+* Zabiju kozu jako obět bohům XCode
+* Podívám se do `Podfile`, jestli se testovací pody načítají i pro hlavní target
+* Smažu `Pods/` a dám znovu `pod install`
+
+
+XCode spustí testy ale výsledek jenom rychle problikne a hned zmizí v Test Navigatoru
+
+* Po cestě do práce začnu přispívat bezdomovcům abych si zlepšil karmu 
+* Zrestartuju XCode, většinou to pomůže 
+
+
 
 # ViewModel a ViewModeling
 

@@ -81,7 +81,6 @@
 		ACF8DA0C1C6236F700D74377 /* MemoryLeakConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8D9F91C6236CD00D74377 /* MemoryLeakConfiguration.swift */; };
 		ACF8DA0E1C6236FD00D74377 /* ProjectTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACF8D9FA1C6236CD00D74377 /* ProjectTests-Info.plist */; };
 		ACF8DA0F1C62370300D74377 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ACF8D9F31C6236CD00D74377 /* InfoPlist.strings */; };
-		ACF8DA101C62370D00D74377 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACF8D9EE1C6236CD00D74377 /* Info.plist */; };
 		ACF8DA111C62370D00D74377 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8D9EF1C6236CD00D74377 /* SnapshotHelper.swift */; };
 		ACF8DA121C62370D00D74377 /* UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8D9F01C6236CD00D74377 /* UITests.swift */; };
 		B433E4AE19530092006BEBF1 /* environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = B433E4AA19530092006BEBF1 /* environment.plist */; };
@@ -176,6 +175,8 @@
 		A0093FA6289EE05EE3BEDCFD /* Pods_APITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA1C61551AF9AA217A2863D4 /* Pods-APITests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APITests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-APITests/Pods-APITests.appstore.xcconfig"; sourceTree = "<group>"; };
 		ABA3E22A1E6F145A094D2DF0 /* Pods-Tests.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.development.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.development.xcconfig"; sourceTree = "<group>"; };
+		AC223D721C6B72860000A2F1 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/build/Development-iphoneos/Quick.framework"; sourceTree = "<group>"; };
+		AC223D741C6B728C0000A2F1 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Pods/build/Development-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
 		ACC810C41C624AEF0080266A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACC8111F1C624C570080266A /* UnicornAPISpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnicornAPISpec.swift; sourceTree = "<group>"; };
 		ACD4798A1C582BFC00E85DD3 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -504,6 +505,8 @@
 		B4ABA1DE195193330069FAD4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AC223D741C6B728C0000A2F1 /* Nimble.framework */,
+				AC223D721C6B72860000A2F1 /* Quick.framework */,
 				6D95BB7D1B3BF81100B00B19 /* CocoaLumberjack.framework */,
 				6D95BB7E1B3BF81100B00B19 /* CocoaLumberjackSwift.framework */,
 				B4A8008C1B28688600453A28 /* ReactiveCocoa.framework */,
@@ -728,7 +731,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACF8DA101C62370D00D74377 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1231,6 +1233,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+				);
 				INFOPLIST_FILE = Tests/UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1241,6 +1247,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_TARGET_NAME = SampleTestingProject;
+				USER_HEADER_SEARCH_PATHS = "";
 				USES_XCTRUNNER = YES;
 			};
 			name = Development;
@@ -1276,6 +1283,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+				);
 				INFOPLIST_FILE = Tests/UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1285,6 +1296,7 @@
 				PROVISIONING_PROFILE = "8eb23d06-09dc-42b2-a49e-b1c9d774aff9";
 				SDKROOT = iphoneos;
 				TEST_TARGET_NAME = SampleTestingProject;
+				USER_HEADER_SEARCH_PATHS = "";
 				USES_XCTRUNNER = YES;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1321,6 +1333,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+				);
 				INFOPLIST_FILE = Tests/UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1330,6 +1346,7 @@
 				PROVISIONING_PROFILE = "484d6157-99f7-494f-9966-da16de38e191";
 				SDKROOT = iphoneos;
 				TEST_TARGET_NAME = SampleTestingProject;
+				USER_HEADER_SEARCH_PATHS = "";
 				USES_XCTRUNNER = YES;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1359,6 +1376,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1410,6 +1428,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1455,6 +1474,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

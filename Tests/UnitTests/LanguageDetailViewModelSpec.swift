@@ -115,6 +115,8 @@ class LanguageDetailViewModelSpec: QuickSpec {
                 }
             }
             
+            
+            
             itBehavesLike("object without leaks"){
                 MemoryLeakContext{
                     LanguageDetailViewModel(language: languageEntity, synthetizer: GoodSpeechSynthetizerStub())
