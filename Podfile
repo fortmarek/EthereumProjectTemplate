@@ -30,7 +30,7 @@ def testing_pods
     pod 'Nimble', '3.1.0'
 end
 
-testing_pods
+#testing_pods
 
 target :Tests, :exclusive => true do
     testing_pods

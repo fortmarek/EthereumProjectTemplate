@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>ack-addsubview</string>
+	<string>ack-addsubview-assign</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>CodeBlock</string>
@@ -11,17 +11,17 @@
 	<key>IDECodeSnippetContents</key>
 	<string>// ----- &lt;#name#&gt; -----
 let aView = &lt;#type#&gt;()
-
 &lt;#superview#&gt;.addSubview(aView)
-aView.snp_makeConstraints { (make) -&gt; Void in
+aView.snp_makeConstraints { make in
     &lt;#code#&gt;
-}</string>
+}
+self.&lt;#name#&gt; = aView</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>2104824F-D56B-4029-83A2-907001F83A74</string>
+	<string>F32E37B2-ED07-4ADA-9541-24FC9B6E9AEC</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>Ackee - Add subview</string>
+	<string>Ackee - Add Subview and assign</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

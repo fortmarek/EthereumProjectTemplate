@@ -440,18 +440,16 @@ fastlane_version "1.57.0"
       end
 
       project_path = File.expand_path(project_path, main_dir)
-
-      dir_without_hidden = (Dir.entries(project_path) - %w{ . .. .git .DS_Store })
-
+      
       if ! File.exists? project_path
           Helper.log.info "Creating new project directory #{project_path}"
           FileUtils.mkdir_p project_path
       else
         if !File.directory?(project_path)
           raise "Entered path is not a directory"
-        elsif !dir_without_hidden.empty?
+        elsif !(Dir.entries(project_path) - %w{ . .. .git .DS_Store }).empty?
           raise "The directory is not empty"
-          print dir_without_hidden
+          #print dir_without_hidden
         end
       end
 

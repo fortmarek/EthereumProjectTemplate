@@ -3,25 +3,24 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>ack-addsubview</string>
+	<string>ack-addstackview</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>CodeBlock</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>// ----- &lt;#name#&gt; -----
-let aView = &lt;#type#&gt;()
-
-&lt;#superview#&gt;.addSubview(aView)
-aView.snp_makeConstraints { (make) -&gt; Void in
+	<string>// ----- Stack View -----
+let stackView = UIStackView(arrangedSubviews: &lt;#T##[UIView]#&gt;)
+&lt;#superview#&gt;.addSubview(stackView)
+stackView.snp_makeConstraints { make in
     &lt;#code#&gt;
 }</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>2104824F-D56B-4029-83A2-907001F83A74</string>
+	<string>44E2F074-EC59-421D-A51A-C672C355F78C</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>Ackee - Add subview</string>
+	<string>Ackee - Add Stack View</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

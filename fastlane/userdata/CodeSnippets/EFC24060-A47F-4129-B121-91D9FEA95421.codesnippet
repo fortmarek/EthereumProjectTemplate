@@ -3,28 +3,30 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>ack-addsubview</string>
+	<string>ack-addcollectionview</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>CodeBlock</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
 	<string>// ----- &lt;#name#&gt; -----
-let aView = &lt;#type#&gt;()
-
-&lt;#superview#&gt;.addSubview(aView)
-aView.snp_makeConstraints { (make) -&gt; Void in
+let collectionView = UICollectionView(frame:CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+collectionView.delegate = self
+collectionView.dataSource = self
+&lt;#superview#&gt;.addSubview(collectionView)
+collectionView.snp_makeConstraints { make in
     &lt;#code#&gt;
-}</string>
+}
+self.collectionView = collectionView</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>2104824F-D56B-4029-83A2-907001F83A74</string>
+	<string>EFC24060-A47F-4129-B121-91D9FEA95421</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>Ackee - Add subview</string>
+	<string>Ackee - Add Collection View</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
-	<integer>2</integer>
+	<integer>0</integer>
 </dict>
 </plist>
