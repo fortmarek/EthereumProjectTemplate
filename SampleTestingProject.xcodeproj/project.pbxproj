@@ -1138,7 +1138,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8eb23d06-09dc-42b2-a49e-b1c9d774aff9";
+				PROVISIONING_PROFILE = "4647b7c4-cd77-42db-bebb-a4452191dc17";
 			};
 			name = AdHoc;
 		};
@@ -1161,7 +1161,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8eb23d06-09dc-42b2-a49e-b1c9d774aff9";
+				PROVISIONING_PROFILE = "4647b7c4-cd77-42db-bebb-a4452191dc17";
 			};
 			name = AdHoc;
 		};
@@ -1184,7 +1184,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8eb23d06-09dc-42b2-a49e-b1c9d774aff9";
+				PROVISIONING_PROFILE = "4647b7c4-cd77-42db-bebb-a4452191dc17";
 			};
 			name = AdHoc;
 		};
@@ -1293,7 +1293,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8eb23d06-09dc-42b2-a49e-b1c9d774aff9";
+				PROVISIONING_PROFILE = "4647b7c4-cd77-42db-bebb-a4452191dc17";
 				SDKROOT = iphoneos;
 				TEST_TARGET_NAME = SampleTestingProject;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1443,7 +1443,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.APITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8eb23d06-09dc-42b2-a49e-b1c9d774aff9";
+				PROVISIONING_PROFILE = "4647b7c4-cd77-42db-bebb-a4452191dc17";
 				SDKROOT = iphoneos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SampleTestingProject.app/SampleTestingProject";
 				VALIDATE_PRODUCT = YES;
@@ -1695,7 +1695,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = SampleTestingProject;
-				PROVISIONING_PROFILE = "8eb23d06-09dc-42b2-a49e-b1c9d774aff9";
+				PROVISIONING_PROFILE = "4647b7c4-cd77-42db-bebb-a4452191dc17";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1732,7 +1732,7 @@
 				INFOPLIST_FILE = "Tests/UnitTests/ProjectTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "cz.ackee.enterprise.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8eb23d06-09dc-42b2-a49e-b1c9d774aff9";
+				PROVISIONING_PROFILE = "4647b7c4-cd77-42db-bebb-a4452191dc17";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SampleTestingProject.app/SampleTestingProject";
 				WRAPPER_EXTENSION = xctest;
