@@ -927,7 +927,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"SwiftLint does not exist, download from https://github.com/realm/SwiftLint\"\nfi";
+			shellScript = "if which swiftlint >/dev/null; then\nenv=${ACK_ENVIRONMENT}\nif [ $env = 'Development' ]; then\nswiftlint autocorrect\nswiftlint\nfi\nelse\necho \"SwiftLint does not exist, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		AC8F26451C64EC500011DC49 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
