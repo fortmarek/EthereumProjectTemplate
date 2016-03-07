@@ -35,7 +35,7 @@ class LanguageDetailViewModel: LanguageDetailViewModeling {
     internal init(language: LanguageEntity, synthetizer: SpeechSynthetizing) {
         self.language = language
         self.name = MutableProperty(language.name)
-        self.flagURL = MutableProperty(language.flag)
+        self.flagURL = MutableProperty(NSURL(string: language.flag)!)
         self.sentence = MutableProperty(language.sentence)
         self.language_code = MutableProperty(language.language_code)
         self.synthetizer = synthetizer

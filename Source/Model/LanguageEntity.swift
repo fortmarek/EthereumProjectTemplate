@@ -14,7 +14,7 @@ struct LanguageEntity {
     var abbr: String
     var name: String
     var sentence: String
-    var flag: NSURL
+    var flag: String
     var not_right: Bool?
     var language_code: String?
 
