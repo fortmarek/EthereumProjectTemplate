@@ -25,8 +25,8 @@ class LanguageDetailViewModel: LanguageDetailViewModeling {
     let flagURL: MutableProperty<NSURL>
     let sentence: MutableProperty<String>
     let language_code: MutableProperty<String?>
-    var canPlaySentence: MutableProperty<Bool>
-    var isSpeaking: MutableProperty<Bool>
+    let canPlaySentence: MutableProperty<Bool>
+    let isSpeaking: MutableProperty<Bool>
 
     private let language: LanguageEntity
 

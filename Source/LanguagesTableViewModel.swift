@@ -19,9 +19,9 @@ protocol LanguagesTableViewModeling {
 
 class LanguagesTableViewModel: LanguagesTableViewModeling {
 
-    var cellModels = MutableProperty<[LanguageDetailViewModeling]>([])
-    var loading = MutableProperty<Bool>(false)
-    var errorMessage = MutableProperty<String?>(nil)
+    let cellModels = MutableProperty<[LanguageDetailViewModeling]>([])
+    let loading = MutableProperty<Bool>(false)
+    let errorMessage = MutableProperty<String?>(nil)
 
     //MARK: Dependencies
     private let api: API
