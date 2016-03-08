@@ -174,7 +174,7 @@ class LanguagesTableViewModelSpec: QuickSpec {
                 MemoryLeakContext{
                         let viewModel = LanguagesTableViewModel(api: GoodStubUnicornApi(), geocoder: ErrorGeocoderStub(), locationManager: LocationManagerStub(), detailModelFactory: self.detailFactory)
                         viewModel.loadLanguages.apply().start()
-                        
+                    
                         return viewModel
                 }
             }

@@ -56,20 +56,20 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
             producer: loading.producer.map {!$0})
     }
 
-    var loadLanguages: Action<(), [LanguageEntity], NSError> {
-        return Action(enabledIf: canLoadImages) { _ in
+    lazy var loadLanguages: Action<(), [LanguageEntity], NSError> = {
+        return Action(enabledIf: self.canLoadImages) { [unowned self] _ in
             self.loading.value = true
-
+            
             return self.api.languages().flatMap(.Latest) { languages -> SignalProducer<[LanguageEntity], NSError> in
-                    if let userLocation = self.locationManager.location {
-                        return self.sortLanguageByDistanceFromUserLocation(languages.filter {$0.abbr.characters.first != "_"}, userLocation: userLocation)
-                    } else {
-                        //Continue if we don't have user location
-                        return SignalProducer<[LanguageEntity], NSError> {sink, disposable in
-                            sink.sendNext(languages)
-                            sink.sendCompleted()
-                        }
+                if let userLocation = self.locationManager.location {
+                    return self.sortLanguageByDistanceFromUserLocation(languages.filter {$0.abbr.characters.first != "_"}, userLocation: userLocation)
+                } else {
+                    //Continue if we don't have user location
+                    return SignalProducer<[LanguageEntity], NSError> {sink, disposable in
+                        sink.sendNext(languages)
+                        sink.sendCompleted()
                     }
+                }
                 }.on(
                     next: { languages in
                         self.cellModels.value = languages.map { self.detailModelFactory(language: $0)}
@@ -78,10 +78,11 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
                     failed: { error in
                         self.loading.value = false
                         self.errorMessage.value = L10n.LanguageTableNetworkErrorMessage.string
-                    })
+                })
         }
-    }
+        }()
 
+    
     private func sortLanguageByDistanceFromUserLocation(languages: [LanguageEntity], userLocation: CLLocation) -> SignalProducer<[LanguageEntity], NSError> {
             //Get geolocation for every language
             let signalProducers: [SignalProducer<(LanguageEntity, CLLocation?), NSError>] = languages.map { language in
