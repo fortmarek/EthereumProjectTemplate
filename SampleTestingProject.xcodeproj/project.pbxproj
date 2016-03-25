@@ -634,6 +634,7 @@
 				B4A800961B2869F700453A28 /* Copy Frameworks */,
 				64D20A36C299ED98D79BC372 /* Embed Pods Frameworks */,
 				AC734C911C5FF0C50001C606 /* Swift Lint */,
+				17EF8CDC1CA5380E007F8E17 /* Make warnings for TODO & FIXME */,
 			);
 			buildRules = (
 			);
@@ -781,6 +782,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UITests/Pods-UITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		17EF8CDC1CA5380E007F8E17 /* Make warnings for TODO & FIXME */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Make warnings for TODO & FIXME";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -not -path \"*/Pods/*\" -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
 		};
 		2E600C0607B3427BAB1CA8DE /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
