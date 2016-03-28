@@ -15,21 +15,7 @@ class LanguageTableViewCell: UITableViewCell {
     weak var flagImageView: UIImageView!
     weak var nameLabel: UILabel!
 
-    internal var viewModel: LanguageDetailViewModeling? {
-        didSet {
-            if let viewModel = viewModel {
-                nameLabel.rac_text <~ viewModel.name.producer.on(disposed: {
-                    print("disposed") }
-                    ,next : { print($0) })
-
-                viewModel.flagURL.producer.startWithNext({[weak self] url in
-                    self?.flagImageView.sd_setImageWithURL(url)
-                })
-            } else {
-                flagImageView.image = nil
-            }
-        }
-    }
+    let viewModel = MutableProperty<LanguageDetailViewModeling?>(nil)
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -57,6 +43,20 @@ class LanguageTableViewCell: UITableViewCell {
         }
 
         self.nameLabel = nameLabel
+        
+        setupBindings()
+    }
+    
+    func setupBindings() {
+        let vm = viewModel.producer.ignoreNil()
+        
+        nameLabel.rac_text <~ vm.flatMap(.Latest) { $0.name.producer } 
+        
+        vm.flatMap(.Latest) { $0.flagURL.producer }
+            .startWithNext({[weak self] url in
+            self?.flagImageView.sd_setImageWithURL(url)
+            })
+        
     }
 
     required init?(coder aDecoder: NSCoder) {

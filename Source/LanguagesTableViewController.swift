@@ -113,7 +113,7 @@ extension LanguagesTableViewController: UITableViewDataSource {
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: LanguageTableViewCell = tableView.dequeCellForIndexPath(indexPath)
-        cell.viewModel = viewModel.cellModels.value[indexPath.row]
+        cell.viewModel.value = viewModel.cellModels.value[indexPath.row]
 
         return cell
     }
