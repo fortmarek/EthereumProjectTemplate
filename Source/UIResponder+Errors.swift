@@ -42,6 +42,18 @@ extension AppDelegate : ErrorPresenting {
         let alertController = UIAlertController(title: e.title ?? "error".localized, message: e.message, preferredStyle: .Alert)
         let okAction = UIAlertAction(title: "ok".localized, style: .Cancel) { _ in }
         alertController.addAction(okAction)
+        
+//        if Environment.scheme == .Development || Environment.scheme == .AdHoc { //TODO: dont show more info in release version?
+//        #if DEBUG
+        let showMoreAction = UIAlertAction(title: "Show More", style: .Default) { _ in
+                let detailAlertController = UIAlertController(title: "Error Detail", message: "\(e)", preferredStyle: .Alert)
+                let detailOkAction = UIAlertAction(title: "ok".localized, style: .Cancel) { _ in }
+                detailAlertController.addAction(detailOkAction)
+                window.rootViewController?.frontmostController.presentViewController(detailAlertController, animated: true) { _ in }
+            }
+            alertController.addAction(showMoreAction)
+//        #endif
+//        }
         window.rootViewController?.frontmostController.presentViewController(alertController, animated: true) { _ in }
         return true
     }

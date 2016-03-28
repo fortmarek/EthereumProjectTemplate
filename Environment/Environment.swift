@@ -18,7 +18,7 @@ enum Environment {
 		case Undefined = "Undefined"
 		var description : String { return rawValue }
 	}
-	static var scheme : Scheme { return Scheme(rawValue: plist["scheme"]! as! String) ?? .Undefined }
+//	static var scheme : Scheme { return Scheme(rawValue: (plist["scheme"] as? String) ?? "") ?? .Undefined } //this no longer works, someone removed it from the script
 	static var appName : String { return plist["appName"]! as! String }
     
     enum Api {
