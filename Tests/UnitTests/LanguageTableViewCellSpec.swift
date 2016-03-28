@@ -15,14 +15,7 @@ class LanguageTableViewCellSpec: QuickSpec {
         
         lazy var playSentence: Action<UIButton, (), NSError> = Action { _ in SignalProducer.empty }
 
-        init() {
-            
-        }
-        
-        deinit{
-            print("deinit" + name.value)
-        }
-        
+        init() {}
     }
     
     override func spec() {
