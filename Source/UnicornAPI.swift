@@ -77,7 +77,7 @@ class UnicornAPI: API {
 	}
 
     func languages() -> SignalProducer<[LanguageEntity], NSError> {
-        return self.network.call(Router.Languages, authHandler:nil, useDisposables: false) { data in
+        return self.network.call(Router.Languages, authHandler:nil, useDisposables: true) { data in
             return rac_decode(data)
         }
     }

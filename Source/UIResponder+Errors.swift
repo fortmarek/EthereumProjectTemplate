@@ -18,6 +18,11 @@ extension ErrorPresentable {
         return "Error at \(NSDate()), title:\(title), message:\(message), instance: \(self)"
     }
 }
+extension NSError : ErrorPresentable {
+    var message : String {
+        return localizedDescription
+    }
+}
 
 extension UIResponder {
     func displayError(e: ErrorPresentable) {

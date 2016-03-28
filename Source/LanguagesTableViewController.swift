@@ -32,18 +32,14 @@ class LanguagesTableViewController: UIViewController {
             })
             .start()
 
+        viewModel.loadLanguages.errors
+            .takeUntil(rac_willDeallocSignal)
+            .observeNext { [weak self] in
+                self?.displayError($0)
+        }
 
-        viewModel.errorMessage.producer
-            .on(next: {[weak self] errorMessage in
-                if let errorMessage = errorMessage {
-                    self?.displayErrorMessage(errorMessage)
-                }
-            })
-            .start()
-
-
-        activityIndicator.rac_animating <~ viewModel.loading.producer
-        tableView.rac_hidden <~ viewModel.loading.producer
+        activityIndicator.rac_animating <~ viewModel.loadLanguages.executing
+        tableView.rac_hidden <~ viewModel.loadLanguages.executing
 
     }
 
@@ -87,17 +83,6 @@ class LanguagesTableViewController: UIViewController {
         if let selected = self.tableView.indexPathForSelectedRow {
             self.tableView.deselectRowAtIndexPath(selected, animated: false)
         }
-    }
-
-    private func displayErrorMessage(errorMessage: String) {
-        let title = L10n.LanguageTableNetworkErrorTitle.string
-        let dismissButtonText = L10n.LanguageTableNetworkErrorDismiss.string
-        let message = errorMessage
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: dismissButtonText, style: .Default) { _ in
-            alert.dismissViewControllerAnimated(true, completion: nil)
-            })
-        self.presentViewController(alert, animated: true, completion: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {

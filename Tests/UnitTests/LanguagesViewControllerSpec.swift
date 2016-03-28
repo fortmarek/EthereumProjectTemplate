@@ -19,7 +19,7 @@ class LanguagesViewControllerSpec: QuickSpec {
         var cellModels: MutableProperty<[LanguageDetailViewModeling]> { return MutableProperty([]) }
         var loading: MutableProperty<Bool>{ return MutableProperty(false) }
         var errorMessage: MutableProperty<String?> { return MutableProperty(nil) }
-        var loadLanguages: Action<(), [LanguageEntity], NSError> { return Action{SignalProducer.empty} }
+        var loadLanguages: Action<(), [LanguageEntity], LoadLanguagesError> { return Action{SignalProducer.empty} }
     }
     
     class LanguageDetailModelingStub:LanguageDetailViewModeling{

@@ -105,9 +105,9 @@ class LanguagesTableViewModelSpec: QuickSpec {
                 expect(cellModels?[1].name.value).toEventually(equal("Czech"))
             }
             
-            it("updates loading property ") {
+            it("updates loadLanguages.executing property.") {
                 var observedValues = [Bool]()
-                viewModel.loading.producer
+                viewModel.loadLanguages.executing.producer
                     .on(next: { observedValues.append($0) })
                     .start()
                 
@@ -118,10 +118,12 @@ class LanguagesTableViewModelSpec: QuickSpec {
             
             
             context("on network error") {
-                it("sets errorMessage property.") {
+                it("reports loadLanguages error.") {
                     let viewModel = LanguagesTableViewModel(api: ErrorStubUnicornApi(), geocoder: GeocoderStub(), locationManager: LocationManagerStub(), detailModelFactory: self.detailFactory)
+                    var error : LoadLanguagesError? = nil
+                    viewModel.loadLanguages.errors.observeNext { error = $0 }
                     viewModel.loadLanguages.apply().start()
-                    expect(viewModel.errorMessage.value).toEventuallyNot(beNil())
+                    expect(error).toEventuallyNot(beNil())
                 }
             }
             
