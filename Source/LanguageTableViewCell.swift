@@ -9,6 +9,7 @@
 import ReactiveCocoa
 import SDWebImage
 
+
 class LanguageTableViewCell: UITableViewCell {
 
     weak var flagImageView: UIImageView!
@@ -17,7 +18,9 @@ class LanguageTableViewCell: UITableViewCell {
     internal var viewModel: LanguageDetailViewModeling? {
         didSet {
             if let viewModel = viewModel {
-                nameLabel.rac_text <~ viewModel.name
+                nameLabel.rac_text <~ viewModel.name.producer.on(disposed: {
+                    print("disposed") }
+                    ,next : { print($0) })
 
                 viewModel.flagURL.producer.startWithNext({[weak self] url in
                     self?.flagImageView.sd_setImageWithURL(url)

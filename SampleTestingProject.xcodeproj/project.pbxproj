@@ -55,6 +55,7 @@
 		6D775D4D1B85DD32002F640D /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D775D4C1B85DD32002F640D /* FoundationExtensions.swift */; };
 		6D7861D51B397903009F8865 /* UIResponder+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7861D41B397903009F8865 /* UIResponder+Errors.swift */; };
 		6DFDD0621B3C5126005D08EA /* KeyboardLayoutGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD0611B3C5126005D08EA /* KeyboardLayoutGuide.swift */; };
+		7975C1081C8EDF7500492A9C /* LanguageTableViewCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7975C1071C8EDF7500492A9C /* LanguageTableViewCellSpec.swift */; };
 		79A24AE01C637162007C7DDB /* Disposing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A24ADF1C637162007C7DDB /* Disposing.swift */; };
 		79A24AE31C63739F007C7DDB /* DisposingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A24AE21C63739F007C7DDB /* DisposingSpec.swift */; };
 		79FB0C131C1AD2D50025C600 /* UIView+Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FB0C121C1AD2D50025C600 /* UIView+Spacer.swift */; };
@@ -157,6 +158,7 @@
 		6D95BB7E1B3BF81100B00B19 /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjackSwift.framework; path = Carthage/Build/iOS/CocoaLumberjackSwift.framework; sourceTree = "<group>"; };
 		6DFDD0611B3C5126005D08EA /* KeyboardLayoutGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutGuide.swift; sourceTree = "<group>"; };
 		75F02EF16C46A63434D5FFBB /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
+		7975C1071C8EDF7500492A9C /* LanguageTableViewCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTableViewCellSpec.swift; sourceTree = "<group>"; };
 		79A24ADF1C637162007C7DDB /* Disposing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposing.swift; sourceTree = "<group>"; };
 		79A24AE21C63739F007C7DDB /* DisposingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisposingSpec.swift; sourceTree = "<group>"; };
 		79FB0C121C1AD2D50025C600 /* UIView+Spacer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Spacer.swift"; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 			isa = PBXGroup;
 			children = (
 				AC5D4BAC1C5EB04700F8CD21 /* LanguagesViewControllerSpec.swift */,
+				7975C1071C8EDF7500492A9C /* LanguageTableViewCellSpec.swift */,
 			);
 			name = ViewTests;
 			sourceTree = "<group>";
@@ -932,6 +935,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7975C1081C8EDF7500492A9C /* LanguageTableViewCellSpec.swift in Sources */,
 				AC5D4BAA1C5EAC3B00F8CD21 /* MemoryLeakConfiguration.swift in Sources */,
 				ACD479AB1C5A635200E85DD3 /* DummyResponse.swift in Sources */,
 				AC5D4BA81C5E86C700F8CD21 /* LanguageDetailViewModelSpec.swift in Sources */,
