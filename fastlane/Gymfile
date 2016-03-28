@@ -11,5 +11,6 @@
 # sdk "iphoneos9.0"
 
 output_directory "./outputs/"
+use_legacy_build_api true
 output_name "App.ipa"
 clean true

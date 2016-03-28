@@ -6,9 +6,6 @@
 
 # Remove the # in front of the line to enable the option
 
-scheme "Development"
-
-open_report true
 clean false
 code_coverage true
 #device "iPhone 6 (9.1)"

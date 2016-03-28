@@ -84,7 +84,7 @@ class LanguageDetailViewController: UIViewController {
         }
 
         self.playIndicator = playIndicator
-        
+
     }
 
 //    var closure:(()->())?

@@ -13,7 +13,7 @@ app_identifier_beta = 'cz.ackee.enterprise.sampletesting.beta' #CHANGE
 app_identifier_appstore = 'cz.ackee.SampleTesting' #CHANGE
 
 inhouse_apple_id = 'enterprise@ackee.cz'
-#inhouse_team_id = '' <-- use if more teams in inhouse account
+inhouse_team_id = 'PXDF48X6VX' 
 
 connect_apple_id = 'ios@ackee.cz' #CHANGE if using client account
 connect_team_id = '3SMVP6VZP8' #<-- CHANGE if more team 
@@ -36,11 +36,11 @@ inhouse_certificate_git = "git@gitlab.ack.ee:Ackee/ios-inhouse-certificates.git"
 
 
 
-fastlane_version "1.55.0"
+fastlane_version "1.57.0"
 
 	before_all do
 		ENV["SLACK_URL"] = slack_url # Webhook URL created in Slack
-	end
+  end
 
 	desc "Installs FixCode which disables the \"Fix Issue\" button in Xcode"
 	  lane :xcode do
@@ -58,109 +58,173 @@ fastlane_version "1.55.0"
     swiftlint
   end
 
-  desc "Runs all unit tests."
-  lane :test do
+  desc "Runs unit, api and ui tests."
+  lane :test do |options|
   	cocoapods
   
-    if is_ci
-      scan(scheme:"Development", skip_slack: false)
-    else
-      scan(scheme:"Development")
+    skip_slack = true
+    open_report = true
+    if is_ci?
+      skip_slack = false
+      open_report = false
     end
+
+    if options[:type] == "api"
+      scheme = "APITests"
+    elsif options[:type] == "ui"
+      scheme = "UITests"
+    elsif options[:type] == "unit"
+      scheme = "Development"
+    else
+      scheme = "AppStore"
+    end
+
+    scan(scheme:scheme, skip_slack: skip_slack, open_report: open_report)
+
   end
 
  
   desc "Submit new **Beta** build to Hockey app"
   lane :beta do
+    #ensure_git_status_clean
+
   	cocoapods
 
   	build_number = number_of_commits
 		increment_build_number(build_number: build_number)
 
-    #Change to match later (non limited by 1 certificate)
+    produce(
+        username: inhouse_apple_id,
+        app_identifier: app_identifier_beta,
+        app_name: app_name_beta,
+        language: app_language,
+        team_id: inhouse_team_id,
+        skip_itc: true
+      )
+
+    #TODO: Change to match later (now limited by 1 certificate)
     sigh(
-    	username: inhouse_apple_id,
-    	app_identifier: enterprise_wildcard # Have to put wildcard here, otherwise new provisioning profile would be created
+      username: inhouse_apple_id,
+      app_identifier: app_identifier_beta, 
+      output_path: "outputs"
     )
+
+    update_project_provisioning(
+       profile: lane_context[SharedValues::SIGH_PROFILE_PATH], # Have to pass Profile path to force use this profile instead whatever is set in xcode
+       build_configuration: "AdHoc"
+     )
 
     #Setup environments, app identifier and app name
     setup_environment(environment: "AdHoc")
 
-    gym(
-    	scheme: "Development",
-		  configuration: "AdHoc",
-		)
+    #Setup badge for beta
+    #badge(shield: "#{get_version_number}-#{number_of_commits}-blue", dark: true)
 
-    if !is_ci
-      upload_to_hockey(environment: "AdHoc")
+    begin
+      gym(
+      	scheme: "Development",
+  		  configuration: "AdHoc",
+        provisioning_profile_path: lane_context[SharedValues::SIGH_PROFILE_PATH],
+        export_team_id: inhouse_team_id
+  		)
 
-      hockey_link = lane_context[SharedValues::HOCKEY_DOWNLOAD_LINK] 
+      if !is_ci
+        upload_to_hockey(environment: "AdHoc")
 
-      slack(
-          message: "New version uploaded to HockeyApp! #{hockey_link}",
-          success: true
-        )
+        hockey_link = lane_context[SharedValues::HOCKEY_DOWNLOAD_LINK] 
+
+        slack(
+            message: "New version uploaded to HockeyApp! #{hockey_link}",
+            success: true
+          )
+      end
+
+    ensure
+      #reset badge app icon
+      # reset_git_repo( #called only after ensure_git_status_clean
+      #   files: [
+      #     "./Resources/Images.xcassets/AppIcon.appiconset/"
+      # ])
     end
+
+    
   end
 
   
   desc "Deploy new version to the App Store (and also hockey app)"
   lane :appstore do |options|
-  	cocoapods
+      #ensure_git_status_clean
+    	cocoapods
 
-  	build_number = number_of_commits
-		increment_build_number(build_number: build_number)
+    	build_number = number_of_commits
+  		increment_build_number(build_number: build_number)
 
-  	#ensure_git_status_clean
-		produce(
-			username: connect_apple_id,
-			app_identifier: app_identifier_appstore,
-    	app_name: app_name_appstore,
-    	language: app_language,
-      team_id: connect_team_id,
-      itc_team_id: connect_team_id
-    )
+      #Setup environments, app identifier and app name
+      setup_environment(environment: "AppStore")
 
-    if !options[:skip_snapshot]
-      snapshot
-    end
-
-    match(
-    		username: connect_apple_id,
-    		app_identifier: app_identifier_appstore,
+    	#ensure_git_status_clean
+  		produce(
+  			username: connect_apple_id,
+  			app_identifier: app_identifier_appstore,
+      	app_name: app_name_appstore,
+      	language: app_language,
         team_id: connect_team_id,
-        type: "appstore",
-        git_url: production_certificate_git
-    	)
-
-    #Setup environments, app identifier and app name
-    setup_environment(environment: "AppStore")
-
-    gym(
-		  scheme: "AppStore",
-      configuration: "AppStore",
-		  clean: true,
-		)
-		
-		upload_to_hockey(environment: "AppStore")
-
-    if is_ci 
-      deliver(
-    		username: connect_apple_id,
-        team_id: connect_team_id,
-        force: true
-    	)
-    else
-      deliver(
-        username: connect_apple_id,
-        team_id: connect_team_id,
+        itc_team_id: connect_team_id
       )
-    end
 
-    slack(
-        message: "Deployed new version to AppStore!",
-        success: true
-      )
+      if !options[:skip_snapshot]
+        snapshot
+      end
+
+      match(
+      		username: connect_apple_id,
+      		app_identifier: app_identifier_appstore,
+          team_id: connect_team_id,
+          type: "appstore",
+          git_url: production_certificate_git
+      	)
+
+      
+      # To force provisioning profile on the build we have to update it in the project info file
+      # This is necessary because we have two accounts (one for enterprise, one for itunes connect)
+      # If somebody picks different team in the xcode project settings it would not build, but crash on entitlements error
+      UUID =  ENV["sigh_#{app_identifier_appstore}_appstore"]
+      profile = File.expand_path("~/Library/MobileDevice/Provisioning\ Profiles/#{UUID}.mobileprovision") #This is dirty, because Xcode might change location of profiles, but so far only work-around
+
+      update_project_provisioning(
+        profile: profile, # Have to pass Profile path to force use this profile instead whatever is set in xcode
+        build_configuration: "AppStore"
+       )
+
+      gym(
+  		  scheme: "AppStore",
+        configuration: "AppStore",
+  		  clean: true,
+  		)
+  		
+      if !is_ci
+  		  upload_to_hockey(environment: "AppStore")
+      end
+
+      if is_ci 
+        deliver(
+      		username: connect_apple_id,
+          team_id: connect_team_id,
+          force: true
+      	)
+      else
+        deliver(
+          username: connect_apple_id,
+          team_id: connect_team_id,
+        )
+      end
+
+      slack(
+          message: "Deployed new version to AppStore!",
+          success: true
+        )
+
+
   end
 
   private_lane :upload_to_hockey do |options|
@@ -231,7 +295,7 @@ fastlane_version "1.55.0"
   		end
 
 
-		  src_dir = File.expand_path("../../FileTemplates", __FILE__)
+		  src_dir = File.expand_path("../userdata/FileTemplates", __FILE__)
 		  template_folders = Dir.entries(src_dir)
 
 		  template_folders.each do |template_folder|
@@ -269,7 +333,7 @@ fastlane_version "1.55.0"
         FileUtils.mkdir_p install_dir
       end
 
-      src_dir = File.expand_path("../../CodeSnippets", __FILE__)
+      src_dir = File.expand_path("../userdata/CodeSnippets", __FILE__)
       code_snippets =  Dir.entries(src_dir).select{ |e| File.extname(e) == ".codesnippet"  }
 
       code_snippets.select.each do |snippet|
@@ -295,7 +359,7 @@ fastlane_version "1.55.0"
   desc "Sets environment.plist app_name and app_bundle_id according to scheme"
   lane :switch_environment do |options|
   	if options[:environment]
-  		setup_environment(options)
+      setup_environment(options)
   	else
   		raise "Missing environment: in options"
   	end
@@ -343,27 +407,160 @@ fastlane_version "1.55.0"
   		
       update_info_plist(
         plist_path: "Source/Project-Info.plist",
-        display_name: display_name,
-        app_identifier:  app_identifier
+        display_name: display_name
+        
+      )
+
+      update_app_identifier(
+          app_identifier:  app_identifier,
+          plist_path: "Source/Project-Info.plist"
       )
 
 			#sh "./utils/generate_preprocess_file.sh '#{display_name}' '#{app_identifier}' ../#{environment_plist_directory}/"
   end
 
-  after_all do |lane|
-    if !is_ci
-      #Implicitly set environment to Development on local machine
-      setup_environment(environment: "Development")
+  desc "Copies and renames the project into new directory"
+  lane :copy do |options|
+    main_dir = File.expand_path("../", File.dirname(__FILE__))
+
+    current_project_file = Dir.entries(main_dir).select{|e| File.extname(e) == ".xcodeproj"}
+    if current_project_file.count == 0
+      raise ".xcodeproj file not found"
+    end 
+
+    current_project_name = File.basename( File.expand_path(current_project_file[0], main_dir), ".*" )
+
+    Helper.log.info "Current project name: #{current_project_name}"
+
+    new_project_name = options[:project_name]
+    
+    if !new_project_name
+      new_project_name = prompt(text: "Please enter new project name:")
+    end
+
+    project_path = options[:project_path]
+    
+   
+
+    begin
+
+      if !project_path
+        project_path = prompt(text: "Please enter path for the new project:")
+      end
+
+      project_path = File.expand_path(project_path, main_dir)
+      
+      if ! File.exists? project_path
+          Helper.log.info "Creating new project directory #{project_path}"
+          FileUtils.mkdir_p project_path
+      else
+        if !File.directory?(project_path)
+          raise "Entered path is not a directory"
+        elsif !(Dir.entries(project_path) - %w{ . .. .git .DS_Store }).empty?
+          raise "The directory is not empty"
+          #print dir_without_hidden
+        end
+      end
+
+    rescue RuntimeError => e
+      Helper.log.warn e.message
+      project_path = nil
+      retry
+    end
+
+
+    git_repo = options[:git_repo]
+    if !git_repo
+      git_repo = prompt(text: "Please enter git repository remote:")
+    end
+
+
+    # Copy & clean
+    sh "cd ../ && rsync -r . '#{project_path}' && cd #{project_path} && git clean -xdf"
+
+    
+    def change_project_name_recursively (path, file_types, replace_from, replace_to)
+        
+        if File.directory? path
+          file_names = (Dir.entries(path) - %w{ . ..})
+        else
+          file_names = [path]
+        end
+
+        file_names.each do |file_name|
+          
+          file_name = File.expand_path(file_name, path)
+          Helper.log.info  "#{file_name}" 
+          if !file_types || file_types.include?(File.extname(file_name)) 
+
+            text = File.read(file_name)
+            new_contents = text.gsub(/#{replace_from}/, replace_to)
+
+            # To merely print the contents of the file, use:
+            #puts new_contents
+
+            # To write changes to the file, use:
+            File.open(file_name, "w") {|file| file.puts new_contents }
+          elsif File.directory? file_name
+            change_project_name_recursively(file_name, file_types, replace_from, replace_to)
+          end
+      end
+    end
+
+    source_file_types = [".swift", ".h", ".m"]
+
+    #Change comments in files
+    change_project_name_recursively("#{project_path}/Source/", source_file_types, current_project_name, new_project_name)
+    change_project_name_recursively("#{project_path}/Tests/", source_file_types, current_project_name, new_project_name)
+
+    #Change project file and rename it
+    change_project_name_recursively("#{project_path}/#{current_project_name}.xcodeproj", [".pbxproj", ".xcscheme"], "SampleTestingProject", new_project_name)
+    sh "mv '#{project_path}/#{current_project_name}.xcodeproj' '#{project_path}/#{new_project_name}.xcodeproj'"
+
+    #Remove workspace
+    sh "rm -rf '#{project_path}/#{current_project_name}.xcworkspace'"
+
+    #Change project name in podfile
+    change_project_name_recursively("#{project_path}/Podfile", nil, current_project_name, new_project_name)
+    sh "rm '#{project_path}/Podfile.lock'"
+
+    #Install pods
+    sh "cd #{project_path} && pod install"
+
+    #Remove old git
+    sh "rm -rf '#{project_path}/.git/'"
+
+    if git_repo
+      #Set new git origin
+      sh "cd #{project_path} && git init && git add . && git remote add origin '#{git_repo}'"
     end
   end
 
+  after_all do |lane|
+    after_success_error(lane: lane)
+  end
+
   error do |lane, exception|
-  	if is_ci
+    after_success_error(lane: lane)
+    if is_ci
       slack(
         message: exception.message,
         success: false
       )
     end
   end
+
+  private_lane :after_success_error do |options|
+    if !is_ci && "#{options[:lane]}" != "switch_environment"
+      #Implicitly set environment to Development on local machine
+      setup_environment(environment: "Development")
+    end
+
+    # if is_ci? && ("#{options[:lane]}" == "appstore" || "#{options[:lane]}" == "beta")
+    #   reset_git_repo
+    # end
+  end
+
+
   
 #end

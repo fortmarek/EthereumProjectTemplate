@@ -123,20 +123,3 @@ func handleError(e: DecodeError) -> NSError {
     }
 
 }
-
-extension NSURL : Decodable {
-    public static func decode(json: JSON) -> Decoded<NSURL> {
-        switch json {
-        case .String(let s):
-            if let url = NSURL(string: s) {
-                return .Success(url)
-            } else if let url = NSURL(string: s.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!) {
-                return .Success(url)
-            }
-
-            return .Failure(DecodeError.Custom("Not a valid URL."))
-        default:
-            return .Failure(DecodeError.TypeMismatch(expected: "String", actual: json.description))
-        }
-    }
-}

@@ -8,31 +8,46 @@ Nainstaluj fastlane
 sudo gem install fastlane
 ```
 
-Stáhni fixcode a file templaty
+### Stáhni fixcode a file templaty
 ```
 fastlane xcode
 ```
 
 # Použití Fastlane
 
-Posláni beta verze na hockey app
+#### Posláni beta verze na hockey app
 ```
 fastlane beta
 ```
 
-Posláni verze do appstore
+### Posláni verze do appstore
 ```
 fastlane appstore
 ```
 
-Testy
+### Testy
 ```
+//Otestuj vse
 fastlane test
+
+//Specificke testy
+fastlane test type:api
+fastlane test type:ui
 ```
 
-SwiftLint a MemoryLeak check
+### Screenshoty
+```
+fastlane screenshots
+```
+
+### SwiftLint a MemoryLeak check
 ```
 fastlane analyze
+```
+
+### Zkopíruje skeleton do nové složky, nastaví jméno, promaže git a nastaví git remote
+```
+fastlane copy
 ```
 
 Kompletní seznam všech metod zde:
@@ -65,6 +80,27 @@ V xcode už ideálně nic neměním.
 
 # Testování
 
+## Typy a spouštění testů
+Máme tři typy testů
+
+### UnitTests
+Většina z testů, data si mockuju přes dummy objekty (nepřipojuju se k API)
+### APITests
+Testy které mají za úkol zajistit že API jede v pořádku. Budou se na jenkinsovi pouštět periodicky
+### UITests
+UI testy použité mimo jiné na generování screenshotů
+
+
+### Spouštění
+Test spustím přes `Command+U`
+
+Protože APITesty a UITesty trvají dlouho, na `Development` scheme se mi defaultně spustí jenom `UnitTests`. 
+
+Pokud chci otestovat APITests a UnitTests spustím je přes jejich scheme
+
+
+
+## Quick
 Používáme framework **Quick** 
 https://github.com/Quick/Quick
 
@@ -127,7 +163,9 @@ Pokud chci delat neco casove narocnejsiho napr. vytvoreni in-memory databaze pou
   }
 ```
 
-##Mocking
+
+
+## Mocking
 
 Mam view model co zavisi na CLLocationManager a chci otestovat co stane kdyz se zmeni poloha
 
@@ -173,7 +211,7 @@ beforeEach {
 }
 ```
 
-##SharedExample
+## SharedExample
 Pokud nejaka kriteria pouzivam vicekrat, muzu si usetrit psani a pouzit Configuration. 
 
 ```
@@ -228,6 +266,25 @@ itBehavesLike("object without leaks"){
    }
 }
 ```
+
+## Testing Troubleshooting
+Xcode má občas svoje dny a komplikuje nám testování. Tady je pár věcí který se můžou stát:
+
+Xcode hlásí že nemůže načíst Quick, Nimble nebo jiný framework. Pokud ale spustím testy, vše proběhne v pořádku.
+
+* Podívám se jestli mám vybraný správný scheme (`Development` pro Unit Testy, `APITests` pro APITesty, a `UITests` pro UITesty)
+* Pokud se pořád nechytá, udělám Clean a Build `Development` scheme a také testovací scheme.
+* Zabiju kozu jako obět bohům XCode
+* Podívám se do `Podfile`, jestli se testovací pody načítají i pro hlavní target
+* Smažu `Pods/` a dám znovu `pod install`
+
+
+XCode spustí testy ale výsledek jenom rychle problikne a hned zmizí v Test Navigatoru
+
+* Po cestě do práce začnu přispívat bezdomovcům abych si zlepšil karmu 
+* Zrestartuju XCode, většinou to pomůže 
+
+
 
 # ViewModel a ViewModeling
 
@@ -304,7 +361,7 @@ init(api: API, imageResizer: ImageResizing){
 To ale znamena predavani dalsich zavislosti, a spousta psani kodu. A kazda dalsi vrstva si musi zavislosti predavat. Pri vetsim mnozstvi zavislosti pak nepisu nic jinyho nez injekty.
 
 
-##Swinject
+## Swinject
 https://github.com/Swinject/Swinject
 
 Misto  toho si zavislosti nadefinuju vsechny na jednom miste:
@@ -343,7 +400,7 @@ Typicky se container inicializuje v AppDelegate, ale pokud je toho tam víc hů�
 Proto jsem jsem to dal do speciální třídy `AppContainer`
 
 
-##Factories
+## Factories
 
 Tohle je fajn, ale to nam uplne neresi problem s vytvarenim novych objektu uvnitr zavislosti
 
@@ -407,13 +464,13 @@ Z toho vim, ze se pripojuje k API, deje se tam geocoding, pouziva se lokace a pu
 Pozn: Samozrejme nepocitam ze bysme vsude pouzivali Factory pro kazdej pushnutej controller, tohle je trochu extremni pripad. Zalezi na tom co chci testovat, a pocitam ze controllery budeme testovat minimalne.
 
 
-#Templaty
+# Templaty
 
 Vzhledem k tomu ze vytvareni ViewControlleru s ViewModelem delame furt dokola, udelal jsem na to File Template. 
 
 Pridal jsem tam taky templaty od Quick na vytvareni testu.
 
-Pokud byste chteli pridat dalsi file templaty, staci je pridat do slozky FileTemplates a zavolat
+Pokud byste chteli pridat dalsi file templaty, staci je pridat do slozky `fastlane\userdata\FileTemplates` a zavolat
 
 ```
 fastlane xcode
@@ -424,11 +481,18 @@ coz prekopiruje vsechny templaty do xcode slozky.
 
 ![enter image description here](http://new.tinygrab.com/1430ee5332d82817dfa2e51130b5fd2a2a3afa2af1.png)
 
-#Snippety
+# Snippety
 
-TODO: Asi bych udelal neco podobnyho pro snippety, zacal jsem je ted docela pouzivat.
+Stejne tak jde vytvaret CodeSnippety najdete je ve slozce `fastlane\userdata\CodeSnippets`
 
-#Snapshot
+Pak nezapomente zavolat
+
+```
+fastlane xcode 
+```
+
+
+# Snapshot
 Fastlane nám taky dokáže ulehčit pořízování snapshotů.
 
 Dejme tomu že chci pořídit screenshoty aplikace ve 3 různých jazycích na 3 zařízeních. To je práce tak na hodinu. A musím to dělat znova s každou verzí.
@@ -479,7 +543,7 @@ fastlane appstore
 
 fastlane automaticky screenshoty vygeneruje a pošle je do iTunes Connect
 
-#Swiftlint
+# Swiftlint
 
 Když zbuilduju aplikaci, swiftlint mi automaticky zkontroluje `Source` a zobrazi mi warningy
 
@@ -493,15 +557,11 @@ Pokud chci opravit nalezene chyby (ty co jsou opravitelne)
 swiftlint autocorrect
 ```
 
-#Todos
-- match
+# Todos
 - lepsi prace s NSError
 - Networking
 - Groot 
 
-#K Aplikaci
+# K Aplikaci
 
 Kdyby jste se divili k cemu je vlastne ta example aplikace, kouknete sem: http://whostolemyunicorn.com/
-
-
-

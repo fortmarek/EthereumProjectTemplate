@@ -55,7 +55,7 @@ class LanguageDetailViewModelSpec: QuickSpec {
             
             it("sets all properties"){
                 expect(viewModel.name.value).toEventually(equal(languageEntity.name))
-                expect(viewModel.flagURL.value).toEventually(equal(languageEntity.flag))
+                expect(viewModel.flagURL.value.URLString).toEventually(equal(languageEntity.flag))
                 expect(viewModel.sentence.value).toEventually(equal(languageEntity.sentence))
             }
             
@@ -114,6 +114,8 @@ class LanguageDetailViewModelSpec: QuickSpec {
                     expect(viewModel.canPlaySentence.value).toEventually(beTrue())
                 }
             }
+            
+            
             
             itBehavesLike("object without leaks"){
                 MemoryLeakContext{
