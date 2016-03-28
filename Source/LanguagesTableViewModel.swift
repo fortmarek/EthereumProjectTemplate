@@ -9,9 +9,10 @@
 import ReactiveCocoa
 import CoreLocation
 
+
 enum LoadLanguagesError : ErrorType {
-    case NetworkError(NSError)
-    case GeocodingError(NSError)
+    case Request(RequestError)
+    case Geocoding(NSError)
 }
 extension LoadLanguagesError : ErrorPresentable {
     var title : String? { //custom title
@@ -19,8 +20,8 @@ extension LoadLanguagesError : ErrorPresentable {
     }
     var message : String { //underlying error description
         switch self {
-        case .NetworkError(let e): return e.message
-        case .GeocodingError(let e): return e.message
+        case .Request(let e): return e.message
+        case .Geocoding(let e): return e.message
         }
     }
 }
@@ -66,11 +67,11 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
     
     lazy var loadLanguages: Action<(), [LanguageEntity], LoadLanguagesError> = Action { [unowned self] _ in
         self.api.languages()
-            .mapError { .NetworkError($0) }
+            .mapError { .Request($0) }
             .flatMap(.Latest) { languages -> SignalProducer<[LanguageEntity], LoadLanguagesError> in
                 if let userLocation = self.locationManager.location {
                     return self.sortLanguageByDistanceFromUserLocation(languages.filter {$0.abbr.characters.first != "_"}, userLocation: userLocation)
-                        .mapError { .GeocodingError($0) }
+                        .mapError { .Geocoding($0) }
                 } else {
                     //Continue if we don't have user location
                     return SignalProducer<[LanguageEntity], LoadLanguagesError>(value: languages)

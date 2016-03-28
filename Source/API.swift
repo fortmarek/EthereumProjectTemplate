@@ -9,5 +9,5 @@
 import ReactiveCocoa
 
 protocol API {
-    func languages() -> SignalProducer<[LanguageEntity], NSError>
+    func languages() -> SignalProducer<[LanguageEntity], RequestError>
 }

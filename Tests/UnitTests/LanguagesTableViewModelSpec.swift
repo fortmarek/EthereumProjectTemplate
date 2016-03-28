@@ -17,8 +17,8 @@ class LanguagesTableViewModelSpec: QuickSpec {
     
     // MARK: Stub
     class GoodStubUnicornApi: API {
-        func languages() -> SignalProducer<[LanguageEntity], NSError> {
-            return SignalProducer<[LanguageEntity], NSError>{sink, disposable in
+        func languages() -> SignalProducer<[LanguageEntity], RequestError> {
+            return SignalProducer<[LanguageEntity], RequestError>{sink, disposable in
                 sink.sendNext(dummyResponse)
                 sink.sendCompleted()
             }
@@ -26,16 +26,16 @@ class LanguagesTableViewModelSpec: QuickSpec {
     }
     
     class ErrorStubUnicornApi: API {
-        func languages() -> SignalProducer<[LanguageEntity], NSError> {
+        func languages() -> SignalProducer<[LanguageEntity], RequestError> {
             return SignalProducer { observer, disposable in
-                observer.sendFailed(NSError(domain: "", code: 0, userInfo: nil))
+                observer.sendFailed(.Network(NSError(domain: "", code: 0, userInfo: nil)))
                 }
                 .observeOn(QueueScheduler())
         }
     }
     
     class StubNetwork: Networking {
-        func call<T>(route: APIRouter, authHandler: AuthHandler?, useDisposables: Bool, action: (AnyObject -> (SignalProducer<T, NSError>))) -> SignalProducer<T, NSError> {
+        func call(route: APIRouter, authHandler: AuthHandler?, useDisposables: Bool) -> SignalProducer<AnyObject, NSError> {
             return SignalProducer.empty
         }
     }
