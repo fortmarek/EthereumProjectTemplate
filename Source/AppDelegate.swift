@@ -48,6 +48,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BITHockeyManagerDelegate 
 		window?.makeKeyAndVisible()
 		window?.tintColor = UIColor.blackColor()
 
+        enum E : ErrorType, ErrorPresentable {
+            case OnlyCase
+            var message : String { return "m" }
+        }
+        let e  = E.OnlyCase
+        self.displayError(e)
+        
 		return true
 	}
 

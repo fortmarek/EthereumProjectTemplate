@@ -56,6 +56,7 @@
 		6DFDD0621B3C5126005D08EA /* KeyboardLayoutGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD0611B3C5126005D08EA /* KeyboardLayoutGuide.swift */; };
 		794BB3401CA9917F004CC4D9 /* LanguageTableViewCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79419A5B1CA9848A00C767F1 /* LanguageTableViewCellSpec.swift */; };
 		794BB3431CA991A0004CC4D9 /* DisposingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794BB3411CA9919D004CC4D9 /* DisposingSpec.swift */; };
+		794BB3451CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794BB3441CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift */; };
 		79A24AE01C637162007C7DDB /* Disposing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A24ADF1C637162007C7DDB /* Disposing.swift */; };
 		79FB0C131C1AD2D50025C600 /* UIView+Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FB0C121C1AD2D50025C600 /* UIView+Spacer.swift */; };
 		ACC810C81C624AFB0080266A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACC810C41C624AEF0080266A /* Info.plist */; };
@@ -172,6 +173,7 @@
 		75F02EF16C46A63434D5FFBB /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
 		79419A5B1CA9848A00C767F1 /* LanguageTableViewCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTableViewCellSpec.swift; sourceTree = "<group>"; };
 		794BB3411CA9919D004CC4D9 /* DisposingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisposingSpec.swift; sourceTree = "<group>"; };
+		794BB3441CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+FrontmostController.swift"; sourceTree = "<group>"; };
 		7975C1071C8EDF7500492A9C /* LanguageTableViewCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTableViewCellSpec.swift; sourceTree = "<group>"; };
 		79A24ADF1C637162007C7DDB /* Disposing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposing.swift; sourceTree = "<group>"; };
 		79FB0C121C1AD2D50025C600 /* UIView+Spacer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Spacer.swift"; sourceTree = "<group>"; };
@@ -584,6 +586,7 @@
 				6D775D4C1B85DD32002F640D /* FoundationExtensions.swift */,
 				6D40F8391BB18D0D0079C917 /* Reachability+RAC.swift */,
 				79A24ADF1C637162007C7DDB /* Disposing.swift */,
+				794BB3441CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1066,6 +1069,7 @@
 				ACD479C21C5C14BE00E85DD3 /* Geocoding.swift in Sources */,
 				B4EE778F1B28A61700ED956B /* UIKitExtensions.swift in Sources */,
 				6D775D4D1B85DD32002F640D /* FoundationExtensions.swift in Sources */,
+				794BB3451CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift in Sources */,
 				ACD4798D1C582D1F00E85DD3 /* Networking.swift in Sources */,
 				ACD4798B1C582BFC00E85DD3 /* Network.swift in Sources */,
 				79A24AE01C637162007C7DDB /* Disposing.swift in Sources */,

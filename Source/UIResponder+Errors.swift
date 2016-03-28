@@ -8,109 +8,46 @@
 
 import UIKit
 
-public typealias ErrorHandlerCompletion = (res: ErrorHandlingResult, handledBy: ErrorHandlerType) -> Void
-
-public protocol ErrorHandlerType {
-
-	func errorHandlingStep(error: NSError, severity: ErrorSeverity, sender: AnyObject?, userInfo: [NSObject: AnyObject]?, completion: ErrorHandlerCompletion?) -> (hasCompletion: Bool, stop: Bool) //return stop==false to pass error to nextResponder.
+protocol ErrorPresentable {
+    var title : String? { get }
+    var message : String { get }
 }
-
-public class DefaultErrorHandler: NSObject, ErrorHandlerType, UIAlertViewDelegate {
-
-	let isAdHoc = { return Environment.scheme == .AdHoc } //TODO: get from environment
-
-	var pendingCompletions: [NSObject : ErrorHandlerCompletion] = [:]
-
-	public func errorHandlingStep(error: NSError, severity: ErrorSeverity, sender: AnyObject?, userInfo: [NSObject: AnyObject]?, completion: ErrorHandlerCompletion?) -> (hasCompletion: Bool, stop: Bool) {
-//		logE("Error: \(error), severity: \(severity), sender: \(sender), userInfo: \(userInfo)")
-
-		var hasCompletion = false
-		func presentError(messagePrefix: String = "") {
-			let alert = UIAlertView(title: "Error", message: "\(messagePrefix) \(error)", delegate: self, cancelButtonTitle: NSLocalizedString("OK", comment: ""))
-			alert.show()
-			if let completion = completion {
-				self.pendingCompletions[alert] = completion
-				hasCompletion = true
-			}
-		}
-
-		switch severity {
-		case .Debug:
-			if isAdHoc() {
-				presentError()
-			}
-		case .InformUser:
-			presentError()
-		case .UserAction:
-			let message = "An error that requires user action was not handled, the app may misbehave."
-//			logE("\(message)")
-			if isAdHoc() {
-				presentError(message)
-			}
-		}
-		return (hasCompletion: hasCompletion, stop: false)
-	}
-
-	public func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-		if let completion = pendingCompletions[alertView] {
-			completion(res: .AlertAction(buttonIndex: buttonIndex, actionIdentifier: "ok", userInfo: nil), handledBy: self)
-			pendingCompletions.removeValueForKey(alertView)
-		}
-	}
+extension ErrorPresentable {
+    var title : String? { return nil }
+    var debugString: String {
+        return "Error at \(NSDate()), title:\(title), message:\(message), instance: \(self)"
+    }
 }
 
 extension UIResponder {
-
-	public static var globalErrorHandlers: [ErrorHandlerType] = [DefaultErrorHandler()]
-
-	public func handleError(error: NSError, severity: ErrorSeverity = .Debug, sender: AnyObject? = nil, userInfo: [NSObject: AnyObject]? = nil, completion: ErrorHandlerCompletion? = nil) -> [ErrorHandlerType] { //returns array of handler objects that have promised to call the completion block. Note: completion block may get called multiple times and may even get called before returning from this method.
-		var haveCompletion: [ErrorHandlerType] = []
-		var optResponder: UIResponder? = self
-		while let responder = optResponder {
-			var stop: Bool = false
-			if let handler = responder as? ErrorHandlerType {
-				let (hasCompl, s) = handler.errorHandlingStep(error, severity: severity, sender: sender, userInfo: userInfo, completion: completion)
-				stop = s
-				if hasCompl {
-					haveCompletion.append(handler)
-				}
-			}
-			optResponder = stop ? nil : responder.nextResponder()
-		}
-		for handler in UIResponder.globalErrorHandlers {
-			let (hasCompl, stop) = handler.errorHandlingStep(error, severity: severity, sender: sender, userInfo: userInfo, completion: completion)
-			if hasCompl {
-				haveCompletion.append(handler)
-			}
-			if stop {
-				break
-			}
-		}
-
-		return haveCompletion
-
-	}
+    func displayError(e: ErrorPresentable) {
+        if (self as? ErrorPresenting)?.presentError(e) == true { //stop
+            return
+        }else {
+            nextResponder()?.displayError(e)
+        }
+    }
 }
 
-
-public enum ErrorHandlingResult {
-	case Success(userInfo: [NSObject:AnyObject]?)
-	case Failure(newError: NSError?, userInfo: [NSObject:AnyObject]?)
-	case AlertAction(buttonIndex: Int, actionIdentifier: String?, userInfo: [NSObject:AnyObject]?)
-	case CantReproduce(userInfo: [NSObject:AnyObject]?) // When the handler tried to fix the error, it had already been fixed (probably by some other handler in the chain)
-	case Custom(name: String, userInfo: [NSObject:AnyObject]?) //(custom result name, userInfo)
+protocol ErrorPresenting {
+    func presentError(e: ErrorPresentable) -> Bool
 }
 
-public enum ErrorSeverity {
-	case Debug
-	case InformUser
-	case UserAction
-
-	var description: String {
-		switch self {
-		case .Debug: return "Debug"
-		case .InformUser: return "InformUser"
-		case .UserAction: return "UserAction"
-		}
-	}
+extension AppDelegate : ErrorPresenting {
+    func presentError(e : ErrorPresentable) -> Bool {
+        defer {
+            logError(e)
+        }
+        guard let window = UIApplication.sharedApplication().keyWindow else { return false }
+        let alertController = UIAlertController(title: e.title ?? "error".localized, message: e.message, preferredStyle: .Alert)
+        let okAction = UIAlertAction(title: "ok".localized, style: .Cancel) { _ in }
+        alertController.addAction(okAction)
+        window.rootViewController?.frontmostController.presentViewController(alertController, animated: true) { _ in }
+        return true
+    }
+    
+    private func logError(e : ErrorPresentable) {
+        print(e.debugString)
+        //if you use any console or logger library, call it here...
+    }
 }
