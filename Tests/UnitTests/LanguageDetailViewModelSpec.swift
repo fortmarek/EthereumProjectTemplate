@@ -71,7 +71,7 @@ class LanguageDetailViewModelSpec: QuickSpec {
                     viewModel = LanguageDetailViewModel(language: languageEntity, synthetizer: synthetizer)
                 }
                 it ("does not allow to play sentence"){
-                    expect(viewModel.canPlaySentence.value).toEventuallyNot(beTrue())
+                    expect(viewModel.playSentence.enabled.value).toEventuallyNot(beTrue())
                     viewModel.playSentence.apply(UIButton()).start()
                     expect(synthetizer.speaked).toEventuallyNot(beTrue())
                 }
@@ -82,10 +82,10 @@ class LanguageDetailViewModelSpec: QuickSpec {
                 it ("does not allow to play another sentence"){
                     synthetizer.isSpeaking.value = true
                     
-                    expect(viewModel.canPlaySentence.value).toEventuallyNot(beTrue())
+                    expect(viewModel.playSentence.enabled.value).toEventuallyNot(beTrue())
                     
                     synthetizer.isSpeaking.value = false
-                    expect(viewModel.canPlaySentence.value).toEventually(beTrue())
+                    expect(viewModel.playSentence.enabled.value).toEventually(beTrue())
                 }
             }
             
@@ -97,7 +97,7 @@ class LanguageDetailViewModelSpec: QuickSpec {
                 }
                 
                 it ("does not allow to play sentence"){
-                    expect(viewModel.canPlaySentence.value).toEventuallyNot(beTrue())
+                    expect(viewModel.playSentence.enabled.value).toEventuallyNot(beTrue())
                     viewModel.playSentence.apply(UIButton()).start()
                     expect(synthetizer.speaked).toEventuallyNot(beTrue())
                 }
@@ -111,7 +111,7 @@ class LanguageDetailViewModelSpec: QuickSpec {
                 it ("allows to play again"){
                     viewModel.playSentence.apply(UIButton()).start()
                     
-                    expect(viewModel.canPlaySentence.value).toEventually(beTrue())
+                    expect(viewModel.playSentence.enabled.value).toEventually(beTrue())
                 }
             }
             

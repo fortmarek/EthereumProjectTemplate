@@ -105,7 +105,7 @@ class LanguageDetailViewController: UIViewController {
         self.sentenceLabel.rac_text <~ viewModel.sentence
 
         self.playButton.addTarget(self.viewModel.playSentence.unsafeCocoaAction, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
-        self.playButton.rac_enabled <~ viewModel.canPlaySentence
+        self.playButton.rac_enabled <~ viewModel.playSentence.enabled
         self.playButton.rac_hidden <~ viewModel.isSpeaking
         self.playIndicator.rac_animating <~ viewModel.isSpeaking
 

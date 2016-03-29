@@ -13,10 +13,9 @@ protocol LanguageDetailViewModeling {
     var name: MutableProperty<String> { get }
     var sentence: MutableProperty<String> { get }
     var flagURL: MutableProperty<NSURL> { get }
-    var canPlaySentence: MutableProperty<Bool> { get }
     var isSpeaking: MutableProperty<Bool> { get }
 
-    var playSentence: Action<UIButton, (), NSError> {get}
+    var playSentence: Action<AnyObject, (), NSError> {get}
 
 }
 
@@ -25,7 +24,6 @@ class LanguageDetailViewModel: LanguageDetailViewModeling {
     let flagURL: MutableProperty<NSURL>
     let sentence: MutableProperty<String>
     let language_code: MutableProperty<String?>
-    let canPlaySentence: MutableProperty<Bool>
     let isSpeaking: MutableProperty<Bool>
 
     private let language: LanguageEntity
@@ -40,27 +38,22 @@ class LanguageDetailViewModel: LanguageDetailViewModeling {
         self.language_code = MutableProperty(language.language_code)
         self.synthetizer = synthetizer
 
-        self.canPlaySentence = MutableProperty(false)
         self.isSpeaking = MutableProperty(false)
 
         self.setupBindings()
     }
 
     func setupBindings() {
-        if let code = language.language_code where self.synthetizer.canSpeakLanguage(code) {
-            canPlaySentence <~ self.synthetizer.isSpeaking.producer.map {!$0}
-        }
-
         isSpeaking <~ self.synthetizer.isSpeaking
     }
 
-    var playSentence: Action<UIButton, (), NSError> {
-        return Action(enabledIf: canPlaySentence) { _ in
-            if let code = self.language.language_code {
-                return self.synthetizer.speakSentence(self.language.sentence, language: code)
-            }
-
-            return SignalProducer.empty
+    lazy var playSentence: Action<AnyObject, (), NSError> = { [unowned self] in
+        let canPlaySentence = self.language.language_code.flatMap { self.synthetizer.canSpeakLanguage($0) } == true ?
+            AnyProperty(initialValue: false, producer: self.synthetizer.isSpeaking.producer.map {!$0}) :
+            AnyProperty(ConstantProperty(false))
+        return Action<AnyObject, (), NSError>(enabledIf: canPlaySentence) { [unowned self] _ in
+            let code = self.language.language_code! //if theres no code, this action is disabled
+            return self.synthetizer.speakSentence(self.language.sentence, language: code)
         }
-    }
+    }()
 }

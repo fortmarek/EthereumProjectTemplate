@@ -10,10 +10,9 @@ class LanguageTableViewCellSpec: QuickSpec {
         let name = MutableProperty("")
         let sentence = MutableProperty("")
         let flagURL = MutableProperty<NSURL>(NSURL())
-        let canPlaySentence = MutableProperty(true)
         let isSpeaking = MutableProperty(false)
         
-        lazy var playSentence: Action<UIButton, (), NSError> = Action { _ in SignalProducer.empty }
+        lazy var playSentence: Action<AnyObject, (), NSError> = Action { _ in SignalProducer.empty }
 
         init() {}
     }
