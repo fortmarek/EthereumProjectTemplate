@@ -15,7 +15,7 @@ protocol LanguageDetailViewModeling {
     var flagURL: MutableProperty<NSURL> { get }
     var isSpeaking: MutableProperty<Bool> { get }
 
-    var playSentence: Action<AnyObject, (), NSError> {get}
+    var playSentence: Action<AnyObject, (), SpeakError> {get}
 
 }
 
@@ -47,11 +47,11 @@ class LanguageDetailViewModel: LanguageDetailViewModeling {
         isSpeaking <~ self.synthetizer.isSpeaking
     }
 
-    lazy var playSentence: Action<AnyObject, (), NSError> = { [unowned self] in
+    lazy var playSentence: Action<AnyObject, (), SpeakError> = { [unowned self] in
         let canPlaySentence = self.language.language_code.flatMap { self.synthetizer.canSpeakLanguage($0) } == true ?
             AnyProperty(initialValue: false, producer: self.synthetizer.isSpeaking.producer.map {!$0}) :
             AnyProperty(ConstantProperty(false))
-        return Action<AnyObject, (), NSError>(enabledIf: canPlaySentence) { [unowned self] _ in
+        return Action(enabledIf: canPlaySentence) { [unowned self] _ in
             let code = self.language.language_code! //if theres no code, this action is disabled
             return self.synthetizer.speakSentence(self.language.sentence, language: code)
         }

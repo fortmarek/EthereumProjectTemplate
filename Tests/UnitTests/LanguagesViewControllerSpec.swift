@@ -28,7 +28,7 @@ class LanguagesViewControllerSpec: QuickSpec {
         var flagURL : MutableProperty<NSURL> { return MutableProperty(NSURL(string: "")!) }
         var isSpeaking: MutableProperty<Bool> { return MutableProperty(false) }
         
-        var playSentence: Action<AnyObject, (), NSError> { return Action<AnyObject, (), NSError>{ _ in return SignalProducer.empty}}
+        lazy var playSentence : Action<AnyObject, (), SpeakError> = Action { _ in return SignalProducer.empty}
     }
     
     let detailFactory:LanguageDetailTableViewControllerFactory = {_ in LanguageDetailViewController(viewModel: LanguageDetailModelingStub())}

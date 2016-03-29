@@ -12,7 +12,7 @@ class LanguageTableViewCellSpec: QuickSpec {
         let flagURL = MutableProperty<NSURL>(NSURL())
         let isSpeaking = MutableProperty(false)
         
-        lazy var playSentence: Action<AnyObject, (), NSError> = Action { _ in SignalProducer.empty }
+        lazy var playSentence: Action<AnyObject, (), SpeakError> = Action { _ in SignalProducer.empty }
 
         init() {}
     }

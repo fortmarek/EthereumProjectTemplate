@@ -15,12 +15,9 @@ class LanguageDetailViewModelSpec: QuickSpec {
             
             return false
         }
-        func speakSentence(sentence:String, language:String) -> SignalProducer<(), NSError>{
+        func speakSentence(sentence:String, language:String) -> SignalProducer<(), SpeakError>{
             speaked = true
-            return SignalProducer<(),NSError>{ sink, disposable in
-                sink.sendNext()
-                sink.sendCompleted()
-                }.delay(3, onScheduler: QueueScheduler())
+            return SignalProducer(value: ()).delay(3, onScheduler: QueueScheduler())
         }
         
         //Stubbed
@@ -33,10 +30,8 @@ class LanguageDetailViewModelSpec: QuickSpec {
                 return true
         }
         
-        func speakSentence(sentence:String, language:String) -> SignalProducer<(), NSError>{
-            return SignalProducer<(),NSError>{ sink, disposable in
-                sink.sendFailed(NSError(domain: "", code: 0, userInfo: nil))
-                }
+        func speakSentence(sentence:String, language:String) -> SignalProducer<(), SpeakError>{
+            return SignalProducer(error: .Cancelled)
         }
     }
     

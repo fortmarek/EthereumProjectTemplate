@@ -74,7 +74,7 @@ class LanguagesTableViewModelSpec: QuickSpec {
     class SpeechSynthetizerStub: SpeechSynthetizing{
         var isSpeaking:MutableProperty<Bool>{ return MutableProperty(false)  }
         func canSpeakLanguage(language:String) -> Bool{return false}
-        func speakSentence(sentence:String, language:String) -> SignalProducer<(), NSError>{return SignalProducer.empty}
+        func speakSentence(sentence:String, language:String) -> SignalProducer<(), SpeakError>{ return SignalProducer.empty }
     }
     
     let detailFactory:LanguageDetailModelingFactory  = { language in LanguageDetailViewModel(language: language, synthetizer: SpeechSynthetizerStub()) }
