@@ -9,7 +9,7 @@ sudo gem install fastlane
 ```
 fastlane xcode
 ```
-Installs FixCode which disables the "Fix Issue" button in Xcode
+Installs FixCode which disables the "Fix Issue" button in Xcode, Swimat and Fuzzy 
 ### analyze
 ```
 fastlane analyze

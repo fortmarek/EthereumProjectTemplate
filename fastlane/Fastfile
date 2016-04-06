@@ -42,11 +42,18 @@ fastlane_version "1.57.0"
 		ENV["SLACK_URL"] = slack_url # Webhook URL created in Slack
   end
 
-	desc "Installs FixCode which disables the \"Fix Issue\" button in Xcode"
+	desc "Installs FixCode which disables the \"Fix Issue\" button in Xcode, Swimat and Fuzzy "
 	  lane :xcode do
 	    install_xcode_plugin(
 	      url: "https://github.com/fastlane/FixCode/releases/download/0.2.0/FixCode.xcplugin.zip"
 	    )
+      install_xcode_plugin(
+        url: "https://s3-eu-west-1.amazonaws.com/ack-staticfiles/Swimat.xcplugin.zip"
+      )
+      
+      install_xcode_plugin(
+        url: "https://github.com/FuzzyAutocomplete/FuzzyAutocompletePlugin/releases/download/v2.1.1/FuzzyAutocomplete-2.1.1.zip"
+      )
       templates
       snippets
       
