@@ -54,6 +54,7 @@
 		6D775D4D1B85DD32002F640D /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D775D4C1B85DD32002F640D /* FoundationExtensions.swift */; };
 		6D7861D51B397903009F8865 /* UIResponder+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7861D41B397903009F8865 /* UIResponder+Errors.swift */; };
 		6DFDD0621B3C5126005D08EA /* KeyboardLayoutGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD0611B3C5126005D08EA /* KeyboardLayoutGuide.swift */; };
+		79165B811CBA56F1000F6294 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79165B801CBA56F1000F6294 /* BaseViewController.swift */; };
 		794BB3401CA9917F004CC4D9 /* LanguageTableViewCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79419A5B1CA9848A00C767F1 /* LanguageTableViewCellSpec.swift */; };
 		794BB3431CA991A0004CC4D9 /* DisposingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794BB3411CA9919D004CC4D9 /* DisposingSpec.swift */; };
 		794BB3451CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794BB3441CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift */; };
@@ -171,6 +172,7 @@
 		6DFDD0611B3C5126005D08EA /* KeyboardLayoutGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutGuide.swift; sourceTree = "<group>"; };
 		70F17024C3AD00246E54C678 /* Pods-UITests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UITests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-UITests/Pods-UITests.appstore.xcconfig"; sourceTree = "<group>"; };
 		75F02EF16C46A63434D5FFBB /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
+		79165B801CBA56F1000F6294 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		79419A5B1CA9848A00C767F1 /* LanguageTableViewCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTableViewCellSpec.swift; sourceTree = "<group>"; };
 		794BB3411CA9919D004CC4D9 /* DisposingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisposingSpec.swift; sourceTree = "<group>"; };
 		794BB3441CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+FrontmostController.swift"; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 				B4F14CA51B20502000DDBE9B /* LanguagesTableViewController.swift */,
 				ACD479C51C5CF82600E85DD3 /* LanguageDetailViewController.swift */,
 				B44456F01B3462FA00597A66 /* TabBarController.swift */,
+				79165B801CBA56F1000F6294 /* BaseViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1042,6 +1045,7 @@
 				6D1A302B1B3C53B300A07F3A /* MBSwizzler.swift in Sources */,
 				ACD8E82A1C57E03300031D67 /* API.swift in Sources */,
 				ACD479C61C5CF82700E85DD3 /* LanguageDetailViewController.swift in Sources */,
+				79165B811CBA56F1000F6294 /* BaseViewController.swift in Sources */,
 				B4A0BA8F1AD4972300715A9F /* Theme.swift in Sources */,
 				ACD479911C5839FB00E85DD3 /* NetworkError.swift in Sources */,
 				79FB0C131C1AD2D50025C600 /* UIView+Spacer.swift in Sources */,

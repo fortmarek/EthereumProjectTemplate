@@ -9,7 +9,7 @@
 import UIKit
 import ReactiveCocoa
 
-class LanguagesTableViewController: UIViewController {
+class LanguagesTableViewController: BaseViewController {
 
     let viewModel: LanguagesTableViewModeling!
     let detailControllerFactory: LanguageDetailTableViewControllerFactory!
@@ -43,7 +43,6 @@ class LanguagesTableViewController: UIViewController {
 
     override func loadView() {
         super.loadView()
-        self.view.backgroundColor = UIColor.whiteColor()
 
         let tableView = UITableView()
         tableView.delegate = self
@@ -124,7 +123,7 @@ extension LanguagesTableViewController: UIViewControllerPreviewingDelegate {
 
     func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         guard let indexPath = tableView.indexPathForRowAtPoint(location) else { return nil }
-    
+
         return detailViewControllerForIndexPath(indexPath)
     }
 

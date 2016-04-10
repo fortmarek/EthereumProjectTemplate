@@ -9,7 +9,7 @@
 import UIKit
 import ReactiveCocoa
 
-class LanguageDetailViewController: UIViewController {
+class LanguageDetailViewController: BaseViewController {
     let viewModel: LanguageDetailViewModeling
 
     weak var titleLabel: UILabel!
@@ -34,7 +34,6 @@ class LanguageDetailViewController: UIViewController {
 
     override func loadView() {
         super.loadView()
-        self.view.backgroundColor = UIColor.whiteColor()
 
         let titleLabel = Theme.label(size: 25)
 
