@@ -25,6 +25,7 @@ PODS:
   - SDWebImage/Core (3.7.5)
   - SnapKit (0.18.0)
   - Swinject (1.0.0)
+  - TPKeyboardAvoiding (1.3)
 
 DEPENDENCIES:
   - ACKategories (from `https://github.com/AckeeCZ/ACKategories.git`)
@@ -38,6 +39,7 @@ DEPENDENCIES:
   - SDWebImage (~> 3.6)
   - SnapKit
   - Swinject (~> 1.0.0)
+  - TPKeyboardAvoiding
 
 EXTERNAL SOURCES:
   ACKategories:
@@ -61,5 +63,6 @@ SPEC CHECKSUMS:
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   SnapKit: e1f090a6d47b1dd4bd89b73f72b6746a7835ef3c
   Swinject: f1ec058cc1809929fd5b962c3a8a8277827389b6
+  TPKeyboardAvoiding: a5138f318c06fb3e151f886e18ce4a72695d9cbe
 
 COCOAPODS: 0.39.0
