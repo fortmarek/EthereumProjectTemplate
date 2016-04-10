@@ -90,7 +90,6 @@
 		B433E4AE19530092006BEBF1 /* environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = B433E4AA19530092006BEBF1 /* environment.plist */; };
 		B433E4AF195300A4006BEBF1 /* environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = B433E4AA19530092006BEBF1 /* environment.plist */; };
 		B433E4B219530FD0006BEBF1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B433E4B119530FD0006BEBF1 /* Images.xcassets */; };
-		B44456F11B3462FA00597A66 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44456F01B3462FA00597A66 /* TabBarController.swift */; };
 		B4A0BA8F1AD4972300715A9F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A0BA8E1AD4972300715A9F /* Theme.swift */; };
 		B4AB848C1AE6E386004BAF1A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B4AB848E1AE6E386004BAF1A /* Localizable.strings */; };
 		B4ABA1E0195193330069FAD4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4ABA1DF195193330069FAD4 /* Foundation.framework */; };
@@ -221,7 +220,6 @@
 		B433E4A919530092006BEBF1 /* environment-Development.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "environment-Development.plist"; sourceTree = "<group>"; };
 		B433E4AA19530092006BEBF1 /* environment.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = environment.plist; sourceTree = "<group>"; };
 		B433E4B119530FD0006BEBF1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		B44456F01B3462FA00597A66 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B47536F51951A84E00DB8D6D /* ProjectHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectHeader.h; sourceTree = "<group>"; };
 		B4A0BA8E1AD4972300715A9F /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B4A8008C1B28688600453A28 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
@@ -452,7 +450,6 @@
 			children = (
 				B4F14CA51B20502000DDBE9B /* LanguagesTableViewController.swift */,
 				ACD479C51C5CF82600E85DD3 /* LanguageDetailViewController.swift */,
-				B44456F01B3462FA00597A66 /* TabBarController.swift */,
 				79165B801CBA56F1000F6294 /* BaseViewController.swift */,
 			);
 			name = Controllers;
@@ -1051,7 +1048,6 @@
 				6D1A3AFD1B3AD61800EC8E47 /* Environment.swift in Sources */,
 				ACD8E8251C57DED100031D67 /* LanguageTableViewCell.swift in Sources */,
 				69D5B8061C24877D008F1A30 /* Model.xcdatamodeld in Sources */,
-				B44456F11B3462FA00597A66 /* TabBarController.swift in Sources */,
 				B4F14CA61B20502000DDBE9B /* LanguagesTableViewController.swift in Sources */,
 				ACD479C41C5C301F00E85DD3 /* LocationManager.swift in Sources */,
 				ACD479961C5919DB00E85DD3 /* AppContainer.swift in Sources */,
