@@ -9,7 +9,7 @@
 import UIKit
 import ReactiveCocoa
 
-class LanguageDetailViewController: UIViewController {
+class LanguageDetailViewController: BaseViewController {
     let viewModel: LanguageDetailViewModeling
 
     weak var titleLabel: UILabel!
@@ -18,16 +18,22 @@ class LanguageDetailViewController: UIViewController {
     weak var playButton: UIButton!
     weak var playIndicator: UIActivityIndicatorView!
 
-
     init(viewModel: LanguageDetailViewModeling) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(iOS 9.0, *)
+    lazy var previewActions: [UIPreviewActionItem] = { [unowned self] in
+        let playAction: UIPreviewActionItem? = self.viewModel.playSentence.enabled.value ?
+        UIPreviewAction(title: "Play sentence", style: .Default) { [unowned self] _, _ in
+            self.viewModel.playSentence.apply(self).start()
+        }: nil
+        return [playAction].flatMap { $0 }
+    }()
 
     override func loadView() {
         super.loadView()
-        self.view.backgroundColor = UIColor.whiteColor()
 
         let titleLabel = Theme.label(size: 25)
 
@@ -61,12 +67,11 @@ class LanguageDetailViewController: UIViewController {
         self.sentenceLabel = sentenceLabel
 
         let playButton = UIButton()
-        playButton.setTitleColor( UIColor.blackColor(), forState: .Normal)
-        playButton.setTitleColor( UIColor.lightGrayColor(), forState: .Disabled)
+        playButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        playButton.setTitleColor(UIColor.lightGrayColor(), forState: .Disabled)
         playButton.titleLabel?.font = UIFont.FontStyle.Regular.font(withSize: 17)
 
         playButton.setTitle("► Play sentence", forState: .Normal)
-
 
         view.addSubview(playButton)
         playButton.snp_makeConstraints { (make) -> Void in
@@ -84,7 +89,6 @@ class LanguageDetailViewController: UIViewController {
         }
 
         self.playIndicator = playIndicator
-
     }
 
 //    var closure:(()->())?
@@ -92,7 +96,7 @@ class LanguageDetailViewController: UIViewController {
     func setupBindings() {
         self.titleLabel.rac_text <~ viewModel.name
 
-        viewModel.flagURL.producer.startWithNext({[weak self] url in
+        viewModel.flagURL.producer.startWithNext({ [weak self] url in
             self?.imageView.sd_setImageWithURL(url)
         })
 
@@ -105,12 +109,10 @@ class LanguageDetailViewController: UIViewController {
         self.sentenceLabel.rac_text <~ viewModel.sentence
 
         self.playButton.addTarget(self.viewModel.playSentence.unsafeCocoaAction, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
-        self.playButton.rac_enabled <~ viewModel.canPlaySentence
+        self.playButton.rac_enabled <~ viewModel.playSentence.enabled
         self.playButton.rac_hidden <~ viewModel.isSpeaking
         self.playIndicator.rac_animating <~ viewModel.isSpeaking
-
     }
-
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -17,8 +17,8 @@ class LanguagesTableViewModelSpec: QuickSpec {
     
     // MARK: Stub
     class GoodStubUnicornApi: API {
-        func languages() -> SignalProducer<[LanguageEntity], NSError> {
-            return SignalProducer<[LanguageEntity], NSError>{sink, disposable in
+        func languages() -> SignalProducer<[LanguageEntity], RequestError> {
+            return SignalProducer<[LanguageEntity], RequestError>{sink, disposable in
                 sink.sendNext(dummyResponse)
                 sink.sendCompleted()
             }
@@ -26,16 +26,16 @@ class LanguagesTableViewModelSpec: QuickSpec {
     }
     
     class ErrorStubUnicornApi: API {
-        func languages() -> SignalProducer<[LanguageEntity], NSError> {
+        func languages() -> SignalProducer<[LanguageEntity], RequestError> {
             return SignalProducer { observer, disposable in
-                observer.sendFailed(NSError(domain: "", code: 0, userInfo: nil))
+                observer.sendFailed(.Network(NSError(domain: "", code: 0, userInfo: nil)))
                 }
                 .observeOn(QueueScheduler())
         }
     }
     
     class StubNetwork: Networking {
-        func call<T>(route: APIRouter, authHandler: AuthHandler?, useDisposables: Bool, action: (AnyObject -> (SignalProducer<T, NSError>))) -> SignalProducer<T, NSError> {
+        func call(route: APIRouter, authHandler: AuthHandler?, useDisposables: Bool) -> SignalProducer<AnyObject, NSError> {
             return SignalProducer.empty
         }
     }
@@ -74,7 +74,7 @@ class LanguagesTableViewModelSpec: QuickSpec {
     class SpeechSynthetizerStub: SpeechSynthetizing{
         var isSpeaking:MutableProperty<Bool>{ return MutableProperty(false)  }
         func canSpeakLanguage(language:String) -> Bool{return false}
-        func speakSentence(sentence:String, language:String) -> SignalProducer<(), NSError>{return SignalProducer.empty}
+        func speakSentence(sentence:String, language:String) -> SignalProducer<(), SpeakError>{ return SignalProducer.empty }
     }
     
     let detailFactory:LanguageDetailModelingFactory  = { language in LanguageDetailViewModel(language: language, synthetizer: SpeechSynthetizerStub()) }
@@ -105,9 +105,9 @@ class LanguagesTableViewModelSpec: QuickSpec {
                 expect(cellModels?[1].name.value).toEventually(equal("Czech"))
             }
             
-            it("updates loading property ") {
+            it("updates loadLanguages.executing property.") {
                 var observedValues = [Bool]()
-                viewModel.loading.producer
+                viewModel.loadLanguages.executing.producer
                     .on(next: { observedValues.append($0) })
                     .start()
                 
@@ -118,10 +118,12 @@ class LanguagesTableViewModelSpec: QuickSpec {
             
             
             context("on network error") {
-                it("sets errorMessage property.") {
+                it("reports loadLanguages error.") {
                     let viewModel = LanguagesTableViewModel(api: ErrorStubUnicornApi(), geocoder: GeocoderStub(), locationManager: LocationManagerStub(), detailModelFactory: self.detailFactory)
+                    var error : LoadLanguagesError? = nil
+                    viewModel.loadLanguages.errors.observeNext { error = $0 }
                     viewModel.loadLanguages.apply().start()
-                    expect(viewModel.errorMessage.value).toEventuallyNot(beNil())
+                    expect(error).toEventuallyNot(beNil())
                 }
             }
             
@@ -174,9 +176,19 @@ class LanguagesTableViewModelSpec: QuickSpec {
                 MemoryLeakContext{
                         let viewModel = LanguagesTableViewModel(api: GoodStubUnicornApi(), geocoder: ErrorGeocoderStub(), locationManager: LocationManagerStub(), detailModelFactory: self.detailFactory)
                         viewModel.loadLanguages.apply().start()
-                        
+                    
                         return viewModel
                 }
+            }
+            
+            it("persists its loadLanguages property") {
+                var executing : [Bool] = []
+                viewModel.loadLanguages.executing.producer
+                    .startWithNext {
+                    executing.append($0)
+                }
+                viewModel.loadLanguages.apply().start()
+                expect(executing).toEventually(equal([false,true,false]))
             }
         }
     }

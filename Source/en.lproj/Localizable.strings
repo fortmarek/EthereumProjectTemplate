@@ -1,3 +1,4 @@
 "languageTable.network_error_title" = "Network error";
 "languageTable.network_error_message" = "Unable to download list of languages";
 "languageTable.network_error_dismiss" = "Close";
+"genericMappingError" = "There was a problem communicating with the server";

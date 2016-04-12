@@ -9,19 +9,32 @@
 import ReactiveCocoa
 import CoreLocation
 
+
+enum LoadLanguagesError : ErrorType {
+    case Request(RequestError)
+    case Geocoding(NSError)
+}
+extension LoadLanguagesError : ErrorPresentable {
+    var title : String? { //custom title
+        return L10n.LanguageTableNetworkErrorTitle.string
+    }
+    var message : String { //underlying error description
+        switch self {
+        case .Request(let e): return e.message
+        case .Geocoding(let e): return e.message
+        }
+    }
+}
+
 protocol LanguagesTableViewModeling {
     var cellModels: MutableProperty<[LanguageDetailViewModeling]> { get }
-    var loading: MutableProperty<Bool> { get }
-    var errorMessage: MutableProperty<String?> { get }
-    var loadLanguages: Action<(), [LanguageEntity], NSError> { get }
-
+    var loadLanguages: Action<(), [LanguageEntity], LoadLanguagesError> { get }
 }
 
 class LanguagesTableViewModel: LanguagesTableViewModeling {
 
-    var cellModels = MutableProperty<[LanguageDetailViewModeling]>([])
-    var loading = MutableProperty<Bool>(false)
-    var errorMessage = MutableProperty<String?>(nil)
+    let cellModels = MutableProperty<[LanguageDetailViewModeling]>([])
+    let loading = MutableProperty<Bool>(false)
 
     //MARK: Dependencies
     private let api: API
@@ -45,50 +58,32 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
 //            let api = self.api
 //
 //        }
+        
+        cellModels <~ loadLanguages.values.map { [unowned self] languages in languages.map { self.detailModelFactory(language: $0) } }
     }
 
 
     //MARK: Action
-
-    private var canLoadImages: AnyProperty<Bool> {
-        return AnyProperty(
-            initialValue: true,
-            producer: loading.producer.map {!$0})
-    }
-
-    var loadLanguages: Action<(), [LanguageEntity], NSError> {
-        return Action(enabledIf: canLoadImages) { _ in
-            self.loading.value = true
-
-            return self.api.languages().flatMap(.Latest) { languages -> SignalProducer<[LanguageEntity], NSError> in
-                    if let userLocation = self.locationManager.location {
-                        return self.sortLanguageByDistanceFromUserLocation(languages.filter {$0.abbr.characters.first != "_"}, userLocation: userLocation)
-                    } else {
-                        //Continue if we don't have user location
-                        return SignalProducer<[LanguageEntity], NSError> {sink, disposable in
-                            sink.sendNext(languages)
-                            sink.sendCompleted()
-                        }
-                    }
-                }.on(
-                    next: { languages in
-                        self.cellModels.value = languages.map { self.detailModelFactory(language: $0)}
-                        self.loading.value = false
-                    },
-                    failed: { error in
-                        self.loading.value = false
-                        self.errorMessage.value = L10n.LanguageTableNetworkErrorMessage.string
-                    })
+    
+    lazy var loadLanguages: Action<(), [LanguageEntity], LoadLanguagesError> = Action { [unowned self] _ in
+        self.api.languages()
+            .mapError { .Request($0) }
+            .flatMap(.Latest) { languages -> SignalProducer<[LanguageEntity], LoadLanguagesError> in
+                if let userLocation = self.locationManager.location {
+                    return self.sortLanguageByDistanceFromUserLocation(languages.filter {$0.abbr.characters.first != "_"}, userLocation: userLocation)
+                        .mapError { .Geocoding($0) }
+                } else {
+                    //Continue if we don't have user location
+                    return SignalProducer<[LanguageEntity], LoadLanguagesError>(value: languages)
+                }
         }
     }
-
+    
+    
     private func sortLanguageByDistanceFromUserLocation(languages: [LanguageEntity], userLocation: CLLocation) -> SignalProducer<[LanguageEntity], NSError> {
             //Get geolocation for every language
             let signalProducers: [SignalProducer<(LanguageEntity, CLLocation?), NSError>] = languages.map { language in
-                let languageProducer = SignalProducer<LanguageEntity, NSError> { sink, disposable in
-                    sink.sendNext(language)
-                    sink.sendCompleted()
-                }
+                let languageProducer = SignalProducer<LanguageEntity, NSError>(value: language)
 
                 return combineLatest(languageProducer, self.geocoder.locationForCountryAbbreviation(language.abbr))
             }

@@ -15,21 +15,20 @@ import ReactiveCocoa
 
 class LanguagesViewControllerSpec: QuickSpec {
     
-    class LanguagesTableViewModelStub:LanguagesTableViewModeling{
+    class LanguagesTableViewModelStub : LanguagesTableViewModeling {
         var cellModels: MutableProperty<[LanguageDetailViewModeling]> { return MutableProperty([]) }
         var loading: MutableProperty<Bool>{ return MutableProperty(false) }
         var errorMessage: MutableProperty<String?> { return MutableProperty(nil) }
-        var loadLanguages: Action<(), [LanguageEntity], NSError> { return Action{SignalProducer.empty} }
+        var loadLanguages: Action<(), [LanguageEntity], LoadLanguagesError> { return Action{SignalProducer.empty} }
     }
     
-    class LanguageDetailModelingStub:LanguageDetailViewModeling{
+    class LanguageDetailModelingStub : LanguageDetailViewModeling {
         var name: MutableProperty<String> { return MutableProperty("") }
         var sentence: MutableProperty<String> { return MutableProperty("") }
         var flagURL : MutableProperty<NSURL> { return MutableProperty(NSURL(string: "")!) }
-        var canPlaySentence: MutableProperty<Bool> { return MutableProperty(false) }
         var isSpeaking: MutableProperty<Bool> { return MutableProperty(false) }
         
-        var playSentence: Action<UIButton, (), NSError> { return Action<UIButton, (), NSError>{ _ in return SignalProducer.empty}}
+        lazy var playSentence : Action<AnyObject, (), SpeakError> = Action { _ in return SignalProducer.empty}
     }
     
     let detailFactory:LanguageDetailTableViewControllerFactory = {_ in LanguageDetailViewController(viewModel: LanguageDetailModelingStub())}

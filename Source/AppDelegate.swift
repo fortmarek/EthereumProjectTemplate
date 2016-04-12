@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BITHockeyManagerDelegate 
         window?.rootViewController = vc
 		window?.makeKeyAndVisible()
 		window?.tintColor = UIColor.blackColor()
-
+        
 		return true
 	}
 

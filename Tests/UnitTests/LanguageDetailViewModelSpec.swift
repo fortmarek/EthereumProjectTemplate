@@ -15,12 +15,9 @@ class LanguageDetailViewModelSpec: QuickSpec {
             
             return false
         }
-        func speakSentence(sentence:String, language:String) -> SignalProducer<(), NSError>{
+        func speakSentence(sentence:String, language:String) -> SignalProducer<(), SpeakError>{
             speaked = true
-            return SignalProducer<(),NSError>{ sink, disposable in
-                sink.sendNext()
-                sink.sendCompleted()
-                }.delay(3, onScheduler: QueueScheduler())
+            return SignalProducer(value: ()).delay(3, onScheduler: QueueScheduler())
         }
         
         //Stubbed
@@ -33,10 +30,8 @@ class LanguageDetailViewModelSpec: QuickSpec {
                 return true
         }
         
-        func speakSentence(sentence:String, language:String) -> SignalProducer<(), NSError>{
-            return SignalProducer<(),NSError>{ sink, disposable in
-                sink.sendFailed(NSError(domain: "", code: 0, userInfo: nil))
-                }
+        func speakSentence(sentence:String, language:String) -> SignalProducer<(), SpeakError>{
+            return SignalProducer(error: .Cancelled)
         }
     }
     
@@ -71,7 +66,7 @@ class LanguageDetailViewModelSpec: QuickSpec {
                     viewModel = LanguageDetailViewModel(language: languageEntity, synthetizer: synthetizer)
                 }
                 it ("does not allow to play sentence"){
-                    expect(viewModel.canPlaySentence.value).toEventuallyNot(beTrue())
+                    expect(viewModel.playSentence.enabled.value).toEventuallyNot(beTrue())
                     viewModel.playSentence.apply(UIButton()).start()
                     expect(synthetizer.speaked).toEventuallyNot(beTrue())
                 }
@@ -82,10 +77,10 @@ class LanguageDetailViewModelSpec: QuickSpec {
                 it ("does not allow to play another sentence"){
                     synthetizer.isSpeaking.value = true
                     
-                    expect(viewModel.canPlaySentence.value).toEventuallyNot(beTrue())
+                    expect(viewModel.playSentence.enabled.value).toEventuallyNot(beTrue())
                     
                     synthetizer.isSpeaking.value = false
-                    expect(viewModel.canPlaySentence.value).toEventually(beTrue())
+                    expect(viewModel.playSentence.enabled.value).toEventually(beTrue())
                 }
             }
             
@@ -97,7 +92,7 @@ class LanguageDetailViewModelSpec: QuickSpec {
                 }
                 
                 it ("does not allow to play sentence"){
-                    expect(viewModel.canPlaySentence.value).toEventuallyNot(beTrue())
+                    expect(viewModel.playSentence.enabled.value).toEventuallyNot(beTrue())
                     viewModel.playSentence.apply(UIButton()).start()
                     expect(synthetizer.speaked).toEventuallyNot(beTrue())
                 }
@@ -111,7 +106,7 @@ class LanguageDetailViewModelSpec: QuickSpec {
                 it ("allows to play again"){
                     viewModel.playSentence.apply(UIButton()).start()
                     
-                    expect(viewModel.canPlaySentence.value).toEventually(beTrue())
+                    expect(viewModel.playSentence.enabled.value).toEventually(beTrue())
                 }
             }
             

@@ -9,10 +9,24 @@
 import Foundation
 import Alamofire
 import ReactiveCocoa
+import Argo
 
 struct APIErrorKeys {
 	static let response = "FailingRequestResponse"
 	static let responseData = "FailingRequestResponseData"
+}
+
+enum RequestError : ErrorType {
+    case Network(NSError)
+    case Mapping(DecodeError)
+}
+extension RequestError : ErrorPresentable {
+    var message : String {
+        switch self {
+        case .Network(let e): return e.message
+        case .Mapping(_): return L10n.GenericMappingError.string
+        }
+    }
 }
 
 class UnicornAPI: API {
@@ -76,11 +90,12 @@ class UnicornAPI: API {
 		return nil
 	}
 
-
-
-    func languages() -> SignalProducer<[LanguageEntity], NSError> {
-        return self.network.call(Router.Languages, authHandler:nil, useDisposables: false) { data in
-            return rac_decode(data)
+    func languages() -> SignalProducer<[LanguageEntity], RequestError> {
+        return network.call(Router.Languages, authHandler:nil, useDisposables: true)
+            .mapError { .Network($0) }
+            .flatMap(.Latest) { json in
+                rac_decode(json)
+                    .mapError { .Mapping($0) }
         }
     }
 

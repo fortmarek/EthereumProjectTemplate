@@ -9,7 +9,7 @@
 import UIKit
 import ReactiveCocoa
 
-class LanguagesTableViewController: UIViewController {
+class LanguagesTableViewController: BaseViewController {
 
     let viewModel: LanguagesTableViewModeling!
     let detailControllerFactory: LanguageDetailTableViewControllerFactory!
@@ -17,39 +17,32 @@ class LanguagesTableViewController: UIViewController {
     weak var activityIndicator: UIActivityIndicatorView!
     weak var tableView: UITableView!
 
-    required init(viewModel: LanguagesTableViewModeling, detailControllerFactory: LanguageDetailTableViewControllerFactory ) {
+    required init(viewModel: LanguagesTableViewModeling, detailControllerFactory: LanguageDetailTableViewControllerFactory) {
         self.viewModel = viewModel
         self.detailControllerFactory = detailControllerFactory
         super.init(nibName: nil, bundle: nil)
     }
 
-
     func setupBindings() {
 
         viewModel.cellModels.producer
-            .on(next: {[weak self] _ in
+            .on(next: { [weak self] _ in
                 self?.tableView.reloadData()
-            })
+        })
             .start()
 
+        viewModel.loadLanguages.errors
+            .takeUntil(rac_willDeallocSignal)
+            .observeNext { [weak self] in
+                self?.displayError($0)
+        }
 
-        viewModel.errorMessage.producer
-            .on(next: {[weak self] errorMessage in
-                if let errorMessage = errorMessage {
-                    self?.displayErrorMessage(errorMessage)
-                }
-            })
-            .start()
-
-
-        activityIndicator.rac_animating <~ viewModel.loading.producer
-        tableView.rac_hidden <~ viewModel.loading.producer
-
+        activityIndicator.rac_animating <~ viewModel.loadLanguages.executing
+        tableView.rac_hidden <~ viewModel.loadLanguages.executing
     }
 
     override func loadView() {
         super.loadView()
-        self.view.backgroundColor = UIColor.whiteColor()
 
         let tableView = UITableView()
         tableView.delegate = self
@@ -72,6 +65,8 @@ class LanguagesTableViewController: UIViewController {
         self.activityIndicator = activityIndicator
     }
 
+    var previewingContext: UIViewControllerPreviewing!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupBindings()
@@ -80,7 +75,9 @@ class LanguagesTableViewController: UIViewController {
 
         viewModel.loadLanguages.apply().start()
 
-
+        if #available(iOS 9.0, *) {
+            previewingContext = registerForPreviewingWithDelegate(self, sourceView: tableView)
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -89,19 +86,14 @@ class LanguagesTableViewController: UIViewController {
         }
     }
 
-    private func displayErrorMessage(errorMessage: String) {
-        let title = L10n.LanguageTableNetworkErrorTitle.string
-        let dismissButtonText = L10n.LanguageTableNetworkErrorDismiss.string
-        let message = errorMessage
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: dismissButtonText, style: .Default) { _ in
-            alert.dismissViewControllerAnimated(true, completion: nil)
-            })
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func detailViewControllerForIndexPath(indexPath: NSIndexPath) -> UIViewController {
+        let detailModel = viewModel.cellModels.value[indexPath.row]
+        let controller = self.detailControllerFactory(viewModel: detailModel)
+        return controller
     }
 }
 
@@ -113,7 +105,7 @@ extension LanguagesTableViewController: UITableViewDataSource {
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: LanguageTableViewCell = tableView.dequeCellForIndexPath(indexPath)
-        cell.viewModel = viewModel.cellModels.value[indexPath.row]
+        cell.viewModel.value = viewModel.cellModels.value[indexPath.row]
 
         return cell
     }
@@ -122,10 +114,20 @@ extension LanguagesTableViewController: UITableViewDataSource {
 // MARK: UITableViewDelegate
 extension LanguagesTableViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let detailModel = viewModel.cellModels.value[indexPath.row]
+        let controller = detailViewControllerForIndexPath(indexPath)
+        navigationController?.pushViewController(controller, animated: true)
+    }
+}
+//MARK : UIViewControllerPreviewingDelegate
+extension LanguagesTableViewController: UIViewControllerPreviewingDelegate {
 
-        let controller = self.detailControllerFactory(viewModel: detailModel)
-        self.navigationController?.pushViewController(controller, animated: true)
+    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = tableView.indexPathForRowAtPoint(location) else { return nil }
 
+        return detailViewControllerForIndexPath(indexPath)
+    }
+
+    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+        showViewController(viewControllerToCommit, sender: self)
     }
 }

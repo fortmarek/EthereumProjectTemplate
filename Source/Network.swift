@@ -13,43 +13,34 @@ import ReactiveCocoa
 class Network: Networking {
 
 
-
-    func call<T>(route: APIRouter, authHandler: AuthHandler?, useDisposables: Bool = true, action: (AnyObject -> (SignalProducer<T, NSError>))) -> SignalProducer<T, NSError> {
-        let signal = SignalProducer<T, NSError> { sink, disposable in
+    func call(route: APIRouter, authHandler: AuthHandler?, useDisposables: Bool = true) -> SignalProducer<AnyObject, NSError> {
+        let requestProducer = SignalProducer<AnyObject, NSError> { sink, disposable in
 
             let request = Alamofire.request(route)
 
             request.validate()
                 .response { (request, response, data, error) in
-                    if let error = error {
+                    switch (data, error) {
+                    case (_, .Some(let e)):
                         //TODO: refactor this shitcode for swift2
                         let newInfo = NSMutableDictionary(object: response ?? NSNull(), forKey: APIErrorKeys.response)
                         newInfo.addEntriesFromDictionary([APIErrorKeys.responseData : data ?? NSNull()])
-                        let userInfo = (error as NSError).userInfo
+                        let userInfo = e.userInfo
                         newInfo.addEntriesFromDictionary(userInfo)
                         let newInfoImmutable = newInfo.copy() as! NSDictionary
-                        let newError = NSError(domain: (error as NSError).domain, code: (error as NSError).code, userInfo: newInfoImmutable as [NSObject : AnyObject])
+                        let newError = NSError(domain: e.domain, code: e.code, userInfo: newInfoImmutable as [NSObject : AnyObject])
                         sink.sendFailed(newError)
-                        return
-                    }
-                    if let json = data {
+                    case (.Some(let d), _):
                         do {
-                            let jsonString = try NSJSONSerialization.JSONObjectWithData(json, options: .AllowFragments)
-
-                            print(jsonString)
-                            let str =  action(jsonString)
-                            let actionDisposable = str.start(sink)
-
-                            if useDisposables {
-                                disposable.addDisposable(actionDisposable) // if disposed dispose running action
-                            }
+                            let json = try NSJSONSerialization.JSONObjectWithData(d, options: .AllowFragments)
+                            sink.sendNext(json)
+                            sink.sendCompleted()
                         } catch {
                             sink.sendFailed(error as! NSError)
                             return
                         }
-                        return
+                    default: assertionFailure()
                     }
-                    sink.sendFailed(NSError(domain: "", code: 0, userInfo: nil))//shouldnt get here
             }
 
             if useDisposables {
@@ -57,20 +48,18 @@ class Network: Networking {
                     request.cancel()
                 }
             }
-
-            return
         }
 
         if let handler = authHandler {
-            return signal.flatMapError { error in
+            return requestProducer.flatMapError { error in
                 if let handlingCall = handler(error: error) {
-                    return handlingCall.then(signal)
+                    return handlingCall.then(requestProducer)
                 } else {
                     return SignalProducer(error: error)
                 }
             }
         } else {
-            return signal
+            return requestProducer
         }
     }
 }

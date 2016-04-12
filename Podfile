@@ -24,6 +24,7 @@ pod 'Swinject', '~> 1.0.0'
 #pod 'SVProgressHUD', :head
 pod 'SDWebImage', '~> 3.6'
 #pod 'Reachability'
+pod 'TPKeyboardAvoiding'
 
 def testing_pods
     pod 'Quick', '~> 0.9.0'
