@@ -11,6 +11,8 @@ enum L10n {
   case LanguageTableNetworkErrorDismiss
   /// There was a problem communicating with the server
   case GenericMappingError
+  /// Unable to save the user
+  case GenericKeychainError
 }
 
 extension L10n : CustomStringConvertible {
@@ -26,6 +28,8 @@ extension L10n : CustomStringConvertible {
         return L10n.tr("languageTable.network_error_dismiss")
       case .GenericMappingError:
         return L10n.tr("genericMappingError")
+      case .GenericKeychainError:
+        return L10n.tr("genericKeychainError")
     }
   }
 

@@ -59,6 +59,10 @@
 		794BB3451CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794BB3441CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift */; };
 		79A24AE01C637162007C7DDB /* Disposing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A24ADF1C637162007C7DDB /* Disposing.swift */; };
 		79FB0C131C1AD2D50025C600 /* UIView+Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FB0C121C1AD2D50025C600 /* UIView+Spacer.swift */; };
+		AC386B671CBD1F62002C9426 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B661CBD1F62002C9426 /* UserManager.swift */; };
+		AC386B691CBD205F002C9426 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B681CBD205F002C9426 /* Credentials.swift */; };
+		AC386B6B1CBD2126002C9426 /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B6A1CBD2126002C9426 /* UserEntity.swift */; };
+		AC386B6D1CBD240C002C9426 /* AuthenticationAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B6C1CBD240C002C9426 /* AuthenticationAPIService.swift */; };
 		ACC810C81C624AFB0080266A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACC810C41C624AEF0080266A /* Info.plist */; };
 		ACC811201C624C570080266A /* UnicornAPISpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC8111F1C624C570080266A /* UnicornAPISpec.swift */; };
 		ACD4798B1C582BFC00E85DD3 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD4798A1C582BFC00E85DD3 /* Network.swift */; };
@@ -183,6 +187,10 @@
 		ABA3E22A1E6F145A094D2DF0 /* Pods-Tests.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.development.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.development.xcconfig"; sourceTree = "<group>"; };
 		AC223D721C6B72860000A2F1 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/build/Development-iphoneos/Quick.framework"; sourceTree = "<group>"; };
 		AC223D741C6B728C0000A2F1 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Pods/build/Development-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
+		AC386B661CBD1F62002C9426 /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		AC386B681CBD205F002C9426 /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		AC386B6A1CBD2126002C9426 /* UserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
+		AC386B6C1CBD240C002C9426 /* AuthenticationAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationAPIService.swift; sourceTree = "<group>"; };
 		ACC810C41C624AEF0080266A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACC8111F1C624C570080266A /* UnicornAPISpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnicornAPISpec.swift; sourceTree = "<group>"; };
 		ACD4798A1C582BFC00E85DD3 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -366,6 +374,7 @@
 				ACE564B81CBCF2E300B6CBDF /* APIService.swift */,
 				ACE564BB1CBCF3C800B6CBDF /* APIServicing.swift */,
 				ACE564BD1CBCF4B200B6CBDF /* LanguagesAPIService.swift */,
+				AC386B6C1CBD240C002C9426 /* AuthenticationAPIService.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -481,6 +490,7 @@
 			children = (
 				ACE564BA1CBCF2EB00B6CBDF /* API */,
 				B4A0BA8E1AD4972300715A9F /* Theme.swift */,
+				AC386B661CBD1F62002C9426 /* UserManager.swift */,
 				ACD4798A1C582BFC00E85DD3 /* Network.swift */,
 				ACD4798C1C582D1F00E85DD3 /* Networking.swift */,
 				ACD479BD1C5C13A200E85DD3 /* Geocoder.swift */,
@@ -559,6 +569,8 @@
 		B4EE77891B2871C800ED956B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AC386B681CBD205F002C9426 /* Credentials.swift */,
+				AC386B6A1CBD2126002C9426 /* UserEntity.swift */,
 				ACD8E8201C57D91300031D67 /* LanguageEntity.swift */,
 				69D5B8041C24877D008F1A30 /* Model.xcdatamodeld */,
 			);
@@ -1070,6 +1082,8 @@
 				B4F14CA61B20502000DDBE9B /* LanguagesTableViewController.swift in Sources */,
 				ACD479C41C5C301F00E85DD3 /* LocationManager.swift in Sources */,
 				ACD479961C5919DB00E85DD3 /* AppContainer.swift in Sources */,
+				AC386B671CBD1F62002C9426 /* UserManager.swift in Sources */,
+				AC386B691CBD205F002C9426 /* Credentials.swift in Sources */,
 				ACD8E82C1C580D6A00031D67 /* ArgoExtensions.swift in Sources */,
 				69D5B7FD1C248694008F1A30 /* LocalizedStrings.swift in Sources */,
 				ACD8E8211C57D91300031D67 /* LanguageEntity.swift in Sources */,
@@ -1083,10 +1097,12 @@
 				B4EE778F1B28A61700ED956B /* UIKitExtensions.swift in Sources */,
 				6D775D4D1B85DD32002F640D /* FoundationExtensions.swift in Sources */,
 				794BB3451CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift in Sources */,
+				AC386B6B1CBD2126002C9426 /* UserEntity.swift in Sources */,
 				ACD4798D1C582D1F00E85DD3 /* Networking.swift in Sources */,
 				ACD4798B1C582BFC00E85DD3 /* Network.swift in Sources */,
 				79A24AE01C637162007C7DDB /* Disposing.swift in Sources */,
 				ACD8E81C1C569DB200031D67 /* LanguagesTableViewModel.swift in Sources */,
+				AC386B6D1CBD240C002C9426 /* AuthenticationAPIService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1169,7 +1185,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4647b7c4-cd77-42db-bebb-a4452191dc17";
+				PROVISIONING_PROFILE = "3c2965c5-302b-4d32-a187-3a3e53c12661";
 			};
 			name = AdHoc;
 		};
@@ -1192,7 +1208,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4647b7c4-cd77-42db-bebb-a4452191dc17";
+				PROVISIONING_PROFILE = "3c2965c5-302b-4d32-a187-3a3e53c12661";
 			};
 			name = AdHoc;
 		};
@@ -1215,7 +1231,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4647b7c4-cd77-42db-bebb-a4452191dc17";
+				PROVISIONING_PROFILE = "3c2965c5-302b-4d32-a187-3a3e53c12661";
 			};
 			name = AdHoc;
 		};
@@ -1324,7 +1340,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4647b7c4-cd77-42db-bebb-a4452191dc17";
+				PROVISIONING_PROFILE = "3c2965c5-302b-4d32-a187-3a3e53c12661";
 				SDKROOT = iphoneos;
 				TEST_TARGET_NAME = SampleTestingProject;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1474,7 +1490,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.APITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4647b7c4-cd77-42db-bebb-a4452191dc17";
+				PROVISIONING_PROFILE = "3c2965c5-302b-4d32-a187-3a3e53c12661";
 				SDKROOT = iphoneos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SampleTestingProject.app/SampleTestingProject";
 				VALIDATE_PRODUCT = YES;
@@ -1726,7 +1742,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = SampleTestingProject;
-				PROVISIONING_PROFILE = "4647b7c4-cd77-42db-bebb-a4452191dc17";
+				PROVISIONING_PROFILE = "3c2965c5-302b-4d32-a187-3a3e53c12661";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1763,7 +1779,7 @@
 				INFOPLIST_FILE = "Tests/UnitTests/ProjectTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "cz.ackee.enterprise.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4647b7c4-cd77-42db-bebb-a4452191dc17";
+				PROVISIONING_PROFILE = "3c2965c5-302b-4d32-a187-3a3e53c12661";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SampleTestingProject.app/SampleTestingProject";
 				WRAPPER_EXTENSION = xctest;

@@ -15,6 +15,11 @@ protocol LanguagesAPIServicing {
     func languages() -> SignalProducer<[LanguageEntity], RequestError>
 }
 
+protocol AuthenticationAPIServicing {
+    func login(username: String, password: String) -> SignalProducer<(UserEntity, Credentials), RequestError>
+}
+
+
 protocol SomethingElseAPIServicing {
     // You can divide functionality in different API Services
 }
