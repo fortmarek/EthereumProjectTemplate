@@ -61,11 +61,8 @@
 		79FB0C131C1AD2D50025C600 /* UIView+Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FB0C121C1AD2D50025C600 /* UIView+Spacer.swift */; };
 		ACC810C81C624AFB0080266A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACC810C41C624AEF0080266A /* Info.plist */; };
 		ACC811201C624C570080266A /* UnicornAPISpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC8111F1C624C570080266A /* UnicornAPISpec.swift */; };
-		ACC811211C624C900080266A /* UnicornAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD8E8291C57E03300031D67 /* UnicornAPI.swift */; };
 		ACD4798B1C582BFC00E85DD3 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD4798A1C582BFC00E85DD3 /* Network.swift */; };
 		ACD4798D1C582D1F00E85DD3 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD4798C1C582D1F00E85DD3 /* Networking.swift */; };
-		ACD4798F1C5835BA00E85DD3 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD4798E1C5835BA00E85DD3 /* APIRouter.swift */; };
-		ACD479911C5839FB00E85DD3 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD479901C5839FB00E85DD3 /* NetworkError.swift */; };
 		ACD479961C5919DB00E85DD3 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD479951C5919DB00E85DD3 /* AppContainer.swift */; };
 		ACD479BE1C5C13A200E85DD3 /* Geocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD479BD1C5C13A200E85DD3 /* Geocoder.swift */; };
 		ACD479C21C5C14BE00E85DD3 /* Geocoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD479C11C5C14BE00E85DD3 /* Geocoding.swift */; };
@@ -75,9 +72,11 @@
 		ACD8E81C1C569DB200031D67 /* LanguagesTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD8E81B1C569DB200031D67 /* LanguagesTableViewModel.swift */; };
 		ACD8E8211C57D91300031D67 /* LanguageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD8E8201C57D91300031D67 /* LanguageEntity.swift */; };
 		ACD8E8251C57DED100031D67 /* LanguageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD8E8231C57DDE000031D67 /* LanguageTableViewCell.swift */; };
-		ACD8E82A1C57E03300031D67 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD8E8281C57E03300031D67 /* API.swift */; };
 		ACD8E82C1C580D6A00031D67 /* ArgoExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0BE1691B3AC49F0030E6AC /* ArgoExtensions.swift */; };
 		ACD8E82E1C58151A00031D67 /* LanguageDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD8E82D1C58151A00031D67 /* LanguageDetailViewModel.swift */; };
+		ACE564B91CBCF2E300B6CBDF /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE564B81CBCF2E300B6CBDF /* APIService.swift */; };
+		ACE564BC1CBCF3C800B6CBDF /* APIServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE564BB1CBCF3C800B6CBDF /* APIServicing.swift */; };
+		ACE564BE1CBCF4B200B6CBDF /* LanguagesAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE564BD1CBCF4B200B6CBDF /* LanguagesAPIService.swift */; };
 		ACF8DA071C6236ED00D74377 /* LanguageDetailViewModelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8D9F61C6236CD00D74377 /* LanguageDetailViewModelSpec.swift */; };
 		ACF8DA091C6236F700D74377 /* DummyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8D9F21C6236CD00D74377 /* DummyResponse.swift */; };
 		ACF8DA0A1C6236F700D74377 /* LanguagesTableViewModelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8D9F71C6236CD00D74377 /* LanguagesTableViewModelSpec.swift */; };
@@ -188,8 +187,6 @@
 		ACC8111F1C624C570080266A /* UnicornAPISpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnicornAPISpec.swift; sourceTree = "<group>"; };
 		ACD4798A1C582BFC00E85DD3 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		ACD4798C1C582D1F00E85DD3 /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
-		ACD4798E1C5835BA00E85DD3 /* APIRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
-		ACD479901C5839FB00E85DD3 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		ACD479951C5919DB00E85DD3 /* AppContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
 		ACD4799B1C5A39E800E85DD3 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACD479BD1C5C13A200E85DD3 /* Geocoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Geocoder.swift; sourceTree = "<group>"; };
@@ -200,9 +197,10 @@
 		ACD8E81B1C569DB200031D67 /* LanguagesTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguagesTableViewModel.swift; sourceTree = "<group>"; };
 		ACD8E8201C57D91300031D67 /* LanguageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageEntity.swift; sourceTree = "<group>"; };
 		ACD8E8231C57DDE000031D67 /* LanguageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTableViewCell.swift; sourceTree = "<group>"; };
-		ACD8E8281C57E03300031D67 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		ACD8E8291C57E03300031D67 /* UnicornAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnicornAPI.swift; sourceTree = "<group>"; };
 		ACD8E82D1C58151A00031D67 /* LanguageDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageDetailViewModel.swift; sourceTree = "<group>"; };
+		ACE564B81CBCF2E300B6CBDF /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		ACE564BB1CBCF3C800B6CBDF /* APIServicing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIServicing.swift; sourceTree = "<group>"; };
+		ACE564BD1CBCF4B200B6CBDF /* LanguagesAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguagesAPIService.swift; sourceTree = "<group>"; };
 		ACF8D9EE1C6236CD00D74377 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACF8D9EF1C6236CD00D74377 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		ACF8D9F01C6236CD00D74377 /* UITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITests.swift; sourceTree = "<group>"; };
@@ -362,6 +360,16 @@
 			name = Cells;
 			sourceTree = "<group>";
 		};
+		ACE564BA1CBCF2EB00B6CBDF /* API */ = {
+			isa = PBXGroup;
+			children = (
+				ACE564B81CBCF2E300B6CBDF /* APIService.swift */,
+				ACE564BB1CBCF3C800B6CBDF /* APIServicing.swift */,
+				ACE564BD1CBCF4B200B6CBDF /* LanguagesAPIService.swift */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
 		ACF8D9EC1C6236B700D74377 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -471,13 +479,10 @@
 		B47536F91951AAFC00DB8D6D /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				ACD8E8281C57E03300031D67 /* API.swift */,
-				ACD8E8291C57E03300031D67 /* UnicornAPI.swift */,
+				ACE564BA1CBCF2EB00B6CBDF /* API */,
 				B4A0BA8E1AD4972300715A9F /* Theme.swift */,
 				ACD4798A1C582BFC00E85DD3 /* Network.swift */,
-				ACD479901C5839FB00E85DD3 /* NetworkError.swift */,
 				ACD4798C1C582D1F00E85DD3 /* Networking.swift */,
-				ACD4798E1C5835BA00E85DD3 /* APIRouter.swift */,
 				ACD479BD1C5C13A200E85DD3 /* Geocoder.swift */,
 				ACD479C11C5C14BE00E85DD3 /* Geocoding.swift */,
 				ACD479C31C5C301F00E85DD3 /* LocationManager.swift */,
@@ -1049,14 +1054,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACE564B91CBCF2E300B6CBDF /* APIService.swift in Sources */,
 				ACD8E82E1C58151A00031D67 /* LanguageDetailViewModel.swift in Sources */,
-				ACD4798F1C5835BA00E85DD3 /* APIRouter.swift in Sources */,
 				6D1A302B1B3C53B300A07F3A /* MBSwizzler.swift in Sources */,
-				ACD8E82A1C57E03300031D67 /* API.swift in Sources */,
+				ACE564BC1CBCF3C800B6CBDF /* APIServicing.swift in Sources */,
 				ACD479C61C5CF82700E85DD3 /* LanguageDetailViewController.swift in Sources */,
 				79165B811CBA56F1000F6294 /* BaseViewController.swift in Sources */,
 				B4A0BA8F1AD4972300715A9F /* Theme.swift in Sources */,
-				ACD479911C5839FB00E85DD3 /* NetworkError.swift in Sources */,
 				79FB0C131C1AD2D50025C600 /* UIView+Spacer.swift in Sources */,
 				6D775D4B1B85DD13002F640D /* TableAndCollectionViewExtensions.swift in Sources */,
 				6D7861D51B397903009F8865 /* UIResponder+Errors.swift in Sources */,
@@ -1067,13 +1071,13 @@
 				ACD479C41C5C301F00E85DD3 /* LocationManager.swift in Sources */,
 				ACD479961C5919DB00E85DD3 /* AppContainer.swift in Sources */,
 				ACD8E82C1C580D6A00031D67 /* ArgoExtensions.swift in Sources */,
-				ACC811211C624C900080266A /* UnicornAPI.swift in Sources */,
 				69D5B7FD1C248694008F1A30 /* LocalizedStrings.swift in Sources */,
 				ACD8E8211C57D91300031D67 /* LanguageEntity.swift in Sources */,
 				ACD479CC1C5D4D6800E85DD3 /* SpeechSynthetizer.swift in Sources */,
 				B4ECD6121AD477910099D516 /* AppDelegate.swift in Sources */,
 				B4EE77901B28A61700ED956B /* RACHelpers.swift in Sources */,
 				69D5B7FC1C248694008F1A30 /* Images.swift in Sources */,
+				ACE564BE1CBCF4B200B6CBDF /* LanguagesAPIService.swift in Sources */,
 				ACD479BE1C5C13A200E85DD3 /* Geocoder.swift in Sources */,
 				ACD479C21C5C14BE00E85DD3 /* Geocoding.swift in Sources */,
 				B4EE778F1B28A61700ED956B /* UIKitExtensions.swift in Sources */,

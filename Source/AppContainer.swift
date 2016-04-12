@@ -21,7 +21,7 @@ class AppContainer {
 
         // ---- Models
         container.register(Networking.self) { _ in Network() }.inObjectScope(.Container) // <-- Will be created as singleton
-        container.register(API.self) { r in UnicornAPI(network: r.resolve(Networking.self)!)}.inObjectScope(.Container) // <-- Will be created as singleton
+        container.register(LanguagesAPIServicing.self) { r in LanguagesAPIService(network: r.resolve(Networking.self)!)}.inObjectScope(.Container) // <-- Will be created as singleton
         container.register(Geocoding.self) { r in Geocoder()}.inObjectScope(.Container) // <-- Will be created as singleton
 
         container.register(LocationManager.self) { _ in
@@ -43,7 +43,7 @@ class AppContainer {
         // ---- View models
         container.register(LanguagesTableViewModeling.self) { r in
             return LanguagesTableViewModel(
-                api: r.resolve(API.self)!,
+                api: r.resolve(LanguagesAPIServicing.self)!,
                 geocoder: r.resolve(Geocoding.self)!,
                 locationManager: r.resolve(LocationManager.self)!,
                 detailModelFactory: r.resolve(LanguageDetailModelingFactory.self)! )

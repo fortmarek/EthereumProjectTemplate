@@ -11,7 +11,7 @@ import UIKit
 
 
 extension UIViewController {
-    private var frontmostChild : UIViewController? {
+    private var frontmostChild: UIViewController? {
         switch self {
         case let s as UISplitViewController: return s.viewControllers.last
         case let n as UINavigationController: return n.topViewController
@@ -21,11 +21,9 @@ extension UIViewController {
         }
     }
     
-    var frontmostController : UIViewController {
+    var frontmostController: UIViewController {
         return presentedViewController?.frontmostController ??
             frontmostChild?.frontmostController
             ?? self
     }
 }
-
-
