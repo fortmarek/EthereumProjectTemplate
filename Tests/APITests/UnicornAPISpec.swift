@@ -13,18 +13,18 @@ import Nimble
 // Connects to real server a tries to download data
 class UnicornAPISpec: QuickSpec {
     override func spec() {
-        var api: API!
+        var api: LanguagesAPIServicing!
         var network: Networking!
         
         beforeEach {
             network = Network()
-            api = UnicornAPI(network: network)
+            api = LanguagesAPIService(network: network)
         }
         
         describe("Unicorn api") {
             it("eventually load language entities") {
                 var languages: [LanguageEntity]?
-                var networkError: NSError?;
+                var networkError: RequestError?;
                 
                 api.languages()
                     .on(

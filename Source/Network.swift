@@ -12,14 +12,18 @@ import ReactiveCocoa
 
 class Network: Networking {
 
-
-    func call(route: APIRouter, authHandler: AuthHandler?, useDisposables: Bool = true) -> SignalProducer<AnyObject, NSError> {
-        let requestProducer = SignalProducer<AnyObject, NSError> { sink, disposable in
-
-            let request = Alamofire.request(route)
-
-            request.validate()
-                .response { (request, response, data, error) in
+    
+    func request(url: String, method: Alamofire.Method = .GET, parameters: [String : AnyObject]?, encoding: ParameterEncoding = .URL, headers: [String: String]?, authHandler: AuthHandler?,  useDisposables: Bool) -> SignalProducer<AnyObject, NSError> {
+        
+        let requestProducer =  SignalProducer<AnyObject, NSError> { sink, disposable in
+            
+            let request = Alamofire.request(method, url,
+                parameters: parameters,
+                headers: headers,
+                encoding: encoding)
+                .validate()
+                .response() { (request, response, data, error) in
+                    
                     switch (data, error) {
                     case (_, .Some(let e)):
                         //TODO: refactor this shitcode for swift2
@@ -42,14 +46,14 @@ class Network: Networking {
                     default: assertionFailure()
                     }
             }
-
+            
             if useDisposables {
                 disposable.addDisposable { // if disposed cancel running request
                     request.cancel()
                 }
             }
         }
-
+        
         if let handler = authHandler {
             return requestProducer.flatMapError { error in
                 if let handlingCall = handler(error: error) {
@@ -62,4 +66,5 @@ class Network: Networking {
             return requestProducer
         }
     }
+
 }

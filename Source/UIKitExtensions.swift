@@ -16,16 +16,16 @@ private struct AssociationKey {
     static var alpha: UInt8 = 2
     static var text: UInt8 = 3
     static var image: UInt8 = 4
-    static var enabled : UInt8 = 5
-    static var progress : UInt8 = 6
+    static var enabled: UInt8 = 5
+    static var progress: UInt8 = 6
 //    static var position : UInt8 = 7
-    static var title : UInt8 = 8
-    static var textColor : UInt8 = 9
-    static var borderWidth : UInt8 = 10
-    static var borderColor : UInt8 = 11
-    static var backgroundColor : UInt8 = 12
-    static var tintColor : UInt8 = 13
-    static var attributedText : UInt8 = 14
+    static var title: UInt8 = 8
+    static var textColor: UInt8 = 9
+    static var borderWidth: UInt8 = 10
+    static var borderColor: UInt8 = 11
+    static var backgroundColor: UInt8 = 12
+    static var tintColor: UInt8 = 13
+    static var attributedText: UInt8 = 14
     static var animating: UInt8 = 6
     static var selected: UInt8 = 7
 }
@@ -117,26 +117,26 @@ extension UITextField {
         rac_text.value = self.text ?? ""
     }
     
-    public var rac_textColor : MutableProperty<UIColor?> {
+    public var rac_textColor: MutableProperty<UIColor?> {
         return lazyMutableProperty(self, &AssociationKey.textColor, { [unowned self] in self.textColor = $0 }, { [unowned self] in self.textColor })
     }
 }
 
 public protocol Enablable : class {
-    var enabled : Bool {get set}
+    var enabled: Bool {get set}
 }
 
 extension UIControl : Enablable {}
 extension UIBarButtonItem : Enablable {}
 extension Enablable {
-    public var rac_enabled : MutableProperty<Bool> {
+    public var rac_enabled: MutableProperty<Bool> {
         return lazyMutableProperty(self, &AssociationKey.enabled, { [unowned self] in self.enabled = $0 }, { [unowned self] in self.enabled })
     }
 }
 
 
 public protocol Selectable : class {
-    var selected : Bool { get set }
+    var selected: Bool { get set }
 }
 extension UIControl : Selectable {}
 extension UITableViewCell : Selectable {}
@@ -149,7 +149,7 @@ extension Selectable {
 
 
 extension UIProgressView {
-    public var rac_progress : MutableProperty<Float> {
+    public var rac_progress: MutableProperty<Float> {
         return lazyMutableProperty(self, &AssociationKey.progress, { [unowned self] in self.progress = $0 }, { [unowned self] in self.progress })
     }
 }
@@ -169,4 +169,3 @@ extension UIActivityIndicatorView {
 //        return lazyMutableProperty(self, &AssociationKey.title, { [unowned self] in self.title = $0 }, { [unowned self] in self.title })
 //    }
 //}
-

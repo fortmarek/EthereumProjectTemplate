@@ -26,7 +26,7 @@ class LanguagesTableViewController: BaseViewController {
     func setupBindings() {
 
         viewModel.cellModels.producer
-            .on(next: { [weak self] _ in
+            .on(next: { [weak self] languages in
                 self?.tableView.reloadData()
         })
             .start()

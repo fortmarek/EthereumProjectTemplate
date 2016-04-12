@@ -15,7 +15,7 @@ protocol SpeechSynthetizing {
     func speakSentence(sentence: String, language: String) -> SignalProducer<(), SpeakError>
 }
 
-enum SpeakError : ErrorType {
+enum SpeakError: ErrorType {
     case LanguageUnavaible(String)
     case Cancelled
 }
@@ -82,4 +82,3 @@ class SpeechSynthetizer: NSObject, SpeechSynthetizing, AVSpeechSynthesizerDelega
     }
     
 }
-
