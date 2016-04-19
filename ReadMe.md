@@ -78,6 +78,158 @@ aby se mi updatnul xcode.
 V xcode už ideálně nic neměním.
 
 
+
+
+# Provisioning
+
+Po nastavení identifieru ve Fastfilu zavolam
+
+```
+fastlane provisioning
+```
+
+který mi stáhne všechny provisioning profily, certifikáty a nastaví je do Xcode
+
+
+> Při prvním spuštění se Match zeptá na heslo ke git repu  najdete ho na [passwd.ack.ee] (https://passwd.ack.ee/) (Ackee Match InHouse Repo a Ackee Match Production Repo)
+
+
+Pokud chci použít provisioning bez fastlane šablony můžu přímo použít `match` nebo `sigh` viz. dále.
+
+
+## Match
+> Pozn.: Pokud používám fastlane šablonu, neměl bych tohle vůbec potřebovat
+
+Instalace
+
+```
+sudo gem install match
+```
+
+Provisioning profily a certifikáty na naších účtech řeší [Match] (https://github.com/fastlane/fastlane/tree/master/match).
+
+Má několik výhod:
+
+1. Certifikáty a jejich klíče jsou uloženy bezpečně na githubu 
+2. Používá jeden certifikát pro všechny developery
+3. Pokud neexistuje provisioning profile dokáže ho automaticky vytvořit
+
+
+Pro každý account je vytvořeno git repo na našem gitlabu
+
+*Enterprise (enterprise@ackee.cz)*
+
+```
+git@gitlab.ack.ee:Ackee/ios-inhouse-certificates.git
+```
+
+*Production (ios@ackee.cz)*
+
+```
+git@gitlab.ack.ee:Ackee/ios-production-certificates.git
+```
+
+### Enterprise
+
+> Při prvním spuštění se Match zeptá na heslo ke git repu  najdete ho na [passwd.ack.ee] (https://passwd.ack.ee/) (Ackee Match InHouse Repo)
+
+#### Development
+
+Pro development používá match narozdil od puvodniho stavu pro všechny uživatele stejný certifikát (Martin Pulpitel). 
+
+Následujícím příkazem ho match stáhne a nainstaluje s provisioning profile pro Development Enterprise Wildcard `cz.ackee.enterprise.*`
+
+```
+match development --git_url git@gitlab.ack.ee:Ackee/ios-inhouse-certificates.git --app_identifier cz.ackee.enterprise.*
+```
+
+#### AdHoc
+
+Match implicitně zakazuje používat match s enterprise účty pro potenciální možnost zneužítí pokud by se nám někdo dostal k našemu gitu. Pořád je to ale lepší řešení než ukládat klíče na Google Drive. Je potřeba nastavit `MATCH_FORCE_ENTERPRISE=1`. 
+
+Následujícím příkazem stáhnu a nainstaluji certifikát pro AdHoc Enterprise Wildcard
+
+```
+MATCH_FORCE_ENTERPRISE=1 match enterprise --git_url git@gitlab.ack.ee:Ackee/ios-inhouse-certificates.git --app_identifier cz.ackee.enterprise.*
+```
+
+### Production
+Pro stažení certifikátu a provisioning profilu pro aplikaci na produkčním profilu můžu zavolat
+
+```
+match appstore --git_url git@gitlab.ack.ee:Ackee/ios-production-certificates.git --app_identifier cz.ackee.someapplication
+```
+
+Pokud neexistuje aplikace v developer portálu  můžu jí vytvořit přes tool `produce`
+
+```
+sudo gem install produce
+```
+
+```
+produce -u ios@ackee.cz -a cz.ackee.someapplication --skip_itc
+```
+
+Pokud chci vytvořit aplikaci i na iTunes Connect
+
+```
+produce -u ios@ackee.cz -a cz.ackee.someapplication
+```
+
+### Klientské účty
+Pokud potřebuju použít klientský účet e.g. k nahrání aplikace na store mám několik možností
+
+#### Match
+Pro klientský účet vytvořím nový git repositář na gitlabu 
+
+```
+git@gitlab.ack.ee:Ackee/ios-clientname-certificates.git
+```
+
+A match za mě vytvoří nový certifikát a uloží ho k nám do repa.
+
+```
+match appstore --git_url git@gitlab.ack.ee:Ackee/ios-clientname-certificates.git --app_identifier cz.clientname.someapp
+```
+
+Další člen týmu nebo jenkins pak může zavolat match appstore a certifikát a provisioning profile se mu sám stáhne.
+
+## Sigh
+
+Pokud by klient z nějakého důvodu nechtěl vytvořit nový certifikát pro match můžeme stále použít `sigh`. Sigh se stará pouze o provisioning, takže certifikát od klienta musí být klasicky stažený a nainstalovaný v keychain.
+
+```
+sudo gem install sigh
+```
+
+Stáhni provisioning profile
+
+```
+sigh -a cz.clientname.someapp -u clientname@email.com
+```
+
+
+Pokud chci použít sigh s fastlane šablonou je potřeba upravit fastlane provisioning lane z:
+
+```
+  desc "Downloads provisioning for all environments"
+  lane :provisioning do |options|
+	provisioning_match("Development", "development", enterprise_wildcard, inhouse_certificate_git, inhouse_apple_id, true)
+    provisioning_match("AdHoc", "enterprise", enterprise_wildcard, inhouse_certificate_git, inhouse_apple_id, true)
+    provisioning_match("AppStore", "appstore", app_identifier_appstore, production_certificate_git, connect_apple_id, false)
+  end
+```
+
+např. na:
+
+```
+provisioning_sigh("AppStore", "appstore", app_identifier_appstore, connect_apple_id, connect_team_id)
+```
+
+
+
+
+
 # Testování
 
 ## Typy a spouštění testů

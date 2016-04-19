@@ -42,6 +42,18 @@ fastlane_version "1.57.0"
 		ENV["SLACK_URL"] = slack_url # Webhook URL created in Slack
   end
 
+  #CHANGE if you want to use different provisioning
+  desc "Downloads provisioning for all environments"
+  lane :provisioning do |options|
+
+    provisioning_match("Development", "development", enterprise_wildcard, inhouse_certificate_git, inhouse_apple_id, inhouse_team_id, true)
+    provisioning_match("AdHoc", "enterprise", enterprise_wildcard, inhouse_certificate_git, inhouse_apple_id, inhouse_team_id, true)
+    provisioning_match("AppStore", "appstore", app_identifier_appstore, production_certificate_git, connect_apple_id, connect_team_id, false)
+    
+    #Use sigh only for client accounts (on our account you would use match)
+    #provisioning_sigh("AppStore", "appstore", app_identifier_appstore, connect_apple_id, connect_team_id)
+  end
+
 	desc "Installs FixCode which disables the \"Fix Issue\" button in Xcode, Swimat and Fuzzy "
 	  lane :xcode do
 	    install_xcode_plugin(
@@ -109,17 +121,7 @@ fastlane_version "1.57.0"
         skip_itc: true
       )
 
-    #TODO: Change to match later (now limited by 1 certificate)
-    sigh(
-      username: inhouse_apple_id,
-      app_identifier: app_identifier_beta, 
-      output_path: "outputs"
-    )
-
-    update_project_provisioning(
-       profile: lane_context[SharedValues::SIGH_PROFILE_PATH], # Have to pass Profile path to force use this profile instead whatever is set in xcode
-       build_configuration: "AdHoc"
-     )
+    provisioning
 
     #Setup environments, app identifier and app name
     setup_environment(environment: "AdHoc")
@@ -183,25 +185,7 @@ fastlane_version "1.57.0"
         snapshot
       end
 
-      match(
-      		username: connect_apple_id,
-      		app_identifier: app_identifier_appstore,
-          team_id: connect_team_id,
-          type: "appstore",
-          git_url: production_certificate_git
-      	)
-
-      
-      # To force provisioning profile on the build we have to update it in the project info file
-      # This is necessary because we have two accounts (one for enterprise, one for itunes connect)
-      # If somebody picks different team in the xcode project settings it would not build, but crash on entitlements error
-      UUID =  ENV["sigh_#{app_identifier_appstore}_appstore"]
-      profile = File.expand_path("~/Library/MobileDevice/Provisioning\ Profiles/#{UUID}.mobileprovision") #This is dirty, because Xcode might change location of profiles, but so far only work-around
-
-      update_project_provisioning(
-        profile: profile, # Have to pass Profile path to force use this profile instead whatever is set in xcode
-        build_configuration: "AppStore"
-       )
+      provisioning
 
       gym(
   		  scheme: "AppStore",
@@ -425,6 +409,44 @@ fastlane_version "1.57.0"
 
 			#sh "./utils/generate_preprocess_file.sh '#{display_name}' '#{app_identifier}' ../#{environment_plist_directory}/"
   end
+
+
+  def provisioning_match (environment, match_type, app_identifier, git_url, apple_id, team_id, readonly)
+    ENV["MATCH_FORCE_ENTERPRISE"] = "1"
+
+    match(type: match_type,
+          app_identifier: app_identifier,
+          git_url: git_url,
+          username: apple_id,
+          team_id: team_id,
+          readonly: readonly)
+
+    #Force the selected provisioning profile in xcode
+    uuid = ENV["sigh_#{app_identifier}_#{match_type}"]
+    profile = File.expand_path("~/Library/MobileDevice/Provisioning\ Profiles/#{uuid}.mobileprovision") 
+
+    update_project_provisioning(
+        profile: profile, # Have to pass Profile path to force use this profile instead whatever is set in xcode
+        build_configuration: environment
+    )
+  end
+
+
+  def provisioning_sigh (environment, sigh_type, app_identifier, apple_id, team_id)
+    sigh(
+      username: apple_id,
+      app_identifier: app_identifier,
+      team_id: team_id,
+      output_path: "outputs"
+    )
+
+    update_project_provisioning(
+       profile: lane_context[SharedValues::SIGH_PROFILE_PATH], # Have to pass Profile path to force use this profile instead whatever is set in xcode
+       build_configuration: environment
+     )
+  end
+
+  
 
   desc "Copies and renames the project into new directory"
   lane :copy do |options|
