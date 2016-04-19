@@ -45,8 +45,8 @@ class UITests: XCTestCase {
         //let images = app.images
         
         
-        expect(app.tables.cells).toEventuallyNot(beNil(), timeout:10)
-        expect(app.images).toEventuallyNot(beNil(), timeout:10)
+        expect(app.tables.cells).toEventuallyNot(beNil(), timeout:20)
+        expect(app.images).toEventuallyNot(beNil(), timeout:20)
         
         
         //Tap the allow location popup

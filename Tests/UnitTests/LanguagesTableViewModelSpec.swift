@@ -8,6 +8,7 @@
 import Quick
 import Nimble
 import ReactiveCocoa
+import Alamofire
 
 @testable import SampleTestingProject
 
@@ -16,7 +17,7 @@ import ReactiveCocoa
 class LanguagesTableViewModelSpec: QuickSpec {
     
     // MARK: Stub
-    class GoodStubUnicornApi: API {
+    class GoodStubUnicornApi: LanguagesAPIServicing {
         func languages() -> SignalProducer<[LanguageEntity], RequestError> {
             return SignalProducer<[LanguageEntity], RequestError>{sink, disposable in
                 sink.sendNext(dummyResponse)
@@ -25,7 +26,7 @@ class LanguagesTableViewModelSpec: QuickSpec {
         }
     }
     
-    class ErrorStubUnicornApi: API {
+    class ErrorStubUnicornApi: LanguagesAPIServicing {
         func languages() -> SignalProducer<[LanguageEntity], RequestError> {
             return SignalProducer { observer, disposable in
                 observer.sendFailed(.Network(NSError(domain: "", code: 0, userInfo: nil)))
@@ -35,7 +36,7 @@ class LanguagesTableViewModelSpec: QuickSpec {
     }
     
     class StubNetwork: Networking {
-        func call(route: APIRouter, authHandler: AuthHandler?, useDisposables: Bool) -> SignalProducer<AnyObject, NSError> {
+        func request(url: String, method: Alamofire.Method, parameters: [String : AnyObject]?, encoding: Alamofire.ParameterEncoding, headers: [String: String]?, authHandler: AuthHandler?, useDisposables: Bool) -> SignalProducer<AnyObject, NSError>{
             return SignalProducer.empty
         }
     }

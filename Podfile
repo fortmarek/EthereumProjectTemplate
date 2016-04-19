@@ -18,6 +18,9 @@ pod 'Argo', '~> 2.2'
 pod 'Curry', '~> 1.4'
 pod 'Swinject', '~> 1.0.0'
 
+pod 'Locksmith', '~> 2.0.8'
+
+
 #pod 'Reachability'
 
 #pod 'MagicalRecord', '~> 2.2'

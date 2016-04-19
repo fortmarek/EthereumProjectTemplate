@@ -9,17 +9,17 @@
 import UIKit
 
 protocol ErrorPresentable {
-    var title : String? { get }
-    var message : String { get }
+    var title: String? { get }
+    var message: String { get }
 }
 extension ErrorPresentable {
-    var title : String? { return nil }
+    var title: String? { return nil }
     var debugString: String {
         return "Error at \(NSDate()), title:\(title), message:\(message), instance: \(self)"
     }
 }
 extension NSError : ErrorPresentable {
-    var message : String {
+    var message: String {
         return localizedDescription
     }
 }
@@ -39,7 +39,7 @@ protocol ErrorPresenting {
 }
 
 extension AppDelegate : ErrorPresenting {
-    func presentError(e : ErrorPresentable) -> Bool {
+    func presentError(e: ErrorPresentable) -> Bool {
         defer {
             logError(e)
         }
@@ -63,7 +63,7 @@ extension AppDelegate : ErrorPresenting {
         return true
     }
     
-    private func logError(e : ErrorPresentable) {
+    private func logError(e: ErrorPresentable) {
         print(e.debugString)
         //if you use any console or logger library, call it here...
     }

@@ -14,5 +14,5 @@ import ReactiveCocoa
 typealias AuthHandler = (error: NSError) -> SignalProducer<AnyObject, NSError>?
 
 protocol Networking {
-    func call(route: APIRouter, authHandler: AuthHandler?, useDisposables: Bool) -> SignalProducer<AnyObject, NSError>
+    func request(url: String, method: Alamofire.Method, parameters: [String : AnyObject]?, encoding: ParameterEncoding, headers: [String: String]?, authHandler: AuthHandler?, useDisposables: Bool) -> SignalProducer<AnyObject, NSError>
 }
