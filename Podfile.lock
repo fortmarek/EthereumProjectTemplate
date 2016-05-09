@@ -7,8 +7,8 @@ PODS:
     - HockeySDK/AllFeaturesLib (= 3.8.5)
   - HockeySDK/AllFeaturesLib (3.8.5)
   - Locksmith (2.0.8)
-  - Nimble (3.2.0)
-  - Quick (0.9.0)
+  - Nimble (4.0.1)
+  - Quick (0.9.2)
   - ReactiveCocoa (4.0.0-alpha-3):
     - ReactiveCocoa/UI (= 4.0.0-alpha-3)
     - Result (~> 0.6-beta.4)
@@ -35,8 +35,8 @@ DEPENDENCIES:
   - Curry (~> 1.4)
   - HockeySDK
   - Locksmith (~> 2.0.8)
-  - Nimble (= 3.2.0)
-  - Quick (~> 0.9.0)
+  - Nimble (= 4.0.1)
+  - Quick (~> 0.9.2)
   - ReactiveCocoa (= 4.0.0-alpha-3)
   - SDWebImage (~> 3.6)
   - SnapKit
@@ -59,8 +59,8 @@ SPEC CHECKSUMS:
   Curry: 294533187eedbf52db60a1e70c29b4f5c9f621c0
   HockeySDK: dd11a2b9da3372fd025643bee5bc10c8c613d169
   Locksmith: a8ed41ac4c06506ea8cb199d8ec8a8d3d108eb2a
-  Nimble: 703854335d181df169bbca9c97117b5cf8c47c1d
-  Quick: 332eb1da73125a2106dd637424c803f2ae97e4a9
+  Nimble: 0f3c8b8b084cda391209c3c5efbb48bedeeb920a
+  Quick: 18d057bc66451eedd5d1c8dc99ba2a5db6e60226
   ReactiveCocoa: f03dcfd385b0e4ee5b7a323f5e0b146a498e12d3
   Result: dc390d0b58f9ec43fcd536f1ebdd130803cc6cbc
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461

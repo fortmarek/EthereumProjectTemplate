@@ -30,8 +30,8 @@ pod 'SDWebImage', '~> 3.6'
 pod 'TPKeyboardAvoiding'
 
 def testing_pods
-    pod 'Quick', '~> 0.9.0'
-    pod 'Nimble', '3.2.0'
+    pod 'Quick', '~> 0.9.2'
+    pod 'Nimble', '4.0.1'
 end
 
 #testing_pods
