@@ -10,9 +10,12 @@ import Foundation
 import Alamofire
 import ReactiveCocoa
 
-
-typealias AuthHandler = (error: NSError) -> SignalProducer<AnyObject, NSError>?
+struct NetworkError: ErrorType {
+    let error: NSError
+    let request: NSURLRequest?
+    let response: NSHTTPURLResponse?
+}
 
 protocol Networking {
-    func request(url: String, method: Alamofire.Method, parameters: [String : AnyObject]?, encoding: ParameterEncoding, headers: [String: String]?, authHandler: AuthHandler?, useDisposables: Bool) -> SignalProducer<AnyObject, NSError>
+    func request(url: String, method: Alamofire.Method, parameters: [String: AnyObject]?, encoding: ParameterEncoding, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<AnyObject, NetworkError>
 }

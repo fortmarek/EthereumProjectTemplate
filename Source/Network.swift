@@ -12,59 +12,36 @@ import ReactiveCocoa
 
 class Network: Networking {
 
-    
-    func request(url: String, method: Alamofire.Method = .GET, parameters: [String : AnyObject]?, encoding: ParameterEncoding = .URL, headers: [String: String]?, authHandler: AuthHandler?,  useDisposables: Bool) -> SignalProducer<AnyObject, NSError> {
-        
-        let requestProducer =  SignalProducer<AnyObject, NSError> { sink, disposable in
-            
+    func request(url: String, method: Alamofire.Method = .GET, parameters: [String: AnyObject]?, encoding: ParameterEncoding = .URL, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<AnyObject, NetworkError> {
+        return SignalProducer { sink, disposable in
             let request = Alamofire.request(method, url,
                 parameters: parameters,
                 headers: headers,
                 encoding: encoding)
                 .validate()
                 .response() { (request, response, data, error) in
-                    
+
                     switch (data, error) {
                     case (_, .Some(let e)):
-                        //TODO: refactor this shitcode for swift2
-                        let newInfo = NSMutableDictionary(object: response ?? NSNull(), forKey: APIErrorKeys.response)
-                        newInfo.addEntriesFromDictionary([APIErrorKeys.responseData : data ?? NSNull()])
-                        let userInfo = e.userInfo
-                        newInfo.addEntriesFromDictionary(userInfo)
-                        let newInfoImmutable = newInfo.copy() as! NSDictionary
-                        let newError = NSError(domain: e.domain, code: e.code, userInfo: newInfoImmutable as [NSObject : AnyObject])
-                        sink.sendFailed(newError)
+                        sink.sendFailed(NetworkError(error: e, request: request, response: response))
                     case (.Some(let d), _):
                         do {
                             let json = try NSJSONSerialization.JSONObjectWithData(d, options: .AllowFragments)
                             sink.sendNext(json)
                             sink.sendCompleted()
                         } catch {
-                            sink.sendFailed(error as! NSError)
+                            sink.sendFailed(NetworkError(error: (error as NSError), request: request, response: response))
                             return
                         }
                     default: assertionFailure()
                     }
             }
-            
+
             if useDisposables {
                 disposable.addDisposable { // if disposed cancel running request
                     request.cancel()
                 }
             }
         }
-        
-        if let handler = authHandler {
-            return requestProducer.flatMapError { error in
-                if let handlingCall = handler(error: error) {
-                    return handlingCall.then(requestProducer)
-                } else {
-                    return SignalProducer(error: error)
-                }
-            }
-        } else {
-            return requestProducer
-        }
     }
-
 }

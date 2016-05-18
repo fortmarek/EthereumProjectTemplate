@@ -21,15 +21,14 @@ class AppContainer {
 
         // ---- Models
         container.register(Networking.self) { _ in Network() }.inObjectScope(.Container) // <-- Will be created as singleton
-        container.register(LanguagesAPIServicing.self) { r in LanguagesAPIService(network: r.resolve(Networking.self)!)}.inObjectScope(.Container) // <-- Will be created as singleton
-        container.register(Geocoding.self) { r in Geocoder()}.inObjectScope(.Container) // <-- Will be created as singleton
+        container.register(LanguagesAPIServicing.self) { r in LanguagesAPIService(network: r.resolve(Networking.self)!, authHandler: r.resolve(AuthHandler.self)) }.inObjectScope(.Container) // <-- Will be created as singleton
+        container.register(Geocoding.self) { r in Geocoder() }.inObjectScope(.Container) // <-- Will be created as singleton
 
         container.register(LocationManager.self) { _ in
             let manager = CLLocationManager()
             manager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
             return manager
-            }.inObjectScope(.Container) // <-- Will be created as singleton
-
+        }.inObjectScope(.Container) // <-- Will be created as singleton
 
         container.register(BITHockeyManager.self) { (r, delegate: BITHockeyManagerDelegate) in
             let hockeyManager = BITHockeyManager.sharedHockeyManager()
@@ -39,16 +38,14 @@ class AppContainer {
 
         container.register(SpeechSynthetizing.self) { _ in SpeechSynthetizer() }.inObjectScope(.Container)
 
-
         // ---- View models
         container.register(LanguagesTableViewModeling.self) { r in
             return LanguagesTableViewModel(
                 api: r.resolve(LanguagesAPIServicing.self)!,
                 geocoder: r.resolve(Geocoding.self)!,
                 locationManager: r.resolve(LocationManager.self)!,
-                detailModelFactory: r.resolve(LanguageDetailModelingFactory.self)! )
+                detailModelFactory: r.resolve(LanguageDetailModelingFactory.self)!)
         }
-
 
         // Factory for creating detail model
         container.register(LanguageDetailModelingFactory.self) { r in
@@ -61,21 +58,15 @@ class AppContainer {
 
         container.register(LanguagesTableViewController.self) { r in
             return LanguagesTableViewController(
-                viewModel:  r.resolve(LanguagesTableViewModeling.self)!,
+                viewModel: r.resolve(LanguagesTableViewModeling.self)!,
                 detailControllerFactory: r.resolve(LanguageDetailTableViewControllerFactory.self)!)
         }
 
-
-        //Factory for detail controller
+        // Factory for detail controller
         container.register(LanguageDetailTableViewControllerFactory.self) { r in
             return { viewModel in
                 return LanguageDetailViewController(viewModel: viewModel)
             }
         }
-
-
-
-
     }
-
 }
