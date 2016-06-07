@@ -70,9 +70,12 @@ class APIService {
                 }
                     .take(1)
 
-                authHandler.apply(networkError).start() // sideeffect
-
                 return refreshSuccessful
+                    .on(started: {
+                        dispatch_async(dispatch_get_main_queue()) { // fire the authHandler in next runloop to prevent recursive events
+                            authHandler.apply(networkError).start() // sideeffect
+                        }
+                })
                     .promoteErrors(NetworkError)
                     .flatMap(.Latest) { success -> SignalProducer<AnyObject, NetworkError> in
                         guard success else { return SignalProducer(error: networkError) }
@@ -105,7 +108,7 @@ class AuthenticatedAPIService: APIService {
     override func request(path: String, method: Alamofire.Method = .GET, parameters: [String: AnyObject]? = nil, encoding: ParameterEncoding = .URL, headers: [String: String] = [:], authHandler: AuthHandler? = nil) -> SignalProducer<AnyObject, NetworkError> {
         let allHeaders = authorizationHeaders(headers)
 
-        return super.request(path, method: method, parameters: parameters, encoding: encoding, headers: allHeaders, authHandler: /*(authHandler == nil) ? self.authHandler : authHandler*/            nil)
+        return super.request(path, method: method, parameters: parameters, encoding: encoding, headers: allHeaders, authHandler: (authHandler == nil) ? self.authHandler : authHandler)
     }
 
     override func requestUsedCurrentAuthData(request: NSURLRequest) -> Bool {
