@@ -101,6 +101,7 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
             it("refreshes token and retries a single failed request") {
                 var result: String? = nil
                 api.testRequest(url: "", requestDelay: 1, responseDelay: 1)
+                    .observeOn(QueueScheduler.mainQueueScheduler)
                     .on(next: { result = $0 })
                     .start()
                 expectedToken = "secondToken"
@@ -116,6 +117,7 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
                 waitUntil(timeout: 10) { done in
                     // req1
                     api.testRequest(url: "", requestDelay: 1, responseDelay: 1)
+                        .observeOn(QueueScheduler.mainQueueScheduler)
                         .on(next: {
                             result1 = $0
                             if result1 != nil && result2 != nil { done() }
@@ -123,6 +125,7 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
                         .start()
                     // req2
                     api.testRequest(url: "", requestDelay: 1, responseDelay: 1)
+                        .observeOn(QueueScheduler.mainQueueScheduler)
                         .on(next: {
                             result2 = $0
                             if result1 != nil && result2 != nil { done() }
@@ -143,6 +146,7 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
                 waitUntil(timeout: 10) { done in
                     // req1
                     api.testRequest(url: "", requestDelay: 1, responseDelay: 1)
+                        .observeOn(QueueScheduler.mainQueueScheduler)
                         .on(next: {
                             result1 = $0
                             if result1 != nil && result2 != nil { done() }
@@ -150,6 +154,7 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
                         .start()
                     // req2
                     api.testRequest(url: "", requestDelay: 200, responseDelay: 1)
+                        .observeOn(QueueScheduler.mainQueueScheduler)
                         .on(next: {
                             result2 = $0
                             if result1 != nil && result2 != nil { done() }
