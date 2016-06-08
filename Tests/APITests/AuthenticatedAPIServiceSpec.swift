@@ -86,7 +86,11 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
                         print("token refreshed")
                         sink.sendCompleted()
                     }
-                }.on(started: { authHandlerInvoked = authHandlerInvoked + 1 })
+                }.on(started: {
+                    print(authHandlerInvoked)
+                    authHandlerInvoked = authHandlerInvoked + 1
+                    print(authHandlerInvoked)
+                })
             }
             authHandlerInvoked = 0
             api = AuthTestAPIService(network: network, authHandler: authHandler, userManager: userManager)
@@ -109,40 +113,54 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
                 var result1: String? = nil
                 var result2: String? = nil
 
-                // req1
-                api.testRequest(url: "", requestDelay: 1, responseDelay: 1)
-                    .on(next: { result1 = $0 })
-                    .start()
-                // req2
-                api.testRequest(url: "", requestDelay: 1, responseDelay: 1)
-                    .on(next: { result2 = $0 })
-                    .start()
+                waitUntil(timeout: 10) { done in
+                    // req1
+                    api.testRequest(url: "", requestDelay: 1, responseDelay: 1)
+                        .on(next: {
+                            result1 = $0
+                            if result1 != nil && result2 != nil { done() }
+                    })
+                        .start()
+                    // req2
+                    api.testRequest(url: "", requestDelay: 1, responseDelay: 1)
+                        .on(next: {
+                            result2 = $0
+                            if result1 != nil && result2 != nil { done() }
+                    })
+                        .start()
 
-                expectedToken = "secondToken"
+                    expectedToken = "secondToken"
 
-                expect(authHandlerInvoked).toEventually(be(1))
-                expect(result1).toEventuallyNot(beNil())
-                expect(result2).toEventuallyNot(beNil())
+                }
+
+                expect(authHandlerInvoked).to(be(1))
             }
 
             it("refreshes token only once and retries requests when second request fails after token has been refreshed") {
                 var result1: String? = nil
                 var result2: String? = nil
 
-                // req1
-                api.testRequest(url: "", requestDelay: 1, responseDelay: 1)
-                    .on(next: { result1 = $0 })
-                    .start()
-                // req2
-                api.testRequest(url: "", requestDelay: 30, responseDelay: 1)
-                    .on(next: { result2 = $0 })
-                    .start()
+                waitUntil(timeout: 10) { done in
+                    // req1
+                    api.testRequest(url: "", requestDelay: 1, responseDelay: 1)
+                        .on(next: {
+                            result1 = $0
+                            if result1 != nil && result2 != nil { done() }
+                    })
+                        .start()
+                    // req2
+                    api.testRequest(url: "", requestDelay: 200, responseDelay: 1)
+                        .on(next: {
+                            result2 = $0
+                            if result1 != nil && result2 != nil { done() }
+                    })
+                        .start()
 
-                expectedToken = "secondToken"
+                    expectedToken = "secondToken"
 
-                expect(authHandlerInvoked).toEventually(be(1))
-                expect(result1).toEventuallyNot(beNil())
-                expect(result2).toEventuallyNot(beNil())
+                }
+
+                expect(authHandlerInvoked).to(be(1))
             }
 
             it("just works") {
