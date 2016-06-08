@@ -14,17 +14,17 @@ import Swinject
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, BITHockeyManagerDelegate {
 
-	var window: UIWindow?
+    var window: UIWindow?
 
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-
-
-	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-
-        //Load App Container
+        // Load App Container
         let appContainer = AppContainer.container
-
-        //Start Hockey Manager
+        // in this example, reauthentication is handled through UI, so we have to inject an AuthHandler for apiservices to use.
+        // in your app, reauth could just be a refresh token request done by the api service instead, so theres no need to pass AuthHandler as parameter to APIService.init.
+        // be aware that all APIServices that talk to the same api should use the same AuthHandler (even if we split functionality into multiple APIService). So dont create a separate AuthHandler for each sub-APIService.
+        appContainer.register(AuthHandler.self) { [unowned self] _ in self.refreshTokenAction }.inObjectScope(.Container)
+        // Start Hockey Manager
         if Environment.Hockey.identifier.characters.count != 0 && Environment.Hockey.allowLogging {
             let hockeyManager = BITHockeyManager.sharedHockeyManager()
             hockeyManager.configureWithIdentifier(Environment.Hockey.identifier, delegate: self)
@@ -33,62 +33,64 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BITHockeyManagerDelegate 
             hockeyManager.crashManager.crashManagerStatus = .AutoSend
         }
 
-        //Start location manager
+        // Start location manager
         let locationManager = appContainer.resolve(LocationManager.self)!
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
 
-        //Resolve initial controller with all its dependencies
+        // Resolve initial controller with all its dependencies
         let controller = appContainer.resolve(LanguagesTableViewController.self)!
 
         let vc = UINavigationController(rootViewController: controller)
 
-		window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.rootViewController = vc
-		window?.makeKeyAndVisible()
-		window?.tintColor = UIColor.blackColor()
-        
-		return true
-	}
+        window?.makeKeyAndVisible()
+        window?.tintColor = UIColor.blackColor()
 
-	func applicationWillResignActive(application: UIApplication) {
-		// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-		// Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-	}
+        return true
+    }
 
-	func applicationDidEnterBackground(application: UIApplication) {
-		// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-		// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-	}
+    func applicationWillResignActive(application: UIApplication) {
+        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    }
 
-	func applicationWillEnterForeground(application: UIApplication) {
-		// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-	}
+    func applicationDidEnterBackground(application: UIApplication) {
+        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    }
 
-	func applicationDidBecomeActive(application: UIApplication) {
-		// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-	}
+    func applicationWillEnterForeground(application: UIApplication) {
+        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    }
 
-	func applicationWillTerminate(application: UIApplication) {
-		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-	}
+    func applicationDidBecomeActive(application: UIApplication) {
+        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    }
 
+    func applicationWillTerminate(application: UIApplication) {
+        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
 
+    func crashManagerWillSendCrashReport(crashManager: BITCrashManager!) {
+    }
 
-	func crashManagerWillSendCrashReport(crashManager: BITCrashManager!) {
+    func crashManagerWillSendCrashReportsAlways(crashManager: BITCrashManager!) {
+    }
 
-	}
+    func crashManagerDidFinishSendingCrashReport(crashManager: BITCrashManager!) {
+    }
 
-	func crashManagerWillSendCrashReportsAlways(crashManager: BITCrashManager!) {
+    func crashManagerWillCancelSendingCrashReport(crashManager: BITCrashManager!) {
+    }
 
-	}
-
-	func crashManagerDidFinishSendingCrashReport(crashManager: BITCrashManager!) {
-
-	}
-
-	func crashManagerWillCancelSendingCrashReport(crashManager: BITCrashManager!) {
-
-	}
-
+    lazy var refreshTokenAction: AuthHandler = { [unowned self] in
+        Action { [unowned self] _ in
+            SignalProducer { [unowned self] sink, dis in
+//                self.window?.rootViewController?.frontmostController.presentViewController(UIViewController(), animated: true) { _ in } //present login controller, send completed when new token is set or error if we cant login.
+                sink.sendCompleted()
+            }
+        }
+    }()
 }

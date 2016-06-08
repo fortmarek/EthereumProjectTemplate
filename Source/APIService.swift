@@ -11,90 +11,108 @@ import Alamofire
 import ReactiveCocoa
 import Argo
 
+typealias AuthHandler = Action<NetworkError, (), NSError>
+
 //Base class which all API Services should inherit
 
-struct APIErrorKeys {
-    static let response = "FailingRequestResponse"
-    static let responseData = "FailingRequestResponseData"
-}
-
 enum RequestError: ErrorType {
-    case Network(NSError)
+    case Network(NetworkError)
     case Mapping(DecodeError)
 }
-extension RequestError : ErrorPresentable {
+extension RequestError: ErrorPresentable {
     var message: String {
         switch self {
-        case .Network(let e): return e.message
+        case .Network(let e): return e.error.message
         case .Mapping(_): return L10n.GenericMappingError.string
         }
     }
 }
 
-
 class APIService {
-    //MARK: Dependencies
+    // MARK: Dependencies
     private let network: Networking
-    
-    required init(network: Networking) {
+    private let authHandler: AuthHandler?
+
+    init(network: Networking, authHandler: AuthHandler?) {
         self.network = network
+        self.authHandler = authHandler
     }
-    
+
     func resourceURL(path: String) -> NSURL {
         let URL = NSURL(string: Environment.Api.baseURL)!
-        let relativeURL = NSURL(string: path, relativeToURL:URL)!
+        let relativeURL = NSURL(string: path, relativeToURL: URL)!
         return relativeURL
     }
-    
-    func request(path: String, method: Alamofire.Method = .GET, parameters: [String: AnyObject]? = nil, encoding: ParameterEncoding = .URL, headers: [String: String] = [:], authHandler: AuthHandler? = nil)  -> SignalProducer<AnyObject, NSError> {
+
+    func request(path: String, method: Alamofire.Method = .GET, parameters: [String: AnyObject]? = nil, encoding: ParameterEncoding = .URL, headers: [String: String] = [:], authHandler: AuthHandler? = nil) -> SignalProducer<AnyObject, NetworkError> {
         let relativeURL = resourceURL(path)
-        return self.network.request(relativeURL.URLString, method: method, parameters: parameters, encoding: encoding, headers: headers, authHandler: authHandler, useDisposables: false)
+        return self.network.request(relativeURL.URLString, method: method, parameters: parameters, encoding: encoding, headers: headers, useDisposables: false)
+            .flatMapError { [unowned self] networkError in
+                guard networkError.response?.statusCode == 401,
+                    let authHandler = authHandler,
+                    let originalRequest = networkError.request
+                else { return SignalProducer(error: networkError) }
+
+                let retry = { [unowned self] in
+                    self.request(path, method: method, parameters: parameters, encoding: encoding, headers: headers, authHandler: authHandler)
+                }
+
+                guard self.requestUsedCurrentAuthData(originalRequest) else { return retry() } // check that we havent refreshed token while the request was running
+
+                let refreshSuccessful = SignalProducer(signal: authHandler.events)
+                    .filter { $0.isTerminating } // dont care about values
+                .map { e -> Bool in
+                    switch e {
+                    case .Completed: return true
+                    case .Failed, .Interrupted: return false
+                    default: assertionFailure(); return false
+                    }
+                }
+                    .take(1)
+
+                return refreshSuccessful
+                    .on(started: {
+                        dispatch_async(dispatch_get_main_queue()) { // fire the authHandler in next runloop to prevent recursive events in case that authHandler completes synchronously
+                            authHandler.apply(networkError).start() // sideeffect
+                        }
+                })
+                    .promoteErrors(NetworkError)
+                    .flatMap(.Latest) { success -> SignalProducer<AnyObject, NetworkError> in
+                        guard success else { return SignalProducer(error: networkError) }
+                        return retry()
+                }
+        }
+    }
+
+    func requestUsedCurrentAuthData(request: NSURLRequest) -> Bool {
+        return true
     }
 }
 
 class AuthenticatedAPIService: APIService {
     let userManager: UserManaging
-    
-    required init(network: Networking, userManager: UserManaging) {
+
+    required init(network: Networking, authHandler: AuthHandler?, userManager: UserManaging) {
         self.userManager = userManager
-        super.init(network: network)
+        super.init(network: network, authHandler: authHandler)
     }
-    
-    required init(network: Networking) {
-        fatalError("init(network:) has not been implemented")
-    }
-    
-    
-    typealias AuthHandler = (error: NSError) -> SignalProducer<AnyObject, NSError>?
-    
-    private func authHandler(error: NSError) -> SignalProducer<AnyObject, NSError>? { //instance method cant be used as default parameter of call, this solution is ok as long as RekolaAPI is a singleton
-        if let response = error.userInfo[APIErrorKeys.response] as? NSHTTPURLResponse {
-            switch response.statusCode {
-            case 401:
-                
-                
-                //self.userManager.refresh
-                
-                return nil
-                //return _instance.login("putCurrentUsernameHere", password: "putCurrentPasswordHere").flatMap(.Merge) { _ in SignalProducer.empty } //login doesnt have to send any values. If it sends a value, the value is ignored, the signal completes and is unsubscribed from
-            default:
-                return nil
-            }
-        }
-        return nil
-    }
-    
-    func authorizationHeaders(headers: [String: String]) -> [String:String] {
+
+    func authorizationHeaders(headers: [String: String]) -> [String: String] {
         var authHeaders = headers
         if let credentials = self.userManager.credentials {
             authHeaders["Authorization"] = "\(credentials.token_type.capitalizedString) \(credentials.access_token)"
         }
         return authHeaders
     }
-    
-    override func request(path: String, method: Alamofire.Method = .GET, parameters: [String: AnyObject]? = nil, encoding: ParameterEncoding = .URL, var headers: [String: String] = [:], authHandler: AuthHandler? = nil) -> SignalProducer<AnyObject, NSError> {
-        headers = authorizationHeaders(headers)
-        
-        return super.request(path, method: method, parameters: parameters, encoding: encoding, headers: headers, authHandler: (authHandler == nil) ? self.authHandler : authHandler)
+
+    override func request(path: String, method: Alamofire.Method = .GET, parameters: [String: AnyObject]? = nil, encoding: ParameterEncoding = .URL, headers: [String: String] = [:], authHandler: AuthHandler? = nil) -> SignalProducer<AnyObject, NetworkError> {
+        let allHeaders = authorizationHeaders(headers)
+
+        return super.request(path, method: method, parameters: parameters, encoding: encoding, headers: allHeaders, authHandler: (authHandler == nil) ? self.authHandler : authHandler)
+    }
+
+    override func requestUsedCurrentAuthData(request: NSURLRequest) -> Bool {
+        guard let allHeaders = request.allHTTPHeaderFields else { return true }
+        return allHeaders == authorizationHeaders(allHeaders)
     }
 }
