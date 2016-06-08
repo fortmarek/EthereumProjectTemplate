@@ -78,8 +78,12 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
                 let currentToken = expectedToken
                 return SignalProducer { sink, dis in
                     dispatch_async(authHandlerQueue) {
+                        print("refreshing token")
                         usleep(10)
-                        userManager.credentials = Credentials(access_token: currentToken, expires_in: 0, token_type: "Dummytokentype", scope: "", refresh_token: "")
+                        let token = currentToken
+                        usleep(10)
+                        userManager.credentials = Credentials(access_token: token, expires_in: 0, token_type: "Dummytokentype", scope: "", refresh_token: "")
+                        print("token refreshed")
                         sink.sendCompleted()
                     }
                 }.on(started: { authHandlerInvoked = authHandlerInvoked + 1 })
@@ -97,8 +101,8 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
                     .start()
                 expectedToken = "secondToken"
 
-                expect(authHandlerInvoked).toEventually(be(1), timeout: 20)
-                expect(result).toEventuallyNot(beNil(), timeout: 20)
+                expect(authHandlerInvoked).toEventually(be(1))
+                expect(result).toEventuallyNot(beNil())
             }
 
             it("refreshes token only once and retries requests when all requests take the same time") {
@@ -116,9 +120,9 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
 
                 expectedToken = "secondToken"
 
-                expect(authHandlerInvoked).toEventually(be(1), timeout: 20)
-                expect(result1).toEventuallyNot(beNil(), timeout: 20)
-                expect(result2).toEventuallyNot(beNil(), timeout: 20)
+                expect(authHandlerInvoked).toEventually(be(1))
+                expect(result1).toEventuallyNot(beNil())
+                expect(result2).toEventuallyNot(beNil())
             }
 
             it("refreshes token only once and retries requests when second request fails after token has been refreshed") {
@@ -130,7 +134,7 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
                     .on(next: { result1 = $0 })
                     .start()
                 // req2
-                api.testRequest(requestDelay: 20, responseDelay: 1)
+                api.testRequest(requestDelay: 30, responseDelay: 1)
                     .on(next: { result2 = $0 })
                     .start()
 
@@ -141,24 +145,53 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
                 expect(result2).toEventuallyNot(beNil())
             }
 
-//            it("just works") {
-//                let numberOfRequests = 10
-//                var results: [String] = []
-//
-//                waitUntil(timeout: 10) { done in
-//
-//                    for _ in 0..<numberOfRequests {
-//                        api.testRequest(requestDelay: Int(arc4random_uniform(50)), responseDelay: Int(arc4random_uniform(50)))
-//                            .on(next: { results.append($0) },
-//                                terminated: {
-//                                    print(results.count)
-//                                    if results.count == numberOfRequests { done() }
-//                        })
-//                            .start()
-//                    }
-//                }
-//
-//            }
+            it("just works") {
+                let numberOfRequests = 100
+                var results: [String] = []
+
+                func changeExpectedTokenAfterRandomDelay() {
+
+                    func changeExpectedToken() {
+
+                        func randomString(length: Int) -> String {
+                            let charactersString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                            let charactersArray = Array(arrayLiteral: charactersString)
+
+                            var string = ""
+                            for _ in 0..<length {
+                                string += charactersArray[Int(arc4random()) % charactersArray.count]
+                            }
+
+                            return string
+                        }
+
+                        expectedToken = randomString(10)
+                    }
+
+                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64((Double(arc4random_uniform(50)) / Double(1000)) * Double(NSEC_PER_SEC)))
+                    dispatch_after(delayTime, dispatch_get_main_queue()) {
+                        changeExpectedToken()
+                        changeExpectedTokenAfterRandomDelay()
+                    }
+
+                }
+
+                waitUntil(timeout: 10) { done in
+
+                    for _ in 0..<numberOfRequests {
+                        api.testRequest(requestDelay: Int(arc4random_uniform(50)), responseDelay: Int(arc4random_uniform(50)))
+                            .observeOn(QueueScheduler.mainQueueScheduler)
+                            .on(next: { results.append($0) },
+                                terminated: {
+                                    print(results.count)
+                                    if results.count == numberOfRequests { done() }
+                        })
+                            .start()
+                    }
+
+                }
+
+            }
         }
 
     }
