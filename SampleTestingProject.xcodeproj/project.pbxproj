@@ -53,12 +53,12 @@
 		6D775D4B1B85DD13002F640D /* TableAndCollectionViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D775D4A1B85DD13002F640D /* TableAndCollectionViewExtensions.swift */; };
 		6D775D4D1B85DD32002F640D /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D775D4C1B85DD32002F640D /* FoundationExtensions.swift */; };
 		6D7861D51B397903009F8865 /* UIResponder+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7861D41B397903009F8865 /* UIResponder+Errors.swift */; };
-		790A480F1CEC86E7006A90D8 /* AuthenticatedAPIServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790A480E1CEC86E7006A90D8 /* AuthenticatedAPIServiceSpec.swift */; };
 		79165B811CBA56F1000F6294 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79165B801CBA56F1000F6294 /* BaseViewController.swift */; };
 		794BB3401CA9917F004CC4D9 /* LanguageTableViewCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79419A5B1CA9848A00C767F1 /* LanguageTableViewCellSpec.swift */; };
 		794BB3431CA991A0004CC4D9 /* DisposingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794BB3411CA9919D004CC4D9 /* DisposingSpec.swift */; };
 		794BB3451CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794BB3441CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift */; };
 		79A24AE01C637162007C7DDB /* Disposing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A24ADF1C637162007C7DDB /* Disposing.swift */; };
+		79F0592C1D098D90005EFEFE /* AuthenticatedAPIServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F0592B1D098D90005EFEFE /* AuthenticatedAPIServiceSpec.swift */; };
 		79FB0C131C1AD2D50025C600 /* UIView+Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FB0C121C1AD2D50025C600 /* UIView+Spacer.swift */; };
 		AC386B691CBD205F002C9426 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B681CBD205F002C9426 /* Credentials.swift */; };
 		AC386B6B1CBD2126002C9426 /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B6A1CBD2126002C9426 /* UserEntity.swift */; };
@@ -173,12 +173,12 @@
 		6D95BB7E1B3BF81100B00B19 /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjackSwift.framework; path = Carthage/Build/iOS/CocoaLumberjackSwift.framework; sourceTree = "<group>"; };
 		70F17024C3AD00246E54C678 /* Pods-UITests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UITests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-UITests/Pods-UITests.appstore.xcconfig"; sourceTree = "<group>"; };
 		75F02EF16C46A63434D5FFBB /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
-		790A480E1CEC86E7006A90D8 /* AuthenticatedAPIServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticatedAPIServiceSpec.swift; sourceTree = "<group>"; };
 		79165B801CBA56F1000F6294 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		79419A5B1CA9848A00C767F1 /* LanguageTableViewCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTableViewCellSpec.swift; sourceTree = "<group>"; };
 		794BB3411CA9919D004CC4D9 /* DisposingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisposingSpec.swift; sourceTree = "<group>"; };
 		794BB3441CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+FrontmostController.swift"; sourceTree = "<group>"; };
 		79A24ADF1C637162007C7DDB /* Disposing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposing.swift; sourceTree = "<group>"; };
+		79F0592B1D098D90005EFEFE /* AuthenticatedAPIServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticatedAPIServiceSpec.swift; sourceTree = "<group>"; };
 		79FB0C121C1AD2D50025C600 /* UIView+Spacer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Spacer.swift"; sourceTree = "<group>"; };
 		7B16CD41DD58F4015F629E8E /* Pods_UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		855A46D88C96E954648FBE1E /* Pods-APITests.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APITests.development.xcconfig"; path = "Pods/Target Support Files/Pods-APITests/Pods-APITests.development.xcconfig"; sourceTree = "<group>"; };
@@ -357,7 +357,6 @@
 			children = (
 				ACC810C41C624AEF0080266A /* Info.plist */,
 				ACC8111F1C624C570080266A /* UnicornAPISpec.swift */,
-				790A480E1CEC86E7006A90D8 /* AuthenticatedAPIServiceSpec.swift */,
 			);
 			name = APITests;
 			path = Tests/APITests;
@@ -407,6 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				ACF8DA291C6237D900D74377 /* Helpers */,
+				79F0592B1D098D90005EFEFE /* AuthenticatedAPIServiceSpec.swift */,
 				794BB3411CA9919D004CC4D9 /* DisposingSpec.swift */,
 				ACF8D9F21C6236CD00D74377 /* DummyResponse.swift */,
 				ACF8D9F31C6236CD00D74377 /* InfoPlist.strings */,
@@ -1062,7 +1062,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ACC811201C624C570080266A /* UnicornAPISpec.swift in Sources */,
-				790A480F1CEC86E7006A90D8 /* AuthenticatedAPIServiceSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1121,6 +1120,7 @@
 				ACF8DA091C6236F700D74377 /* DummyResponse.swift in Sources */,
 				794BB3401CA9917F004CC4D9 /* LanguageTableViewCellSpec.swift in Sources */,
 				ACF8DA0B1C6236F700D74377 /* LanguagesViewControllerSpec.swift in Sources */,
+				79F0592C1D098D90005EFEFE /* AuthenticatedAPIServiceSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
