@@ -31,11 +31,7 @@ class LanguagesTableViewController: BaseViewController {
         })
             .start()
 
-        viewModel.loadLanguages.errors
-            .takeUntil(rac_willDeallocSignal)
-            .observeNext { [weak self] in
-                self?.displayError($0)
-        }
+        displayErrors(forAction: viewModel.loadLanguages)
 
         activityIndicator.rac_animating <~ viewModel.loadLanguages.executing
         tableView.rac_hidden <~ viewModel.loadLanguages.executing

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReactiveCocoa
 
 protocol ErrorPresentable {
     var title: String? { get }
@@ -18,7 +19,7 @@ extension ErrorPresentable {
         return "Error at \(NSDate()), title:\(title), message:\(message), instance: \(self)"
     }
 }
-extension NSError : ErrorPresentable {
+extension NSError: ErrorPresentable {
     var message: String {
         return localizedDescription
     }
@@ -26,9 +27,9 @@ extension NSError : ErrorPresentable {
 
 extension UIResponder {
     func displayError(e: ErrorPresentable) {
-        if (self as? ErrorPresenting)?.presentError(e) == true { //stop
+        if (self as? ErrorPresenting)?.presentError(e) == true { // stop
             return
-        }else {
+        } else {
             nextResponder()?.displayError(e)
         }
     }
@@ -38,7 +39,7 @@ protocol ErrorPresenting {
     func presentError(e: ErrorPresentable) -> Bool
 }
 
-extension AppDelegate : ErrorPresenting {
+extension AppDelegate: ErrorPresenting {
     func presentError(e: ErrorPresentable) -> Bool {
         defer {
             logError(e)
@@ -47,24 +48,35 @@ extension AppDelegate : ErrorPresenting {
         let alertController = UIAlertController(title: e.title ?? "error".localized, message: e.message, preferredStyle: .Alert)
         let okAction = UIAlertAction(title: "ok".localized, style: .Cancel) { _ in }
         alertController.addAction(okAction)
-        
+
 //        if Environment.scheme == .Development || Environment.scheme == .AdHoc { //TODO: dont show more info in release version?
 //        #if DEBUG
         let showMoreAction = UIAlertAction(title: "Show More", style: .Default) { _ in
-                let detailAlertController = UIAlertController(title: "Error Detail", message: "\(e)", preferredStyle: .Alert)
-                let detailOkAction = UIAlertAction(title: "ok".localized, style: .Cancel) { _ in }
-                detailAlertController.addAction(detailOkAction)
-                window.rootViewController?.frontmostController.presentViewController(detailAlertController, animated: true) { _ in }
-            }
-            alertController.addAction(showMoreAction)
+            let detailAlertController = UIAlertController(title: "Error Detail", message: "\(e)", preferredStyle: .Alert)
+            let detailOkAction = UIAlertAction(title: "ok".localized, style: .Cancel) { _ in }
+            detailAlertController.addAction(detailOkAction)
+            window.rootViewController?.frontmostController.presentViewController(detailAlertController, animated: true) { _ in }
+        }
+        alertController.addAction(showMoreAction)
 //        #endif
 //        }
         window.rootViewController?.frontmostController.presentViewController(alertController, animated: true) { _ in }
         return true
     }
-    
+
     private func logError(e: ErrorPresentable) {
         print(e.debugString)
-        //if you use any console or logger library, call it here...
+        // if you use any console or logger library, call it here...
     }
 }
+
+extension UIResponder {
+    func displayErrors<Input, Output, Error: ErrorPresentable>(forAction action: Action < Input, Output, Error>) {
+        action.errors
+            .takeUntil(rac_willDeallocSignal)
+            .observeNext { [weak self] e in
+                self?.displayError(e)
+        }
+    }
+}
+
