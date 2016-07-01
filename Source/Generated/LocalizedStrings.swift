@@ -15,10 +15,10 @@ enum L10n {
   case GenericKeychainError
 }
 
-extension L10n : CustomStringConvertible {
-  var description : String { return self.string }
+extension L10n: CustomStringConvertible {
+  var description: String { return self.string }
 
-  var string : String {
+  var string: String {
     switch self {
       case .LanguageTableNetworkErrorTitle:
         return L10n.tr("languageTable.network_error_title")
@@ -35,7 +35,7 @@ extension L10n : CustomStringConvertible {
 
   private static func tr(key: String, _ args: CVarArgType...) -> String {
     let format = NSLocalizedString(key, comment: "")
-    return String(format: format, arguments: args)
+    return String(format: format, locale: NSLocale.currentLocale(), arguments: args)
   }
 }
 

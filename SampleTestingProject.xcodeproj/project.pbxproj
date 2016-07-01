@@ -927,7 +927,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "swiftgen images --output \"Source/Generated/Images.swift\" \"Resources\"\nswiftgen strings --output \"Source/Generated/LocalizedStrings.swift\" \"Source/en.lproj/Localizable.strings\"";
+			shellScript = "Pods/SwiftGen/bin/swiftgen images --output \"Source/Generated/Images.swift\" \"Resources\"\nPods/SwiftGen/bin/swiftgen strings --output \"Source/Generated/LocalizedStrings.swift\" \"Source/en.lproj/Localizable.strings\"";
 		};
 		7704379CB1B4B5B7AD824C8D /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

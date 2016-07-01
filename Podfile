@@ -17,6 +17,7 @@ pod 'ReactiveCocoa', '4.0.0-alpha-3'
 pod 'Argo', '~> 2.2'
 pod 'Curry', '~> 1.4'
 pod 'Swinject', '~> 1.0.0'
+pod 'SwiftGen', '~> 0.7.6'
 
 pod 'Locksmith', '~> 2.0.8'
 
