@@ -115,15 +115,15 @@ Má několik výhod:
 3. Pokud neexistuje provisioning profile dokáže ho automaticky vytvořit
 
 
-Pro každý account je vytvořeno git repo na našem gitlabu
+Pro každý account je vytvořeno git repo na našem gitlabu. Na enterprise i produkcni account se lze prihlasit pres unicorn@ackee.cz. Je to normalni developersky account pridany pro (ios@ackee.cz i enterprise@ackee.cz) a prihlasuje se pres nej i Jenkins. Heslo k nemu najdete na passwd.
 
-*Enterprise (enterprise@ackee.cz)*
+*Enterprise (unicorn@ackee.cz)*
 
 ```
 git@gitlab.ack.ee:Ackee/ios-inhouse-certificates.git
 ```
 
-*Production (ios@ackee.cz)*
+*Production (unicorn@ackee.cz)*
 
 ```
 git@gitlab.ack.ee:Ackee/ios-production-certificates.git

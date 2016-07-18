@@ -12,10 +12,10 @@ app_identifier_dev = 'cz.ackee.enterprise.sampletesting.dev' #CHANGE
 app_identifier_beta = 'cz.ackee.enterprise.sampletesting.beta' #CHANGE
 app_identifier_appstore = 'cz.ackee.SampleTesting' #CHANGE
 
-inhouse_apple_id = 'enterprise@ackee.cz'
+inhouse_apple_id = 'unicorn@ackee.cz'
 inhouse_team_id = 'PXDF48X6VX' 
 
-connect_apple_id = 'ios@ackee.cz' #CHANGE if using client account
+connect_apple_id = 'unicorn@ackee.cz' #CHANGE if using client account
 connect_team_id = '3SMVP6VZP8' #<-- CHANGE if more team 
 
 slack_url = "https://hooks.slack.com/services/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" #Hook to channel you want to send all messages <-- #rokKvality
