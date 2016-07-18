@@ -1,10 +1,9 @@
 // Generated using SwiftGen, by O.Halligon — https://github.com/AliSoftware/SwiftGen
 
-import Foundation
 import UIKit
 
 extension UIImage {
-  enum Asset : String {
+  enum Asset: String {
     case Icon_60 = "Icon-60"
     case Icon_72 = "Icon-72"
     case Icon_Small_50 = "Icon-Small-50"
