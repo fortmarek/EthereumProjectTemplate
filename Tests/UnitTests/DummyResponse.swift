@@ -7,7 +7,7 @@
 //
 
 import Foundation
-@testable import SampleTestingProject
+@testable import GrenkePlayground
 
 let dummyResponse: [LanguageEntity] = {
     let language0 = LanguageEntity(abbr: "en",

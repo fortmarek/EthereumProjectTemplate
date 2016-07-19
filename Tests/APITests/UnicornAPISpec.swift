@@ -8,7 +8,7 @@
 
 import Quick
 import Nimble
-@testable import SampleTestingProject
+@testable import GrenkePlayground
 
 // Connects to real server a tries to download data
 class UnicornAPISpec: QuickSpec {
