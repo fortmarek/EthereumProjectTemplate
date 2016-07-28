@@ -1,6 +1,6 @@
 //
 //  ImagesTableViewSpec.swift
-//  GrenkePlayground
+//  SampleTestingProject
 //
 //  Created by Tomas Kohout on 1/28/16.
 //  Copyright © 2016 Ackee s.r.o. All rights reserved.
@@ -10,7 +10,7 @@ import Nimble
 import ReactiveCocoa
 import Alamofire
 
-@testable import GrenkePlayground
+@testable import SampleTestingProject
 
 // Specificatios of LanguagesTableViewModel
 

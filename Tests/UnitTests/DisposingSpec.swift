@@ -1,7 +1,7 @@
 import Quick
 import Nimble
 import ReactiveCocoa
-@testable import GrenkePlayground
+@testable import SampleTestingProject
 
 class DisposingSpec: QuickSpec {
     

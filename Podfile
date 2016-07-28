@@ -1,7 +1,7 @@
 # Podfile
 
 platform :ios, '8.0'
-xcodeproj 'GrenkePlayground', 'AdHoc' => :release,'AppStore' => :release, 'Development' => :debug
+xcodeproj 'SampleTestingProject', 'AdHoc' => :release,'AppStore' => :release, 'Development' => :debug
 
 use_frameworks!
 

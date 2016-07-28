@@ -1,6 +1,6 @@
 //
 //  UIViewController+FrontmostController.swift
-//  GrenkePlayground
+//  SampleTestingProject
 //
 //  Created by Petr Šíma on 28/03/16.
 //  Copyright © 2016 Ackee s.r.o. All rights reserved.

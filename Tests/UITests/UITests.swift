@@ -61,7 +61,7 @@ class UITests: XCTestCase {
         
         snapshot("02DetailScreenFirst")
         
-        let backButton = app.navigationBars["GrenkePlayground.LanguageDetailView"].childrenMatchingType(.Button).matchingIdentifier("Back").elementBoundByIndex(0)
+        let backButton = app.navigationBars["SampleTestingProject.LanguageDetailView"].childrenMatchingType(.Button).matchingIdentifier("Back").elementBoundByIndex(0)
         backButton.tap()
         
         
