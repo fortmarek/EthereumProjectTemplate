@@ -10,6 +10,9 @@ import UIKit
 import ReactiveCocoa
 import HockeySDK
 import Swinject
+import enum Result.NoError
+
+public typealias NoError = Result.NoError
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, BITHockeyManagerDelegate {
