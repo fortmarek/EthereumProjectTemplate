@@ -20,28 +20,28 @@ class AppContainer {
     static let container = Container() { container in
 
         // ---- Models
-        container.registerAuto(Networking.self, initializer: Network.init).inObjectScope(.Container)
-        container.registerAuto(LanguagesAPIServicing.self, initializer: LanguagesAPIService.init).inObjectScope(.Container)
-        container.registerAuto(Geocoding.self, initializer: Geocoder.init).inObjectScope(.Container)
+        container.register(Networking.self, initializer: Network.init).inObjectScope(.Container)
+        container.register(LanguagesAPIServicing.self, initializer: LanguagesAPIService.init).inObjectScope(.Container)
+        container.register(Geocoding.self, initializer: Geocoder.init).inObjectScope(.Container)
 
-        container.register(LocationManager.self) { _ in
+        container.register(LocationManager.self, factory: { _ in
             let manager = CLLocationManager()
             manager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
             return manager
-        }.inObjectScope(.Container)
+        }).inObjectScope(.Container)
 
-        container.registerAuto(SpeechSynthetizing.self, initializer: SpeechSynthetizer.init).inObjectScope(.Container)
+        container.register(SpeechSynthetizing.self, initializer: SpeechSynthetizer.init).inObjectScope(.Container)
 
         // ---- View models
-        container.registerAuto(LanguagesTableViewModeling.self, initializer: LanguagesTableViewModel.init)
-        container.registerAuto(LanguageDetailViewModeling.self, initializer: LanguageDetailViewModel.init, argument: LanguageEntity.self)
+        container.register(LanguagesTableViewModeling.self, initializer: LanguagesTableViewModel.init)
+        container.register(LanguageDetailViewModeling.self, initializer: LanguageDetailViewModel.init, argument: LanguageEntity.self)
         
         // Factory for creating detail model
         container.registerFactory(LanguageDetailModelingFactory.self)
         
         // ---- Views
-        container.registerAuto(LanguagesTableViewController.self, initializer: LanguagesTableViewController.init)
-        container.registerAuto(LanguageDetailViewController.self, initializer: LanguageDetailViewController.init, argument: LanguageDetailViewModeling.self)
+        container.register(LanguagesTableViewController.self, initializer: LanguagesTableViewController.init)
+        container.register(LanguageDetailViewController.self, initializer: LanguageDetailViewController.init, argument: LanguageDetailViewModeling.self)
         
          // Factory for detail controller
         container.registerFactory(LanguageDetailTableViewControllerFactory.self)
