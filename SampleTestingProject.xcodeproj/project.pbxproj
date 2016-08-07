@@ -65,6 +65,7 @@
 		AC386B6B1CBD2126002C9426 /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B6A1CBD2126002C9426 /* UserEntity.swift */; };
 		AC386B6D1CBD240C002C9426 /* AuthenticationAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B6C1CBD240C002C9426 /* AuthenticationAPIService.swift */; };
 		AC386B6F1CBD2F3C002C9426 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B6E1CBD2F3C002C9426 /* UserManager.swift */; };
+		AC8A88551D57D56800454F68 /* Swinject+Autoregistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8A88541D57D56800454F68 /* Swinject+Autoregistration.swift */; };
 		ACC810C81C624AFB0080266A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACC810C41C624AEF0080266A /* Info.plist */; };
 		ACC811201C624C570080266A /* UnicornAPISpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC8111F1C624C570080266A /* UnicornAPISpec.swift */; };
 		ACD4798B1C582BFC00E85DD3 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD4798A1C582BFC00E85DD3 /* Network.swift */; };
@@ -195,6 +196,7 @@
 		AC386B6A1CBD2126002C9426 /* UserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
 		AC386B6C1CBD240C002C9426 /* AuthenticationAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationAPIService.swift; sourceTree = "<group>"; };
 		AC386B6E1CBD2F3C002C9426 /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		AC8A88541D57D56800454F68 /* Swinject+Autoregistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Swinject+Autoregistration.swift"; sourceTree = "<group>"; };
 		ACC810C41C624AEF0080266A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACC8111F1C624C570080266A /* UnicornAPISpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnicornAPISpec.swift; sourceTree = "<group>"; };
 		ACD4798A1C582BFC00E85DD3 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -585,6 +587,7 @@
 				6D40F8391BB18D0D0079C917 /* Reachability+RAC.swift */,
 				79A24ADF1C637162007C7DDB /* Disposing.swift */,
 				794BB3441CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift */,
+				AC8A88541D57D56800454F68 /* Swinject+Autoregistration.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1089,6 +1092,7 @@
 				ACD479C41C5C301F00E85DD3 /* LocationManager.swift in Sources */,
 				ACD479961C5919DB00E85DD3 /* AppContainer.swift in Sources */,
 				AC386B691CBD205F002C9426 /* Credentials.swift in Sources */,
+				AC8A88551D57D56800454F68 /* Swinject+Autoregistration.swift in Sources */,
 				ACD8E82C1C580D6A00031D67 /* ArgoExtensions.swift in Sources */,
 				69D5B7FD1C248694008F1A30 /* LocalizedStrings.swift in Sources */,
 				ACD8E8211C57D91300031D67 /* LanguageEntity.swift in Sources */,

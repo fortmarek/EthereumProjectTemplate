@@ -10,7 +10,10 @@ import Foundation
 import ReactiveCocoa
 
 class LanguagesAPIService: APIService, LanguagesAPIServicing {
-
+    init(network: Networking) {
+        super.init(network: network, authHandler: nil)
+    }
+    
     func languages() -> SignalProducer<[LanguageEntity], RequestError> {
         return self.request("languages.json")
             .mapError { .Network($0) }
