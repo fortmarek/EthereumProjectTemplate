@@ -12,6 +12,21 @@ import Swinject
 
 // Operator ~ equivalent to r.resolve(...)!
 infix operator ~ { associativity left precedence 160 }
+postfix operator ~ {}
+
+
+postfix func ~ <Service>(r: ResolverType) -> Service {
+    return r.resolve()
+}
+
+//postfix func ~ <Service, Arg1>(o: (r: ResolverType, argument: Arg1)) -> Service {
+//    return o.r.resolve(argument: o.argument)
+//}
+//
+//postfix func ~ <Service, Arg1, Arg2>(o: (r: ResolverType, arguments: (Arg1, Arg2))) -> Service {
+//    return o.r.resolve(arguments: o.arguments)
+//}
+
 func ~ <Service>(r: ResolverType, o: Service.Type) -> Service {
     return r.resolve(o)!
 }

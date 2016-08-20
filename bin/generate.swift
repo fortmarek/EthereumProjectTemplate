@@ -42,23 +42,25 @@ func registerGenerator(dependenciesCount: Int, argumentsCount: Int, breakIntoVar
     // If there is only one argument and one dependency, it can be checked by compiler
     let isArgumentInjection = dependenciesCount == 1 && argumentsCount == 1
     
-    var genericParameters = (0..<dependenciesCount).map(genericType)
-    let genericArguments = (1..<(argumentsCount+1)).map{ "\(genericArgumentPrefix)\($0)" }
-    var resolvers = genericParameters.map { _ in "res($0)" }
+    let argParameterName = argumentsCount == 1 ? "argument" : "arguments"
+    
+    var genericParameters = (0..<dependenciesCount).map(genericType) // ["A", "B", "C"]
+    let genericArguments = (1..<(argumentsCount+1)).map{ "\(genericArgumentPrefix)\($0)" } // ["Arg1", "Arg2", "Arg3"]
+    let genericArgumentsVars = genericArguments.map { $0.lowercaseString } // ["arg1", "arg2", "arg3"]
+    
+    var resolvers = genericParameters.map { _ in "r.resolve(\( argumentsCount > 0 ? "\(argParameterName): (\(commaConcat(genericArgumentsVars)))" : ""))" }
     
     var genericsDefinition = commaConcat(["Service"] + genericParameters + genericArguments)
-    
     
     if isArgumentInjection {
         genericParameters = ["\(genericArgumentPrefix)1"]
         genericsDefinition = commaConcat(["Service"] + genericParameters)
-        resolvers = ["$0.1"]
+        resolvers = ["\(genericArgumentPrefix.lowercaseString)1"]
     }
     
     let concatenatedParameters = commaConcat(genericParameters)
     
     
-    let argParameterName = argumentsCount == 1 ? "argument" : "arguments"
     let argumentsDefinition = argumentsCount > 0 ? ", \(argParameterName): (\(commaConcat(genericArguments.map{"\($0).Type"})))" : ""
     
     let initializer: String
@@ -70,9 +72,12 @@ func registerGenerator(dependenciesCount: Int, argumentsCount: Int, breakIntoVar
     } else {
         initializer = "       initializer(\(commaConcat(resolvers)))"
     }
+    
+    let closureParameters = commaConcat(["r"] + genericArgumentsVars)
+    
     let register = [
-        "func register<\(genericsDefinition)>(service: Service.Type, name: String? = nil, initializer: (\(concatenatedParameters)) -> Service\(argumentsDefinition)) -> ServiceEntry<Service> {",
-        "   return self.register(service.self, name: name, factory: { \(dependenciesCount == 0 ? "_ in": "")",
+        "func register<\(genericsDefinition)>(initializer initializer: (\(concatenatedParameters)) -> Service, service: Service.Type, name: String? = nil\(argumentsDefinition)) -> ServiceEntry<Service> {",
+        "   return self.register(service.self, name: name, factory: { \(closureParameters) in ",
         initializer,
         "   } as (\(commaConcat(["Resolvable"] + genericArguments))) -> Service)",
         "}"
@@ -84,21 +89,22 @@ func registerGenerator(dependenciesCount: Int, argumentsCount: Int, breakIntoVar
 
 func resolverGenerator(arguments: Int) -> String {
     
+    let argParameterName = arguments == 1 ? "argument" : "arguments"
     
-    let genericArguments = (1..<(arguments+1)).map{ "\(genericArgumentPrefix)\($0)" }
+    let genericArguments = (1..<(arguments+1)).map{ "\(genericArgumentPrefix)\($0)" } // ["Arg1", "Arg2", "Arg3"]
     
     let genericsDefinition = commaConcat(["Service"] + genericArguments)
     
-    let paramArgs = (1..<(arguments+1)).map { "params.\($0)" }
+    let paramArgs = (0..<(arguments)).map { arguments == 1 ? argParameterName : "\(argParameterName).\($0)" }
     
     let argumentsTests = paramArgs.map { "(\($0) as? Service) ?? " }.joinWithSeparator("")
     
-    let functionDefinition = arguments == 0 ? "r: Resolvable" : "params: (r: \(commaConcat(["Resolvable"] + genericArguments)))"
+    let functionDefinition = arguments == 0 ? "" : "\(argParameterName) \(argParameterName): (\(commaConcat(genericArguments)))"
     
-    let implementation = "return \(argumentsTests)\(arguments == 0 ? "r" : "params.r").resolve(Service.self)!"
+    let implementation = "return \(argumentsTests)self.resolve(Service.self\(arguments > 0 ? ", \(argParameterName): \(argParameterName)" : ""))!"
     
     let resolver = [
-    "private func res<\(genericsDefinition)>(\(functionDefinition)) -> Service{",
+    "func resolve<\(genericsDefinition)>(\(functionDefinition)) -> Service{",
     "   \(implementation)",
     "}"
     ]
@@ -126,7 +132,9 @@ let registers = (0...dependenciesCount).map { dep in
 var output = [
     headers(outputPath),
     "\n\n import Swinject \n\n",
+    "extension Resolvable {\n\n",
     resolvers.joinWithSeparator("\n\n"),
+    "}\n\n",
     "extension Container {\n\n",
         registers.joinWithSeparator("\n\n"),
     "\n\n}"
