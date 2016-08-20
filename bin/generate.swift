@@ -8,6 +8,17 @@ let genericServices = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L
 
 let genericArgumentPrefix = "Arg"
 
+let outputPath = "Source/Swinject+AutoRegistration.swift"
+
+func headers(fileName: String) -> String {
+    return ["//",
+    "//  \(fileName)",
+    "//  Swinject",
+    "//",
+    "//  Generated using Swinject AutoRegistration generator.",
+    "//"].joinWithSeparator("\n")
+}
+
 extension Array {
     subscript(safe index: Int) -> Element? {
         return indices ~= index ? self[index] : nil
@@ -23,8 +34,6 @@ func genericType(for position: Int) -> String {
 }
 
 
-
-
 func commaConcat(xs: [String]) -> String {
     return xs.joinWithSeparator(", ")
 }
@@ -35,7 +44,7 @@ func registerGenerator(dependenciesCount: Int, argumentsCount: Int, breakIntoVar
     
     var genericParameters = (0..<dependenciesCount).map(genericType)
     let genericArguments = (1..<(argumentsCount+1)).map{ "\(genericArgumentPrefix)\($0)" }
-    var resolvers = commaConcat(genericParameters.map { _ in "res($0)" })
+    var resolvers = genericParameters.map { _ in "res($0)" }
     
     var genericsDefinition = commaConcat(["Service"] + genericParameters + genericArguments)
     
@@ -43,7 +52,7 @@ func registerGenerator(dependenciesCount: Int, argumentsCount: Int, breakIntoVar
     if isArgumentInjection {
         genericParameters = ["\(genericArgumentPrefix)1"]
         genericsDefinition = commaConcat(["Service"] + genericParameters)
-        resolvers = "$0.1"
+        resolvers = ["$0.1"]
     }
     
     let concatenatedParameters = commaConcat(genericParameters)
@@ -56,10 +65,10 @@ func registerGenerator(dependenciesCount: Int, argumentsCount: Int, breakIntoVar
     
     if breakIntoVariables {
         let services = genericParameters.enumerate().map { "let \($1.lowercaseString): \($1) = \(resolvers[$0])" }
-        initializer = services.joinWithSeparator(";") + "\n" +
-            "       initializer(\(commaConcat(genericParameters.map{ $0.lowercaseString })))"
+        initializer = "       " + services.joinWithSeparator("; ") + "\n" +
+            "       return initializer(\(commaConcat(genericParameters.map{ $0.lowercaseString })))"
     } else {
-        initializer = "       initializer(\(resolvers))"
+        initializer = "       initializer(\(commaConcat(resolvers)))"
     }
     let register = [
         "func register<\(genericsDefinition)>(service: Service.Type, name: String? = nil, initializer: (\(concatenatedParameters)) -> Service\(argumentsDefinition)) -> ServiceEntry<Service> {",
@@ -84,7 +93,7 @@ func resolverGenerator(arguments: Int) -> String {
     
     let argumentsTests = paramArgs.map { "(\($0) as? Service) ?? " }.joinWithSeparator("")
     
-    let functionDefinition = arguments == 0 ? "r: Resolvable" : "params: (r:\(commaConcat(["Resolvable"] + genericArguments)))"
+    let functionDefinition = arguments == 0 ? "r: Resolvable" : "params: (r: \(commaConcat(["Resolvable"] + genericArguments)))"
     
     let implementation = "return \(argumentsTests)\(arguments == 0 ? "r" : "params.r").resolve(Service.self)!"
     
@@ -102,35 +111,34 @@ print("Generating 💬")
 
 let dependenciesCount = Int(Process.arguments[safe: 1] ?? "9")!
 let argumentsCount = Int(Process.arguments[safe: 2] ?? "3")!
-
+let breakCount = Int(Process.arguments[safe: 3] ?? "5")!
 
 let resolvers = (0...argumentsCount).map { arg in
     resolverGenerator(arg)
 }
 
-
 let registers = (0...dependenciesCount).map { dep in
     (0...argumentsCount).filter{ dep >= $0 }.map { arg in
-        registerGenerator(dep, argumentsCount: arg, breakIntoVariables: true)
+        registerGenerator(dep, argumentsCount: arg, breakIntoVariables: dep + arg > breakCount)
     }
     }.reduce([]){ $0 + $1}
 
-let output = (resolvers + registers).joinWithSeparator("\n\n") + "\n"
+var output = [
+    headers(outputPath),
+    "\n\n import Swinject \n\n",
+    resolvers.joinWithSeparator("\n\n"),
+    "extension Container {\n\n",
+        registers.joinWithSeparator("\n\n"),
+    "\n\n}"
+].joinWithSeparator("\n")
 
+let currentPath = NSURL(fileURLWithPath: NSFileManager.defaultManager().currentDirectoryPath)
+let swinjectPath = currentPath.URLByAppendingPathComponent(outputPath)
 
-
-print(output)
-
-//let output = curries.joined(separator: "\n\n") + "\n"
-
-let outputPath = "Source/Swinject+AutoRegistration.swift"
-//let currentPath = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-//let currySwiftPath = try! currentPath.appendingPathComponent(outputPath)
-
-//do {
-//try output.write(to: currySwiftPath, atomically: true, encoding: String.Encoding.utf8)
-//} catch let e as NSError {
-//print("An error occurred while saving the generated functions. Error: \(e)")
-//}
+do {
+    try output.writeToURL(swinjectPath, atomically: true, encoding: NSUTF8StringEncoding)
+} catch let e as NSError {
+    print("An error occurred while saving the generated functions. Error: \(e)")
+}
 
 print("Done, swinject functions files written at \(outputPath) 👍")
