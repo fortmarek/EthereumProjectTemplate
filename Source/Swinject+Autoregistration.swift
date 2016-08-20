@@ -239,8 +239,7 @@ extension Container {
         func register<Service, A, B, C, D, E, F, G, H, Arg1, Arg2, Arg3>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F, G, H) -> Service, arguments: (Arg1.Type, Arg2.Type, Arg3.Type)) -> ServiceEntry<Service> {
     
             return self.register(service.self, name: name, factory: {
-                let a: A = res($0); let b: B = res($0); let c: C = res($0); let d: D = res($0); let e: E = res($0);
-                let f: F = res($0); let g: G = res($0); let h: H = res($0);
+                let a: A = res($0); let b: B = res($0); let c: C = res($0); let d: D = res($0); let e: E = res($0); let f: F = res($0); let g: G = res($0); let h: H = res($0)
                 return initializer(a, b, c, d, e, f, g, h)
                 } as (Resolvable, Arg1, Arg2, Arg3) -> Service)
         }

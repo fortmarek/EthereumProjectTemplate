@@ -29,7 +29,7 @@ func commaConcat(xs: [String]) -> String {
     return xs.joinWithSeparator(", ")
 }
 
-func registerGenerator(dependenciesCount: Int, argumentsCount: Int) -> String {
+func registerGenerator(dependenciesCount: Int, argumentsCount: Int, breakIntoVariables: Bool = false) -> String {
     // If there is only one argument and one dependency, it can be checked by compiler
     let isArgumentInjection = dependenciesCount == 1 && argumentsCount == 1
     
@@ -52,10 +52,19 @@ func registerGenerator(dependenciesCount: Int, argumentsCount: Int) -> String {
     let argParameterName = argumentsCount == 1 ? "argument" : "arguments"
     let argumentsDefinition = argumentsCount > 0 ? ", \(argParameterName): (\(commaConcat(genericArguments.map{"\($0).Type"})))" : ""
     
+    let initializer: String
+    
+    if breakIntoVariables {
+        let services = genericParameters.enumerate().map { "let \($1.lowercaseString): \($1) = \(resolvers[$0])" }
+        initializer = services.joinWithSeparator(";") + "\n" +
+            "       initializer(\(commaConcat(genericParameters.map{ $0.lowercaseString })))"
+    } else {
+        initializer = "       initializer(\(resolvers))"
+    }
     let register = [
         "func register<\(genericsDefinition)>(service: Service.Type, name: String? = nil, initializer: (\(concatenatedParameters)) -> Service\(argumentsDefinition)) -> ServiceEntry<Service> {",
         "   return self.register(service.self, name: name, factory: { \(dependenciesCount == 0 ? "_ in": "")",
-        "       initializer(\(resolvers))",
+        initializer,
         "   } as (\(commaConcat(["Resolvable"] + genericArguments))) -> Service)",
         "}"
     ]
@@ -102,7 +111,7 @@ let resolvers = (0...argumentsCount).map { arg in
 
 let registers = (0...dependenciesCount).map { dep in
     (0...argumentsCount).filter{ dep >= $0 }.map { arg in
-        registerGenerator(dep, argumentsCount: arg)
+        registerGenerator(dep, argumentsCount: arg, breakIntoVariables: true)
     }
     }.reduce([]){ $0 + $1}
 
