@@ -15,6 +15,22 @@ import AVFoundation
 typealias LanguageDetailTableViewControllerFactory = (viewModel: LanguageDetailViewModeling) -> LanguageDetailViewController
 typealias LanguageDetailModelingFactory = (language: LanguageEntity) -> LanguageDetailViewModeling
 
+class A {
+
+}
+
+class B {
+    
+}
+
+
+class VM {
+    init(b: B, a: A) {
+        print(a, b)
+        print("registered")
+    }
+}
+
 class AppContainer {
 
     static let container = Container() { container in
@@ -45,6 +61,10 @@ class AppContainer {
         
          // Factory for detail controller
         container.registerFactory(LanguageDetailTableViewControllerFactory.self)
+        
+        //Test
+        container.register(VM.self, initializer: VM.init, arguments: (A.self, B.self))
+        
         
     }
 }

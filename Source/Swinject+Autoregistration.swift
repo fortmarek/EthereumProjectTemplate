@@ -24,113 +24,255 @@ func ~ <Service, Arg1, Arg2>(r: ResolverType, o: (Service.Type, arguments: (Arg1
     return r.resolve(o.0, arguments: o.arguments)!
 }
 
+//private func res<Service, Arg1, Arg2>(params: (r: Resolvable, Arg1, Arg2)) -> Service{
+//    return (params.1 as? Service) ?? (params.2 as? Service) ?? params.r.resolve(Service.self)!
+//}
+//
+//private func res<Service, Arg1>(params: (r: Resolvable, Arg1)) -> Service{
+//    return (params.1 as? Service) ?? params.r.resolve(Service.self)!
+//}
+//
+//private func res<Service>(r: (Resolvable)) -> Service{
+//    return r.resolve(Service.self)!
+//}
+
+private func res<Service>(r: Resolvable) -> Service {
+    let s = r.resolve(Service.self)
+    if let resolved = s {
+        return resolved
+    } else {
+        assertionFailure("Failed to resolve \(Service.self)")
+        return s!
+    }
+}
+
+private func res<Service, Arg1>(params: (r: Resolvable, Arg1)) -> Service {
+    return (params.1 as? Service) ?? params.r.resolve(Service.self)!
+}
+
+private func res<Service, Arg1, Arg2>(params: (r: Resolvable, Arg1, Arg2)) -> Service {
+    return (params.1 as? Service) ?? (params.2 as? Service) ?? params.r.resolve(Service.self)!
+}
+
+private func res<Service, Arg1, Arg2, Arg3>(params: (r: Resolvable, Arg1, Arg2, Arg3)) -> Service {
+    return (params.1 as? Service) ?? (params.2 as? Service) ?? (params.3 as? Service) ?? params.r.resolve(Service.self)!
+}
+
+
 extension Container {
     
-    func register<Service>(service: Service.Type, name: String? = nil, initializer:() -> Service) -> ServiceEntry<Service> {
-        return self.register(service.self, name: name, factory: { (r) -> Service in
+    func register<Service>(service: Service.Type, name: String? = nil, initializer: () -> Service) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: { _ in
             initializer()
-        })
+            } as (Resolvable) -> Service)
     }
+
     
     func register<Service, A>(service: Service.Type, name: String? = nil, initializer: (A) -> Service) -> ServiceEntry<Service> {
-        return self.register(service.self, name: name) { (r) -> Service in
-            return initializer(r.resolve(A.self)!)
-        }
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0))
+            } as (Resolvable) -> Service)
+    }
+    
+    func register<Service, Arg1>(service: Service.Type, name: String? = nil, initializer: (Arg1) -> Service, argument: (Arg1.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer($0.1)
+            } as (Resolvable, Arg1) -> Service)
     }
     
     func register<Service, A, B>(service: Service.Type, name: String? = nil, initializer: (A, B) -> Service) -> ServiceEntry<Service> {
-        return self.register(service.self, name: name) { (r) -> Service in
-            return initializer(r.resolve(A.self)!, r.resolve(B.self)!)
-        }
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0))
+            } as (Resolvable) -> Service)
+    }
+    
+    func register<Service, A, B, Arg1>(service: Service.Type, name: String? = nil, initializer: (A, B) -> Service, argument: (Arg1.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0))
+            } as (Resolvable, Arg1) -> Service)
+    }
+    
+    func register<Service, A, B, Arg1, Arg2>(service: Service.Type, name: String? = nil, initializer: (A, B) -> Service, arguments: (Arg1.Type, Arg2.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0))
+            } as (Resolvable, Arg1, Arg2) -> Service)
     }
     
     func register<Service, A, B, C>(service: Service.Type, name: String? = nil, initializer: (A, B, C) -> Service) -> ServiceEntry<Service> {
-        return self.register(service.self, name: name) { (r) -> Service in
-            initializer(r.resolve(A.self)!, r.resolve(B.self)!, r.resolve(C.self)!)
-        }
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0))
+            } as (Resolvable) -> Service)
+    }
+    
+    func register<Service, A, B, C, Arg1>(service: Service.Type, name: String? = nil, initializer: (A, B, C) -> Service, argument: (Arg1.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0))
+            } as (Resolvable, Arg1) -> Service)
+    }
+    
+    func register<Service, A, B, C, Arg1, Arg2>(service: Service.Type, name: String? = nil, initializer: (A, B, C) -> Service, arguments: (Arg1.Type, Arg2.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0))
+            } as (Resolvable, Arg1, Arg2) -> Service)
+    }
+    
+    func register<Service, A, B, C, Arg1, Arg2, Arg3>(service: Service.Type, name: String? = nil, initializer: (A, B, C) -> Service, arguments: (Arg1.Type, Arg2.Type, Arg3.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0))
+            } as (Resolvable, Arg1, Arg2, Arg3) -> Service)
     }
     
     func register<Service, A, B, C, D>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D) -> Service) -> ServiceEntry<Service> {
-        return self.register(service.self, name: name) { (r) -> Service in
-            initializer(r.resolve(A.self)!, r.resolve(B.self)!, r.resolve(C.self)!, r.resolve(D.self)!)
-        }
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0))
+            } as (Resolvable) -> Service)
+    }
+    
+    func register<Service, A, B, C, D, Arg1>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D) -> Service, argument: (Arg1.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0))
+            } as (Resolvable, Arg1) -> Service)
+    }
+    
+    func register<Service, A, B, C, D, Arg1, Arg2>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D) -> Service, arguments: (Arg1.Type, Arg2.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0))
+            } as (Resolvable, Arg1, Arg2) -> Service)
+    }
+    
+    func register<Service, A, B, C, D, Arg1, Arg2, Arg3>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D) -> Service, arguments: (Arg1.Type, Arg2.Type, Arg3.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0))
+            } as (Resolvable, Arg1, Arg2, Arg3) -> Service)
     }
     
     func register<Service, A, B, C, D, E>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E) -> Service) -> ServiceEntry<Service> {
-        return self.register(service.self, name: name) { (r) -> Service in
-            initializer(r.resolve(A.self)!, r.resolve(B.self)!, r.resolve(C.self)!, r.resolve(D.self)!, r.resolve(E.self)!)
-        }
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0), res($0))
+            } as (Resolvable) -> Service)
+    }
+    
+    func register<Service, A, B, C, D, E, Arg1>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E) -> Service, argument: (Arg1.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0), res($0))
+            } as (Resolvable, Arg1) -> Service)
+    }
+    
+    func register<Service, A, B, C, D, E, Arg1, Arg2>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E) -> Service, arguments: (Arg1.Type, Arg2.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0), res($0))
+            } as (Resolvable, Arg1, Arg2) -> Service)
+    }
+    
+    func register<Service, A, B, C, D, E, Arg1, Arg2, Arg3>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E) -> Service, arguments: (Arg1.Type, Arg2.Type, Arg3.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0), res($0))
+            } as (Resolvable, Arg1, Arg2, Arg3) -> Service)
     }
     
     func register<Service, A, B, C, D, E, F>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F) -> Service) -> ServiceEntry<Service> {
-        return self.register(service.self, name: name) { (r) -> Service in
-            initializer(r.resolve(A.self)!, r.resolve(B.self)!, r.resolve(C.self)!, r.resolve(D.self)!, r.resolve(E.self)!, r.resolve(F.self)!)
-        }
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0), res($0), res($0))
+            } as (Resolvable) -> Service)
+    }
+    
+    func register<Service, A, B, C, D, E, F, Arg1>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F) -> Service, argument: (Arg1.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0), res($0), res($0))
+            } as (Resolvable, Arg1) -> Service)
+    }
+    
+    func register<Service, A, B, C, D, E, F, Arg1, Arg2>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F) -> Service, arguments: (Arg1.Type, Arg2.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0), res($0), res($0))
+            } as (Resolvable, Arg1, Arg2) -> Service)
+    }
+    
+    func register<Service, A, B, C, D, E, F, Arg1, Arg2, Arg3>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F) -> Service, arguments: (Arg1.Type, Arg2.Type, Arg3.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0), res($0), res($0))
+            } as (Resolvable, Arg1, Arg2, Arg3) -> Service)
     }
     
     func register<Service, A, B, C, D, E, F, G>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F, G) -> Service) -> ServiceEntry<Service> {
-        return self.register(service.self, name: name) { (r) -> Service in
-            initializer(r.resolve(A.self)!, r.resolve(B.self)!, r.resolve(C.self)!, r.resolve(D.self)!, r.resolve(E.self)!, r.resolve(F.self)!, r.resolve(G.self)!)
-        }
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0), res($0), res($0), res($0))
+            } as (Resolvable) -> Service)
+    }
+    
+    func register<Service, A, B, C, D, E, F, G, Arg1>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F, G) -> Service, argument: (Arg1.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0), res($0), res($0), res($0))
+            } as (Resolvable, Arg1) -> Service)
+    }
+    
+    func register<Service, A, B, C, D, E, F, G, Arg1, Arg2>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F, G) -> Service, arguments: (Arg1.Type, Arg2.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0), res($0), res($0), res($0))
+            } as (Resolvable, Arg1, Arg2) -> Service)
+    }
+    
+    func register<Service, A, B, C, D, E, F, G, Arg1, Arg2, Arg3>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F, G) -> Service, arguments: (Arg1.Type, Arg2.Type, Arg3.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0), res($0), res($0), res($0))
+            } as (Resolvable, Arg1, Arg2, Arg3) -> Service)
     }
     
     func register<Service, A, B, C, D, E, F, G, H>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F, G, H) -> Service) -> ServiceEntry<Service> {
-        return self.register(service.self, name: name) { (r) -> Service in
-            initializer(r.resolve(A.self)!, r.resolve(B.self)!, r.resolve(C.self)!, r.resolve(D.self)!, r.resolve(E.self)!, r.resolve(F.self)!, r.resolve(G.self)!, r.resolve(H.self)!)
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0), res($0), res($0), res($0), res($0))
+            } as (Resolvable) -> Service)
+    }
+
+    func register<Service, A, B, C, D, E, F, G, H, Arg1>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F, G, H) -> Service, argument: (Arg1.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0), res($0), res($0), res($0), res($0))
+            } as (Resolvable, Arg1) -> Service)
+    }
+    
+    func register<Service, A, B, C, D, E, F, G, H, Arg1, Arg2>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F, G, H) -> Service, arguments: (Arg1.Type, Arg2.Type)) -> ServiceEntry<Service> {
+        return self.register(service.self, name: name, factory: {
+            initializer(res($0), res($0), res($0), res($0), res($0), res($0), res($0), res($0))
+            } as (Resolvable, Arg1, Arg2) -> Service)
+    }
+    
+        func register<Service, A, B, C, D, E, F, G, H, Arg1, Arg2, Arg3>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F, G, H) -> Service, arguments: (Arg1.Type, Arg2.Type, Arg3.Type)) -> ServiceEntry<Service> {
+    
+            return self.register(service.self, name: name, factory: {
+                let a: A = res($0); let b: B = res($0); let c: C = res($0); let d: D = res($0); let e: E = res($0);
+                let f: F = res($0); let g: G = res($0); let h: H = res($0);
+                return initializer(a, b, c, d, e, f, g, h)
+                } as (Resolvable, Arg1, Arg2, Arg3) -> Service)
         }
-    }
     
-    //MARK: With arguments
     
-    func register<Service, A, Arg1>(service: Service.Type, name: String? = nil, initializer: (A) -> Service, argument: Arg1.Type) -> ServiceEntry<Service> {
-        return self.register(service.self, factory: { (r, arg) -> Service in
-            initializer((arg as? A).flatMap { $0 } ?? r.resolve(A.self)!)
-            } as (Resolvable, Arg1) -> Service )
-    }
     
-    func register<Service, A, B, Arg1>(service: Service.Type, name: String? = nil, initializer: (A, B) -> Service, argument: Arg1.Type) -> ServiceEntry<Service> {
-        return self.register(service.self, name: name, factory: { (r, arg) -> Service in
-            initializer((arg as? A).flatMap { $0 } ?? r.resolve(A.self)!, (arg as? B).flatMap { $0 } ?? r.resolve(B.self)!)
-            } as (Resolvable, Arg1) -> Service )
-    }
+//    func register<Service, A, B, C, D, E, F, G, H, I>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F, G, H, I) -> Service) -> ServiceEntry<Service> {
+//        return self.register(service.self, name: name, factory: {
+//            initializer(res($0), res($0), res($0), res($0), res($0), res($0), res($0), res($0), res($0))
+//            } as (Resolvable) -> Service)
+//    }
     
-    func register<Service, A, B, C, Arg1>(service: Service.Type, name: String? = nil, initializer: (A, B, C) -> Service, argument: Arg1.Type) -> ServiceEntry<Service> {
-        print(Arg1.self)
-        return self.register(service.self, name: name, factory: { (r, arg) -> Service in
-            initializer((arg as? A).flatMap { $0 } ?? r.resolve(A.self)!, (arg as? B).flatMap { $0 } ?? r.resolve(B.self)!, (arg as? C).flatMap { $0 } ?? r.resolve(C.self)!)
-            } as (Resolvable, Arg1) -> Service )
-    }
+//    func register<Service, A, B, C, D, E, F, G, H, I, Arg1>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F, G, H, I) -> Service, argument: (Arg1.Type)) -> ServiceEntry<Service> {
+//        return self.register(service.self, name: name, factory: {
+//            initializer(res($0), res($0), res($0), res($0), res($0), res($0), res($0), res($0), res($0))
+//            } as (Resolvable, Arg1) -> Service)
+//    }
+//    
+//    func register<Service, A, B, C, D, E, F, G, H, I, Arg1, Arg2>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F, G, H, I) -> Service, arguments: (Arg1.Type, Arg2.Type)) -> ServiceEntry<Service> {
+//        return self.register(service.self, name: name, factory: { 
+//            initializer(res($0), res($0), res($0), res($0), res($0), res($0), res($0), res($0), res($0))
+//            } as (Resolvable, Arg1, Arg2) -> Service)
+//    }
+//    
+//    func register<Service, A, B, C, D, E, F, G, H, I, Arg1, Arg2, Arg3>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F, G, H, I) -> Service, arguments: (Arg1.Type, Arg2.Type, Arg3.Type)) -> ServiceEntry<Service> {
+//        return self.register(service.self, name: name, factory: { 
+//            initializer(res($0), res($0), res($0), res($0), res($0), res($0), res($0), res($0), res($0))
+//            } as (Resolvable, Arg1, Arg2, Arg3) -> Service)
+//    }
     
-    func register<Service, A, B, C, D, Arg1>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D) -> Service, argument: Arg1.Type) -> ServiceEntry<Service> {
-        return self.register(service.self, name: name, factory: { (r, arg) -> Service in
-            initializer((arg as? A).flatMap { $0 } ?? r.resolve(A.self)!, (arg as? B).flatMap { $0 } ?? r.resolve(B.self)!, (arg as? C).flatMap { $0 } ?? r.resolve(C.self)!, (arg as? D).flatMap { $0 } ?? r.resolve(D.self)!)
-            } as (Resolvable, Arg1) -> Service )
-    }
-    
-    func register<Service, A, B, C, D, E, Arg1>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E) -> Service, argument: Arg1.Type) -> ServiceEntry<Service> {
-        return self.register(service.self, name: name, factory: { (r, arg) -> Service in
-            return initializer((arg as? A).flatMap { $0 } ?? r.resolve(A.self)!, (arg as? B).flatMap { $0 } ?? r.resolve(B.self)!, (arg as? C).flatMap { $0 } ?? r.resolve(C.self)!, (arg as? D).flatMap { $0 } ?? r.resolve(D.self)!, (arg as? E).flatMap { $0 } ?? r.resolve(E.self)!)
-            } as (Resolvable, Arg1) -> Service )
-    }
-    
-    func register<Service, A, B, C, D, E, F, Arg1>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F) -> Service, argument: Arg1.Type) -> ServiceEntry<Service> {
-        return self.register(service.self, name: name, factory: { (r, arg) -> Service in
-            initializer((arg as? A).flatMap { $0 } ?? r.resolve(A.self)!, (arg as? B).flatMap { $0 } ?? r.resolve(B.self)!, (arg as? C).flatMap { $0 } ?? r.resolve(C.self)!, (arg as? D).flatMap { $0 } ?? r.resolve(D.self)!, (arg as? E).flatMap { $0 } ?? r.resolve(E.self)!, (arg as? F).flatMap { $0 } ?? r.resolve(F.self)!)
-            } as (Resolvable, Arg1) -> Service )
-    }
-    
-    func register<Service, A, B, C, D, E, F, G, Arg1>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F, G) -> Service, argument: Arg1.Type) -> ServiceEntry<Service> {
-        return self.register(service.self, name: name, factory: { (r, arg) -> Service in
-            initializer((arg as? A).flatMap { $0 } ?? r.resolve(A.self)!, (arg as? B).flatMap { $0 } ?? r.resolve(B.self)!, (arg as? C).flatMap { $0 } ?? r.resolve(C.self)!, (arg as? D).flatMap { $0 } ?? r.resolve(D.self)!, (arg as? E).flatMap { $0 } ?? r.resolve(E.self)!, (arg as? F).flatMap { $0 } ?? r.resolve(F.self)!, (arg as? G).flatMap { $0 } ?? r.resolve(G.self)!)
-            } as (Resolvable, Arg1) -> Service )
-    }
-    
-    func register<Service, A, B, C, D, E, F, G, H, Arg1>(service: Service.Type, name: String? = nil, initializer: (A, B, C, D, E, F, G, H) -> Service, argument: Arg1.Type) -> ServiceEntry<Service> {
-        return self.register(service.self, name: name, factory: { (r, arg) -> Service in
-            initializer((arg as? A).flatMap { $0 } ?? r.resolve(A.self)!, (arg as? B).flatMap { $0 } ?? r.resolve(B.self)!, (arg as? C).flatMap { $0 } ?? r.resolve(C.self)!, (arg as? D).flatMap { $0 } ?? r.resolve(D.self)!, (arg as? E).flatMap { $0 } ?? r.resolve(E.self)!, (arg as? F).flatMap { $0 } ?? r.resolve(F.self)!, (arg as? G).flatMap { $0 } ?? r.resolve(G.self)!, (arg as? H).flatMap { $0 } ?? r.resolve(H.self)!)
-            } as (Resolvable, Arg1) -> Service )
-    }
-    
+
+
     
     
     //MARK: Factory
