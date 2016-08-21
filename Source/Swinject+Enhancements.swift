@@ -86,8 +86,7 @@ extension Container {
      - Important: Fails on unresolvable service.
      */
     func registerFactory<Service>(factory: (() -> Service).Type) -> ServiceEntry<(() -> Service)> {
-        return self.register(factory.self) { r in
-            { arg in
+        return self.register(factory.self) { r in { arg in
                 r.resolve(Service.self)!
             }
         }
@@ -111,8 +110,7 @@ extension Container {
      */
     
     func registerFactory<Service, Arg1>(factory: ((Arg1) -> Service).Type) -> ServiceEntry<((Arg1) -> Service)> {
-        return self.register(factory.self) { r in
-            { arg in
+        return self.register(factory.self) { r in { arg in
                 r.resolve(Service.self, argument: arg)!
             }
         }
@@ -138,8 +136,7 @@ extension Container {
      */
     
     func registerFactory<Service, Arg1, Arg2>(factory: ((Arg1, Arg2) -> Service).Type) -> ServiceEntry<((Arg1, Arg2) -> Service)> {
-        return self.register(factory.self) { r in
-            { args in
+        return self.register(factory.self) { r in { args in
                 r.resolve(Service.self, arguments: args)!
             }
         }
@@ -162,8 +159,7 @@ extension Container {
      - Important: Fails on unresolvable service.
      */
     func registerFactory<Service, Arg1, Arg2, Arg3>(factory: ((Arg1, Arg2, Arg3) -> Service).Type) -> ServiceEntry<((Arg1, Arg2, Arg3) -> Service)> {
-        return self.register(factory.self) { r in
-            { args in
+        return self.register(factory.self) { r in { args in
                 r.resolve(Service.self, arguments: args)!
             }
         }
