@@ -36,7 +36,7 @@ class AppContainer {
         // Example usage of unary ~ operator
         // Better to use container.register(initializer: LanguagesTableViewModel.init, service: LanguagesTableViewModeling.self) when possible
         container.register(LanguagesTableViewModeling.self) { r in
-            LanguagesTableViewModel(api: r~, geocoder: r~, locationManager: r~, detailModelFactory: r~)
+            return LanguagesTableViewModel(api: r~, geocoder: r~, locationManager: r~, detailModelFactory: r~)
         }
         
         //Example usage of dynamic argument passing
