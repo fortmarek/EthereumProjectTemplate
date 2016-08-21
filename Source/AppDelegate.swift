@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BITHockeyManagerDelegate 
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
 
-        appContainer.resolve(VM.self, arguments: (A(), B()))!
+        appContainer.resolve(UIViewController.self)
         
         // Resolve initial controller with all its dependencies
         let controller = appContainer.resolve(LanguagesTableViewController.self)!

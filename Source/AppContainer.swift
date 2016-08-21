@@ -15,22 +15,6 @@ import AVFoundation
 typealias LanguageDetailTableViewControllerFactory = (viewModel: LanguageDetailViewModeling) -> LanguageDetailViewController
 typealias LanguageDetailModelingFactory = (language: LanguageEntity) -> LanguageDetailViewModeling
 
-class A {
-
-}
-
-class B {
-    
-}
-
-
-class VM {
-    init(b: B, a: A) {
-        print(a, b)
-        print("registered")
-    }
-}
-
 class AppContainer {
 
     static let container = Container() { container in
@@ -49,15 +33,15 @@ class AppContainer {
         container.register(initializer: SpeechSynthetizer.init, service: SpeechSynthetizing.self).inObjectScope(.Container)
 
         // ---- View models
+        // Example usage of unary ~ operator
+        // Better to use container.register(initializer: LanguagesTableViewModel.init, service: LanguagesTableViewModeling.self) when possible
         container.register(LanguagesTableViewModeling.self) { r in
             LanguagesTableViewModel(api: r~, geocoder: r~, locationManager: r~, detailModelFactory: r~)
         }
-        //container.register(LanguagesTableViewModeling.self, initializer: LanguagesTableViewModel.init)
-        //container.register(LanguageDetailViewModeling.self, initializer: LanguageDetailViewModel.init, argument: LanguageEntity.self)
         
-        container.register(LanguageDetailViewModeling.self, factory: { r, language in
-            LanguageDetailViewModel(language: language, synthetizer: r~)
-        })
+        //Example usage of dynamic argument passing
+        container.register(initializer:LanguageDetailViewModel.init, service: LanguageDetailViewModeling.self, argument: LanguageEntity.self)
+        
         
         // Factory for creating detail model
         container.registerFactory(LanguageDetailModelingFactory.self)
@@ -68,10 +52,6 @@ class AppContainer {
         
          // Factory for detail controller
         container.registerFactory(LanguageDetailTableViewControllerFactory.self)
-        
-        //Test
-        container.register(initializer: VM.init, service: VM.self, arguments: A.self, B.self)
-        
         
     }
 }
