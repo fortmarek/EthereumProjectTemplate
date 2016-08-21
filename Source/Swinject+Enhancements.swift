@@ -16,7 +16,7 @@ postfix operator ~ {}
 
 
 postfix func ~ <Service>(r: ResolverType) -> Service {
-    return r.resolve()
+    return r.resolve(Service.self)!
 }
 
 //postfix func ~ <Service, Arg1>(o: (r: ResolverType, argument: Arg1)) -> Service {

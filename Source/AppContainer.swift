@@ -70,7 +70,7 @@ class AppContainer {
         container.registerFactory(LanguageDetailTableViewControllerFactory.self)
         
         //Test
-        container.register(initializer: VM.init, service: VM.self, arguments: (A.self, B.self))
+        container.register(initializer: VM.init, service: VM.self, arguments: A.self, B.self)
         
         
     }
