@@ -18,15 +18,26 @@ public typealias NoError = Result.NoError
 class AppDelegate: UIResponder, UIApplicationDelegate, BITHockeyManagerDelegate {
 
     var window: UIWindow?
+    
+    var assembler: Assembler!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-        // Load App Container
-        let appContainer = AppContainer.container
+        // Assemble!
+        assembler = try! Assembler(assemblies: [
+            LaunchAssembly(),
+            ServiceAssembly(),
+            ManagerAssembly(),
+            LanguagesAssembly()
+        ])
+        
         // in this example, reauthentication is handled through UI, so we have to inject an AuthHandler for apiservices to use.
         // in your app, reauth could just be a refresh token request done by the api service instead, so theres no need to pass AuthHandler as parameter to APIService.init.
         // be aware that all APIServices that talk to the same api should use the same AuthHandler (even if we split functionality into multiple APIService). So dont create a separate AuthHandler for each sub-APIService.
-        appContainer.register(AuthHandler.self, factory: { [unowned self] _ in self.refreshTokenAction }).inObjectScope(.Container)
+        (assembler.resolver as? Container)?.register(AuthHandler.self, factory: { [unowned self] _ in self.refreshTokenAction }).inObjectScope(.Container)
+        
+        
+        
         // Start Hockey Manager
         if Environment.Hockey.identifier.characters.count != 0 && Environment.Hockey.allowLogging {
             let hockeyManager = BITHockeyManager.sharedHockeyManager()
@@ -37,14 +48,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BITHockeyManagerDelegate 
         }
 
         // Start location manager
-        let locationManager = appContainer.resolve(LocationManager.self)!
+        let locationManager = assembler.resolver.resolve(LocationManager.self)!
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
 
-        appContainer.resolve(UIViewController.self)
+         assembler.resolver.resolve(UIViewController.self)
         
         // Resolve initial controller with all its dependencies
-        let controller = appContainer.resolve(LanguagesTableViewController.self)!
+        let controller = assembler.resolver.resolve(LanguagesTableViewController.self)!
 
         let vc = UINavigationController(rootViewController: controller)
 

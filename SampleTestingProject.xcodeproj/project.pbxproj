@@ -61,6 +61,10 @@
 		79F0592C1D098D90005EFEFE /* AuthenticatedAPIServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F0592B1D098D90005EFEFE /* AuthenticatedAPIServiceSpec.swift */; };
 		79FB0C131C1AD2D50025C600 /* UIView+Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FB0C121C1AD2D50025C600 /* UIView+Spacer.swift */; };
 		7A2FE95079FAE357F23A8DC1 /* Pods_UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68CBF6A3747C7413DE1CBC2E /* Pods_UITests.framework */; };
+		AC22F0C71D6A44BB00514668 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC22F0C61D6A44BB00514668 /* ServiceAssembly.swift */; };
+		AC22F0C91D6A44CB00514668 /* ManagerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC22F0C81D6A44CB00514668 /* ManagerAssembly.swift */; };
+		AC22F0CB1D6A44D600514668 /* LanguagesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC22F0CA1D6A44D600514668 /* LanguagesAssembly.swift */; };
+		AC22F0CD1D6A44E600514668 /* LaunchAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC22F0CC1D6A44E600514668 /* LaunchAssembly.swift */; };
 		AC386B691CBD205F002C9426 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B681CBD205F002C9426 /* Credentials.swift */; };
 		AC386B6B1CBD2126002C9426 /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B6A1CBD2126002C9426 /* UserEntity.swift */; };
 		AC386B6D1CBD240C002C9426 /* AuthenticationAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B6C1CBD240C002C9426 /* AuthenticationAPIService.swift */; };
@@ -69,7 +73,6 @@
 		ACC811201C624C570080266A /* UnicornAPISpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC8111F1C624C570080266A /* UnicornAPISpec.swift */; };
 		ACD4798B1C582BFC00E85DD3 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD4798A1C582BFC00E85DD3 /* Network.swift */; };
 		ACD4798D1C582D1F00E85DD3 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD4798C1C582D1F00E85DD3 /* Networking.swift */; };
-		ACD479961C5919DB00E85DD3 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD479951C5919DB00E85DD3 /* AppContainer.swift */; };
 		ACD479BE1C5C13A200E85DD3 /* Geocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD479BD1C5C13A200E85DD3 /* Geocoder.swift */; };
 		ACD479C21C5C14BE00E85DD3 /* Geocoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD479C11C5C14BE00E85DD3 /* Geocoding.swift */; };
 		ACD479C41C5C301F00E85DD3 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD479C31C5C301F00E85DD3 /* LocationManager.swift */; };
@@ -193,6 +196,10 @@
 		A632E3F366F026D7D4ED7159 /* Pods-Tests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.appstore.xcconfig"; sourceTree = "<group>"; };
 		AC223D721C6B72860000A2F1 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/build/Development-iphoneos/Quick.framework"; sourceTree = "<group>"; };
 		AC223D741C6B728C0000A2F1 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Pods/build/Development-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
+		AC22F0C61D6A44BB00514668 /* ServiceAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
+		AC22F0C81D6A44CB00514668 /* ManagerAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerAssembly.swift; sourceTree = "<group>"; };
+		AC22F0CA1D6A44D600514668 /* LanguagesAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguagesAssembly.swift; sourceTree = "<group>"; };
+		AC22F0CC1D6A44E600514668 /* LaunchAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchAssembly.swift; sourceTree = "<group>"; };
 		AC386B681CBD205F002C9426 /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		AC386B6A1CBD2126002C9426 /* UserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
 		AC386B6C1CBD240C002C9426 /* AuthenticationAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationAPIService.swift; sourceTree = "<group>"; };
@@ -201,7 +208,6 @@
 		ACC8111F1C624C570080266A /* UnicornAPISpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnicornAPISpec.swift; sourceTree = "<group>"; };
 		ACD4798A1C582BFC00E85DD3 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		ACD4798C1C582D1F00E85DD3 /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
-		ACD479951C5919DB00E85DD3 /* AppContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
 		ACD4799B1C5A39E800E85DD3 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACD479BD1C5C13A200E85DD3 /* Geocoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Geocoder.swift; sourceTree = "<group>"; };
 		ACD479C11C5C14BE00E85DD3 /* Geocoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Geocoding.swift; sourceTree = "<group>"; };
@@ -336,6 +342,17 @@
 				ACD8E81B1C569DB200031D67 /* LanguagesTableViewModel.swift */,
 			);
 			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		AC22F0C51D6A446E00514668 /* Assemblies */ = {
+			isa = PBXGroup;
+			children = (
+				AC22F0C61D6A44BB00514668 /* ServiceAssembly.swift */,
+				AC22F0C81D6A44CB00514668 /* ManagerAssembly.swift */,
+				AC22F0CA1D6A44D600514668 /* LanguagesAssembly.swift */,
+				AC22F0CC1D6A44E600514668 /* LaunchAssembly.swift */,
+			);
+			name = Assemblies;
 			sourceTree = "<group>";
 		};
 		ACC810C21C624AEF0080266A /* APITests */ = {
@@ -551,7 +568,7 @@
 				B4EE778B1B2871F100ED956B /* View */,
 				6D40F83B1BB18E9F0079C917 /* ViewModel */,
 				B4ECD6111AD477910099D516 /* AppDelegate.swift */,
-				ACD479951C5919DB00E85DD3 /* AppContainer.swift */,
+				AC22F0C51D6A446E00514668 /* Assemblies */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -1086,6 +1103,7 @@
 				79165B811CBA56F1000F6294 /* BaseViewController.swift in Sources */,
 				B4A0BA8F1AD4972300715A9F /* Theme.swift in Sources */,
 				79FB0C131C1AD2D50025C600 /* UIView+Spacer.swift in Sources */,
+				AC22F0CB1D6A44D600514668 /* LanguagesAssembly.swift in Sources */,
 				6D775D4B1B85DD13002F640D /* TableAndCollectionViewExtensions.swift in Sources */,
 				6D7861D51B397903009F8865 /* UIResponder+Errors.swift in Sources */,
 				6D1A3AFD1B3AD61800EC8E47 /* Environment.swift in Sources */,
@@ -1093,7 +1111,6 @@
 				69D5B8061C24877D008F1A30 /* Model.xcdatamodeld in Sources */,
 				B4F14CA61B20502000DDBE9B /* LanguagesTableViewController.swift in Sources */,
 				ACD479C41C5C301F00E85DD3 /* LocationManager.swift in Sources */,
-				ACD479961C5919DB00E85DD3 /* AppContainer.swift in Sources */,
 				AC386B691CBD205F002C9426 /* Credentials.swift in Sources */,
 				ACD8E82C1C580D6A00031D67 /* ArgoExtensions.swift in Sources */,
 				69D5B7FD1C248694008F1A30 /* LocalizedStrings.swift in Sources */,
@@ -1102,8 +1119,11 @@
 				B4ECD6121AD477910099D516 /* AppDelegate.swift in Sources */,
 				B4EE77901B28A61700ED956B /* RACHelpers.swift in Sources */,
 				69D5B7FC1C248694008F1A30 /* Images.swift in Sources */,
+				AC22F0CD1D6A44E600514668 /* LaunchAssembly.swift in Sources */,
+				AC22F0C71D6A44BB00514668 /* ServiceAssembly.swift in Sources */,
 				ACE564BE1CBCF4B200B6CBDF /* LanguagesAPIService.swift in Sources */,
 				ACF5482A1D68D1E70032D051 /* Swinject+AutoRegistration.swift in Sources */,
+				AC22F0C91D6A44CB00514668 /* ManagerAssembly.swift in Sources */,
 				ACD479BE1C5C13A200E85DD3 /* Geocoder.swift in Sources */,
 				ACD479C21C5C14BE00E85DD3 /* Geocoding.swift in Sources */,
 				ACF548281D68BDCD0032D051 /* Swinject+Enhancements.swift in Sources */,
