@@ -5,6 +5,8 @@ xcodeproj 'SampleTestingProject', 'AdHoc' => :release,'AppStore' => :release, 'D
 
 use_frameworks!
 
+target 'SampleTestingProject' do
+
 pod 'ACKategories', :git => 'https://github.com/AckeeCZ/ACKategories.git'
 pod 'HockeySDK'
 #pod 'FlurrySDK'
@@ -13,10 +15,10 @@ pod 'HockeySDK'
 #pod 'SVProgressHUD'
 pod 'SnapKit'
 pod 'Alamofire'
-pod 'ReactiveCocoa', '4.0.0-alpha-3'
+pod 'ReactiveCocoa', '~> 4.0.0'
 pod 'Argo', '~> 2.2'
 pod 'Curry', '~> 1.4'
-pod 'Swinject', '~> 1.0.0'
+pod 'Swinject', '~> 1.1'
 pod 'SwiftGen', '~> 0.7.6'
 
 pod 'Locksmith', '~> 2.0.8'
@@ -37,16 +39,21 @@ end
 
 #testing_pods
 
-target :Tests, :exclusive => true do
+target 'Tests' do
+    inherit! :search_paths
     testing_pods
 end
 
-target :UITests, :exclusive => true do
+target 'UITests' do
+    inherit! :search_paths
     testing_pods
 end
 
-target :APITests, :exclusive => true do
+target 'APITests' do
+    inherit! :search_paths
     testing_pods
+end
+
 end
 
 post_install do |installer|

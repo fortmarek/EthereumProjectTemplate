@@ -20,53 +20,40 @@ class AppContainer {
     static let container = Container() { container in
 
         // ---- Models
-        container.register(Networking.self) { _ in Network() }.inObjectScope(.Container) // <-- Will be created as singleton
-        container.register(LanguagesAPIServicing.self) { r in LanguagesAPIService(network: r.resolve(Networking.self)!, authHandler: r.resolve(AuthHandler.self)) }.inObjectScope(.Container) // <-- Will be created as singleton
-        container.register(Geocoding.self) { r in Geocoder() }.inObjectScope(.Container) // <-- Will be created as singleton
+        container.register(initializer: Network.init, service: Networking.self).inObjectScope(.Container)
+        container.register(initializer: LanguagesAPIService.init, service: LanguagesAPIServicing.self).inObjectScope(.Container)
+        container.register(initializer: Geocoder.init, service: Geocoding.self).inObjectScope(.Container)
 
-        container.register(LocationManager.self) { _ in
+        container.register(LocationManager.self, factory: { _ in
             let manager = CLLocationManager()
             manager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
             return manager
-        }.inObjectScope(.Container) // <-- Will be created as singleton
+        }).inObjectScope(.Container)
 
-        container.register(BITHockeyManager.self) { (r, delegate: BITHockeyManagerDelegate) in
-            let hockeyManager = BITHockeyManager.sharedHockeyManager()
-            hockeyManager.configureWithIdentifier(Environment.Hockey.identifier, delegate: delegate)
-            return hockeyManager
-        }.inObjectScope(.Container)
-
-        container.register(SpeechSynthetizing.self) { _ in SpeechSynthetizer() }.inObjectScope(.Container)
+        container.register(initializer: SpeechSynthetizer.init, service: SpeechSynthetizing.self).inObjectScope(.Container)
 
         // ---- View models
-        container.register(LanguagesTableViewModeling.self) { r in
-            return LanguagesTableViewModel(
-                api: r.resolve(LanguagesAPIServicing.self)!,
-                geocoder: r.resolve(Geocoding.self)!,
-                locationManager: r.resolve(LocationManager.self)!,
-                detailModelFactory: r.resolve(LanguageDetailModelingFactory.self)!)
-        }
+        //Example use of specific initializer
+        container.register(initializer: LanguagesTableViewModel.init(api:geocoder:locationManager:detailModelFactory:), service: LanguagesTableViewModeling.self)
 
+        // For more specific cases you can use unary operator ~
+//        container.register(LanguagesTableViewModeling.self) { r in
+//            return LanguagesTableViewModel(api: r~, geocoder: r~, locationManager: r~, detailModelFactory: r~)
+//        }
+        
+        //Example usage of dynamic argument passing
+        container.register(initializer:LanguageDetailViewModel.init, service: LanguageDetailViewModeling.self, argument: LanguageEntity.self)
+        
+        
         // Factory for creating detail model
-        container.register(LanguageDetailModelingFactory.self) { r in
-            return { language in
-                return LanguageDetailViewModel(language: language, synthetizer: r.resolve(SpeechSynthetizing.self)!)
-            }
-        }
-
+        container.registerFactory(LanguageDetailModelingFactory.self)
+        
         // ---- Views
-
-        container.register(LanguagesTableViewController.self) { r in
-            return LanguagesTableViewController(
-                viewModel: r.resolve(LanguagesTableViewModeling.self)!,
-                detailControllerFactory: r.resolve(LanguageDetailTableViewControllerFactory.self)!)
-        }
-
-        // Factory for detail controller
-        container.register(LanguageDetailTableViewControllerFactory.self) { r in
-            return { viewModel in
-                return LanguageDetailViewController(viewModel: viewModel)
-            }
-        }
+        container.register(initializer: LanguagesTableViewController.init, service: LanguagesTableViewController.self)
+        container.register(initializer: LanguageDetailViewController.init, service: LanguageDetailViewController.self, argument: LanguageDetailViewModeling.self)
+        
+         // Factory for detail controller
+        container.registerFactory(LanguageDetailTableViewControllerFactory.self)
+        
     }
 }

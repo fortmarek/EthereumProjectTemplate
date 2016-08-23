@@ -10,6 +10,9 @@ import UIKit
 import ReactiveCocoa
 import HockeySDK
 import Swinject
+import enum Result.NoError
+
+public typealias NoError = Result.NoError
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, BITHockeyManagerDelegate {
@@ -23,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BITHockeyManagerDelegate 
         // in this example, reauthentication is handled through UI, so we have to inject an AuthHandler for apiservices to use.
         // in your app, reauth could just be a refresh token request done by the api service instead, so theres no need to pass AuthHandler as parameter to APIService.init.
         // be aware that all APIServices that talk to the same api should use the same AuthHandler (even if we split functionality into multiple APIService). So dont create a separate AuthHandler for each sub-APIService.
-        appContainer.register(AuthHandler.self) { [unowned self] _ in self.refreshTokenAction }.inObjectScope(.Container)
+        appContainer.register(AuthHandler.self, factory: { [unowned self] _ in self.refreshTokenAction }).inObjectScope(.Container)
         // Start Hockey Manager
         if Environment.Hockey.identifier.characters.count != 0 && Environment.Hockey.allowLogging {
             let hockeyManager = BITHockeyManager.sharedHockeyManager()

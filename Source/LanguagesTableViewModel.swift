@@ -43,7 +43,7 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
     private let detailModelFactory: LanguageDetailModelingFactory
 
 
-    init(api: LanguagesAPIServicing, geocoder: Geocoding, locationManager: LocationManager, detailModelFactory: LanguageDetailModelingFactory) {
+    required init(api: LanguagesAPIServicing, geocoder: Geocoding, locationManager: LocationManager, detailModelFactory: LanguageDetailModelingFactory) {
         self.api = api
         self.geocoder = geocoder
         self.locationManager = locationManager
