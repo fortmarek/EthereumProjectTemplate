@@ -33,11 +33,13 @@ class AppContainer {
         container.register(initializer: SpeechSynthetizer.init, service: SpeechSynthetizing.self).inObjectScope(.Container)
 
         // ---- View models
-        // Example usage of unary ~ operator
-        // Better to use container.register(initializer: LanguagesTableViewModel.init, service: LanguagesTableViewModeling.self) when possible
-        container.register(LanguagesTableViewModeling.self) { r in
-            return LanguagesTableViewModel(api: r~, geocoder: r~, locationManager: r~, detailModelFactory: r~)
-        }
+        //Example use of specific initializer
+        container.register(initializer: LanguagesTableViewModel.init(api:geocoder:locationManager:detailModelFactory:), service: LanguagesTableViewModeling.self)
+
+        // For more specific cases you can use unary operator ~
+//        container.register(LanguagesTableViewModeling.self) { r in
+//            return LanguagesTableViewModel(api: r~, geocoder: r~, locationManager: r~, detailModelFactory: r~)
+//        }
         
         //Example usage of dynamic argument passing
         container.register(initializer:LanguageDetailViewModel.init, service: LanguageDetailViewModeling.self, argument: LanguageEntity.self)
