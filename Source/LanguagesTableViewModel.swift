@@ -43,11 +43,6 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
     private let detailModelFactory: LanguageDetailModelingFactory
 
 
-    class func swinit(api: LanguagesAPIServicing, geocoder: Geocoding, locationManager: LocationManager, detailModelFactory: LanguageDetailModelingFactory) -> LanguagesTableViewModel {
-        
-        return self.init(api: api, geocoder: geocoder, locationManager: locationManager, detailModelFactory: detailModelFactory)
-    }
-    
     required init(api: LanguagesAPIServicing, geocoder: Geocoding, locationManager: LocationManager, detailModelFactory: LanguageDetailModelingFactory) {
         self.api = api
         self.geocoder = geocoder

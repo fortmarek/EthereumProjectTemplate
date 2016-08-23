@@ -21,7 +21,9 @@ postfix operator ~ {}
  - Important: Fails on unresolvable service.
  */
 postfix func ~ <Service>(r: ResolverType) -> Service {
-    return r.resolve(Service.self)!
+    let service = r.resolve(Service.self)
+    assert(service != nil, "Failed to resolve \(Service.self)")
+    return service!
 }
 
 /** Binary operator ~ equivalent to `r.resolve(Service.Type)!`
@@ -35,7 +37,9 @@ postfix func ~ <Service>(r: ResolverType) -> Service {
  - Important: Fails on unresolvable service.
 */
 func ~ <Service>(r: ResolverType, service: Service.Type) -> Service {
-    return r.resolve(service)!
+    let service = r.resolve(service)
+    assert(service != nil, "Failed to resolve \(Service.self)")
+    return service!
 }
 
 /** Binary operator ~ equivalent to `r.resolve(Service.Type, argument: Arg1)!`
@@ -50,7 +54,9 @@ func ~ <Service>(r: ResolverType, service: Service.Type) -> Service {
  - Important: Fails on unresolvable service.
  */
 func ~ <Service, Arg1>(r: ResolverType, o: (service: Service.Type, argument: Arg1) ) -> Service {
-    return r.resolve(o.service, argument: o.argument)!
+    let service = r.resolve(o.service, argument: o.argument)
+    assert(service != nil, "Failed to resolve \(Service.self) with argument \(Arg1.self)")
+    return service!
 }
 
 /** Binary operator ~ equivalent to `r.resolve(Service.Type, arguments: (Arg1, Arg2))!`
@@ -64,8 +70,10 @@ func ~ <Service, Arg1>(r: ResolverType, o: (service: Service.Type, argument: Arg
  - Returns: The resolved service type instance.
  - Important: Fails on unresolvable service.
  */
-func ~ <Service, Arg1, Arg2>(r: ResolverType, o: (Service.Type, arguments: (Arg1, Arg2)) ) -> Service {
-    return r.resolve(o.0, arguments: o.arguments)!
+func ~ <Service, Arg1, Arg2>(r: ResolverType, o: (service: Service.Type, arguments: (Arg1, Arg2)) ) -> Service {
+    let service = r.resolve(o.service, arguments: o.arguments)
+    assert(service != nil, "Failed to resolve \(Service.self) with arguments: (\(Arg1.self), \(Arg2.self))")
+    return service!
 }
 
 extension Container {
