@@ -7,6 +7,7 @@
 //
 
 import Swinject
+import ACKSwinject
 
 class ServiceAssembly: AssemblyType {
     

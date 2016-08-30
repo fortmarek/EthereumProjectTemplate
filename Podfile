@@ -1,4 +1,6 @@
 # Podfile
+source 'git@gitlab.ack.ee:Ackee/AckeePods.git' # Ackee private repo
+source 'https://github.com/CocoaPods/Specs.git' # Default Cocoapods repo
 
 platform :ios, '8.0'
 xcodeproj 'SampleTestingProject', 'AdHoc' => :release,'AppStore' => :release, 'Development' => :debug
@@ -18,7 +20,7 @@ pod 'Alamofire'
 pod 'ReactiveCocoa', '~> 4.0.0'
 pod 'Argo', '~> 2.2'
 pod 'Curry', '~> 1.4'
-pod 'Swinject', '~> 1.1'
+pod 'ACKSwinject'
 pod 'SwiftGen', '~> 0.7.6'
 
 pod 'Locksmith', '~> 2.0.8'
