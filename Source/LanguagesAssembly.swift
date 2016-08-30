@@ -7,7 +7,7 @@
 //
 
 import Swinject
-
+import ACKSwinject
 
 typealias LanguageDetailModelingFactory = (language: LanguageEntity) -> LanguageDetailViewModeling
 typealias LanguageDetailTableViewControllerFactory = (viewModel: LanguageDetailViewModeling) -> LanguageDetailViewController
@@ -20,9 +20,9 @@ class LanguagesAssembly: AssemblyType {
         //Example use of specific initializer
         container.register(initializer: LanguagesTableViewModel.init(api:geocoder:locationManager:detailModelFactory:), service: LanguagesTableViewModeling.self)
 
-        // For more specific cases you can use unary operator ~
+        // For more specific cases you can use unary operator ~>
 //        container.register(LanguagesTableViewModeling.self) { r in
-//            return LanguagesTableViewModel(api: r~, geocoder: r~, locationManager: r~, detailModelFactory: r~)
+//            return LanguagesTableViewModel(api: r~>, geocoder: r~>, locationManager: r~>, detailModelFactory: r~>)
 //        }
         
         //Example usage of dynamic argument passing

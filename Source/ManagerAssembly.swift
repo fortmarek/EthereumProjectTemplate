@@ -7,6 +7,7 @@
 //
 
 import Swinject
+import ACKSwinject
 import CoreLocation
 
 class ManagerAssembly: AssemblyType {
