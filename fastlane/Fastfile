@@ -79,7 +79,7 @@ fastlane_version "1.57.0"
 
   desc "Runs unit, api and ui tests."
   lane :test do |options|
-  	cocoapods
+  	pod_install
   
     skip_slack = true
     open_report = true
@@ -107,7 +107,7 @@ fastlane_version "1.57.0"
   lane :beta do
     #ensure_git_status_clean
 
-  	cocoapods
+  	pod_install
 
   	build_number = number_of_commits
 		increment_build_number(build_number: build_number)
@@ -163,7 +163,7 @@ fastlane_version "1.57.0"
   desc "Deploy new version to the App Store (and also hockey app)"
   lane :appstore do |options|
       #ensure_git_status_clean
-    	cocoapods
+    	pod_install
 
     	build_number = number_of_commits
   		increment_build_number(build_number: build_number)
@@ -564,6 +564,17 @@ fastlane_version "1.57.0"
       sh "cd #{project_path} && git init && git add . && git remote add origin '#{git_repo}'"
     end
   end
+
+  private_lane :pod_install do
+    if is_ci
+      puts "Running on CI installing pods with pod repo update"
+      sh "pod install --repo-update"
+    else
+      puts "Running locally pod repo update not neccessary"
+      sh "pod install"
+    end
+  end
+
 
   after_all do |lane|
     after_success_error(lane: lane)
