@@ -2,13 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>appIdentifier</key>
+	<string>cz.ackee.enterprise.unicorn.beta</string>
+	<key>appName</key>
+	<string>Ackee β</string>
 	<key>api</key>
 	<dict>
 		<key>baseURL</key>
 		<string>https://www.whostolemyunicorn.com/api/</string>
 	</dict>
-	<key>appName</key>
-	<string>Ackee β</string>
 	<key>hockey_allowLogging</key>
 	<false/>
 	<key>hockey_identifier</key>

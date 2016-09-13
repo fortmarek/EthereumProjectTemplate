@@ -1018,7 +1018,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "env=${ACK_ENVIRONMENT}\ndir=${PROJECT_DIR}\n\n$dir/fastlane/utils/replace_environment_plist.sh $env $dir/Environment/\n";
+			shellScript = "LC_ALL= LANG=en_US.UTF-8 ruby -e 'p Encoding.default_external'\nexport LANG=en_US.UTF-8\n\nenv=`cat ${ACK_ENVIRONMENT_DIR}/.current_environment`\necho $env\ndir=${PROJECT_DIR}\n\nfastlane switch_environment environment:$env\n#$dir/fastlane/utils/replace_environment_plist.sh $env $dir/Environment/\n";
 		};
 		B371B4412040D8D0260E655E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1204,7 +1204,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9f626461-9cbd-4482-98ec-94119ce7bae6";
+				PROVISIONING_PROFILE = "2bfcc027-5151-4b96-a838-d00764a94a41";
 			};
 			name = Development;
 		};
@@ -1228,7 +1228,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9f626461-9cbd-4482-98ec-94119ce7bae6";
+				PROVISIONING_PROFILE = "2bfcc027-5151-4b96-a838-d00764a94a41";
 			};
 			name = Development;
 		};
@@ -1251,14 +1251,16 @@
 		AC8F26411C64EC3B0011DC49 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				INFOPLIST_PREFIX_HEADER = environment/environment_preprocess.h;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9f626461-9cbd-4482-98ec-94119ce7bae6";
+				PROVISIONING_PROFILE = "2bfcc027-5151-4b96-a838-d00764a94a41";
 			};
 			name = Development;
 		};
 		AC8F26421C64EC3B0011DC49 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				INFOPLIST_PREFIX_HEADER = environment/environment_preprocess.h;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "461d3b36-aa18-468a-93bf-df13ae9f0e38";
 			};
@@ -1267,6 +1269,7 @@
 		AC8F26431C64EC3B0011DC49 /* AppStore */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				INFOPLIST_PREFIX_HEADER = environment/environment_preprocess.h;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "20adb468-22d0-4de4-8e7c-d522a73c54ad";
 			};
@@ -1320,7 +1323,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9f626461-9cbd-4482-98ec-94119ce7bae6";
+				PROVISIONING_PROFILE = "2bfcc027-5151-4b96-a838-d00764a94a41";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_TARGET_NAME = SampleTestingProject;
@@ -1475,7 +1478,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.APITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9f626461-9cbd-4482-98ec-94119ce7bae6";
+				PROVISIONING_PROFILE = "2bfcc027-5151-4b96-a838-d00764a94a41";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SampleTestingProject.app/SampleTestingProject";
@@ -1577,8 +1580,8 @@
 		B47536FA1951B7CD00DB8D6D /* AppStore */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ACK_BUNDLEID = cz.ackee.enterprise.myApp;
-				ACK_ENVIRONMENT = AppStore;
+				ACK_ENVIRONMENT_DIR = "${PROJECT_DIR}/Environment";
+				ACK_UTILS_DIR = "$(PROJECT_DIR)/fastlane/utils";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1613,7 +1616,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 80499EEB56BFC41C2EC853D6 /* Pods-SampleTestingProject.appstore.xcconfig */;
 			buildSettings = {
-				ACK_BUNDLEID = cz.ackee.enterprise.projectName;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1623,7 +1625,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
-				INFOPLIST_PREFIX_HEADER = "";
+				INFOPLIST_PREFIX_HEADER = environment/environment_preprocess.h;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = SampleTestingProject;
@@ -1654,8 +1656,8 @@
 		B4ABA20C195193330069FAD4 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ACK_BUNDLEID = cz.ackee.enterprise.myApp.dev;
-				ACK_ENVIRONMENT = Development;
+				ACK_ENVIRONMENT_DIR = "${PROJECT_DIR}/Environment";
+				ACK_UTILS_DIR = "$(PROJECT_DIR)/fastlane/utils";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1697,8 +1699,8 @@
 		B4ABA20D195193330069FAD4 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ACK_BUNDLEID = cz.ackee.enterprise.myApp.beta;
-				ACK_ENVIRONMENT = AdHoc;
+				ACK_ENVIRONMENT_DIR = "${PROJECT_DIR}/Environment";
+				ACK_UTILS_DIR = "$(PROJECT_DIR)/fastlane/utils";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1733,7 +1735,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7554DDC0C8AE5A664636FF5C /* Pods-SampleTestingProject.development.xcconfig */;
 			buildSettings = {
-				ACK_BUNDLEID = cz.ackee.enterprise.projectName.dev;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1743,11 +1744,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
-				INFOPLIST_PREFIX_HEADER = "";
+				INFOPLIST_PREFIX_HEADER = environment/environment_preprocess.h;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = SampleTestingProject;
-				PROVISIONING_PROFILE = "9f626461-9cbd-4482-98ec-94119ce7bae6";
+				PROVISIONING_PROFILE = "2bfcc027-5151-4b96-a838-d00764a94a41";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1759,7 +1760,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E29A12FC6D8B5F58FAA4B5F6 /* Pods-SampleTestingProject.adhoc.xcconfig */;
 			buildSettings = {
-				ACK_BUNDLEID = cz.ackee.enterprise.projectName.beta;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1769,7 +1769,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
-				INFOPLIST_PREFIX_HEADER = "";
+				INFOPLIST_PREFIX_HEADER = environment/environment_preprocess.h;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = SampleTestingProject;
@@ -1794,7 +1794,7 @@
 				INFOPLIST_FILE = "Tests/UnitTests/ProjectTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "cz.ackee.enterprise.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9f626461-9cbd-4482-98ec-94119ce7bae6";
+				PROVISIONING_PROFILE = "2bfcc027-5151-4b96-a838-d00764a94a41";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SampleTestingProject.app/SampleTestingProject";
 				WRAPPER_EXTENSION = xctest;

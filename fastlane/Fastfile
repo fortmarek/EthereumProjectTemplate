@@ -2,16 +2,6 @@
 
 ##################################### SETTINGS #####################################
 
-app_language = "English" #CHANGE
-
-app_name_dev = "Sample Testing Δ" # CHANGE
-app_name_beta = "Sample Testing β" # CHANGE
-app_name_appstore = "Sample Testing" # CHANGE
-
-app_identifier_dev = 'cz.ackee.enterprise.sampletesting.dev' #CHANGE
-app_identifier_beta = 'cz.ackee.enterprise.sampletesting.beta' #CHANGE
-app_identifier_appstore = 'cz.ackee.SampleTesting' #CHANGE
-
 inhouse_apple_id = 'unicorn@ackee.cz'
 inhouse_team_id = 'PXDF48X6VX' 
 
@@ -20,114 +10,67 @@ connect_team_id = '3SMVP6VZP8' #<-- CHANGE if more team
 
 slack_url = "https://hooks.slack.com/services/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" #Hook to channel you want to send all messages <-- #rokKvality
 
-hockey_api_token = "90fc8b51202f48bf9aa9772a7238f946" # NOT app id, token for hockey uploads
-enterprise_wildcard = "cz.ackee.enterprise.*" # Do not change if you don't have to (We don't want to create provisioning profile for every app)
-
-
-environment_plist_directory = "Environment"
-environment_plist_hockey_key = "hockey_identifier"
-
-
-production_certificate_git = "git@gitlab.ack.ee:Ackee/ios-production-certificates.git"
-inhouse_certificate_git = "git@gitlab.ack.ee:Ackee/ios-inhouse-certificates.git"
+ # Do not change if you don't have to (We don't want to create provisioning profile for every app)
 
 
 ####################################################################################
 
+import 'SharedFastfile'
 
-
-fastlane_version "1.57.0"
 
 	before_all do
 		ENV["SLACK_URL"] = slack_url # Webhook URL created in Slack
   end
 
+  
+
   #CHANGE if you want to use different provisioning
   desc "Downloads provisioning for all environments"
   lane :provisioning do |options|
-
-    provisioning_match("Development", "development", enterprise_wildcard, inhouse_certificate_git, inhouse_apple_id, inhouse_team_id, true)
-    provisioning_match("AdHoc", "enterprise", enterprise_wildcard, inhouse_certificate_git, inhouse_apple_id, inhouse_team_id, true)
-    provisioning_match("AppStore", "appstore", app_identifier_appstore, production_certificate_git, connect_apple_id, connect_team_id, false)
+    environment = options[:environment]
     
-    #Use sigh only for client accounts (on our account you would use match)
-    #provisioning_sigh("AppStore", "appstore", app_identifier_appstore, connect_apple_id, connect_team_id)
+    if environment && !(is_environment(environment))
+      raise "Unknown environment #{environment}"
+    end
+
+    if !environment || environment == "Development"
+      provisioning_match(environment, "development", Config.enterprise_wildcard, Config.inhouse_certificate_git, inhouse_apple_id, inhouse_team_id, true)
+    end
+
+    UI.message environment
+    if !environment || environment == "AdHoc"
+      provisioning_match(environment, "enterprise", Config.enterprise_wildcard, Config.inhouse_certificate_git, inhouse_apple_id, inhouse_team_id, true)
+    end
+    
+    if !environment || environment == "AppStore"
+      provisioning_match(environment, "appstore", app_identifier(environment), Config.production_certificate_git, production_apple_id, production_team_id, true)
+      #Use sigh only for client accounts (on our account you would use match)
+      #provisioning_sigh("AppStore", "appstore", app_identifier(environment), production_apple_id, production_team_id)
+    end
+
   end
 
-	desc "Installs FixCode which disables the \"Fix Issue\" button in Xcode, Swimat and Fuzzy "
-	  lane :xcode do
-	    install_xcode_plugin(
-	      url: "https://github.com/fastlane/FixCode/releases/download/0.2.0/FixCode.xcplugin.zip"
-	    )
-      install_xcode_plugin(
-        url: "https://s3-eu-west-1.amazonaws.com/ack-staticfiles/Swimat.xcplugin.zip"
-      )
-      
-      install_xcode_plugin(
-        url: "https://github.com/FuzzyAutocomplete/FuzzyAutocompletePlugin/releases/download/v2.1.1/FuzzyAutocomplete-2.1.1.zip"
-      )
-      templates
-      snippets
-      
-	end
-
-  desc "Runs linting (and eventually static analysis)"
-  lane :analyze do
-  	sh "utils/closure_leak_check.sh ../Source"
-    swiftlint
-  end
-
-  desc "Runs unit, api and ui tests."
-  lane :test do |options|
-  	pod_install
   
-    skip_slack = true
-    open_report = true
-    if is_ci?
-      skip_slack = false
-      open_report = false
-    end
 
-    if options[:type] == "api"
-      scheme = "APITests"
-    elsif options[:type] == "ui"
-      scheme = "UITests"
-    elsif options[:type] == "unit"
-      scheme = "Development"
-    else
-      scheme = "AppStore"
-    end
-
-    scan(scheme:scheme, skip_slack: skip_slack, open_report: open_report)
-
-  end
-
- 
+	
   desc "Submit new **Beta** build to Hockey app"
   lane :beta do
     #ensure_git_status_clean
+    environment = "AdHoc"
 
   	pod_install
 
   	build_number = number_of_commits
 		increment_build_number(build_number: build_number)
 
-    produce(
-        username: inhouse_apple_id,
-        app_identifier: app_identifier_beta,
-        app_name: app_name_beta,
-        language: app_language,
-        team_id: inhouse_team_id,
-        skip_itc: true
-      )
-
-    provisioning
+    #Download provisioning
+    provisioning(environment: environment)
 
     #Setup environments, app identifier and app name
-    setup_environment(environment: "AdHoc")
+    setup_environment(environment: environment)
 
     #Setup badge for beta
-    #badge(shield: "#{get_version_number}-#{number_of_commits}-blue", dark: true)
+    badge(shield: "#{get_version_number}-#{number_of_commits}-blue", dark: true, shield_no_resize: true)
 
     begin
       gym(
@@ -136,27 +79,21 @@ fastlane_version "1.57.0"
         provisioning_profile_path: lane_context[SharedValues::SIGH_PROFILE_PATH],
         export_team_id: inhouse_team_id
   		)
-
-      if !is_ci
-        upload_to_hockey(environment: "AdHoc")
-
-        hockey_link = lane_context[SharedValues::HOCKEY_DOWNLOAD_LINK] 
-
-        slack(
-            message: "New version uploaded to HockeyApp! #{hockey_link}",
-            success: true
-          )
-      end
-
     ensure
-      #reset badge app icon
-      # reset_git_repo( #called only after ensure_git_status_clean
-      #   files: [
-      #     "./Resources/Images.xcassets/AppIcon.appiconset/"
-      # ])
+      sh "git checkout -- ../Resources/Images.xcassets/"
     end
 
-    
+    if !is_ci
+        hockey_identifier = get_environment_plist_value(key: "hockey_identifier", environment: environment)
+        upload_to_hockey(identifier: hockey_identifier)
+
+        # hockey_link = lane_context[SharedValues::HOCKEY_DOWNLOAD_LINK] 
+
+        # slack(
+        #     message: "New version uploaded to HockeyApp! #{hockey_link}",
+        #     success: true
+        #   )
+    end
   end
 
   
@@ -172,20 +109,13 @@ fastlane_version "1.57.0"
       setup_environment(environment: "AppStore")
 
     	#ensure_git_status_clean
-  		produce(
-  			username: connect_apple_id,
-  			app_identifier: app_identifier_appstore,
-      	app_name: app_name_appstore,
-      	language: app_language,
-        team_id: connect_team_id,
-        itc_team_id: connect_team_id
-      )
+  		
 
       if !options[:skip_snapshot]
         snapshot
       end
 
-      provisioning
+      provisioning(environment:"AppStore")
 
       gym(
   		  scheme: "AppStore",
@@ -215,373 +145,9 @@ fastlane_version "1.57.0"
           success: true
         )
 
-
-  end
-
-  private_lane :upload_to_hockey do |options|
-    # Load hockey app identifier from plist
-    hockey_identifier =  get_environment_plist_value(key: environment_plist_hockey_key, environment:options[:environment])
-
-    begin
-      if hockey_identifier != ''
-        UI.message "Using public_identifier: #{hockey_identifier}"
-        
-        hockey(
-          api_token: hockey_api_token,
-          public_identifier: hockey_identifier,
-          notify: '0'
-        )
-
-      else
-        UI.message "No public_identifier found, creating new Hockey app"
-        
-        hockey(
-          api_token: hockey_api_token,
-          notify: '0'
-        )
-      end
-
-    rescue RuntimeError => e
-      # When the public_identifier is not found (e.g. App was deleted from hockey app) , try it one more time without it
-      if (e.message.include? "not found") && hockey_identifier != ''
-        UI.important "Hockey public_identifier #{hockey_identifier} not found on hockey server (possibly deleted), trying one more time without it"
-        
-        hockey_identifier = ''
-        retry
-      else
-        raise
-      end  
-    end
-
-    
-    hockey_build = lane_context[SharedValues::HOCKEY_BUILD_INFORMATION] 
-    
-    #If there is hockey identifier, save it
-    hockey_build_public_identifier = hockey_build['public_identifier']
-
-    if  hockey_build_public_identifier &&  hockey_identifier != hockey_build_public_identifier
-      UI.message "Saving hockey identifier: #{hockey_build_public_identifier}"
-      set_environment_plist_value(key: environment_plist_hockey_key, value: hockey_build_public_identifier, environments: [options[:environment]])
-
-      if is_ci
-        #commit and push the saved hockey identifier
-        git_commit(path: "./#{environment_plist_directory}/",
-          message: "Added hockey identifier (from Fastlane)")
-
-        push_to_git_remote
-      end
-
-    end
-  end 
-
-  desc "Installs xcode file templates"
-  private_lane :templates do |options|
-  		#Location of iPhone Templates for reference
-  		#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Templates/File Templates/
-  		install_dir = File.expand_path("~/Library/Developer/Xcode/Templates/File Templates")
-  		
-  		if ! File.exists? install_dir
-  			UI.message "Creating File Template Xcode directory #{install_dir}"
-  			FileUtils.mkdir_p install_dir
-  		end
-
-
-		  src_dir = File.expand_path("../userdata/FileTemplates", __FILE__)
-		  template_folders = Dir.entries(src_dir)
-
-		  template_folders.each do |template_folder|
-		  	template_folder_path = "#{src_dir}/#{template_folder}"
-
-		  	if File.directory?(template_folder_path) 
-
-		  		xctemplates = Dir.entries(template_folder_path).select{ |e| File.extname(e) == ".xctemplate"  }
-		  		
-		  		install_folder_path = "#{install_dir}/#{template_folder}/"
-					FileUtils.mkdir_p install_folder_path
-
-		  		xctemplates.each do |xctemplate|
-		  			src_template_path = "#{template_folder_path}/#{xctemplate}"
-		  			
-		  			if File.exists? "#{install_folder_path}/#{xctemplate}"
-		  				UI.message "Removing template #{xctemplate}"
-		  				FileUtils.rm_rf "#{install_folder_path}/#{xctemplate}"
-		  			end
-
-		  			UI.message "Installing template #{xctemplate} in folder #{install_folder_path}"
-		  			FileUtils.cp_r src_template_path, install_folder_path
-		  		end
-
-				end 
-			end
-  end	
-
-
-  desc "Installs xcode code snippets"
-  private_lane :snippets do
-    install_dir = File.expand_path("~/Library/Developer/Xcode/UserData/CodeSnippets")
-    if ! File.exists? install_dir
-        UI.message "Creating Code Snippets Xcode directory #{install_dir}"
-        FileUtils.mkdir_p install_dir
-      end
-
-      src_dir = File.expand_path("../userdata/CodeSnippets", __FILE__)
-      code_snippets =  Dir.entries(src_dir).select{ |e| File.extname(e) == ".codesnippet"  }
-
-      code_snippets.select.each do |snippet|
-        src_snippet_path = "#{src_dir}/#{snippet}"
-
-        if File.exists? "#{install_dir}/#{snippet}"
-          UI.message "Removing code snippet #{snippet}"
-          FileUtils.rm_rf "#{snippet}/#{snippet}"
-        end
-
-        UI.message "Installing code snippet #{snippet}"
-        FileUtils.cp_r src_snippet_path, install_dir
-      end
-  end
-
-  desc "Create new screenshots for the App Store in all languages and device types"
-  desc "Additionally, this will add device frames around the screenshots"
-  lane :screenshots do
-    snapshot(skip_open_summary: false)
-    frameit(white: true)
-  end
-
-  desc "Sets environment.plist app_name and app_bundle_id according to scheme"
-  lane :switch_environment do |options|
-  	if options[:environment]
-      setup_environment(options)
-  	else
-  		raise "Missing environment: in options"
-  	end
-  end
-
-  
-  # Sets value for given in key in selected environments
-  private_lane :set_environment_plist_value do |options|
-		options[:environments].each { |env| set_info_plist_value(path: "#{environment_plist_directory}/environment-#{env}.plist", key: options[:key], value: options[:value]) }
-  end
-
-  #Gets value for given key in environment
-  private_lane :get_environment_plist_value do |options|
-  		get_info_plist_value(path: "#{environment_plist_directory}/environment-#{options[:environment]}.plist", key: options[:key])
-  end
-
-
-  desc "Switches environment and sets app_name and app_identifier in plist"
-  private_lane :setup_environment do |options|
-  		environment = options[:environment]
-
-			display_name = ""
-			app_identifier = ""
-
-  		if environment == "AppStore"
-  			display_name = app_name_appstore
-  			app_identifier = app_identifier_appstore
-  		elsif environment == "AdHoc"
-  			display_name = app_name_beta
-  			app_identifier = app_identifier_beta
-  		elsif environment == "Development"
-  			display_name = app_name_dev
-  			app_identifier = app_identifier_dev
-  		else 
-  			raise "Non-existent environment: #{environment}"
-  		end
-
-  		UI.message "Setting environment for #{environment}"
-  		
-  		# Change environments according to scheme
-			sh "./utils/replace_environment_plist.sh '#{environment}' ../#{environment_plist_directory}/" 
-
-  		UI.message "Setting app name to #{display_name}"
-  		UI.message "Setting app identifier to #{app_identifier}"
-  		
-      update_info_plist(
-        plist_path: "Source/Project-Info.plist",
-        display_name: display_name
-        
-      )
-
-      update_app_identifier(
-          app_identifier:  app_identifier,
-          plist_path: "Source/Project-Info.plist"
-      )
-
-			#sh "./utils/generate_preprocess_file.sh '#{display_name}' '#{app_identifier}' ../#{environment_plist_directory}/"
-  end
-
-
-  def provisioning_match (environment, match_type, app_identifier, git_url, apple_id, team_id, readonly)
-    ENV["MATCH_FORCE_ENTERPRISE"] = "1"
-
-    match(type: match_type,
-          app_identifier: app_identifier,
-          git_url: git_url,
-          username: apple_id,
-          team_id: team_id,
-          readonly: readonly)
-
-    #Force the selected provisioning profile in xcode
-    uuid = ENV["sigh_#{app_identifier}_#{match_type}"]
-    profile = File.expand_path("~/Library/MobileDevice/Provisioning\ Profiles/#{uuid}.mobileprovision") 
-
-    update_project_provisioning(
-        profile: profile, # Have to pass Profile path to force use this profile instead whatever is set in xcode
-        build_configuration: environment
-    )
-  end
-
-
-  def provisioning_sigh (environment, sigh_type, app_identifier, apple_id, team_id)
-    sigh(
-      username: apple_id,
-      app_identifier: app_identifier,
-      team_id: team_id,
-      output_path: "outputs"
-    )
-
-    update_project_provisioning(
-       profile: lane_context[SharedValues::SIGH_PROFILE_PATH], # Have to pass Profile path to force use this profile instead whatever is set in xcode
-       build_configuration: environment
-     )
-  end
-
-  
-
-  desc "Copies and renames the project into new directory"
-  lane :copy do |options|
-    main_dir = File.expand_path("../", File.dirname(__FILE__))
-
-    current_project_file = Dir.entries(main_dir).select{|e| File.extname(e) == ".xcodeproj"}
-    if current_project_file.count == 0
-      raise ".xcodeproj file not found"
-    end 
-
-    current_project_name = File.basename( File.expand_path(current_project_file[0], main_dir), ".*" )
-
-    UI.message "Current project name: #{current_project_name}"
-
-    new_project_name = options[:project_name]
-    
-    if !new_project_name
-      new_project_name = prompt(text: "Please enter new project name:")
-    end
-
-    project_path = options[:project_path]
-    
-   
-
-    begin
-
-      if !project_path
-        project_path = prompt(text: "Please enter path for the new project:")
-      end
-
-      project_path = File.expand_path(project_path, main_dir)
-      
-      if ! File.exists? project_path
-          UI.message "Creating new project directory #{project_path}"
-          FileUtils.mkdir_p project_path
-      else
-        if !File.directory?(project_path)
-          raise "Entered path is not a directory"
-        elsif !(Dir.entries(project_path) - %w{ . .. .git .DS_Store }).empty?
-          raise "The directory is not empty"
-          #print dir_without_hidden
-        end
-      end
-
-    rescue RuntimeError => e
-      UI.important e.message
-      project_path = nil
-      retry
-    end
-
-
-    git_repo = options[:git_repo]
-    if !git_repo
-      git_repo = prompt(text: "Please enter git repository remote:")
-    end
-
-
-    # Copy & clean
-    sh "cd ../ && rsync -r . '#{project_path}' && cd #{project_path} && git clean -xdf"
-
-    
-    def change_project_name_recursively (path, file_types, replace_from, replace_to)
-        
-        if File.directory? path
-          file_names = (Dir.entries(path) - %w{ . ..})
-        else
-          file_names = [path]
-        end
-
-        file_names.each do |file_name|
-          
-          file_name = File.expand_path(file_name, path)
-          UI.message  "#{file_name}" 
-          if !file_types || file_types.include?(File.extname(file_name)) 
-
-            text = File.read(file_name)
-            new_contents = text.gsub(/#{replace_from}/, replace_to)
-
-            # To merely print the contents of the file, use:
-            #puts new_contents
-
-            # To write changes to the file, use:
-            File.open(file_name, "w") {|file| file.puts new_contents }
-          elsif File.directory? file_name
-            change_project_name_recursively(file_name, file_types, replace_from, replace_to)
-          end
-      end
-    end
-
-    source_file_types = [".swift", ".h", ".m"]
-
-    #Change comments in files
-    change_project_name_recursively("#{project_path}/Source/", source_file_types, current_project_name, new_project_name)
-    change_project_name_recursively("#{project_path}/Tests/", source_file_types, current_project_name, new_project_name)
-
-    #Change project file and rename it
-    change_project_name_recursively("#{project_path}/#{current_project_name}.xcodeproj", [".pbxproj", ".xcscheme"], "SampleTestingProject", new_project_name)
-    sh "mv '#{project_path}/#{current_project_name}.xcodeproj' '#{project_path}/#{new_project_name}.xcodeproj'"
-
-    #Remove workspace
-    sh "rm -rf '#{project_path}/#{current_project_name}.xcworkspace'"
-
-    #Change project name in podfile
-    change_project_name_recursively("#{project_path}/Podfile", nil, current_project_name, new_project_name)
-    sh "rm '#{project_path}/Podfile.lock'"
-
-    #Install pods
-    sh "cd #{project_path} && pod install"
-
-    #Remove old git
-    sh "rm -rf '#{project_path}/.git/'"
-
-    if git_repo
-      #Set new git origin
-      sh "cd #{project_path} && git init && git add . && git remote add origin '#{git_repo}'"
-    end
-  end
-
-  private_lane :pod_install do
-    if is_ci
-      puts "Running on CI installing pods with pod repo update"
-      sh "pod install --repo-update"
-    else
-      puts "Running locally pod repo update not neccessary"
-      sh "pod install"
-    end
-  end
-
-
-  after_all do |lane|
-    after_success_error(lane: lane)
   end
 
   error do |lane, exception|
-    after_success_error(lane: lane)
     if is_ci
       slack(
         message: exception.message,
@@ -590,16 +156,7 @@ fastlane_version "1.57.0"
     end
   end
 
-  private_lane :after_success_error do |options|
-    if !is_ci && "#{options[:lane]}" != "switch_environment"
-      #Implicitly set environment to Development on local machine
-      setup_environment(environment: "Development")
-    end
-
-    # if is_ci? && ("#{options[:lane]}" == "appstore" || "#{options[:lane]}" == "beta")
-    #   reset_git_repo
-    # end
-  end
+  
 
 
   
