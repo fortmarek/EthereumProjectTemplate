@@ -15,7 +15,9 @@ slack_url = "https://hooks.slack.com/services/T025DRF07/B0KHH1K9V/eIoISH0udFnZ5X
 
 ####################################################################################
 
-import 'SharedFastfile'
+import_from_git(url: 'git@gitlab.ack.ee:Ackee/project-skeleton.git',
+               path: 'fastlane/SharedFastfile',
+               branch: 'environments')
 
 
 	before_all do
@@ -37,7 +39,6 @@ import 'SharedFastfile'
       provisioning_match(environment, "development", Config.enterprise_wildcard, Config.inhouse_certificate_git, inhouse_apple_id, inhouse_team_id, true)
     end
 
-    UI.message environment
     if !environment || environment == "AdHoc"
       provisioning_match(environment, "enterprise", Config.enterprise_wildcard, Config.inhouse_certificate_git, inhouse_apple_id, inhouse_team_id, true)
     end
@@ -55,11 +56,13 @@ import 'SharedFastfile'
 	
   desc "Submit new **Beta** build to Hockey app"
   lane :beta do
-    #ensure_git_status_clean
+
     environment = "AdHoc"
 
+    #Pods
   	pod_install
 
+    #Build number
   	build_number = number_of_commits
 		increment_build_number(build_number: build_number)
 

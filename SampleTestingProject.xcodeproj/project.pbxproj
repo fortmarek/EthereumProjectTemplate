@@ -1018,7 +1018,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "LC_ALL= LANG=en_US.UTF-8 ruby -e 'p Encoding.default_external'\nexport LANG=en_US.UTF-8\n\nenv=`cat ${ACK_ENVIRONMENT_DIR}/.current_environment`\necho $env\ndir=${PROJECT_DIR}\n\nfastlane switch_environment environment:$env\n#$dir/fastlane/utils/replace_environment_plist.sh $env $dir/Environment/\n";
+			shellScript = "LC_ALL= LANG=en_US.UTF-8 ruby -e 'p Encoding.default_external'\nexport LANG=en_US.UTF-8\n\nenv=`cat ${ACK_ENVIRONMENT_DIR}/.current_environment`\necho $env\ndir=${PROJECT_DIR}\n\ndisplay_name=$(/usr/libexec/PlistBuddy -c \"Print :appName\" \"${ACK_ENVIRONMENT_DIR}/environment-$env.plist\")\napp_identifier=$(/usr/libexec/PlistBuddy -c \"Print :appIdentifier\" \"${ACK_ENVIRONMENT_DIR}/environment-$env.plist\")\n\necho \"Setting environment for $env\"\n\n# Change environments according to scheme\n$dir/fastlane/utils/replace_environment_plist.sh $env $dir/Environment/\n\necho \"Setting app name to $display_name\"\necho \"Setting app identifier to $app_identifier\"\n\nfastlane run update_info_plist display_name:$display_name plist_path:Source/Project-Info.plist\nfastlane run update_app_identifier app_identifier:$app_identifier plist_path:Source/Project-Info.plist\n\n";
 		};
 		B371B4412040D8D0260E655E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1625,7 +1625,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
-				INFOPLIST_PREFIX_HEADER = environment/environment_preprocess.h;
+				INFOPLIST_PREFIX_HEADER = "";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = SampleTestingProject;
@@ -1744,7 +1744,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
-				INFOPLIST_PREFIX_HEADER = environment/environment_preprocess.h;
+				INFOPLIST_PREFIX_HEADER = "";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = SampleTestingProject;
@@ -1769,7 +1769,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
-				INFOPLIST_PREFIX_HEADER = environment/environment_preprocess.h;
+				INFOPLIST_PREFIX_HEADER = "";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = SampleTestingProject;
