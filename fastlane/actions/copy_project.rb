@@ -1,7 +1,6 @@
 module Fastlane
   module Actions
     module SharedValues
-      COPY_PROJECT_CUSTOM_VALUE = :COPY_PROJECT_CUSTOM_VALUE
     end
 
     class CopyProjectAction < Action
