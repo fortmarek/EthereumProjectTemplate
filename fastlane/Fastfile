@@ -3,17 +3,15 @@
 ##################################### SETTINGS #####################################
 
 inhouse_apple_id = 'unicorn@ackee.cz'
-production_apple_id = 'unicorn@ackee.cz' 
-connect_apple_id = 'unicorn@ackee.cz' 
+production_apple_id = 'ios@ackee.cz' 
+connect_apple_id = 'ios@ackee.cz' 
+connect_team_id = "xxx"
 
 ####################################################################################
 
-import "SharedFastfile"
-#download_from_git(url: 'git@gitlab.ack.ee:Ackee/project-skeleton.git',
-               # path: 'fastlane/SharedFastfile',
-               # branch: 'environments',
-               # use_cache: ENV['XCODE_SCRIPT'] == '1')
-#import ENV[SharedValues::DOWNLOAD_FROM_GIT_FASTFILE_PATH.to_s]
+#import "../../fastlane/fastlane/Fastfile"
+download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache: ENV['XCODE_SCRIPT'] == '1')
+import ENV[SharedValues::DOWNLOAD_FROM_GIT_FASTFILE_PATH.to_s]
 
   
   desc "Downloads provisioning for all environments"
@@ -86,7 +84,7 @@ import "SharedFastfile"
       	scheme: "Development",
   		  configuration: "AdHoc",
         provisioning_profile_path: lane_context[SharedValues::SIGH_PROFILE_PATH],
-        export_team_id: inhouse_team_id
+        #export_team_id: inhouse_team_id
   		)
     ensure
       # Put badge back to original

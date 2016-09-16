@@ -7,7 +7,7 @@
 	<key>appIdentifier</key>
 	<string>cz.ackee.enterprise.unicorn.beta</string>
 	<key>appName</key>
-	<string>Ackee β</string>
+	<string>Unicorn β</string>
 	<key>api</key>
 	<dict>
 		<key>baseURL</key>
