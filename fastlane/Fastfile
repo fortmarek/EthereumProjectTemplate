@@ -10,8 +10,7 @@ connect_team_id = "xxx"
 ####################################################################################
 
 #import "../../fastlane/fastlane/Fastfile"
-download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache: ENV['XCODE_SCRIPT'] == '1')
-import ENV[SharedValues::DOWNLOAD_FROM_GIT_FASTFILE_PATH.to_s]
+import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache: ENV['XCODE_SCRIPT'] == '1'))
 
   
   desc "Downloads provisioning for all environments"
