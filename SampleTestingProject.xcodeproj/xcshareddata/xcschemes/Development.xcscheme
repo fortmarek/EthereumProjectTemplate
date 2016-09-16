@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "${ACK_UTILS_DIR}/set_environment.sh &quot;Development&quot; ${ACK_ENVIRONMENT_DIR}">
+               scriptText = "${ACK_UTILS_DIR}/environment.sh &quot;Development&quot; ${ACK_ENVIRONMENT_DIR}">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"

@@ -27,11 +27,6 @@ fastlane screenshots
 Create new screenshots for the App Store in all languages and device types
 
 Additionally, this will add device frames around the screenshots
-### switch_environment
-```
-fastlane switch_environment
-```
-Sets environment.plist app_name and app_bundle_id according to scheme
 ### copy
 ```
 fastlane copy
@@ -42,16 +37,11 @@ Copies and renames the project into new directory
 fastlane provisioning
 ```
 Downloads provisioning for all environments
-### whatevs
-```
-fastlane whatevs
-```
-
 ### beta
 ```
 fastlane beta
 ```
-Submit new **Beta** build to Hockey app
+Submit new **beta** build to Hockey app
 ### appstore
 ```
 fastlane appstore

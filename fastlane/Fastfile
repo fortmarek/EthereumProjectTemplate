@@ -3,63 +3,64 @@
 ##################################### SETTINGS #####################################
 
 inhouse_apple_id = 'unicorn@ackee.cz'
-inhouse_team_id = 'PXDF48X6VX' 
-
-production_apple_id = 'unicorn@ackee.cz' #CHANGE if using client account
-production_team_id = '3SMVP6VZP8' #<-- CHANGE if more team 
-
-connect_apple_id = 'unicorn@ackee.cz' #CHANGE if using client account
-connect_team_id = '3SMVP6VZP8' #<-- CHANGE if more team 
-
-slack_url = "https://hooks.slack.com/services/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" #Hook to channel you want to send all messages <-- #rokKvality
-
+production_apple_id = 'unicorn@ackee.cz' 
+connect_apple_id = 'unicorn@ackee.cz' 
 
 ####################################################################################
-download_from_git(url: 'git@gitlab.ack.ee:Ackee/project-skeleton.git',
-               path: 'fastlane/SharedFastfile',
-               branch: 'environments',
-               use_cache: ENV['XCODE_SCRIPT'] == '1')
-import ENV[SharedValues::DOWNLOAD_FROM_GIT_FASTFILE_PATH.to_s]
 
-
-	before_all do
-		ENV["SLACK_URL"] = slack_url # Webhook URL created in Slack
-  end
+import "SharedFastfile"
+#download_from_git(url: 'git@gitlab.ack.ee:Ackee/project-skeleton.git',
+               # path: 'fastlane/SharedFastfile',
+               # branch: 'environments',
+               # use_cache: ENV['XCODE_SCRIPT'] == '1')
+#import ENV[SharedValues::DOWNLOAD_FROM_GIT_FASTFILE_PATH.to_s]
 
   
-
-  #CHANGE if you want to use different provisioning
   desc "Downloads provisioning for all environments"
   lane :provisioning do |options|
     environment = options[:environment]
     
-    if environment && !(is_environment(environment))
+    if environment && !(is_environment(environment: environment))
       raise "Unknown environment #{environment}"
     end
 
     if !environment || environment == "Development"
-      provisioning_match("Development", "development", Config.enterprise_wildcard, Config.inhouse_certificate_git, inhouse_apple_id, inhouse_team_id, true)
+      provisioning_match(configuration: "Development", 
+                        type: "development", 
+                        use_wildcard: true, 
+                        username: inhouse_apple_id,
+                        team_id: team_id("Development"),
+                        readonly: true)
     end
 
     if !environment || environment == "AdHoc"
-      provisioning_match("AdHoc", "enterprise", Config.enterprise_wildcard, Config.inhouse_certificate_git, inhouse_apple_id, inhouse_team_id, true)
+      provisioning_match(configuration: "AdHoc", 
+                        type: "enterprise", 
+                        use_wildcard: true, 
+                        username: inhouse_apple_id,
+                        team_id: team_id("AdHoc"),
+                        readonly: true)
     end
     
     if !environment || environment == "AppStore"
-      provisioning_match("AppStore", "appstore", app_identifier("AppStore"), Config.production_certificate_git, production_apple_id, production_team_id, read_only:true)
+      provisioning_match(configuration: "AppStore", 
+                        type: "appstore", 
+                        app_identifier: app_identifier("AppStore"), 
+                        username: production_apple_id,
+                        git_url: ENV["ACK_PRODUCTION_MATCH_GIT"],
+                        team_id: team_id("AppStore"),
+                        readonly: true)
+
       #Use sigh only for client accounts (on our account you would use match)
-      #provisioning_sigh("AppStore", "appstore", app_identifier(environment), production_apple_id, production_team_id)
+      # provisioning_sigh(configuration: "AppStore",
+      #                   username: production_apple_id,
+      #                   team_id: team_id("AppStore"),
+      #                   app_identifier: app_identifier("AppStore"))
     end
 
   end
 
-  lane :whatevs do 
-    copy
-  end
-  
-
-	
-  desc "Submit new **Beta** build to Hockey app"
+  desc "Submit new **beta** build to Hockey app"
   lane :beta do
 
     environment = "AdHoc"
@@ -94,72 +95,54 @@ import ENV[SharedValues::DOWNLOAD_FROM_GIT_FASTFILE_PATH.to_s]
 
     if !is_ci
         hockey_identifier = get_environment_plist_value(key: "hockey_identifier", environment: environment)
-        upload_to_hockey(identifier: hockey_identifier)
+        
+        hockey(
+              public_identifier: hockey_identifier,
+              notify: '0'
+        )
     end
   end
 
   
   desc "Deploy new version to the App Store (and also hockey app)"
   lane :appstore do |options|
-      #ensure_git_status_clean
-    	pod_install
+
+      environment = "AppStore"
+
+      pod_install
 
     	build_number = number_of_commits
   		increment_build_number(build_number: build_number)
 
       #Setup environments, app identifier and app name
-      set_environment(environment: "AppStore")
+      set_environment(environment: environment)
 
       if !options[:skip_snapshot]
         snapshot
       end
 
-      provisioning(environment:"AppStore")
+      provisioning(environment:environment)
 
       gym(
   		  scheme: "AppStore",
         configuration: "AppStore",
-  		  clean: true,
+  		  clean: true
   		)
   		
-      if !is_ci
-  		  upload_to_hockey(environment: "AppStore")
-      end
-
-      if is_ci 
-        deliver(
+      deliver(
       		username: connect_apple_id,
           team_id: connect_team_id,
-          force: true
-      	)
-      else
-        deliver(
-          username: connect_apple_id,
-          team_id: connect_team_id,
-        )
-      end
-
-      slack(
-          message: "Deployed new version to AppStore!",
-          success: true
-        )
-
-  end
-
-  error do |lane, exception|
-    if is_ci
-      slack(
-        message: exception.message,
-        success: false
+          force: is_ci
       )
-    end
   end
+
+  
 
   desc "Switches environment and sets app_name and app_identifier in plist"
   lane :set_environment do |options|
       environment = options[:environment]
 
-      if !is_environment(environment)
+      if !is_environment(environment: environment)
         raise "Unknown environment #{environment}"
       end
 
@@ -168,42 +151,34 @@ import ENV[SharedValues::DOWNLOAD_FROM_GIT_FASTFILE_PATH.to_s]
 
       UI.message "Setting environment for #{environment}"
       
-      env_dir = "../Environment/"
-
-      # Change environments according to scheme
+      # Change environment plist
       replace_environment_plist(environment: environment)
 
 
       UI.message "Setting app name to #{display_name}"
       
       update_info_plist(
-        plist_path: "Source/Project-Info.plist",
-        display_name: display_name
+        display_name: display_name,
+        plist_path: ENV["FL_PROJECT_PLIST"]
       )
 
       UI.message "Setting app identifier to #{app_identifier}"
       
       update_app_identifier(
           app_identifier:  app_identifier,
-          plist_path: "Source/Project-Info.plist"
+          plist_path: ENV["FL_PROJECT_PLIST"]
       )
 
-      
-      
-      team_id = get_environment_plist_value(key: "teamIdentifier", environment:environment)
+      team_id = team_id(environment)
       current_project_file =  File.basename(Dir['../*.xcodeproj'].first)
 
       current_team_id = get_project_team()
-      if current_team_id != team_id 
-        
-
+      if team_id && current_team_id != team_id 
         update_project_team(
           path:current_project_file, 
           teamid:team_id
           )
         UI.success "Team identifier set to #{team_id} from #{current_team_id}"
-      else
-        UI.success "Team identifier was already set to #{team_id}"
       end
 
   end
