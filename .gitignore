@@ -68,6 +68,9 @@ fastlane/report.xml
 # deliver temporary files
 fastlane/Preview.html
 
+# shared fastfile 
+fastlane/.shared
+
 # snapshot generated screenshots
 fastlane/screenshots
 

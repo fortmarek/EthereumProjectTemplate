@@ -5,19 +5,21 @@
 inhouse_apple_id = 'unicorn@ackee.cz'
 inhouse_team_id = 'PXDF48X6VX' 
 
+production_apple_id = 'unicorn@ackee.cz' #CHANGE if using client account
+production_team_id = '3SMVP6VZP8' #<-- CHANGE if more team 
+
 connect_apple_id = 'unicorn@ackee.cz' #CHANGE if using client account
 connect_team_id = '3SMVP6VZP8' #<-- CHANGE if more team 
 
 slack_url = "https://hooks.slack.com/services/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" #Hook to channel you want to send all messages <-- #rokKvality
 
- # Do not change if you don't have to (We don't want to create provisioning profile for every app)
-
 
 ####################################################################################
-
-import_from_git(url: 'git@gitlab.ack.ee:Ackee/project-skeleton.git',
+download_from_git(url: 'git@gitlab.ack.ee:Ackee/project-skeleton.git',
                path: 'fastlane/SharedFastfile',
-               branch: 'environments')
+               branch: 'environments',
+               use_cache: ENV['XCODE_SCRIPT'] == '1')
+import ENV[SharedValues::DOWNLOAD_FROM_GIT_FASTFILE_PATH.to_s]
 
 
 	before_all do
@@ -36,21 +38,24 @@ import_from_git(url: 'git@gitlab.ack.ee:Ackee/project-skeleton.git',
     end
 
     if !environment || environment == "Development"
-      provisioning_match(environment, "development", Config.enterprise_wildcard, Config.inhouse_certificate_git, inhouse_apple_id, inhouse_team_id, true)
+      provisioning_match("Development", "development", Config.enterprise_wildcard, Config.inhouse_certificate_git, inhouse_apple_id, inhouse_team_id, true)
     end
 
     if !environment || environment == "AdHoc"
-      provisioning_match(environment, "enterprise", Config.enterprise_wildcard, Config.inhouse_certificate_git, inhouse_apple_id, inhouse_team_id, true)
+      provisioning_match("AdHoc", "enterprise", Config.enterprise_wildcard, Config.inhouse_certificate_git, inhouse_apple_id, inhouse_team_id, true)
     end
     
     if !environment || environment == "AppStore"
-      provisioning_match(environment, "appstore", app_identifier(environment), Config.production_certificate_git, production_apple_id, production_team_id, true)
+      provisioning_match("AppStore", "appstore", app_identifier("AppStore"), Config.production_certificate_git, production_apple_id, production_team_id, read_only:true)
       #Use sigh only for client accounts (on our account you would use match)
       #provisioning_sigh("AppStore", "appstore", app_identifier(environment), production_apple_id, production_team_id)
     end
 
   end
 
+  lane :whatevs do 
+    copy
+  end
   
 
 	
@@ -70,7 +75,7 @@ import_from_git(url: 'git@gitlab.ack.ee:Ackee/project-skeleton.git',
     provisioning(environment: environment)
 
     #Setup environments, app identifier and app name
-    setup_environment(environment: environment)
+    set_environment(environment: environment)
 
     #Setup badge for beta
     badge(shield: "#{get_version_number}-#{number_of_commits}-blue", dark: true, shield_no_resize: true)
@@ -83,19 +88,13 @@ import_from_git(url: 'git@gitlab.ack.ee:Ackee/project-skeleton.git',
         export_team_id: inhouse_team_id
   		)
     ensure
+      # Put badge back to original
       sh "git checkout -- ../Resources/Images.xcassets/"
     end
 
     if !is_ci
         hockey_identifier = get_environment_plist_value(key: "hockey_identifier", environment: environment)
         upload_to_hockey(identifier: hockey_identifier)
-
-        # hockey_link = lane_context[SharedValues::HOCKEY_DOWNLOAD_LINK] 
-
-        # slack(
-        #     message: "New version uploaded to HockeyApp! #{hockey_link}",
-        #     success: true
-        #   )
     end
   end
 
@@ -109,10 +108,7 @@ import_from_git(url: 'git@gitlab.ack.ee:Ackee/project-skeleton.git',
   		increment_build_number(build_number: build_number)
 
       #Setup environments, app identifier and app name
-      setup_environment(environment: "AppStore")
-
-    	#ensure_git_status_clean
-  		
+      set_environment(environment: "AppStore")
 
       if !options[:skip_snapshot]
         snapshot
@@ -157,6 +153,59 @@ import_from_git(url: 'git@gitlab.ack.ee:Ackee/project-skeleton.git',
         success: false
       )
     end
+  end
+
+  desc "Switches environment and sets app_name and app_identifier in plist"
+  lane :set_environment do |options|
+      environment = options[:environment]
+
+      if !is_environment(environment)
+        raise "Unknown environment #{environment}"
+      end
+
+      display_name = app_name(environment)
+      app_identifier =  app_identifier(environment)
+
+      UI.message "Setting environment for #{environment}"
+      
+      env_dir = "../Environment/"
+
+      # Change environments according to scheme
+      replace_environment_plist(environment: environment)
+
+
+      UI.message "Setting app name to #{display_name}"
+      
+      update_info_plist(
+        plist_path: "Source/Project-Info.plist",
+        display_name: display_name
+      )
+
+      UI.message "Setting app identifier to #{app_identifier}"
+      
+      update_app_identifier(
+          app_identifier:  app_identifier,
+          plist_path: "Source/Project-Info.plist"
+      )
+
+      
+      
+      team_id = get_environment_plist_value(key: "teamIdentifier", environment:environment)
+      current_project_file =  File.basename(Dir['../*.xcodeproj'].first)
+
+      current_team_id = get_project_team()
+      if current_team_id != team_id 
+        
+
+        update_project_team(
+          path:current_project_file, 
+          teamid:team_id
+          )
+        UI.success "Team identifier set to #{team_id} from #{current_team_id}"
+      else
+        UI.success "Team identifier was already set to #{team_id}"
+      end
+
   end
 
   

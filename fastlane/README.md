@@ -42,6 +42,11 @@ Copies and renames the project into new directory
 fastlane provisioning
 ```
 Downloads provisioning for all environments
+### whatevs
+```
+fastlane whatevs
+```
+
 ### beta
 ```
 fastlane beta
@@ -52,6 +57,11 @@ Submit new **Beta** build to Hockey app
 fastlane appstore
 ```
 Deploy new version to the App Store (and also hockey app)
+### set_environment
+```
+fastlane set_environment
+```
+Switches environment and sets app_name and app_identifier in plist
 
 ----
 
