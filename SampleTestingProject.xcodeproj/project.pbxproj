@@ -231,8 +231,8 @@
 		ACF8D9F91C6236CD00D74377 /* MemoryLeakConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryLeakConfiguration.swift; sourceTree = "<group>"; };
 		ACF8D9FA1C6236CD00D74377 /* ProjectTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ProjectTests-Info.plist"; sourceTree = "<group>"; };
 		ACF8DA171C62374C00D74377 /* APITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B433E4A719530092006BEBF1 /* environment-AdHoc.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "environment-AdHoc.plist"; sourceTree = "<group>"; };
-		B433E4A819530092006BEBF1 /* environment-AppStore.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "environment-AppStore.plist"; sourceTree = "<group>"; };
+		B433E4A719530092006BEBF1 /* environment-Stage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "environment-Stage.plist"; sourceTree = "<group>"; };
+		B433E4A819530092006BEBF1 /* environment-Production.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "environment-Production.plist"; sourceTree = "<group>"; };
 		B433E4A919530092006BEBF1 /* environment-Development.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "environment-Development.plist"; sourceTree = "<group>"; };
 		B433E4AA19530092006BEBF1 /* environment.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = environment.plist; sourceTree = "<group>"; };
 		B433E4B119530FD0006BEBF1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -430,8 +430,8 @@
 		B433E4A619530092006BEBF1 /* Environment */ = {
 			isa = PBXGroup;
 			children = (
-				B433E4A719530092006BEBF1 /* environment-AdHoc.plist */,
-				B433E4A819530092006BEBF1 /* environment-AppStore.plist */,
+				B433E4A719530092006BEBF1 /* environment-Stage.plist */,
+				B433E4A819530092006BEBF1 /* environment-Production.plist */,
 				B433E4A919530092006BEBF1 /* environment-Development.plist */,
 				B433E4AA19530092006BEBF1 /* environment.plist */,
 				6D1A3AFC1B3AD61800EC8E47 /* Environment.swift */,
@@ -744,7 +744,7 @@
 						TestTargetID = B4ABA1DB195193330069FAD4;
 					};
 					B4ABA1DB195193330069FAD4 = {
-						DevelopmentTeam = 3SMVP6VZP8;
+						DevelopmentTeam = PXDF48X6VX;
 					};
 					B4ABA1FC195193330069FAD4 = {
 						TestTargetID = B4ABA1DB195193330069FAD4;
@@ -1200,13 +1200,13 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		69148E1F1B78BFE300D83C0E /* Development */ = {
+		69148E1F1B78BFE300D83C0E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "2bfcc027-5151-4b96-a838-d00764a94a41";
 			};
-			name = Development;
+			name = Debug;
 		};
 		69148E201B78BFE300D83C0E /* AdHoc */ = {
 			isa = XCBuildConfiguration;
@@ -1224,13 +1224,13 @@
 			};
 			name = AppStore;
 		};
-		69D5B7F61C24861E008F1A30 /* Development */ = {
+		69D5B7F61C24861E008F1A30 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "2bfcc027-5151-4b96-a838-d00764a94a41";
 			};
-			name = Development;
+			name = Debug;
 		};
 		69D5B7F71C24861E008F1A30 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
@@ -1248,14 +1248,14 @@
 			};
 			name = AppStore;
 		};
-		AC8F26411C64EC3B0011DC49 /* Development */ = {
+		AC8F26411C64EC3B0011DC49 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_PREFIX_HEADER = environment/environment_preprocess.h;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "2bfcc027-5151-4b96-a838-d00764a94a41";
 			};
-			name = Development;
+			name = Debug;
 		};
 		AC8F26421C64EC3B0011DC49 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
@@ -1275,7 +1275,7 @@
 			};
 			name = AppStore;
 		};
-		ACD479A21C5A39E900E85DD3 /* Development */ = {
+		ACD479A21C5A39E900E85DD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CBFC8296B75D80D9A971E851 /* Pods-UITests.development.xcconfig */;
 			buildSettings = {
@@ -1330,7 +1330,7 @@
 				USER_HEADER_SEARCH_PATHS = "";
 				USES_XCTRUNNER = YES;
 			};
-			name = Development;
+			name = Debug;
 		};
 		ACD479A31C5A39E900E85DD3 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
@@ -1432,7 +1432,7 @@
 			};
 			name = AppStore;
 		};
-		ACF8DA1F1C62374C00D74377 /* Development */ = {
+		ACF8DA1F1C62374C00D74377 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DE1ED0E7B091E2F030C1DE33 /* Pods-APITests.development.xcconfig */;
 			buildSettings = {
@@ -1483,7 +1483,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SampleTestingProject.app/SampleTestingProject";
 			};
-			name = Development;
+			name = Debug;
 		};
 		ACF8DA201C62374C00D74377 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
@@ -1653,7 +1653,7 @@
 			};
 			name = AppStore;
 		};
-		B4ABA20C195193330069FAD4 /* Development */ = {
+		B4ABA20C195193330069FAD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ACK_ENVIRONMENT_DIR = "${PROJECT_DIR}/Environment";
@@ -1694,7 +1694,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
-			name = Development;
+			name = Debug;
 		};
 		B4ABA20D195193330069FAD4 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
@@ -1731,7 +1731,7 @@
 			};
 			name = AdHoc;
 		};
-		B4ABA20F195193330069FAD4 /* Development */ = {
+		B4ABA20F195193330069FAD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7554DDC0C8AE5A664636FF5C /* Pods-SampleTestingProject.development.xcconfig */;
 			buildSettings = {
@@ -1754,7 +1754,7 @@
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
-			name = Development;
+			name = Debug;
 		};
 		B4ABA210195193330069FAD4 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
@@ -1780,7 +1780,7 @@
 			};
 			name = AdHoc;
 		};
-		B4ABA212195193330069FAD4 /* Development */ = {
+		B4ABA212195193330069FAD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 897BCF23CDB1347AB98D1917 /* Pods-Tests.development.xcconfig */;
 			buildSettings = {
@@ -1799,7 +1799,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SampleTestingProject.app/SampleTestingProject";
 				WRAPPER_EXTENSION = xctest;
 			};
-			name = Development;
+			name = Debug;
 		};
 		B4ABA213195193330069FAD4 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
@@ -1824,7 +1824,7 @@
 		69148E221B78BFE300D83C0E /* Build configuration list for PBXAggregateTarget "mogenerator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				69148E1F1B78BFE300D83C0E /* Development */,
+				69148E1F1B78BFE300D83C0E /* Debug */,
 				69148E201B78BFE300D83C0E /* AdHoc */,
 				69148E211B78BFE300D83C0E /* AppStore */,
 			);
@@ -1834,7 +1834,7 @@
 		69D5B7F51C24861E008F1A30 /* Build configuration list for PBXAggregateTarget "SwiftGen" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				69D5B7F61C24861E008F1A30 /* Development */,
+				69D5B7F61C24861E008F1A30 /* Debug */,
 				69D5B7F71C24861E008F1A30 /* AdHoc */,
 				69D5B7F81C24861E008F1A30 /* AppStore */,
 			);
@@ -1844,7 +1844,7 @@
 		AC8F26441C64EC3B0011DC49 /* Build configuration list for PBXAggregateTarget "EnvironmentSwitch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AC8F26411C64EC3B0011DC49 /* Development */,
+				AC8F26411C64EC3B0011DC49 /* Debug */,
 				AC8F26421C64EC3B0011DC49 /* AdHoc */,
 				AC8F26431C64EC3B0011DC49 /* AppStore */,
 			);
@@ -1854,7 +1854,7 @@
 		ACD479A51C5A39E900E85DD3 /* Build configuration list for PBXNativeTarget "UITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				ACD479A21C5A39E900E85DD3 /* Development */,
+				ACD479A21C5A39E900E85DD3 /* Debug */,
 				ACD479A31C5A39E900E85DD3 /* AdHoc */,
 				ACD479A41C5A39E900E85DD3 /* AppStore */,
 			);
@@ -1864,7 +1864,7 @@
 		ACF8DA1E1C62374C00D74377 /* Build configuration list for PBXNativeTarget "APITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				ACF8DA1F1C62374C00D74377 /* Development */,
+				ACF8DA1F1C62374C00D74377 /* Debug */,
 				ACF8DA201C62374C00D74377 /* AdHoc */,
 				ACF8DA211C62374C00D74377 /* AppStore */,
 			);
@@ -1874,7 +1874,7 @@
 		B4ABA1D7195193330069FAD4 /* Build configuration list for PBXProject "SampleTestingProject" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B4ABA20C195193330069FAD4 /* Development */,
+				B4ABA20C195193330069FAD4 /* Debug */,
 				B4ABA20D195193330069FAD4 /* AdHoc */,
 				B47536FA1951B7CD00DB8D6D /* AppStore */,
 			);
@@ -1884,7 +1884,7 @@
 		B4ABA20E195193330069FAD4 /* Build configuration list for PBXNativeTarget "SampleTestingProject" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B4ABA20F195193330069FAD4 /* Development */,
+				B4ABA20F195193330069FAD4 /* Debug */,
 				B4ABA210195193330069FAD4 /* AdHoc */,
 				B47536FB1951B7CD00DB8D6D /* AppStore */,
 			);
@@ -1894,7 +1894,7 @@
 		B4ABA211195193330069FAD4 /* Build configuration list for PBXNativeTarget "Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B4ABA212195193330069FAD4 /* Development */,
+				B4ABA212195193330069FAD4 /* Debug */,
 				B4ABA213195193330069FAD4 /* AdHoc */,
 				B47536FC1951B7CD00DB8D6D /* AppStore */,
 			);

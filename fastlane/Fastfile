@@ -22,7 +22,7 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
     end
 
     if !environment || environment == "Development"
-      provisioning_match(configuration: "Development", 
+      provisioning_match(configuration: "Debug", 
                         type: "development", 
                         use_wildcard: true, 
                         username: inhouse_apple_id,
@@ -30,22 +30,22 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
                         readonly: true)
     end
 
-    if !environment || environment == "AdHoc"
+    if !environment || environment == "Stage"
       provisioning_match(configuration: "AdHoc", 
                         type: "enterprise", 
                         use_wildcard: true, 
                         username: inhouse_apple_id,
-                        team_id: team_id("AdHoc"),
+                        team_id: team_id("Stage"),
                         readonly: true)
     end
     
-    if !environment || environment == "AppStore"
+    if !environment || environment == "Production"
       provisioning_match(configuration: "AppStore", 
                         type: "appstore", 
-                        app_identifier: app_identifier("AppStore"), 
+                        app_identifier: app_identifier("Production"), 
                         username: production_apple_id,
                         git_url: ENV["ACK_PRODUCTION_MATCH_GIT"],
-                        team_id: team_id("AppStore"),
+                        team_id: team_id("Production"),
                         readonly: true)
 
       #Use sigh only for client accounts (on our account you would use match)
@@ -60,7 +60,7 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
   desc "Submit new **beta** build to Hockey app"
   lane :beta do
 
-    environment = "AdHoc"
+    environment = "Stage"
 
     #Pods
   	pod_install
@@ -104,7 +104,7 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
   desc "Deploy new version to the App Store (and also hockey app)"
   lane :appstore do |options|
 
-      environment = "AppStore"
+      environment = "Production"
 
       pod_install
 
@@ -121,7 +121,7 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
       provisioning(environment:environment)
 
       gym(
-  		  scheme: "AppStore",
+  		  scheme: "Production",
         configuration: "AppStore",
   		  clean: true
   		)
