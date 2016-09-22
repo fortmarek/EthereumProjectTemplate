@@ -25,70 +25,24 @@ fastlane beta
 fastlane appstore
 ```
 
-### Testy
-```
-//Otestuj vse
-fastlane test
-
-//Specificke testy
-fastlane test type:api
-fastlane test type:ui
-```
-
-### Screenshoty
-```
-fastlane screenshots
-```
-
-### SwiftLint a MemoryLeak check
-```
-fastlane analyze
-```
-
-### Zkopíruje skeleton do nové složky, nastaví jméno, promaže git a nastaví git remote
-```
-fastlane copy
-```
-
-Kompletní seznam všech metod zde:
-[Fastlane README](fastlane/README.md)
+Další lane lze najít v [shared fastlane repu](https://gitlab.ack.ee/Ackee/fastlane)
 
 
 ## Nastavení
-Všechny konstanty se nastavují ve fastlane/Fastfile
+Většína konstant souvisejících s prostředím se nastavuje v Environment.plist
 
-Jdu sem pokud chci zmenit:
-
-**app_name** pro dev/beta/appstore
-
-**app_identifier** pro dev/beta/appstore
-
-**slack_url**  channel hook pro posilani zprav o testech, uploadech atd ...
-
-**inhouse/connect app identifier** username pro podepisovani a posilani buildu 
-
-Pokud změním app_name, app_identifier zavolám
-
-```
-fastlane xcode
-```
-
-aby se mi updatnul xcode. 
-
-V xcode už ideálně nic neměním.
-
-
+* appIdentifier - bundle identifieru který bude nastaven při každém buildu aplikace
+* appName - název aplikace který se nastaví  při každém buildu aplikace
+* teamIdentifier - team který se nastaví v Xcode projektu při každém buildu
 
 
 # Provisioning
-
-Po nastavení identifieru ve Fastfilu zavolam
 
 ```
 fastlane provisioning
 ```
 
-který mi stáhne všechny provisioning profily, certifikáty a nastaví je do Xcode
+mi stáhne všechny provisioning profily, certifikáty a nastaví je do Xcode
 
 
 > Při prvním spuštění se Match zeptá na heslo ke git repu  najdete ho na [passwd.ack.ee] (https://passwd.ack.ee/) (Ackee Match InHouse Repo a Ackee Match Production Repo)
