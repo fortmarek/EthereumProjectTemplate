@@ -10,7 +10,7 @@ connect_team_id = "xxx"
 ####################################################################################
 
 #import "../../fastlane/fastlane/Fastfile"
-import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache: ENV['XCODE_SCRIPT'] == '1'))
+import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache: is_xcode ))
 
   
   desc "Downloads provisioning for all environments"
@@ -137,6 +137,11 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
 
   desc "Switches environment and sets app_name and app_identifier in plist"
   lane :set_environment do |options|
+
+      if is_xcode 
+        UI.message "Xcode run script phase"
+      end
+
       environment = options[:environment]
 
       if !is_environment(environment: environment)
@@ -151,7 +156,7 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
       # Change environment plist
       replace_environment_plist(environment: environment)
 
-
+      
       UI.message "Setting app name to #{display_name}"
       
       update_info_plist(
