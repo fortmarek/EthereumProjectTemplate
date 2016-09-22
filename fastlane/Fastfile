@@ -9,8 +9,8 @@ connect_team_id = "xxx"
 
 ####################################################################################
 
-#import "../../fastlane/fastlane/Fastfile"
-import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache: is_xcode ))
+import "../../fastlane/fastlane/Fastfile"
+#import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache: is_xcode ))
 
   
   desc "Downloads provisioning for all environments"
