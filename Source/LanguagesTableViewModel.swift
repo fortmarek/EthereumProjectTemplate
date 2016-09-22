@@ -1,6 +1,6 @@
 //
-//  ImagesTableViewModel.swift
-//  SampleTestingProject
+//  LanguagesTableViewModel.swift
+//  ProjectSkeleton
 //
 //  Created by Tomas Kohout on 1/25/16.
 //  Copyright © 2016 Ackee s.r.o. All rights reserved.
@@ -32,38 +32,38 @@ protocol LanguagesTableViewModeling {
 }
 
 class LanguagesTableViewModel: LanguagesTableViewModeling {
-
+    
     let cellModels = MutableProperty<[LanguageDetailViewModeling]>([])
     let loading = MutableProperty<Bool>(false)
-
+    
     //MARK: Dependencies
     private let api: LanguagesAPIServicing
     private let geocoder: Geocoding
     private let locationManager: LocationManager
     private let detailModelFactory: LanguageDetailModelingFactory
-
-
+    
+    
     required init(api: LanguagesAPIServicing, geocoder: Geocoding, locationManager: LocationManager, detailModelFactory: LanguageDetailModelingFactory) {
         self.api = api
         self.geocoder = geocoder
         self.locationManager = locationManager
         self.detailModelFactory = detailModelFactory
-
+        
         self.setupBindings()
     }
-
+    
     func setupBindings() {
         //Uncomment to test the memory leak test
-//        self.loading.producer.startWithNext { _ in
-//            let api = self.api
-//
-//        }
+        //        self.loading.producer.startWithNext { _ in
+        //            let api = self.api
+        //
+        //        }
         
         cellModels <~ loadLanguages.values.map { [unowned self] languages in
             return languages.map { self.detailModelFactory(language: $0) } }
     }
-
-
+    
+    
     //MARK: Action
     
     lazy var loadLanguages: Action<(), [LanguageEntity], LoadLanguagesError> = Action { [unowned self] _ in
@@ -83,27 +83,31 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
     
     
     private func sortLanguageByDistanceFromUserLocation(languages: [LanguageEntity], userLocation: CLLocation) -> SignalProducer<[LanguageEntity], NSError> {
-            //Get geolocation for every language
-            let signalProducers: [SignalProducer<(LanguageEntity, CLLocation?), NSError>] = languages.map { language in
-                let languageProducer = SignalProducer<LanguageEntity, NSError>(value: language)
-
-                return combineLatest(languageProducer, self.geocoder.locationForCountryAbbreviation(language.abbr))
-            }
-
-            //Check all geolocations in sequence
-            return SignalProducer(values: signalProducers).flatten (.Concat).reduce([], { (var array: [(LanguageEntity, CLLocation?)], item: (LanguageEntity, CLLocation?))  in
-                    array.append(item)
-                    return array
-
-            //Sort by closest
-            }).map { languages in
-                languages.sort({ entityA, entityB in
-                    let (_, locationA) = entityA; let (_, locationB) = entityB
-                    return locationA?.distanceFromLocation(userLocation) < locationB?.distanceFromLocation(userLocation)
-                }).map {$0.0}
-            }
+        //Get geolocation for every language
+        let signalProducers: [SignalProducer<(LanguageEntity, CLLocation?), NSError>] = languages.map { language in
+            let languageProducer = SignalProducer<LanguageEntity, NSError>(value: language)
+            
+            return combineLatest(languageProducer, self.geocoder.locationForCountryAbbreviation(language.abbr))
+        }
+        
+        //Check all geolocations in sequence
+        let geolocations = SignalProducer<SignalProducer<(LanguageEntity, CLLocation?), NSError>, NSError>(values: signalProducers)
+            .flatten(.Concat)
+            .reduce([], { (array: [(LanguageEntity, CLLocation?)], item: (LanguageEntity, CLLocation?)) -> [(LanguageEntity, CLLocation?)] in
+                var array = array
+                array.append(item)
+                return array
+            })
+        
+        //Sort by closest
+        return geolocations.map { languages -> [LanguageEntity] in
+            languages.sort({ entityA, entityB in
+                let (_, locationA) = entityA; let (_, locationB) = entityB
+                return locationA?.distanceFromLocation(userLocation) < locationB?.distanceFromLocation(userLocation)
+            }).map { $0.0}
+        }
     }
-
-
-
+    
+    
+    
 }

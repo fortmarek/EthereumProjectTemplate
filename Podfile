@@ -3,35 +3,23 @@ source 'git@gitlab.ack.ee:Ackee/AckeePods.git' # Ackee private repo
 source 'https://github.com/CocoaPods/Specs.git' # Default Cocoapods repo
 
 platform :ios, '8.0'
-xcodeproj 'SampleTestingProject', 'AdHoc' => :release,'AppStore' => :release, 'Development' => :debug
+xcodeproj 'ProjectSkeleton', 'AdHoc' => :release,'AppStore' => :release, 'Development' => :debug
 
 use_frameworks!
 
-target 'SampleTestingProject' do
+target 'ProjectSkeleton' do
 
 pod 'ACKategories', :git => 'https://github.com/AckeeCZ/ACKategories.git'
 pod 'HockeySDK'
-#pod 'FlurrySDK'
-
-
-#pod 'SVProgressHUD'
 pod 'SnapKit'
 pod 'Alamofire'
-pod 'ReactiveCocoa', '~> 4.0.0'
+pod 'ReactiveCocoa', '~> 4.2'
 pod 'Argo', '~> 2.2'
 pod 'Curry', '~> 1.4'
 pod 'ACKSwinject'
 pod 'SwiftGen', '~> 0.7.6'
-
 pod 'Locksmith', '~> 2.0.8'
-
-
-#pod 'Reachability'
-
-#pod 'MagicalRecord', '~> 2.2'
-#pod 'SVProgressHUD', :head
 pod 'SDWebImage', '~> 3.6'
-#pod 'Reachability'
 pod 'TPKeyboardAvoiding'
 
 def testing_pods
@@ -39,7 +27,6 @@ def testing_pods
     pod 'Nimble', '4.0.1'
 end
 
-#testing_pods
 
 target 'Tests' do
     inherit! :search_paths

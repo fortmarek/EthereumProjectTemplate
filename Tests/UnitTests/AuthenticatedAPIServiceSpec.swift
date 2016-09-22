@@ -2,7 +2,7 @@ import Quick
 import Nimble
 import ReactiveCocoa
 import Alamofire
-@testable import SampleTestingProject
+@testable import ProjectSkeleton
 
 private let networkQueue = dispatch_queue_create("networkQueue", DISPATCH_QUEUE_CONCURRENT)
 private let authHandlerQueue = dispatch_queue_create("authHandlerQueue", DISPATCH_QUEUE_CONCURRENT)

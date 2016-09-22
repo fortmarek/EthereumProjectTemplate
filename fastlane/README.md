@@ -5,11 +5,6 @@ fastlane documentation
 sudo gem install fastlane
 ```
 # Available Actions
-### provisioning
-```
-fastlane provisioning
-```
-Downloads provisioning for all environments
 ### xcode
 ```
 fastlane xcode
@@ -25,16 +20,6 @@ Runs linting (and eventually static analysis)
 fastlane test
 ```
 Runs unit, api and ui tests.
-### beta
-```
-fastlane beta
-```
-Submit new **Beta** build to Hockey app
-### appstore
-```
-fastlane appstore
-```
-Deploy new version to the App Store (and also hockey app)
 ### screenshots
 ```
 fastlane screenshots
@@ -42,19 +27,34 @@ fastlane screenshots
 Create new screenshots for the App Store in all languages and device types
 
 Additionally, this will add device frames around the screenshots
-### switch_environment
-```
-fastlane switch_environment
-```
-Sets environment.plist app_name and app_bundle_id according to scheme
 ### copy
 ```
 fastlane copy
 ```
 Copies and renames the project into new directory
+### provisioning
+```
+fastlane provisioning
+```
+Downloads provisioning for all environments
+### beta
+```
+fastlane beta
+```
+Submit new **beta** build to Hockey app
+### appstore
+```
+fastlane appstore
+```
+Deploy new version to the App Store (and also hockey app)
+### set_environment
+```
+fastlane set_environment
+```
+Switches environment and sets app_name and app_identifier in plist
 
 ----
 
-This README.md is auto-generated and will be re-generated every time to run [fastlane](https://fastlane.tools).
+This README.md is auto-generated and will be re-generated every time [fastlane](https://fastlane.tools) is run.
 More information about fastlane can be found on [https://fastlane.tools](https://fastlane.tools).
 The documentation of fastlane can be found on [GitHub](https://github.com/fastlane/fastlane/tree/master/fastlane).

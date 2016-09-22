@@ -1,6 +1,6 @@
 //
 //  BaseViewController.swift
-//  SampleTestingProject
+//  ProjectSkeleton
 //
 //  Created by Petr Šíma on 10/04/16.
 //  Copyright © 2016 Ackee s.r.o. All rights reserved.

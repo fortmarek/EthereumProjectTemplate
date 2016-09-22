@@ -1,6 +1,6 @@
 //
 //  Disposing.swift
-//  SampleTestingProject
+//  ProjectSkeleton
 //
 //  Created by Petr Šíma on 04/02/16.
 //  Copyright © 2016 Ackee s.r.o. All rights reserved.

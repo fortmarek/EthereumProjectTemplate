@@ -1,6 +1,6 @@
 //
 //  UserManager.swift
-//  iLikeYou
+//  ProjectSkeleton
 //
 //  Created by Tomas Kohout on 2/29/16.
 //  Copyright © 2016 Ackee s.r.o. All rights reserved.

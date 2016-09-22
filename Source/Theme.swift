@@ -1,6 +1,6 @@
 //
 //  StoriesUI.swift
-//  LandOfStories
+//  ProjectSkeleton
 //
 //  Created by Dominik Vesely on 08/04/15.
 //  Copyright (c) 2015 Ackee s.r.o. All rights reserved.
