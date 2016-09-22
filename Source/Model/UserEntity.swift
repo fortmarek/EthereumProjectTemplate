@@ -1,6 +1,6 @@
 //
 //  UserEntity.swift
-//  CoreMapper
+//  ProjectSkeleton
 //
 //  Created by Tomas Kohout on 2/8/16.
 //  Copyright © 2016 Ackee s.r.o. All rights reserved.

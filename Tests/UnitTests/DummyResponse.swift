@@ -1,13 +1,13 @@
 //
 //  DummyResponse.swift
-//  SwinjectMVVMExample
+//  ProjectSkeleton
 //
-//  Created by Yoichi Tagaya on 8/23/15.
-//  Copyright © 2015 Swinject Contributors. All rights reserved.
+//  Created by Tomas Kohout on 8/23/15.
+//  Copyright © 2015 Ackee s. r. o. All rights reserved.
 //
 
 import Foundation
-@testable import SampleTestingProject
+@testable import ProjectSkeleton
 
 let dummyResponse: [LanguageEntity] = {
     let language0 = LanguageEntity(abbr: "en",

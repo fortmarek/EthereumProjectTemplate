@@ -17,7 +17,7 @@
                BlueprintIdentifier = "69D5B7F41C24861E008F1A30"
                BuildableName = "SwiftGen"
                BlueprintName = "SwiftGen"
-               ReferencedContainer = "container:SampleTestingProject.xcodeproj">
+               ReferencedContainer = "container:ProjectSkeleton.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,7 +48,7 @@
             BlueprintIdentifier = "69D5B7F41C24861E008F1A30"
             BuildableName = "SwiftGen"
             BlueprintName = "SwiftGen"
-            ReferencedContainer = "container:SampleTestingProject.xcodeproj">
+            ReferencedContainer = "container:ProjectSkeleton.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -66,7 +66,7 @@
             BlueprintIdentifier = "69D5B7F41C24861E008F1A30"
             BuildableName = "SwiftGen"
             BlueprintName = "SwiftGen"
-            ReferencedContainer = "container:SampleTestingProject.xcodeproj">
+            ReferencedContainer = "container:ProjectSkeleton.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

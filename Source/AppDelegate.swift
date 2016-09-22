@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  SwiftPokus
+//  ProjectSkeleton
 //
 //  Created by Dominik Vesely on 07/04/15.
 //  Copyright (c) 2015 Ackee s.r.o. All rights reserved.
@@ -11,7 +11,6 @@ import ReactiveCocoa
 import HockeySDK
 import Swinject
 import enum Result.NoError
-
 public typealias NoError = Result.NoError
 
 @UIApplicationMain

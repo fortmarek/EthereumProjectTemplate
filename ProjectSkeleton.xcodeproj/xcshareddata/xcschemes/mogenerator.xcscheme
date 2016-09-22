@@ -17,7 +17,7 @@
                BlueprintIdentifier = "69148E1E1B78BFE300D83C0E"
                BuildableName = "mogenerator"
                BlueprintName = "mogenerator"
-               ReferencedContainer = "container:SampleTestingProject.xcodeproj">
+               ReferencedContainer = "container:ProjectSkeleton.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,7 +48,7 @@
             BlueprintIdentifier = "69148E1E1B78BFE300D83C0E"
             BuildableName = "mogenerator"
             BlueprintName = "mogenerator"
-            ReferencedContainer = "container:SampleTestingProject.xcodeproj">
+            ReferencedContainer = "container:ProjectSkeleton.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -66,7 +66,7 @@
             BlueprintIdentifier = "69148E1E1B78BFE300D83C0E"
             BuildableName = "mogenerator"
             BlueprintName = "mogenerator"
-            ReferencedContainer = "container:SampleTestingProject.xcodeproj">
+            ReferencedContainer = "container:ProjectSkeleton.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

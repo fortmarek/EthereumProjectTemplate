@@ -1,6 +1,6 @@
 //
 //  ImagesTableViewSpec.swift
-//  SampleTestingProject
+//  ProjectSkeleton
 //
 //  Created by Tomas Kohout on 1/28/16.
 //  Copyright © 2016 Ackee s.r.o. All rights reserved.
@@ -9,8 +9,9 @@ import Quick
 import Nimble
 import ReactiveCocoa
 import Alamofire
+import Result
 
-@testable import SampleTestingProject
+@testable import ProjectSkeleton
 
 // Specificatios of LanguagesTableViewModel
 

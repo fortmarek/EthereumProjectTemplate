@@ -1,6 +1,6 @@
 //
 //  LanguageViewControllerSpec.swift
-//  SampleTestingProject
+//  ProjectSkeleton
 //
 //  Created by Tomas Kohout on 1/31/16.
 //  Copyright © 2016 Ackee s.r.o. All rights reserved.
@@ -11,7 +11,7 @@ import Quick
 import Nimble
 import ReactiveCocoa
 
-@testable import SampleTestingProject
+@testable import ProjectSkeleton
 
 class LanguagesViewControllerSpec: QuickSpec {
     
