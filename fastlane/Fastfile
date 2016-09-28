@@ -3,8 +3,8 @@
 ##################################### SETTINGS #####################################
 
 inhouse_apple_id = 'unicorn@ackee.cz'
-production_apple_id = 'ios@ackee.cz' 
-connect_apple_id = 'ios@ackee.cz' 
+production_apple_id = 'ios@ackee.cz'
+connect_apple_id = 'ios@ackee.cz'
 connect_team_id = "xxx"
 
 ####################################################################################
@@ -12,37 +12,37 @@ connect_team_id = "xxx"
 #import "../../fastlane/fastlane/Fastfile"
 import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache: is_xcode ))
 
-  
+
   desc "Downloads provisioning for all environments"
   lane :provisioning do |options|
     environment = options[:environment]
-    
+
     if environment && !(is_environment(environment: environment))
       raise "Unknown environment #{environment}"
     end
 
     if !environment || environment == "Development"
-      provisioning_match(configuration: "Debug", 
-                        type: "development", 
-                        use_wildcard: true, 
+      provisioning_match(configuration: "Debug",
+                        type: "development",
+                        use_wildcard: true,
                         username: inhouse_apple_id,
                         team_id: team_id("Development"),
                         readonly: true)
     end
 
     if !environment || environment == "Stage"
-      provisioning_match(configuration: "AdHoc", 
-                        type: "enterprise", 
-                        use_wildcard: true, 
+      provisioning_match(configuration: "AdHoc",
+                        type: "enterprise",
+                        use_wildcard: true,
                         username: inhouse_apple_id,
                         team_id: team_id("Stage"),
                         readonly: true)
     end
-    
+
     if !environment || environment == "Production"
-      provisioning_match(configuration: "AppStore", 
-                        type: "appstore", 
-                        app_identifier: app_identifier("Production"), 
+      provisioning_match(configuration: "AppStore",
+                        type: "appstore",
+                        app_identifier: app_identifier("Production"),
                         username: production_apple_id,
                         git_url: ENV["ACK_PRODUCTION_MATCH_GIT"],
                         team_id: team_id("Production"),
@@ -92,7 +92,7 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
 
     if !is_ci
         hockey_identifier = get_environment_plist_value(key: "hockey_identifier", environment: environment)
-        
+
         hockey(
               public_identifier: hockey_identifier,
               notify: '0'
@@ -100,7 +100,7 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
     end
   end
 
-  
+
   desc "Deploy new version to the App Store (and also hockey app)"
   lane :appstore do |options|
 
@@ -125,7 +125,7 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
         configuration: "AppStore",
   		  clean: true
   		)
-  		
+
       deliver(
       		username: connect_apple_id,
           team_id: connect_team_id,
@@ -133,60 +133,36 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
       )
   end
 
-  
+
 
   desc "Switches environment and sets app_name and app_identifier in plist"
   lane :set_environment do |options|
-
-      if is_xcode 
-        UI.message "Xcode run script phase"
+      if is_xcode
+          UI.message "Xcode run script phase"
       end
 
       environment = options[:environment]
 
       if !is_environment(environment: environment)
-        raise "Unknown environment #{environment}"
+          raise "Unknown environment #{environment}"
       end
 
       display_name = app_name(environment)
       app_identifier =  app_identifier(environment)
 
       UI.message "Setting environment for #{environment}"
-      
+
       # Change environment plist
       replace_environment_plist(environment: environment)
 
-      
-      UI.message "Setting app name to #{display_name}"
-      
-      update_info_plist(
-        display_name: display_name,
-        plist_path: ENV["FL_PROJECT_PLIST"]
-      )
+      UI.message "Setting app name to #{display_name} and app identifier to #{app_identifier}"
 
-      UI.message "Setting app identifier to #{app_identifier}"
-      
-      update_app_identifier(
-          app_identifier:  app_identifier,
-          plist_path: ENV["FL_PROJECT_PLIST"]
-      )
-
-      team_id = team_id(environment)
-      current_project_file =  File.basename(Dir['../*.xcodeproj'].first)
-
-      current_team_id = get_project_team()
-      if team_id && current_team_id != team_id 
-        update_project_team(
-          path:current_project_file, 
-          teamid:team_id
-          )
-        UI.success "Team identifier set to #{team_id} from #{current_team_id}"
-      end
-
+      update_info_plist(display_name: display_name, app_identifier: app_identifier, plist_path: ENV["FL_PROJECT_PLIST"])
   end
 
-  
 
 
-  
+
+
+
 #end
