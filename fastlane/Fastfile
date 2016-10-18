@@ -51,8 +51,8 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
       #Use sigh only for client accounts (on our account you would use match)
       # provisioning_sigh(configuration: "AppStore",
       #                   username: production_apple_id,
-      #                   team_id: team_id("AppStore"),
-      #                   app_identifier: app_identifier("AppStore"))
+      #                   team_id: team_id("Production"),
+      #                   app_identifier: app_identifier("Production"))
     end
 
   end
@@ -67,7 +67,7 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
 
     #Build number
   	build_number = number_of_commits
-		increment_build_number(build_number: build_number)
+		set_build_number(build_number: build_number)
 
     #Download provisioning
     provisioning(environment: environment)
@@ -80,7 +80,7 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
 
     begin
       gym(
-      	scheme: "Development",
+      	scheme: environment,
   		  configuration: "AdHoc",
         provisioning_profile_path: lane_context[SharedValues::SIGH_PROFILE_PATH],
         #export_team_id: inhouse_team_id
@@ -109,7 +109,7 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
       pod_install
 
     	build_number = number_of_commits
-  		increment_build_number(build_number: build_number)
+  		set_build_number(build_number: build_number)
 
       #Setup environments, app identifier and app name
       set_environment(environment: environment)
@@ -121,7 +121,7 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
       provisioning(environment:environment)
 
       gym(
-  		  scheme: "Production",
+  		  scheme: environment,
         configuration: "AppStore",
   		  clean: true
   		)
