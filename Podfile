@@ -2,29 +2,33 @@
 source 'git@gitlab.ack.ee:Ackee/AckeePods.git' # Ackee private repo
 source 'https://github.com/CocoaPods/Specs.git' # Default Cocoapods repo
 
-platform :ios, '8.0'
-xcodeproj 'ProjectSkeleton', 'AdHoc' => :release,'AppStore' => :release, 'Development' => :debug
+platform :ios, '9.0'
+project 'ProjectSkeleton', 'AdHoc' => :release,'AppStore' => :release, 'Development' => :debug
 
 use_frameworks!
+inhibit_all_warnings!
 
 target 'ProjectSkeleton' do
 
-pod 'ACKategories', :git => 'https://github.com/AckeeCZ/ACKategories.git'
-pod 'HockeySDK'
-pod 'SnapKit'
-pod 'Alamofire'
-pod 'ReactiveCocoa', '~> 4.2'
-pod 'Argo', '~> 2.2'
-pod 'Curry', '~> 1.4'
-pod 'ACKSwinject'
-pod 'SwiftGen', '~> 0.7.6'
-pod 'Locksmith', '~> 2.0.8'
-pod 'SDWebImage', '~> 3.6'
-pod 'TPKeyboardAvoiding'
+pod 'ACKategories', '~> 4.0'
+pod 'HockeySDK', '~> 4.1'
+
+pod 'SwiftGen', '~> 3.0'
+pod 'ACKSwinject', '~> 0.1'
+pod 'ReactiveCocoa', '5.0.0-alpha.2'
+pod 'ReactiveSwift', '1.0.0-alpha.3'
+
+pod 'SnapKit', '~> 3.0'
+pod 'SDWebImage', '~> 3.8'
+pod 'TPKeyboardAvoiding', '~> 1.3'
+
+pod 'Alamofire', '~> 4.0'
+pod 'Argo', '~> 4.0'
+pod 'Curry', '~> 3.0'
 
 def testing_pods
-    pod 'Quick', '~> 0.9.2'
-    pod 'Nimble', '4.0.1'
+    pod 'Quick', '~> 0.10'
+    pod 'Nimble', '~> 5.1'
 end
 
 
