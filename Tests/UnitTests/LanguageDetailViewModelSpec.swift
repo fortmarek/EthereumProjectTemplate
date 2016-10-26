@@ -1,6 +1,6 @@
 import Quick
 import Nimble
-import ReactiveCocoa
+import ReactiveSwift
 
 @testable import ProjectSkeleton
 
@@ -8,16 +8,16 @@ class LanguageDetailViewModelSpec: QuickSpec {
 
     class GoodSpeechSynthetizerStub: SpeechSynthetizing {
         var isSpeaking = MutableProperty<Bool>(false)
-        func canSpeakLanguage(language: String) -> Bool {
+        func canSpeakLanguage(_ language: String) -> Bool {
             if (language == "en-EN") {
                 return true
             }
 
             return false
         }
-        func speakSentence(sentence: String, language: String) -> SignalProducer<(), SpeakError> {
+        func speakSentence(_ sentence: String, language: String) -> SignalProducer<(), SpeakError> {
             speaked = true
-            return SignalProducer(value: ()).delay(3, onScheduler: QueueScheduler())
+            return SignalProducer(value: ()).delay(3, on: QueueScheduler())
         }
 
         // Stubbed
@@ -26,12 +26,12 @@ class LanguageDetailViewModelSpec: QuickSpec {
 
     class BadSpeechSynthetizerStub: SpeechSynthetizing {
         var isSpeaking = MutableProperty<Bool>(false)
-        func canSpeakLanguage(language: String) -> Bool {
+        func canSpeakLanguage(_ language: String) -> Bool {
             return true
         }
 
-        func speakSentence(sentence: String, language: String) -> SignalProducer<(), SpeakError> {
-            return SignalProducer(error: .Cancelled)
+        func speakSentence(_ sentence: String, language: String) -> SignalProducer<(), SpeakError> {
+            return SignalProducer(error: .cancelled)
         }
     }
 
@@ -50,12 +50,12 @@ class LanguageDetailViewModelSpec: QuickSpec {
 
             it("sets all properties") {
                 expect(viewModel.name.value).toEventually(equal(languageEntity.name))
-                expect(viewModel.flagURL.value.URLString).toEventually(equal(languageEntity.flag))
+                expect(viewModel.flagURL.value.absoluteString).toEventually(equal(languageEntity.flag))
                 expect(viewModel.sentence.value).toEventually(equal(languageEntity.sentence))
             }
 
             it ("plays the sentence") {
-                viewModel.playSentence.apply(UIButton()).start()
+                viewModel.playSentence.apply().start()
                 expect(synthetizer.speaked).toEventually(beTrue())
             }
 
@@ -65,8 +65,8 @@ class LanguageDetailViewModelSpec: QuickSpec {
                     viewModel = LanguageDetailViewModel(language: languageEntity, synthetizer: synthetizer)
                 }
                 it ("does not allow to play sentence") {
-                    expect(viewModel.playSentence.enabled.value).toEventuallyNot(beTrue())
-                    viewModel.playSentence.apply(UIButton()).start()
+                    expect(viewModel.playSentence.isEnabled.value).toEventuallyNot(beTrue())
+                    viewModel.playSentence.apply().start()
                     expect(synthetizer.speaked).toEventuallyNot(beTrue())
                 }
             }
@@ -76,10 +76,10 @@ class LanguageDetailViewModelSpec: QuickSpec {
                 it ("does not allow to play another sentence") {
                     synthetizer.isSpeaking.value = true
 
-                    expect(viewModel.playSentence.enabled.value).toEventuallyNot(beTrue())
+                    expect(viewModel.playSentence.isEnabled.value).toEventuallyNot(beTrue())
 
                     synthetizer.isSpeaking.value = false
-                    expect(viewModel.playSentence.enabled.value).toEventually(beTrue())
+                    expect(viewModel.playSentence.isEnabled.value).toEventually(beTrue())
                 }
             }
 
@@ -91,8 +91,8 @@ class LanguageDetailViewModelSpec: QuickSpec {
                 }
 
                 it ("does not allow to play sentence") {
-                    expect(viewModel.playSentence.enabled.value).toEventuallyNot(beTrue())
-                    viewModel.playSentence.apply(UIButton()).start()
+                    expect(viewModel.playSentence.isEnabled.value).toEventuallyNot(beTrue())
+                    viewModel.playSentence.apply().start()
                     expect(synthetizer.speaked).toEventuallyNot(beTrue())
                 }
             }
@@ -103,9 +103,9 @@ class LanguageDetailViewModelSpec: QuickSpec {
                 }
 
                 it ("allows to play again") {
-                    viewModel.playSentence.apply(UIButton()).start()
+                    viewModel.playSentence.apply().start()
 
-                    expect(viewModel.playSentence.enabled.value).toEventually(beTrue())
+                    expect(viewModel.playSentence.isEnabled.value).toEventually(beTrue())
                 }
             }
 

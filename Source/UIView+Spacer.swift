@@ -8,26 +8,26 @@
 
 import UIKit
 import SnapKit
-import ReactiveCocoa
+import ReactiveSwift
 
 extension  UIView {
-    private func createSpacer(size size: CGFloat, axis: UILayoutConstraintAxis, priority: Int) -> UIView {
+    fileprivate func createSpacer(_ size: CGFloat, axis: UILayoutConstraintAxis, priority: Int) -> UIView {
         let v = UIView()
         v.rac_hidden <~ self.rac_hidden
-        v.snp_makeConstraints { make in
+        v.snp.makeConstraints { make in
             switch axis {
-            case .Vertical: make.height.equalTo(size).priority(priority)
-            case .Horizontal: make.width.equalTo(size).priority(priority)
+            case .vertical: make.height.equalTo(size).priority(priority)
+            case .horizontal: make.width.equalTo(size).priority(priority)
             }
         }
         return v
     }
 
-    func createVSpacer(height height: CGFloat, priority: Int = 999) -> UIView {
-        return createSpacer(size: height, axis: .Vertical, priority: priority)
+    func createVSpacer(_ height: CGFloat, priority: Int = 999) -> UIView {
+        return createSpacer(height, axis: .vertical, priority: priority)
     }
-    func createHSpacer(width width: CGFloat, priority: Int = 999) -> UIView {
-        return createSpacer(size: width, axis: .Horizontal, priority: priority)
+    func createHSpacer(_ width: CGFloat, priority: Int = 999) -> UIView {
+        return createSpacer(width, axis: .horizontal, priority: priority)
     }
 
 }

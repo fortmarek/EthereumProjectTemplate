@@ -8,14 +8,14 @@
 
 import Foundation
 import Alamofire
-import ReactiveCocoa
+import ReactiveSwift
 
-struct NetworkError: ErrorType {
+struct NetworkError: Error {
     let error: NSError
-    let request: NSURLRequest?
-    let response: NSHTTPURLResponse?
+    let request: URLRequest?
+    let response: HTTPURLResponse?
 }
 
 protocol Networking {
-    func request(url: String, method: Alamofire.Method, parameters: [String: AnyObject]?, encoding: ParameterEncoding, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<AnyObject, NetworkError>
+    func request(_ url: String, method: Alamofire.HTTPMethod, parameters: [String: Any]?, encoding: ParameterEncoding, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<Any, NetworkError>
 }

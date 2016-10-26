@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import ReactiveCocoa
+import ReactiveSwift
 
 //Describe protocols for all APIs
 
@@ -16,7 +16,7 @@ protocol LanguagesAPIServicing {
 }
 
 protocol AuthenticationAPIServicing {
-    func login(username: String, password: String) -> SignalProducer<(UserEntity, Credentials), RequestError>
+    func login(_ username: String, password: String) -> SignalProducer<(UserEntity, Credentials), RequestError>
 }
 
 

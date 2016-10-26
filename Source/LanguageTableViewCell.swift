@@ -6,7 +6,7 @@
 //  Copyright © 2015 Ackee s. r. o. All rights reserved.
 //
 
-import ReactiveCocoa
+import ReactiveSwift
 import SDWebImage
 
 
@@ -24,7 +24,7 @@ class LanguageTableViewCell: UITableViewCell {
 
         self.contentView.addSubview(flagImageView)
 
-        flagImageView.snp_makeConstraints { (make) -> Void in
+        flagImageView.snp.makeConstraints { (make) -> Void in
             make.leading.top.bottom.equalTo(flagImageView.superview!).inset(12)
             make.width.equalTo(48)
             make.height.equalTo(48)
@@ -36,8 +36,8 @@ class LanguageTableViewCell: UITableViewCell {
 
         self.contentView.addSubview(nameLabel)
 
-        nameLabel.snp_makeConstraints { (make) -> Void in
-            make.leading.equalTo(flagImageView.snp_trailing).offset(12)
+        nameLabel.snp.makeConstraints { (make) -> Void in
+            make.leading.equalTo(flagImageView.snp.trailing).offset(12)
             make.centerY.equalTo(flagImageView)
             make.trailing.equalTo(-15)
         }
@@ -48,14 +48,13 @@ class LanguageTableViewCell: UITableViewCell {
     }
     
     func setupBindings() {
-        let vm = viewModel.producer.ignoreNil()
+        let vm = viewModel.producer.skipNil()
         
-        nameLabel.rac_text <~ vm.flatMap(.Latest) { $0.name.producer } 
+        nameLabel.rac_text <~ vm.flatMap(.latest) { $0.name.producer } 
         
-        vm.flatMap(.Latest) { $0.flagURL.producer }
-            .startWithNext({[weak self] url in
-            self?.flagImageView.sd_setImageWithURL(url)
-            })
+        vm.flatMap(.latest) { $0.flagURL.producer }.startWithValues { [weak self] url in
+            self?.flagImageView.sd_setImage(with: url)
+        }
         
     }
 

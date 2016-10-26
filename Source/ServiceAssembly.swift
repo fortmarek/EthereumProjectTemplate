@@ -7,14 +7,13 @@
 //
 
 import Swinject
-import ACKSwinject
 
 class ServiceAssembly: AssemblyType {
     
     func assemble(container: Container) {
         
-        container.register(initializer: Network.init, service: Networking.self).inObjectScope(.Container)
-        container.register(initializer: LanguagesAPIService.init, service: LanguagesAPIServicing.self).inObjectScope(.Container)
+        container.autoregister(Networking.self, initializer: Network.init).inObjectScope(.container)
+        container.autoregister(LanguagesAPIServicing.self, initializer: LanguagesAPIService.init).inObjectScope(.container)
     }
 
 }

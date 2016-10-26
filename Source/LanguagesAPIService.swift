@@ -7,7 +7,8 @@
 //
 
 import Foundation
-import ReactiveCocoa
+import ReactiveSwift
+import ACKReactiveExtensions
 
 class LanguagesAPIService: APIService, LanguagesAPIServicing {
     init(network: Networking) {
@@ -16,10 +17,9 @@ class LanguagesAPIService: APIService, LanguagesAPIServicing {
     
     func languages() -> SignalProducer<[LanguageEntity], RequestError> {
         return self.request("languages.json")
-            .mapError { .Network($0) }
-            .flatMap(.Latest) { json in
-                rac_decode(json)
-                    .mapError { .Mapping($0) }
+            .mapError { .network($0) }
+            .flatMap(.latest) { json in
+                rac_decode(object: json as AnyObject).mapError { .mapping($0) }
         }
     }
 }

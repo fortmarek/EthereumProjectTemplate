@@ -10,7 +10,7 @@ import Foundation
 
 extension NSObject {
 
-	class func swizzleMethodSelector(origSelector: String, withSelector: String, forClass: AnyClass!) -> Bool {
+	class func swizzleMethodSelector(_ origSelector: String, withSelector: String, forClass: AnyClass!) -> Bool {
 
 		var originalMethod: Method?
 		var swizzledMethod: Method?
@@ -25,7 +25,7 @@ extension NSObject {
 		return false
 	}
 
-	class func swizzleStaticMethodSelector(origSelector: String, withSelector: String, forClass: AnyClass!) -> Bool {
+	class func swizzleStaticMethodSelector(_ origSelector: String, withSelector: String, forClass: AnyClass!) -> Bool {
 
 		var originalMethod: Method?
 		var swizzledMethod: Method?

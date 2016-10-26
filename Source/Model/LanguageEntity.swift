@@ -7,6 +7,7 @@
 //
 
 import Argo
+import Runes
 import Curry
 import CoreLocation
 
@@ -25,7 +26,7 @@ struct LanguageEntity {
 extension LanguageEntity: Decodable {
 
 
-    static func decode(json: JSON) -> Decoded<LanguageEntity> {
+    static func decode(_ json: JSON) -> Decoded<LanguageEntity> {
 
         return curry(self.init)
             <^> json <| "abbr"

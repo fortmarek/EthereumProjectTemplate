@@ -14,9 +14,12 @@ pod 'ACKategories', '~> 4.0'
 pod 'HockeySDK', '~> 4.1'
 
 pod 'SwiftGen', '~> 3.0'
-pod 'ACKSwinject', '~> 0.1'
+pod 'Locksmith', '~> 3.0'
+pod 'SwinjectAutoregistration', :git => 'https://github.com/Swinject/SwinjectAutoregistration.git', :branch => 'release2.0'
 pod 'ReactiveCocoa', '5.0.0-alpha.2'
 pod 'ReactiveSwift', '1.0.0-alpha.3'
+pod 'ACKReactiveExtensions', '~> 2.0'
+pod 'ACKReactiveExtensions/Argo', '~> 2.0'
 
 pod 'SnapKit', '~> 3.0'
 pod 'SDWebImage', '~> 3.8'

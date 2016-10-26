@@ -21,7 +21,7 @@ extension UIFont {
             return UIFont(name: rawValue, size: size)!
         }
     }
-    class func mainRegular(size: CGFloat) -> UIFont {
+    class func mainRegular(_ size: CGFloat) -> UIFont {
         return FontStyle.Regular.font(withSize: size)
     }
 }
@@ -36,7 +36,7 @@ extension UIColor {
 	}
 
     class func defaultTextColor() -> UIColor {
-        return UIColor.blackColor()
+        return UIColor.black
     }
 
 }
@@ -53,7 +53,7 @@ extension UIImage {
 
     - returns: tuple of images with on/off postfix.
     */
-    class func toggleImage(name: ImagesForToggle) -> (on: UIImage!, off: UIImage!) {
+    class func toggleImage(_ name: ImagesForToggle) -> (on: UIImage?, off: UIImage?) {
         let imageOn = UIImage(named: name.rawValue + "On")
         let imageOff = UIImage(named: name.rawValue + "Off")
         return (imageOn!, imageOff!)
@@ -68,11 +68,11 @@ extension UIImage {
 class Theme {
     class func blueButton() -> UIButton {
         let button = UIButton()
-        button.backgroundColor = UIColor.blueColor()
+        button.backgroundColor = UIColor.blue
         return button
     }
 
-    class func label(style: UIFont.FontStyle = .Regular, size: CGFloat = 13, color: UIColor = UIColor.defaultTextColor()) -> UILabel {
+    class func label(_ style: UIFont.FontStyle = .Regular, size: CGFloat = 13, color: UIColor = UIColor.defaultTextColor()) -> UILabel {
         let label = UILabel()
 
         label.font = UIFont(name: style.rawValue, size: size)

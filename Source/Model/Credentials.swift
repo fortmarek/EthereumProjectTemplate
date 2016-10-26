@@ -8,6 +8,7 @@
 
 import Foundation
 import Argo
+import Runes
 import Curry
 import Locksmith
 
@@ -28,8 +29,8 @@ struct Credentials {
         self.refresh_token = refresh_token
     }
 
-    init?(data: [String: AnyObject]?) {
-        if let data = data, id = data["id"] as? Int, access_token = data["access_token"] as? String, refresh_token = data["refresh_token"] as? String, expires_in = data["expires_in"] as? Int, scope = data["scope"] as? String, token_type = data["token_type"] as? String {
+    init?(data: [String: Any]?) {
+        if let data = data, let id = data["id"] as? Int, let access_token = data["access_token"] as? String, let refresh_token = data["refresh_token"] as? String, let expires_in = data["expires_in"] as? Int, let scope = data["scope"] as? String, let token_type = data["token_type"] as? String {
                 self.init(access_token: access_token, expires_in: expires_in, token_type: token_type, scope: scope, refresh_token: refresh_token, id: id)
                 
         } else {
@@ -37,16 +38,16 @@ struct Credentials {
         }
     }
     
-    func toKeychainData() -> [String: AnyObject]? {
+    func toKeychainData() -> [String: Any]? {
         if let id = self.id {
-            return ["access_token": access_token, "refresh_token": refresh_token, "expires_in": expires_in, "scope": scope, "token_type": token_type, "id": id]
+            return ["access_token": access_token as AnyObject, "refresh_token": refresh_token as AnyObject, "expires_in": expires_in as AnyObject, "scope": scope as AnyObject, "token_type": token_type as AnyObject, "id": id as AnyObject]
         }
         return nil
     }
 }
 
 extension Credentials: Decodable {
-    static func decode(json: JSON) -> Decoded<Credentials> {
+    static func decode(_ json: JSON) -> Decoded<Credentials> {
         return
             curry(self.init)
                 <^> json <| "access_token"
@@ -54,6 +55,6 @@ extension Credentials: Decodable {
                 <*> json <| "token_type"
                 <*> json <| "scope"
                 <*> json <| "refresh_token"
-                <*> .Success(nil)
+                <*> .success(nil)
     }
 }
