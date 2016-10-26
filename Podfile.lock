@@ -1,24 +1,24 @@
 PODS:
   - ACKategories (4.0.0)
-  - ACKReactiveExtensions (2.0.1):
-    - ACKReactiveExtensions/Core (= 2.0.1)
-    - ACKReactiveExtensions/UIKit (= 2.0.1)
+  - ACKReactiveExtensions (2.0.2):
+    - ACKReactiveExtensions/Core (= 2.0.2)
+    - ACKReactiveExtensions/UIKit (= 2.0.2)
     - ReactiveCocoa (= 5.0.0-alpha.2)
-  - ACKReactiveExtensions/Argo (2.0.1):
+  - ACKReactiveExtensions/Argo (2.0.2):
     - Argo (~> 4.0)
     - ReactiveCocoa (= 5.0.0-alpha.2)
-  - ACKReactiveExtensions/Core (2.0.1):
+  - ACKReactiveExtensions/Core (2.0.2):
     - ReactiveCocoa (= 5.0.0-alpha.2)
-  - ACKReactiveExtensions/UIKit (2.0.1):
+  - ACKReactiveExtensions/UIKit (2.0.2):
     - ACKReactiveExtensions/Core
     - ReactiveCocoa (= 5.0.0-alpha.2)
   - Alamofire (4.0.1)
   - Argo (4.0.0):
     - Runes (>= 4.0.0)
   - Curry (3.0.0)
-  - HockeySDK (4.1.0):
-    - HockeySDK/AllFeaturesLib (= 4.1.0)
-  - HockeySDK/AllFeaturesLib (4.1.0)
+  - HockeySDK (4.1.2):
+    - HockeySDK/DefaultLib (= 4.1.2)
+  - HockeySDK/DefaultLib (4.1.2)
   - Locksmith (3.0.0)
   - Nimble (5.1.0)
   - Quick (0.10.0)
@@ -28,9 +28,9 @@ PODS:
     - Result (~> 3.0)
   - Result (3.0.0)
   - Runes (4.0.0)
-  - SDWebImage (3.8.1):
-    - SDWebImage/Core (= 3.8.1)
-  - SDWebImage/Core (3.8.1)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
   - SnapKit (3.0.2)
   - SwiftGen (3.0.0)
   - Swinject (2.0.0-beta.2)
@@ -69,11 +69,11 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   ACKategories: 951e12ce64b884a220d4939027954f270f54b3f5
-  ACKReactiveExtensions: 3157c356b1ce3a72fb9120f32cc7429ea7b26fb1
+  ACKReactiveExtensions: d75a77ce373b230764db408b8a92965814ed19aa
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
   Argo: e808d20ee2e95c4498276ca1812d75d3b0b00090
   Curry: eb3d2c75aec678b3cc7fb2729d2ad6dd121531d1
-  HockeySDK: 1249d4f1b3a9ce537a1517805bcf6fe121099d16
+  HockeySDK: c7523379550a4305cefc1cdfa7b5f9a5a3538180
   Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
   Nimble: 5ea121a2eda60440287054cde077fc0ad22227b3
   Quick: 5d290df1c69d5ee2f0729956dcf0fd9a30447eaa
@@ -81,7 +81,7 @@ SPEC CHECKSUMS:
   ReactiveSwift: d67b677f9574ba614d94022a88fcf456e77fa515
   Result: 1b3e431f37cbcd3ad89c6aa9ab0ae55515fae3b6
   Runes: 423ee2dac4dedb4626a859c0962c934195ba8433
-  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SnapKit: 2e456761aa92d4d4067a7a5594c18769d451a8ad
   SwiftGen: f679cd0ed4173a5da3b01efd0da23542bf82f6ab
   Swinject: 69a893192efa9f2cc44be79ef423d04d571b6af9
