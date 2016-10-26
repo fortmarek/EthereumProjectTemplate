@@ -108,7 +108,7 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
                     .start()
                 expectedToken = "secondToken"
 
-                expect(authHandlerInvoked).toEventually(be(1))
+                expect(authHandlerInvoked == 1).toEventually(beTrue())
                 expect(result).toEventuallyNot(beNil())
             }
 
@@ -138,7 +138,7 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
 
                 }
 
-                expect(authHandlerInvoked).to(be(1))
+                expect(authHandlerInvoked == 1).to(beTrue())
             }
 
             it("refreshes token only once and retries requests when second request fails after token has been refreshed") {
@@ -167,7 +167,7 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
 
                 }
 
-                expect(authHandlerInvoked).to(be(1))
+                expect(authHandlerInvoked == 1).to(beTrue())
             }
 
             it("just works") {

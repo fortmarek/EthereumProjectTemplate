@@ -64,7 +64,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   SwinjectAutoregistration:
-    :commit: 2d30162b5334d44e80db57d9ba4db3242152ed29
+    :commit: 6206eda4a6ebf4cdc6189976a4bf4bb442dcd125
     :git: https://github.com/Swinject/SwinjectAutoregistration.git
 
 SPEC CHECKSUMS:
