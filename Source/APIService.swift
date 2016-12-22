@@ -100,7 +100,7 @@ class AuthenticatedAPIService: APIService {
 	func customHeaders(headers: [String: String]) -> [String: String] {
 		var customHeaders = headers
 		
-		customHeaders["X-DeviceId"] = Bundle.main.bundleIdentifier ?? ""
+		customHeaders["X-DeviceId"] = UserDefaults.standard.deviceId
 		
 		return customHeaders
 	}
