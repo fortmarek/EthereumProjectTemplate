@@ -96,6 +96,14 @@ class AuthenticatedAPIService: APIService {
         self.userManager = userManager
         super.init(network: network, authHandler: authHandler)
     }
+	
+	func customHeaders(headers: [String: String]) -> [String: String] {
+		var customHeaders = headers
+		
+		customHeaders["X-DeviceId"] = UserDefaults.standard.deviceId
+		
+		return customHeaders
+	}
 
     func authorizationHeaders(headers: [String: String]) -> [String: String] {
         var authHeaders = headers
@@ -104,11 +112,16 @@ class AuthenticatedAPIService: APIService {
         }
         return authHeaders
     }
+	
+	func allHeaders(headers: [String: String]) -> [String: String] {
+		let allHeaders = authorizationHeaders(headers)
+		return customHeaders(allHeaders)
+	}
 
     override func request(path: String, method: Alamofire.Method = .GET, parameters: [String: AnyObject]? = nil, encoding: ParameterEncoding = .URL, headers: [String: String] = [:], authHandler: AuthHandler? = nil) -> SignalProducer<AnyObject, NetworkError> {
-        let allHeaders = authorizationHeaders(headers)
+        let requestHeaders = allHeaders(headers)
 
-        return super.request(path, method: method, parameters: parameters, encoding: encoding, headers: allHeaders, authHandler: (authHandler == nil) ? self.authHandler : authHandler)
+        return super.request(path, method: method, parameters: parameters, encoding: encoding, headers: requestHeaders, authHandler: (authHandler == nil) ? self.authHandler : authHandler)
     }
 
     override func requestUsedCurrentAuthData(request: NSURLRequest) -> Bool {
