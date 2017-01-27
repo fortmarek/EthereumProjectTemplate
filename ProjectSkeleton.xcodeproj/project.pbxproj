@@ -750,6 +750,7 @@
 					B4ABA1DB195193330069FAD4 = {
 						DevelopmentTeam = PXDF48X6VX;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Manual;
 					};
 					B4ABA1FC195193330069FAD4 = {
 						LastSwiftMigration = 0820;
@@ -1037,7 +1038,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "LC_ALL= LANG=en_US.UTF-8 ruby -e 'p Encoding.default_external'\nexport LANG=en_US.UTF-8\nexport FASTLANE_DISABLE_COLORS=1\n\nenv=`cat ${ACK_ENVIRONMENT_DIR}/.current_environment`\nfastlane set_environment environment:$env\n\n\n";
+			shellScript = "LC_ALL= LANG=en_US.UTF-8 ruby -e 'p Encoding.default_external'\nexport LANG=en_US.UTF-8\nexport FASTLANE_DISABLE_COLORS=1\nexport FASTLANE_SKIP_UPDATE_CHECK=1\n\nenv=`cat ${ACK_ENVIRONMENT_DIR}/.current_environment`\nfastlane set_environment environment:$env\n\n\n";
 		};
 		B371B4412040D8D0260E655E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1591,6 +1592,8 @@
 		B47536FA1951B7CD00DB8D6D /* AppStore */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ACK_APPNAME = Unicorn;
+				ACK_BUNDLEID = cz.ackee.unicorn;
 				ACK_ENVIRONMENT_DIR = "${PROJECT_DIR}/Environment";
 				ACK_UTILS_DIR = "$(PROJECT_DIR)/fastlane/utils";
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1610,7 +1613,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1637,7 +1639,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1645,7 +1648,7 @@
 				INFOPLIST_FILE = "Source/Project-Info.plist";
 				INFOPLIST_PREFIX_HEADER = "";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.unicorn;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = ProjectSkeleton;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
@@ -1676,6 +1679,8 @@
 		B4ABA20C195193330069FAD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ACK_APPNAME = "Unicorn Δ";
+				ACK_BUNDLEID = cz.ackee.enterprise.unicorn.dev;
 				ACK_ENVIRONMENT_DIR = "${PROJECT_DIR}/Environment";
 				ACK_UTILS_DIR = "$(PROJECT_DIR)/fastlane/utils";
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1695,8 +1700,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1726,6 +1729,8 @@
 		B4ABA20D195193330069FAD4 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ACK_APPNAME = "Unicorn β";
+				ACK_BUNDLEID = cz.ackee.enterprise.unicorn.beta;
 				ACK_ENVIRONMENT_DIR = "${PROJECT_DIR}/Environment";
 				ACK_UTILS_DIR = "$(PROJECT_DIR)/fastlane/utils";
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1745,7 +1750,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1772,7 +1776,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Martin Pulpitel (KE4Y7PU6Z8)";
+				DEVELOPMENT_TEAM = PXDF48X6VX;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1781,9 +1786,10 @@
 				INFOPLIST_PREFIX_HEADER = "";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DDEBUG -Xfrontend -debug-time-function-bodies";
-				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.unicorn;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = ProjectSkeleton;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2bfcc027-5151-4b96-a838-d00764a94a41";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development cz.ackee.enterprise.*";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -1799,7 +1805,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = PXDF48X6VX;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1807,9 +1814,10 @@
 				INFOPLIST_FILE = "Source/Project-Info.plist";
 				INFOPLIST_PREFIX_HEADER = "";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.unicorn;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = ProjectSkeleton;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "461d3b36-aa18-468a-93bf-df13ae9f0e38";
+				PROVISIONING_PROFILE_SPECIFIER = "match InHouse cz.ackee.enterprise.*";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;

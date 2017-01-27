@@ -9,6 +9,8 @@ connect_team_id = "xxx"
 
 ####################################################################################
 
+ENV["ACK_BACKTOBASICS"] = "1"
+
 #import "../../fastlane/fastlane/Fastfile"
 import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache: is_xcode ))
 
@@ -24,7 +26,8 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
     if !environment || environment == "Development"
       provisioning_match(configuration: "Debug",
                         type: "development",
-                        use_wildcard: true,
+                        use_wildcard: true, #uncomment to use app id
+                        app_identifier: app_identifier("Development"),
                         username: inhouse_apple_id,
                         team_id: team_id("Development"),
                         readonly: true)
@@ -33,7 +36,8 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
     if !environment || environment == "Stage"
       provisioning_match(configuration: "AdHoc",
                         type: "enterprise",
-                        use_wildcard: true,
+                        use_wildcard: true, #uncomment to use app id
+                        app_identifier: app_identifier("Stage"),
                         username: inhouse_apple_id,
                         team_id: team_id("Stage"),
                         readonly: true)
@@ -155,9 +159,6 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
       # Change environment plist
       replace_environment_plist(environment: environment)
 
-      UI.message "Setting app name to #{display_name} and app identifier to #{app_identifier}"
-
-      update_info_plist(display_name: display_name, app_identifier: app_identifier, plist_path: ENV["FL_PROJECT_PLIST"])
   end
 
 
