@@ -29,7 +29,7 @@ struct Credentials {
     }
 
     init?(data: [String: AnyObject]?) {
-        if let data = data, id = data["id"] as? Int, access_token = data["access_token"] as? String, refresh_token = data["refresh_token"] as? String, expires_in = data["expires_in"] as? Int, scope = data["scope"] as? String, token_type = data["token_type"] as? String {
+        if let data = data, let id = data["id"] as? Int, access_token = data["access_token"] as? String, refresh_token = data["refresh_token"] as? String, expires_in = data["expires_in"] as? Int, scope = data["scope"] as? String, token_type = data["token_type"] as? String {
                 self.init(access_token: access_token, expires_in: expires_in, token_type: token_type, scope: scope, refresh_token: refresh_token, id: id)
                 
         } else {

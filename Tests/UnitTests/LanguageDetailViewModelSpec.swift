@@ -8,14 +8,14 @@ class LanguageDetailViewModelSpec: QuickSpec {
 
     class GoodSpeechSynthetizerStub: SpeechSynthetizing {
         var isSpeaking = MutableProperty<Bool>(false)
-        func canSpeakLanguage(language: String) -> Bool {
+        func canSpeakLanguage(_ language: String) -> Bool {
             if (language == "en-EN") {
                 return true
             }
 
             return false
         }
-        func speakSentence(sentence: String, language: String) -> SignalProducer<(), SpeakError> {
+        func speakSentence(_ sentence: String, language: String) -> SignalProducer<(), SpeakError> {
             speaked = true
             return SignalProducer(value: ()).delay(3, onScheduler: QueueScheduler())
         }
@@ -26,11 +26,11 @@ class LanguageDetailViewModelSpec: QuickSpec {
 
     class BadSpeechSynthetizerStub: SpeechSynthetizing {
         var isSpeaking = MutableProperty<Bool>(false)
-        func canSpeakLanguage(language: String) -> Bool {
+        func canSpeakLanguage(_ language: String) -> Bool {
             return true
         }
 
-        func speakSentence(sentence: String, language: String) -> SignalProducer<(), SpeakError> {
+        func speakSentence(_ sentence: String, language: String) -> SignalProducer<(), SpeakError> {
             return SignalProducer(error: .Cancelled)
         }
     }

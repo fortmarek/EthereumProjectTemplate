@@ -35,13 +35,13 @@ class LanguagesTableViewModelSpec: QuickSpec {
     }
 
     class StubNetwork: Networking {
-        func request(url: String, method: Alamofire.Method, parameters: [String: AnyObject]?, encoding: ParameterEncoding, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<AnyObject, NetworkError> {
+        func request(_ url: String, method: Alamofire.Method, parameters: [String: AnyObject]?, encoding: ParameterEncoding, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<AnyObject, NetworkError> {
             return SignalProducer.empty
         }
     }
 
     class GeocoderStub: Geocoding {
-        func locationForCountryAbbreviation(abbr: String) -> SignalProducer<CLLocation?, NSError> {
+        func locationForCountryAbbreviation(_ abbr: String) -> SignalProducer<CLLocation?, NSError> {
             return SignalProducer<CLLocation?, NSError> { sink, disposable in
                 var location: CLLocation? = nil
                 if (abbr == "en") {
@@ -57,7 +57,7 @@ class LanguagesTableViewModelSpec: QuickSpec {
     }
 
     class ErrorGeocoderStub: Geocoding {
-        func locationForCountryAbbreviation(abbr: String) -> SignalProducer<CLLocation?, NSError> {
+        func locationForCountryAbbreviation(_ abbr: String) -> SignalProducer<CLLocation?, NSError> {
             return SignalProducer<CLLocation?, NSError> { sink, disposable in
                 sink.sendNext(nil)
                 sink.sendCompleted()
@@ -73,8 +73,8 @@ class LanguagesTableViewModelSpec: QuickSpec {
 
     class SpeechSynthetizerStub: SpeechSynthetizing {
         var isSpeaking: MutableProperty<Bool> { return MutableProperty(false) }
-        func canSpeakLanguage(language: String) -> Bool { return false }
-        func speakSentence(sentence: String, language: String) -> SignalProducer<(), SpeakError> { return SignalProducer.empty }
+        func canSpeakLanguage(_ language: String) -> Bool { return false }
+        func speakSentence(_ sentence: String, language: String) -> SignalProducer<(), SpeakError> { return SignalProducer.empty }
     }
 
     let detailFactory: LanguageDetailModelingFactory = { language in LanguageDetailViewModel(language: language, synthetizer: SpeechSynthetizerStub()) }
@@ -129,7 +129,7 @@ class LanguagesTableViewModelSpec: QuickSpec {
                 it("does not load geocoding") {
                     class GeocoderMock: Geocoding {
                         var loaded = false
-                        func locationForCountryAbbreviation(abbr: String) -> SignalProducer<CLLocation?, NSError> {
+                        func locationForCountryAbbreviation(_ abbr: String) -> SignalProducer<CLLocation?, NSError> {
                             self.loaded = true
                             return SignalProducer.empty
                         }

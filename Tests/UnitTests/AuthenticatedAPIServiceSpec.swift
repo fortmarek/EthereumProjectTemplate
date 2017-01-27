@@ -9,7 +9,7 @@ private let authHandlerQueue = dispatch_queue_create("authHandlerQueue", DISPATC
 
 class AuthenticatedAPIServiceSpec: QuickSpec {
     class AuthTestAPIService: AuthenticatedAPIService {
-        func testRequest(url url: String, requestDelay: Int, responseDelay: Int) -> SignalProducer<String, RequestError> {
+        func testRequest(url: String, requestDelay: Int, responseDelay: Int) -> SignalProducer<String, RequestError> {
             return request(url, method: .GET, parameters: ["requestDelay": requestDelay, "responseDelay": responseDelay], encoding: .URL, headers: [:])
                 .map { $0 as! String }
                 .mapError { .Network($0) }
@@ -19,7 +19,7 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
     class NetworkStub: Networking {
         var expectedToken: String = "firstToken"
 
-        func request(url: String, method: Alamofire.Method, parameters: [String: AnyObject]?, encoding: ParameterEncoding, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<AnyObject, NetworkError> {
+        func request(_ url: String, method: Alamofire.Method, parameters: [String: AnyObject]?, encoding: ParameterEncoding, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<AnyObject, NetworkError> {
             let requestDelay = parameters?["requestDelay"] as! Double
             let responseDelay = parameters?["responseDelay"] as! Double
 
@@ -50,7 +50,7 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
         var credentials: Credentials? = Credentials(access_token: "firstToken", expires_in: 0, token_type: "Dummytokentype", scope: "", refresh_token: "")
         func logout() -> SignalProducer<(), NoError> { return SignalProducer.empty }
         func isLoggedIn() -> Bool { return false }
-        func login(username: String, password: String) -> SignalProducer<UserEntity, UserError> { return SignalProducer.empty }
+        func login(_ username: String, password: String) -> SignalProducer<UserEntity, UserError> { return SignalProducer.empty }
     }
 
     // NOTE: all requests must finish in under a seconds, or toEventually will start polling before requests have been finished. Use waitUntil if you need longer requests
@@ -176,7 +176,7 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
 
                     func changeExpectedToken() {
 
-                        func randomString(length: Int) -> String {
+                        func randomString(_ length: Int) -> String {
                             let charactersString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
                             let charactersArray = Array(arrayLiteral: charactersString)
 

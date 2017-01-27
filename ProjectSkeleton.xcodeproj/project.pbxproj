@@ -651,6 +651,7 @@
 				ACD479981C5A39E800E85DD3 /* Frameworks */,
 				ACD479991C5A39E800E85DD3 /* Resources */,
 				8BD516E86F5B937685FF1464 /* [CP] Copy Pods Resources */,
+				4EF7063B9240F79D286F3F51 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -751,6 +752,7 @@
 					};
 					ACD4799A1C5A39E800E85DD3 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0820;
 						TestTargetID = B4ABA1DB195193330069FAD4;
 					};
 					ACF8DA161C62374C00D74377 = {
@@ -761,6 +763,7 @@
 						DevelopmentTeam = PXDF48X6VX;
 					};
 					B4ABA1FC195193330069FAD4 = {
+						LastSwiftMigration = 0820;
 						TestTargetID = B4ABA1DB195193330069FAD4;
 					};
 				};
@@ -919,6 +922,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tests/Pods-Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		4EF7063B9240F79D286F3F51 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UITests/Pods-UITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		69148E231B78BFEB00D83C0E /* Generate managed objects */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -959,7 +977,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		8BD516E86F5B937685FF1464 /* [CP] Copy Pods Resources */ = {
@@ -989,7 +1007,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		9D99C044816FAA4B50F4F478 /* [CP] Embed Pods Frameworks */ = {
@@ -1046,7 +1064,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		B4A800961B2869F700453A28 /* Copy Frameworks */ = {
@@ -1075,7 +1093,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1340,6 +1358,7 @@
 				PROVISIONING_PROFILE = "2bfcc027-5151-4b96-a838-d00764a94a41";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = SampleTestingProject;
 				USER_HEADER_SEARCH_PATHS = "";
 				USES_XCTRUNNER = YES;
@@ -1389,6 +1408,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "461d3b36-aa18-468a-93bf-df13ae9f0e38";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = SampleTestingProject;
 				USER_HEADER_SEARCH_PATHS = "";
 				USES_XCTRUNNER = YES;
@@ -1439,6 +1459,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "461d3b36-aa18-468a-93bf-df13ae9f0e38";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = SampleTestingProject;
 				USER_HEADER_SEARCH_PATHS = "";
 				USES_XCTRUNNER = YES;
@@ -1495,6 +1516,7 @@
 				PROVISIONING_PROFILE = "2bfcc027-5151-4b96-a838-d00764a94a41";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProjectSkeleton.app/ProjectSkeleton";
 			};
 			name = Debug;
@@ -1540,6 +1562,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "461d3b36-aa18-468a-93bf-df13ae9f0e38";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProjectSkeleton.app/ProjectSkeleton";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1586,6 +1609,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "461d3b36-aa18-468a-93bf-df13ae9f0e38";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProjectSkeleton.app/ProjectSkeleton";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1622,6 +1646,7 @@
 				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = AppStore;
@@ -1645,6 +1670,7 @@
 				PRODUCT_NAME = ProjectSkeleton;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1662,6 +1688,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "461d3b36-aa18-468a-93bf-df13ae9f0e38";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProjectSkeleton.app/ProjectSkeleton";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1707,6 +1734,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1741,6 +1769,7 @@
 				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = AdHoc;
@@ -1765,6 +1794,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1789,6 +1819,7 @@
 				PRODUCT_NAME = ProjectSkeleton;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1810,6 +1841,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "2bfcc027-5151-4b96-a838-d00764a94a41";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProjectSkeleton.app/ProjectSkeleton";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1827,6 +1859,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "461d3b36-aa18-468a-93bf-df13ae9f0e38";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProjectSkeleton.app/ProjectSkeleton";
 				WRAPPER_EXTENSION = xctest;
 			};

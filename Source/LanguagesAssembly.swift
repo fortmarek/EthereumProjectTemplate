@@ -7,10 +7,10 @@
 //
 
 import Swinject
-import ACKSwinject
+import SwinjectAutoregistration
 
-typealias LanguageDetailModelingFactory = (language: LanguageEntity) -> LanguageDetailViewModeling
-typealias LanguageDetailTableViewControllerFactory = (viewModel: LanguageDetailViewModeling) -> LanguageDetailViewController
+typealias LanguageDetailModelingFactory = (_ language: LanguageEntity) -> LanguageDetailViewModeling
+typealias LanguageDetailTableViewControllerFactory = (_ viewModel: LanguageDetailViewModeling) -> LanguageDetailViewController
 
 class LanguagesAssembly: AssemblyType {
     

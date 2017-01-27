@@ -9,22 +9,40 @@ use_frameworks!
 
 target 'ProjectSkeleton' do
 
-pod 'ACKategories', :git => 'https://github.com/AckeeCZ/ACKategories.git'
-pod 'HockeySDK'
+# Extensions
+pod 'ACKategories', '~> 4.0'
+pod 'ACKReactiveExtensions', '~> 2.0'
+pod 'ACKReactiveExtensions/Argo', '~> 2.0'
+pod 'ACKReactiveExtensions/SDWebImage', '~> 2.0'
+
+# Hockey
+pod 'HockeySDK', '~> 4.1'
+
+# UI
 pod 'SnapKit'
-pod 'Alamofire'
-pod 'ReactiveCocoa', '~> 4.2'
-pod 'Argo', '~> 2.2'
-pod 'Curry', '~> 1.4'
-pod 'ACKSwinject'
-pod 'SwiftGen', '~> 0.7.6'
-pod 'Locksmith', '~> 2.0.8'
 pod 'SDWebImage', '~> 3.6'
 pod 'TPKeyboardAvoiding'
 
+# Networking
+pod 'Alamofire'
+
+# Model
+pod 'ReactiveCocoa', '= 5.0.0'
+pod 'ReactiveSwift', '= 1.0.0'
+pod 'Argo', '~> 4.1'
+pod 'Curry', '~> 3.0'
+pod 'Locksmith', '~> 3.0'
+
+# Dependency Injection
+pod 'Swinject', '= 2.0.0-beta.2'
+pod 'SwinjectAutoregistration', :git => 'https://github.com/Swinject/SwinjectAutoregistration.git', :branch => 'release2.0'
+
+# Code Generation
+pod 'SwiftGen', '~> 4.0'
+
 def testing_pods
-    pod 'Quick', '~> 0.9.2'
-    pod 'Nimble', '4.0.1'
+    pod 'Quick', '~> 1.0'
+    pod 'Nimble', '5.1'
 end
 
 

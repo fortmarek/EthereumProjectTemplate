@@ -1,70 +1,99 @@
 PODS:
-  - ACKategories (2.3)
-  - ACKSwinject (0.1.1):
-    - Swinject (~> 1.1)
-  - Alamofire (3.4.2)
-  - Argo (2.3.0)
-  - Curry (1.4.0)
-  - HockeySDK (4.1.0):
-    - HockeySDK/AllFeaturesLib (= 4.1.0)
-  - HockeySDK/AllFeaturesLib (4.1.0)
-  - Locksmith (2.0.8)
-  - Nimble (4.0.1)
-  - Quick (0.9.3)
-  - ReactiveCocoa (4.2.2):
-    - Result (~> 2.0)
-  - Result (2.1.3)
-  - SDWebImage (3.8.1):
-    - SDWebImage/Core (= 3.8.1)
-  - SDWebImage/Core (3.8.1)
-  - SnapKit (0.22.0)
-  - SwiftGen (0.7.6)
-  - Swinject (1.1.3)
-  - TPKeyboardAvoiding (1.3)
+  - ACKategories (4.0.0)
+  - ACKReactiveExtensions (2.2.1):
+    - ACKReactiveExtensions/Core (= 2.2.1)
+    - ACKReactiveExtensions/UIKit (= 2.2.1)
+    - ReactiveCocoa (~> 5.0.0-rc.1)
+  - ACKReactiveExtensions/Argo (2.2.1):
+    - Argo (~> 4.0)
+    - ReactiveCocoa (~> 5.0.0-rc.1)
+  - ACKReactiveExtensions/Core (2.2.1):
+    - ReactiveCocoa (~> 5.0.0-rc.1)
+  - ACKReactiveExtensions/SDWebImage (2.2.1):
+    - ACKReactiveExtensions/Core
+    - ReactiveCocoa (~> 5.0.0-rc.1)
+    - SDWebImage
+  - ACKReactiveExtensions/UIKit (2.2.1):
+    - ACKReactiveExtensions/Core
+    - ReactiveCocoa (~> 5.0.0-rc.1)
+  - Alamofire (4.3.0)
+  - Argo (4.1.2):
+    - Runes (>= 4.0.0)
+  - Curry (3.0.0)
+  - HockeySDK (4.1.3):
+    - HockeySDK/DefaultLib (= 4.1.3)
+  - HockeySDK/DefaultLib (4.1.3)
+  - Locksmith (3.0.0)
+  - Nimble (5.1.0)
+  - Quick (1.0.0)
+  - ReactiveCocoa (5.0.0):
+    - ReactiveSwift (~> 1.0.0)
+  - ReactiveSwift (1.0.0):
+    - Result (~> 3.1)
+  - Result (3.1.0)
+  - Runes (4.0.1)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
+  - SnapKit (3.1.2)
+  - SwiftGen (4.1.0)
+  - Swinject (2.0.0-beta.2)
+  - SwinjectAutoregistration (2.0.0):
+    - Swinject (~> 2.0.0-beta.2)
+  - TPKeyboardAvoiding (1.3.1)
 
 DEPENDENCIES:
-  - ACKategories (from `https://github.com/AckeeCZ/ACKategories.git`)
-  - ACKSwinject
+  - ACKategories (~> 4.0)
+  - ACKReactiveExtensions (~> 2.0)
+  - ACKReactiveExtensions/Argo (~> 2.0)
+  - ACKReactiveExtensions/SDWebImage (~> 2.0)
   - Alamofire
-  - Argo (~> 2.2)
-  - Curry (~> 1.4)
-  - HockeySDK
-  - Locksmith (~> 2.0.8)
-  - Nimble (= 4.0.1)
-  - Quick (~> 0.9.2)
-  - ReactiveCocoa (~> 4.2)
+  - Argo (~> 4.1)
+  - Curry (~> 3.0)
+  - HockeySDK (~> 4.1)
+  - Locksmith (~> 3.0)
+  - Nimble (= 5.1)
+  - Quick (~> 1.0)
+  - ReactiveCocoa (= 5.0.0)
+  - ReactiveSwift (= 1.0.0)
   - SDWebImage (~> 3.6)
   - SnapKit
-  - SwiftGen (~> 0.7.6)
+  - SwiftGen (~> 4.0)
+  - Swinject (= 2.0.0-beta.2)
+  - SwinjectAutoregistration (from `https://github.com/Swinject/SwinjectAutoregistration.git`, branch `release2.0`)
   - TPKeyboardAvoiding
 
 EXTERNAL SOURCES:
-  ACKategories:
-    :git: https://github.com/AckeeCZ/ACKategories.git
+  SwinjectAutoregistration:
+    :branch: release2.0
+    :git: https://github.com/Swinject/SwinjectAutoregistration.git
 
 CHECKOUT OPTIONS:
-  ACKategories:
-    :commit: 32ed2332f3d1ce2179475b79a62d1b182a4a6ce9
-    :git: https://github.com/AckeeCZ/ACKategories.git
+  SwinjectAutoregistration:
+    :commit: 6206eda4a6ebf4cdc6189976a4bf4bb442dcd125
+    :git: https://github.com/Swinject/SwinjectAutoregistration.git
 
 SPEC CHECKSUMS:
-  ACKategories: bfde377d7888ef3c6c3bc49d023867048a00bcd1
-  ACKSwinject: b3bc912eb686b9bc46e76b33e3237a58ddbd85c4
-  Alamofire: 6aa33201d20d069e1598891cf928883ff1888c7a
-  Argo: 3dbecf4204b1a3cdd1df88ebd5e23d01b652d34b
-  Curry: 294533187eedbf52db60a1e70c29b4f5c9f621c0
-  HockeySDK: 1249d4f1b3a9ce537a1517805bcf6fe121099d16
-  Locksmith: a8ed41ac4c06506ea8cb199d8ec8a8d3d108eb2a
-  Nimble: 0f3c8b8b084cda391209c3c5efbb48bedeeb920a
-  Quick: 13a2a2b19a5d8e3ed4fd0c36ee46597fd77ebf71
-  ReactiveCocoa: 72263e7ac0770c274617ccd345e01049d0ca38ae
-  Result: 18e1a7597fbcca5923c565b40a25a98afafdee02
-  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
-  SnapKit: 0dd2fd157330f1ea11fd84da13e6be8a7a22bae0
-  SwiftGen: c27b189a569d0946d7aef6d8451003ea164e754e
-  Swinject: 69273c2419f93d52603c3a546f5d2792ee1a5e98
-  TPKeyboardAvoiding: a5138f318c06fb3e151f886e18ce4a72695d9cbe
+  ACKategories: 951e12ce64b884a220d4939027954f270f54b3f5
+  ACKReactiveExtensions: 44f9987dcf143c57aa5eb9506af255e32879c6c4
+  Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
+  Argo: 5db06502fc1222d83011f574243089dab25202ff
+  Curry: eb3d2c75aec678b3cc7fb2729d2ad6dd121531d1
+  HockeySDK: 7dd8d7f5a4d71b7a5eebb320c8515cb22e99221b
+  Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
+  Nimble: 5ea121a2eda60440287054cde077fc0ad22227b3
+  Quick: 8024e4a47e6cc03a9d5245ef0948264fc6d27cff
+  ReactiveCocoa: 60ef0da915b4f70c34ebecc3f4fb8f96af0e53d6
+  ReactiveSwift: f391724ee318a2cfd3e37dfb041cd49ecf4e7869
+  Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
+  Runes: ff20f163b478ac2c0e18158d6086fd5b1997f983
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  SnapKit: 12b24f569cb7c143acc9c22b9d91b23e7b1c84a2
+  SwiftGen: d29fd8b7aa52092411d415fb09d0abd3d79ea1a5
+  Swinject: 69a893192efa9f2cc44be79ef423d04d571b6af9
+  SwinjectAutoregistration: 486d8f9f39c79ab851b7d4a265a7d8882896748d
+  TPKeyboardAvoiding: 0d6af20e95e2850f4c621841225b59ec7d8dd852
 
-PODFILE CHECKSUM: b95550c0d266890653433aa7f6736402fb77d473
+PODFILE CHECKSUM: 62d078fba2404d579197dbcb45d891f1d4583415
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.2.0.rc.1
