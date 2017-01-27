@@ -10,16 +10,17 @@ import Foundation
 import ReactiveSwift
 import ACKReactiveExtensions
 
+protocol LanguagesAPIServicing {
+    func languages() -> SignalProducer<[LanguageEntity], RequestError>
+}
+
 class LanguagesAPIService: APIService, LanguagesAPIServicing {
-    init(network: Networking) {
-        super.init(network: network, authHandler: nil)
-    }
     
     func languages() -> SignalProducer<[LanguageEntity], RequestError> {
+        
         return self.request("languages.json")
-            .mapError { .network($0) }
-            .flatMap(.latest) { json in
-                rac_decode(object: json as AnyObject).mapError { .mapping($0) }
+            .flatMap(.latest) { json  -> SignalProducer<[LanguageEntity], RequestError> in
+                return rac_decode(object: json as AnyObject).mapError { .mapping(MappingError(underlyingError: $0)) }
         }
     }
 }

@@ -28,18 +28,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BITHockeyManagerDelegate 
         
         // Assemble!
         assembler = try! Assembler(assemblies: [
-            LaunchAssembly(),
+            AppAssembly(),
             ServiceAssembly(),
             ManagerAssembly(),
             LanguagesAssembly()
         ])
-        
-        // in this example, reauthentication is handled through UI, so we have to inject an AuthHandler for apiservices to use.
-        // in your app, reauth could just be a refresh token request done by the api service instead, so theres no need to pass AuthHandler as parameter to APIService.init.
-        // be aware that all APIServices that talk to the same api should use the same AuthHandler (even if we split functionality into multiple APIService). So dont create a separate AuthHandler for each sub-APIService.
-        (assembler.resolver as? Container)?.register(AuthHandler.self, factory: { [unowned self] _ in self.refreshTokenAction }).inObjectScope(.container)
-        
-        
         
         // Start Hockey Manager
         if Environment.Hockey.identifier.characters.count != 0 && Environment.Hockey.allowLogging {
@@ -101,13 +94,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BITHockeyManagerDelegate 
 
     func crashManagerWillCancelSendingCrashReport(_ crashManager: BITCrashManager!) {
     }
-
-    lazy var refreshTokenAction: AuthHandler = { [unowned self] in
-        Action { [unowned self] _ in
-            SignalProducer { [unowned self] sink, dis in
-//                self.window?.rootViewController?.frontmostController.presentViewController(UIViewController(), animated: true) { _ in } //present login controller, send completed when new token is set or error if we cant login.
-                sink.sendCompleted()
-            }
-        }
-    }()
 }

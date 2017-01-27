@@ -64,7 +64,10 @@
 		AC22F0C71D6A44BB00514668 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC22F0C61D6A44BB00514668 /* ServiceAssembly.swift */; };
 		AC22F0C91D6A44CB00514668 /* ManagerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC22F0C81D6A44CB00514668 /* ManagerAssembly.swift */; };
 		AC22F0CB1D6A44D600514668 /* LanguagesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC22F0CA1D6A44D600514668 /* LanguagesAssembly.swift */; };
-		AC22F0CD1D6A44E600514668 /* LaunchAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC22F0CC1D6A44E600514668 /* LaunchAssembly.swift */; };
+		AC22F0CD1D6A44E600514668 /* AppAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC22F0CC1D6A44E600514668 /* AppAssembly.swift */; };
+		AC273A151E3B82D200648E82 /* ErrorWrapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC273A141E3B82D200648E82 /* ErrorWrapping.swift */; };
+		AC273A191E3B848F00648E82 /* AuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC273A181E3B848F00648E82 /* AuthHandler.swift */; };
+		AC273A1B1E3B854100648E82 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC273A1A1E3B854100648E82 /* Router.swift */; };
 		AC386B691CBD205F002C9426 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B681CBD205F002C9426 /* Credentials.swift */; };
 		AC386B6B1CBD2126002C9426 /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B6A1CBD2126002C9426 /* UserEntity.swift */; };
 		AC386B6D1CBD240C002C9426 /* AuthenticationAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B6C1CBD240C002C9426 /* AuthenticationAPIService.swift */; };
@@ -82,7 +85,6 @@
 		ACD8E8251C57DED100031D67 /* LanguageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD8E8231C57DDE000031D67 /* LanguageTableViewCell.swift */; };
 		ACD8E82E1C58151A00031D67 /* LanguageDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD8E82D1C58151A00031D67 /* LanguageDetailViewModel.swift */; };
 		ACE564B91CBCF2E300B6CBDF /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE564B81CBCF2E300B6CBDF /* APIService.swift */; };
-		ACE564BC1CBCF3C800B6CBDF /* APIServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE564BB1CBCF3C800B6CBDF /* APIServicing.swift */; };
 		ACE564BE1CBCF4B200B6CBDF /* LanguagesAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE564BD1CBCF4B200B6CBDF /* LanguagesAPIService.swift */; };
 		ACF8DA071C6236ED00D74377 /* LanguageDetailViewModelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8D9F61C6236CD00D74377 /* LanguageDetailViewModelSpec.swift */; };
 		ACF8DA091C6236F700D74377 /* DummyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8D9F21C6236CD00D74377 /* DummyResponse.swift */; };
@@ -198,7 +200,10 @@
 		AC22F0C61D6A44BB00514668 /* ServiceAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
 		AC22F0C81D6A44CB00514668 /* ManagerAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ManagerAssembly.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		AC22F0CA1D6A44D600514668 /* LanguagesAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LanguagesAssembly.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		AC22F0CC1D6A44E600514668 /* LaunchAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LaunchAssembly.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		AC22F0CC1D6A44E600514668 /* AppAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppAssembly.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		AC273A141E3B82D200648E82 /* ErrorWrapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorWrapping.swift; sourceTree = "<group>"; };
+		AC273A181E3B848F00648E82 /* AuthHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthHandler.swift; sourceTree = "<group>"; };
+		AC273A1A1E3B854100648E82 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		AC386B681CBD205F002C9426 /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		AC386B6A1CBD2126002C9426 /* UserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
 		AC386B6C1CBD240C002C9426 /* AuthenticationAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AuthenticationAPIService.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -218,7 +223,6 @@
 		ACD8E8231C57DDE000031D67 /* LanguageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTableViewCell.swift; sourceTree = "<group>"; };
 		ACD8E82D1C58151A00031D67 /* LanguageDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LanguageDetailViewModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ACE564B81CBCF2E300B6CBDF /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = APIService.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		ACE564BB1CBCF3C800B6CBDF /* APIServicing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = APIServicing.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ACE564BD1CBCF4B200B6CBDF /* LanguagesAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LanguagesAPIService.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ACF8D9EE1C6236CD00D74377 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACF8D9EF1C6236CD00D74377 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
@@ -345,7 +349,7 @@
 				AC22F0C61D6A44BB00514668 /* ServiceAssembly.swift */,
 				AC22F0C81D6A44CB00514668 /* ManagerAssembly.swift */,
 				AC22F0CA1D6A44D600514668 /* LanguagesAssembly.swift */,
-				AC22F0CC1D6A44E600514668 /* LaunchAssembly.swift */,
+				AC22F0CC1D6A44E600514668 /* AppAssembly.swift */,
 			);
 			name = Assemblies;
 			sourceTree = "<group>";
@@ -372,7 +376,6 @@
 			isa = PBXGroup;
 			children = (
 				ACE564B81CBCF2E300B6CBDF /* APIService.swift */,
-				ACE564BB1CBCF3C800B6CBDF /* APIServicing.swift */,
 				ACE564BD1CBCF4B200B6CBDF /* LanguagesAPIService.swift */,
 				AC386B6C1CBD240C002C9426 /* AuthenticationAPIService.swift */,
 			);
@@ -498,6 +501,8 @@
 				ACD479C11C5C14BE00E85DD3 /* Geocoding.swift */,
 				ACD479C31C5C301F00E85DD3 /* LocationManager.swift */,
 				ACD479CB1C5D4D6800E85DD3 /* SpeechSynthetizer.swift */,
+				AC273A181E3B848F00648E82 /* AuthHandler.swift */,
+				AC273A1A1E3B854100648E82 /* Router.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -599,6 +604,7 @@
 				6D40F8391BB18D0D0079C917 /* Reachability+RAC.swift */,
 				794BB3441CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift */,
 				17A18CBE1DBFAD8E003B728E /* Swinject+Factories.swift */,
+				AC273A141E3B82D200648E82 /* ErrorWrapping.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1098,10 +1104,10 @@
 				ACD8E82E1C58151A00031D67 /* LanguageDetailViewModel.swift in Sources */,
 				AC386B6F1CBD2F3C002C9426 /* UserManager.swift in Sources */,
 				6D1A302B1B3C53B300A07F3A /* MBSwizzler.swift in Sources */,
-				ACE564BC1CBCF3C800B6CBDF /* APIServicing.swift in Sources */,
 				ACD479C61C5CF82700E85DD3 /* LanguageDetailViewController.swift in Sources */,
 				79165B811CBA56F1000F6294 /* BaseViewController.swift in Sources */,
 				17A18CBF1DBFAD8E003B728E /* Swinject+Factories.swift in Sources */,
+				AC273A151E3B82D200648E82 /* ErrorWrapping.swift in Sources */,
 				B4A0BA8F1AD4972300715A9F /* Theme.swift in Sources */,
 				79FB0C131C1AD2D50025C600 /* UIView+Spacer.swift in Sources */,
 				AC22F0CB1D6A44D600514668 /* LanguagesAssembly.swift in Sources */,
@@ -1118,13 +1124,15 @@
 				ACD479CC1C5D4D6800E85DD3 /* SpeechSynthetizer.swift in Sources */,
 				B4ECD6121AD477910099D516 /* AppDelegate.swift in Sources */,
 				69D5B7FC1C248694008F1A30 /* Images.swift in Sources */,
-				AC22F0CD1D6A44E600514668 /* LaunchAssembly.swift in Sources */,
+				AC22F0CD1D6A44E600514668 /* AppAssembly.swift in Sources */,
 				AC22F0C71D6A44BB00514668 /* ServiceAssembly.swift in Sources */,
 				ACE564BE1CBCF4B200B6CBDF /* LanguagesAPIService.swift in Sources */,
 				AC22F0C91D6A44CB00514668 /* ManagerAssembly.swift in Sources */,
 				ACD479BE1C5C13A200E85DD3 /* Geocoder.swift in Sources */,
 				ACD479C21C5C14BE00E85DD3 /* Geocoding.swift in Sources */,
 				6D775D4D1B85DD32002F640D /* FoundationExtensions.swift in Sources */,
+				AC273A1B1E3B854100648E82 /* Router.swift in Sources */,
+				AC273A191E3B848F00648E82 /* AuthHandler.swift in Sources */,
 				794BB3451CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift in Sources */,
 				AC386B6B1CBD2126002C9426 /* UserEntity.swift in Sources */,
 				ACD4798D1C582D1F00E85DD3 /* Networking.swift in Sources */,
