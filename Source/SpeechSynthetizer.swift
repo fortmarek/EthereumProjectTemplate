@@ -47,13 +47,13 @@ class SpeechSynthetizer: NSObject, SpeechSynthetizing, AVSpeechSynthesizerDelega
         utterance.voice = voice
         synthetizer.speak(utterance)
         
-        return SignalProducer(signal: proxy.signal).on(value: {[weak self] _ in
-            self?.isSpeaking.value = true
-            }, failed: {[weak self] error in
-                self?.isSpeaking.value = false
+        return SignalProducer(proxy.signal).on(failed: {[weak self] error in
+            self?.isSpeaking.value = false
             }, completed: {[weak self]  in
                 self?.isSpeaking.value = false
-            })
+            }, value: {[weak self] _ in
+                self?.isSpeaking.value = true
+        })
     }
     
 
@@ -75,9 +75,9 @@ class SpeechSynthetizer: NSObject, SpeechSynthetizing, AVSpeechSynthesizerDelega
             observer.send(error: .cancelled)
         }
         
-        init(pipe: (signal: Signal<(), SpeakError>, observer: Observer<(), SpeakError>)) {
-            signal = pipe.signal
-            observer = pipe.observer
+        init(pipe: (output: Signal<(), SpeakError>, input: Observer<(), SpeakError>)) {
+            signal = pipe.output
+            observer = pipe.input
         }
     }
     

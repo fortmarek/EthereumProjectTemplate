@@ -13,7 +13,7 @@ import ReactiveSwift
 extension  UIView {
     fileprivate func createSpacer(_ size: CGFloat, axis: UILayoutConstraintAxis, priority: Int) -> UIView {
         let v = UIView()
-        v.rac_hidden <~ self.rac_hidden
+//        v.reactive.isHidden <~ self.rac_hidden.producer
         v.snp.makeConstraints { make in
             switch axis {
             case .vertical: make.height.equalTo(size).priority(priority)

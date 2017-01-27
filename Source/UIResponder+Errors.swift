@@ -49,8 +49,7 @@ extension AppDelegate: ErrorPresenting {
         let okAction = UIAlertAction(title: "ok".localized(), style: .cancel) { _ in }
         alertController.addAction(okAction)
 
-//        if Environment.scheme == .Development || Environment.scheme == .AdHoc { //TODO: dont show more info in release version?
-//        #if DEBUG
+        #if DEBUG
         let showMoreAction = UIAlertAction(title: "Show More", style: .default) { _ in
             let detailAlertController = UIAlertController(title: "Error Detail", message: "\(e)", preferredStyle: .alert)
             let detailOkAction = UIAlertAction(title: "ok".localized(), style: .cancel) { _ in }
@@ -58,8 +57,8 @@ extension AppDelegate: ErrorPresenting {
             window.rootViewController?.frontmostController.present(detailAlertController, animated: true) { _ in }
         }
         alertController.addAction(showMoreAction)
-//        #endif
-//        }
+        #endif
+
         window.rootViewController?.frontmostController.present(alertController, animated: true) { _ in }
         return true
     }
@@ -73,7 +72,7 @@ extension AppDelegate: ErrorPresenting {
 extension UIResponder {
     func displayErrors<Input, Output, Error: ErrorPresentable>(forAction action: Action < Input, Output, Error>) {
         action.errors
-            .take(until: rac_lifetime.ended)
+            .take(until: reactive.lifetime.ended)
             .observeValues { [weak self] e in
                 self?.displayError(e)
         }

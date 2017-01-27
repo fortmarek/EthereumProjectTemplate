@@ -33,8 +33,8 @@ class LanguagesTableViewController: BaseViewController {
 
         displayErrors(forAction: viewModel.loadLanguages)
 
-        activityIndicator.rac_animating <~ viewModel.loadLanguages.isExecuting
-        tableView.rac_hidden <~ viewModel.loadLanguages.isExecuting
+        activityIndicator.reactive.isAnimating <~ viewModel.loadLanguages.isExecuting
+        tableView.reactive.isHidden <~ viewModel.loadLanguages.isExecuting
     }
 
     override func loadView() {

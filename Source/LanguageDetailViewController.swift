@@ -105,7 +105,7 @@ class LanguageDetailViewController: BaseViewController {
     }
     
     func setupBindings() {
-        self.titleLabel.rac_text <~ viewModel.name
+        self.titleLabel.reactive.text <~ viewModel.name
 
         viewModel.flagURL.producer.startWithValues({ [weak self] url in
             self?.imageView.sd_setImage(with: url)
@@ -117,11 +117,11 @@ class LanguageDetailViewController: BaseViewController {
 //            return
 //        }
 
-        self.sentenceLabel.rac_text <~ viewModel.sentence
+        self.sentenceLabel.reactive.text <~ viewModel.sentence
 
-        self.playButton.rac_enabled <~ viewModel.playSentence.isEnabled
-        self.playButton.rac_hidden <~ viewModel.isSpeaking
-        self.playIndicator.rac_animating <~ viewModel.isSpeaking
+        self.playButton.reactive.isEnabled <~ viewModel.playSentence.isEnabled
+        self.playButton.reactive.isHidden <~ viewModel.isSpeaking
+        self.playIndicator.reactive.isAnimating <~ viewModel.isSpeaking
     }
 
     

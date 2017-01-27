@@ -90,7 +90,7 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
         }
         
         //Check all geolocations in sequence
-        let geolocations = SignalProducer<SignalProducer<(LanguageEntity, CLLocation?), NSError>, NSError>(values: signalProducers)
+        let geolocations = SignalProducer<SignalProducer<(LanguageEntity, CLLocation?), NSError>, NSError>(signalProducers)
             .flatten(.concat)
             .reduce([], { (array: [(LanguageEntity, CLLocation?)], item: (LanguageEntity, CLLocation?)) -> [(LanguageEntity, CLLocation?)] in
                 var array = array
