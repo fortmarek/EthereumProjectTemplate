@@ -10,6 +10,7 @@
 import Foundation
 import CoreData
 import Argo
+import Runes
 import Curry
 
 struct UserEntity {
@@ -18,7 +19,7 @@ struct UserEntity {
 }
 
 extension UserEntity: Decodable {
-    static func decode(json: JSON) -> Decoded<UserEntity> {
+    static func decode(_ json: JSON) -> Decoded<UserEntity> {
         return curry(self.init)
             <^> json <| "id"
     }

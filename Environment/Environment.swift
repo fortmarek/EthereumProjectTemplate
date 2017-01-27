@@ -9,7 +9,7 @@
 import Foundation
 
 enum Environment {
-	private static let plist : [String: AnyObject] = NSDictionary(contentsOfFile:(NSBundle.mainBundle().pathForResource("environment", ofType:"plist")!))! as! [String : AnyObject]
+	fileprivate static let plist : [String: AnyObject] = NSDictionary(contentsOfFile:(Bundle.main.path(forResource: "environment", ofType:"plist")!))! as! [String : AnyObject]
 	
 	enum Scheme : String {
 		case AppStore = "AppStore"
@@ -22,7 +22,7 @@ enum Environment {
 	static var appName : String { return plist["appName"]! as! String }
     
     enum Api {
-        private static let apiDict = plist["api"] as! [String : AnyObject]
+        fileprivate static let apiDict = plist["api"] as! [String : AnyObject]
         
         static var baseURL : String { return apiDict["baseURL"] as! String }
     }

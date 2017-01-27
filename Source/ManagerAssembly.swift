@@ -7,21 +7,20 @@
 //
 
 import Swinject
-import ACKSwinject
 import CoreLocation
 
 class ManagerAssembly: AssemblyType {
     
     func assemble(container: Container) {
-        container.register(initializer: Geocoder.init, service: Geocoding.self).inObjectScope(.Container)
+        container.autoregister(Geocoding.self, initializer: Geocoder.init).inObjectScope(.container)
         
         container.register(LocationManager.self, factory: { _ in
             let manager = CLLocationManager()
             manager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
             return manager
-        }).inObjectScope(.Container)
+        }).inObjectScope(.container)
         
-        container.register(initializer: SpeechSynthetizer.init, service: SpeechSynthetizing.self).inObjectScope(.Container)
+        container.autoregister(SpeechSynthetizing.self, initializer: SpeechSynthetizer.init).inObjectScope(.container)
     }
 
 }

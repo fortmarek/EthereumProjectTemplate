@@ -16,7 +16,7 @@ module Fastlane
         repo_name = url.split("/").last
         
         # To save cached repo
-        fastlane_dir = Fastlane::FastlaneFolder.path
+        fastlane_dir = FastlaneCore::FastlaneFolder.path
 
         clone_folder = ".shared"
 

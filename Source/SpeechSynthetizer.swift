@@ -7,17 +7,17 @@
 //
 
 import AVFoundation
-import ReactiveCocoa
+import ReactiveSwift
 
 protocol SpeechSynthetizing {
     var isSpeaking: MutableProperty<Bool> { get }
-    func canSpeakLanguage(language: String) -> Bool
-    func speakSentence(sentence: String, language: String) -> SignalProducer<(), SpeakError>
+    func canSpeakLanguage(_ language: String) -> Bool
+    func speakSentence(_ sentence: String, language: String) -> SignalProducer<(), SpeakError>
 }
 
-enum SpeakError: ErrorType {
-    case LanguageUnavaible(String)
-    case Cancelled
+enum SpeakError: Error {
+    case languageUnavaible(String)
+    case cancelled
 }
 
 class SpeechSynthetizer: NSObject, SpeechSynthetizing, AVSpeechSynthesizerDelegate {
@@ -30,54 +30,54 @@ class SpeechSynthetizer: NSObject, SpeechSynthetizing, AVSpeechSynthesizerDelega
 
     var isSpeaking = MutableProperty<Bool>(false)
 
-    func canSpeakLanguage(language: String) -> Bool {
+    func canSpeakLanguage(_ language: String) -> Bool {
 
         return AVSpeechSynthesisVoice.speechVoices().map {$0.language}.contains(language)
     }
 
-    func speakSentence(sentence: String, language: String) -> SignalProducer<(), SpeakError> {
+    func speakSentence(_ sentence: String, language: String) -> SignalProducer<(), SpeakError> {
         let proxy = AVSpeechSynthesizerDelegateProxy(pipe: Signal<(), SpeakError>.pipe())
         synthetizer.delegate = proxy
 
         let utterance = AVSpeechUtterance(string: sentence)
         utterance.rate = 0.4
 
-        guard let voice = AVSpeechSynthesisVoice(language: language) else { return SignalProducer(error: .LanguageUnavaible(language)) }
+        guard let voice = AVSpeechSynthesisVoice(language: language) else { return SignalProducer(error: .languageUnavaible(language)) }
         
         utterance.voice = voice
-        synthetizer.speakUtterance(utterance)
+        synthetizer.speak(utterance)
         
-        return SignalProducer(signal: proxy.signal).on(next: {[weak self] _ in
-            self?.isSpeaking.value = true
-            }, failed: {[weak self] error in
-                self?.isSpeaking.value = false
+        return SignalProducer(proxy.signal).on(failed: {[weak self] error in
+            self?.isSpeaking.value = false
             }, completed: {[weak self]  in
                 self?.isSpeaking.value = false
-            })
+            }, value: {[weak self] _ in
+                self?.isSpeaking.value = true
+        })
     }
     
 
 
 
-    private class AVSpeechSynthesizerDelegateProxy: NSObject, AVSpeechSynthesizerDelegate {
+    fileprivate class AVSpeechSynthesizerDelegateProxy: NSObject, AVSpeechSynthesizerDelegate {
         let signal: Signal<(), SpeakError>
         let observer: Observer<(), SpeakError>
         
-        @objc private func speechSynthesizer(synthesizer: AVSpeechSynthesizer, didStartSpeechUtterance utterance: AVSpeechUtterance) {
-            observer.sendNext()
+        @objc fileprivate func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
+            observer.send(value: ())
         }
         
-        @objc private func speechSynthesizer(synthesizer: AVSpeechSynthesizer, didFinishSpeechUtterance utterance: AVSpeechUtterance) {
+        @objc fileprivate func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
             observer.sendCompleted()
         }
         
-        @objc func speechSynthesizer(synthesizer: AVSpeechSynthesizer, didCancelSpeechUtterance utterance: AVSpeechUtterance) {
-            observer.sendFailed(.Cancelled)
+        @objc func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
+            observer.send(error: .cancelled)
         }
         
-        init(pipe: (signal: Signal<(), SpeakError>, observer: Observer<(), SpeakError>)) {
-            signal = pipe.signal
-            observer = pipe.observer
+        init(pipe: (output: Signal<(), SpeakError>, input: Observer<(), SpeakError>)) {
+            signal = pipe.output
+            observer = pipe.input
         }
     }
     

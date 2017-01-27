@@ -51,21 +51,21 @@ class UITests: XCTestCase {
         
         //Tap the allow location popup
         if (app.alerts.count > 0) {
-            app.alerts.elementBoundByIndex(0).buttons.elementBoundByIndex(1).tap()
+            app.alerts.element(boundBy: 0).buttons.element(boundBy: 1).tap()
         }
         
         snapshot("01MainScreenList")
         
         let tablesQuery = app.tables
-        tablesQuery.cells.elementBoundByIndex(0).tap()
+        tablesQuery.cells.element(boundBy: 0).tap()
         
         snapshot("02DetailScreenFirst")
         
-        let backButton = app.navigationBars["ProjectSkeleton.LanguageDetailView"].childrenMatchingType(.Button).matchingIdentifier("Back").elementBoundByIndex(0)
+        let backButton = app.navigationBars["ProjectSkeleton.LanguageDetailView"].children(matching: .button).matching(identifier: "Back").element(boundBy: 0)
         backButton.tap()
         
         
-        tablesQuery.cells.elementBoundByIndex(1).tap()
+        tablesQuery.cells.element(boundBy: 1).tap()
         
         snapshot("03DetailScreenSecond")
         

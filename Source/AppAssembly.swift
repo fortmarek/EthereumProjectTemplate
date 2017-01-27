@@ -7,9 +7,8 @@
 //
 
 import Swinject
-import ACKSwinject
 
-class LaunchAssembly: AssemblyType {
+class AppAssembly: AssemblyType {
     
     func assemble(container: Container) {
         

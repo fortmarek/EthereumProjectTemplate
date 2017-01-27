@@ -5,8 +5,10 @@
 //  Created by Tomas Kohout on 1/29/16.
 //  Copyright © 2016 Ackee s.r.o. All rights reserved.
 //
-import ReactiveCocoa
+import ReactiveSwift
 import AddressBook
+import Contacts
+import CoreLocation
 
 class Geocoder: Geocoding {
     let geocoder: CLGeocoder
@@ -15,17 +17,17 @@ class Geocoder: Geocoding {
         self.geocoder = CLGeocoder()
     }
 
-    func locationForCountryAbbreviation(abbr: String) -> SignalProducer<CLLocation?, NSError> {
+    func locationForCountryAbbreviation(_ abbr: String) -> SignalProducer<CLLocation?, NSError> {
 
         return SignalProducer<CLLocation?, NSError> { sink, disposable in
 
-            let checkAddress: [NSObject:AnyObject] = [
-                kABPersonAddressCountryKey:abbr
+            let checkAddress: [AnyHashable: Any] = [
+                CNPostalAddressCountryKey: abbr
             ]
 
 
             self.geocoder.geocodeAddressDictionary(checkAddress) { (placemarks: [CLPlacemark]?, error) -> Void in
-                sink.sendNext(placemarks?.first?.location)
+                sink.send(value: placemarks?.first?.location)
                 sink.sendCompleted()
             }
         }

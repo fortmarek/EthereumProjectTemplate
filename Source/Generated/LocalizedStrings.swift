@@ -4,15 +4,15 @@ import Foundation
 
 enum L10n {
   /// Network error
-  case LanguageTableNetworkErrorTitle
+  case languageTableNetworkErrorTitle
   /// Unable to download list of languages
-  case LanguageTableNetworkErrorMessage
+  case languageTableNetworkErrorMessage
   /// Close
-  case LanguageTableNetworkErrorDismiss
+  case languageTableNetworkErrorDismiss
   /// There was a problem communicating with the server
-  case GenericMappingError
+  case genericMappingError
   /// Unable to save the user
-  case GenericKeychainError
+  case genericKeychainError
 }
 
 extension L10n: CustomStringConvertible {
@@ -20,25 +20,25 @@ extension L10n: CustomStringConvertible {
 
   var string: String {
     switch self {
-      case .LanguageTableNetworkErrorTitle:
+      case .languageTableNetworkErrorTitle:
         return L10n.tr("languageTable.network_error_title")
-      case .LanguageTableNetworkErrorMessage:
+      case .languageTableNetworkErrorMessage:
         return L10n.tr("languageTable.network_error_message")
-      case .LanguageTableNetworkErrorDismiss:
+      case .languageTableNetworkErrorDismiss:
         return L10n.tr("languageTable.network_error_dismiss")
-      case .GenericMappingError:
+      case .genericMappingError:
         return L10n.tr("genericMappingError")
-      case .GenericKeychainError:
+      case .genericKeychainError:
         return L10n.tr("genericKeychainError")
     }
   }
 
-  private static func tr(key: String, _ args: CVarArgType...) -> String {
+  fileprivate static func tr(_ key: String, _ args: CVarArg...) -> String {
     let format = NSLocalizedString(key, comment: "")
-    return String(format: format, locale: NSLocale.currentLocale(), arguments: args)
+    return String(format: format, locale: Locale.current, arguments: args)
   }
 }
 
-func tr(key: L10n) -> String {
+func tr(_ key: L10n) -> String {
   return key.string
 }

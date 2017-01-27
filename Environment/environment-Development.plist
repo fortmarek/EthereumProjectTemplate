@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>configuration</key>
+	<string>Debug</string>
 	<key>api</key>
 	<dict>
 		<key>baseURL</key>
 		<string>https://www.whostolemyunicorn.com/api/</string>
 	</dict>
-	<key>appIdentifier</key>
-	<string>cz.ackee.enterprise.unicorn.dev</string>
-	<key>appName</key>
-	<string>Unicorn Δ</string>
 	<key>hockey_allowLogging</key>
 	<false/>
 	<key>hockey_identifier</key>
 	<string></string>
-	<key>teamIdentifier</key>
-	<string>PXDF48X6VX</string>
 </dict>
 </plist>

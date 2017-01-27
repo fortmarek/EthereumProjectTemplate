@@ -10,6 +10,8 @@ import UIKit
 
 class BaseViewController: UIViewController {
     override func loadView() {
-        let view = UIView(); view.backgroundColor = .whiteColor(); view.opaque = true; self.view = view
+        super.loadView()
+        
+        view.backgroundColor = .white
     }
 }

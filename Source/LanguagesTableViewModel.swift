@@ -6,22 +6,22 @@
 //  Copyright © 2016 Ackee s.r.o. All rights reserved.
 //
 
-import ReactiveCocoa
+import ReactiveSwift
 import CoreLocation
 
 
-enum LoadLanguagesError: ErrorType {
-    case Request(RequestError)
-    case Geocoding(NSError)
+enum LoadLanguagesError: Error {
+    case request(RequestError)
+    case geocoding(NSError)
 }
 extension LoadLanguagesError : ErrorPresentable {
     var title: String? { //custom title
-        return L10n.LanguageTableNetworkErrorTitle.string
+        return L10n.languageTableNetworkErrorTitle.string
     }
     var message: String { //underlying error description
         switch self {
-        case .Request(let e): return e.message
-        case .Geocoding(let e): return e.message
+        case .request(let e): return e.message
+        case .geocoding(let e): return e.message
         }
     }
 }
@@ -37,13 +37,13 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
     let loading = MutableProperty<Bool>(false)
     
     //MARK: Dependencies
-    private let api: LanguagesAPIServicing
-    private let geocoder: Geocoding
-    private let locationManager: LocationManager
-    private let detailModelFactory: LanguageDetailModelingFactory
+    fileprivate let api: LanguagesAPIServicing
+    fileprivate let geocoder: Geocoding
+    fileprivate let locationManager: LocationManager
+    fileprivate let detailModelFactory: LanguageDetailModelingFactory
     
     
-    required init(api: LanguagesAPIServicing, geocoder: Geocoding, locationManager: LocationManager, detailModelFactory: LanguageDetailModelingFactory) {
+    required init(api: LanguagesAPIServicing, geocoder: Geocoding, locationManager: LocationManager, detailModelFactory: @escaping LanguageDetailModelingFactory) {
         self.api = api
         self.geocoder = geocoder
         self.locationManager = locationManager
@@ -60,7 +60,7 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
         //        }
         
         cellModels <~ loadLanguages.values.map { [unowned self] languages in
-            return languages.map { self.detailModelFactory(language: $0) } }
+            return languages.map { self.detailModelFactory($0) } }
     }
     
     
@@ -68,12 +68,11 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
     
     lazy var loadLanguages: Action<(), [LanguageEntity], LoadLanguagesError> = Action { [unowned self] _ in
         return self.api.languages()
-            .mapError { .Request($0) }
-            .flatMap(.Latest) { languages -> SignalProducer<[LanguageEntity], LoadLanguagesError> in
+            .mapError { .request($0) }
+            .flatMap(.latest) { languages -> SignalProducer<[LanguageEntity], LoadLanguagesError> in
                 //The simulator user location works unexpectably in simulator
-                if let userLocation = self.locationManager.location where TARGET_OS_SIMULATOR == 0 {
-                    return self.sortLanguageByDistanceFromUserLocation(languages.filter {$0.abbr.characters.first != "_"}, userLocation: userLocation)
-                        .mapError { .Geocoding($0) }
+                if let userLocation = self.locationManager.location , TARGET_OS_SIMULATOR == 0 {
+                    return self.sortLanguageByDistanceFromUserLocation(languages.filter {$0.abbr.characters.first != "_"}, userLocation: userLocation).mapError { .geocoding($0) }
                 } else {
                     //Continue if we don't have user location
                     return SignalProducer<[LanguageEntity], LoadLanguagesError>(value: languages)
@@ -82,17 +81,17 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
     }
     
     
-    private func sortLanguageByDistanceFromUserLocation(languages: [LanguageEntity], userLocation: CLLocation) -> SignalProducer<[LanguageEntity], NSError> {
+    fileprivate func sortLanguageByDistanceFromUserLocation(_ languages: [LanguageEntity], userLocation: CLLocation) -> SignalProducer<[LanguageEntity], NSError> {
         //Get geolocation for every language
         let signalProducers: [SignalProducer<(LanguageEntity, CLLocation?), NSError>] = languages.map { language in
             let languageProducer = SignalProducer<LanguageEntity, NSError>(value: language)
             
-            return combineLatest(languageProducer, self.geocoder.locationForCountryAbbreviation(language.abbr))
+            return SignalProducer.combineLatest(languageProducer, self.geocoder.locationForCountryAbbreviation(language.abbr))
         }
         
         //Check all geolocations in sequence
-        let geolocations = SignalProducer<SignalProducer<(LanguageEntity, CLLocation?), NSError>, NSError>(values: signalProducers)
-            .flatten(.Concat)
+        let geolocations = SignalProducer<SignalProducer<(LanguageEntity, CLLocation?), NSError>, NSError>(signalProducers)
+            .flatten(.concat)
             .reduce([], { (array: [(LanguageEntity, CLLocation?)], item: (LanguageEntity, CLLocation?)) -> [(LanguageEntity, CLLocation?)] in
                 var array = array
                 array.append(item)
@@ -101,9 +100,9 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
         
         //Sort by closest
         return geolocations.map { languages -> [LanguageEntity] in
-            languages.sort({ entityA, entityB in
+            languages.sorted(by: { entityA, entityB in
                 let (_, locationA) = entityA; let (_, locationB) = entityB
-                return locationA?.distanceFromLocation(userLocation) < locationB?.distanceFromLocation(userLocation)
+                return locationA?.distance(from: userLocation) ?? 0 < locationB?.distance(from: userLocation) ?? 0
             }).map { $0.0}
         }
     }

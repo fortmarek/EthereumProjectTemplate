@@ -8,29 +8,26 @@
 
 import Foundation
 import Alamofire
-import ReactiveCocoa
+import ReactiveSwift
 
 class Network: Networking {
 
-    func request(url: String, method: Alamofire.Method = .GET, parameters: [String: AnyObject]?, encoding: ParameterEncoding = .URL, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<AnyObject, NetworkError> {
+    func request(_ url: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]?, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<Any, NetworkError> {
         return SignalProducer { sink, disposable in
-            let request = Alamofire.request(method, url,
-                parameters: parameters,
-                headers: headers,
-                encoding: encoding)
+            let request = Alamofire.request(url, method: method, parameters: parameters, encoding: encoding, headers: headers)
                 .validate()
-                .response() { (request, response, data, error) in
+                .response() { let request = $0.request; let response = $0.response; let data = $0.data; let error = $0.error
 
                     switch (data, error) {
-                    case (_, .Some(let e)):
-                        sink.sendFailed(NetworkError(error: e, request: request, response: response))
-                    case (.Some(let d), _):
+                    case (_, .some(let e)):
+                        sink.send(error: NetworkError(error: e as NSError, request: request, response: response))
+                    case (.some(let d), _):
                         do {
-                            let json = try NSJSONSerialization.JSONObjectWithData(d, options: .AllowFragments)
-                            sink.sendNext(json)
+                            let json = try JSONSerialization.jsonObject(with: d, options: .allowFragments)
+                            sink.send(value: json)
                             sink.sendCompleted()
                         } catch {
-                            sink.sendFailed(NetworkError(error: (error as NSError), request: request, response: response))
+                            sink.send(error: NetworkError(error: (error as NSError), request: request, response: response))
                             return
                         }
                     default: assertionFailure()
@@ -38,7 +35,7 @@ class Network: Networking {
             }
 
             if useDisposables {
-                disposable.addDisposable { // if disposed cancel running request
+                disposable.add { // if disposed cancel running request
                     request.cancel()
                 }
             }
