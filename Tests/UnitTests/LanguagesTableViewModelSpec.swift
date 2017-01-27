@@ -7,9 +7,10 @@
 //
 import Quick
 import Nimble
-import ReactiveCocoa
+import ReactiveSwift
 import Alamofire
 import Result
+import CoreLocation
 
 @testable import ProjectSkeleton
 
@@ -21,7 +22,7 @@ class LanguagesTableViewModelSpec: QuickSpec {
     class GoodStubUnicornApi: LanguagesAPIServicing {
         func languages() -> SignalProducer<[LanguageEntity], RequestError> {
             return SignalProducer<[LanguageEntity], RequestError> { sink, disposable in
-                sink.sendNext(dummyResponse)
+                sink.send(value: dummyResponse)
                 sink.sendCompleted()
             }
         }
@@ -29,13 +30,12 @@ class LanguagesTableViewModelSpec: QuickSpec {
 
     class ErrorStubUnicornApi: LanguagesAPIServicing {
         func languages() -> SignalProducer<[LanguageEntity], RequestError> {
-            return SignalProducer(error: .Network(NetworkError(error: NSError(domain: "", code: 0, userInfo: nil), request: nil, response: nil)))
-                .observeOn(QueueScheduler())
+            return SignalProducer(error: .network(NetworkError(error: NSError(domain: "", code: 0, userInfo: nil), request: nil, response: nil))).observe(on: QueueScheduler())
         }
     }
 
     class StubNetwork: Networking {
-        func request(_ url: String, method: Alamofire.Method, parameters: [String: AnyObject]?, encoding: ParameterEncoding, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<AnyObject, NetworkError> {
+        func request(_ url: String, method: Alamofire.HTTPMethod, parameters: [String: Any]?, encoding: ParameterEncoding, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<Any, NetworkError> {
             return SignalProducer.empty
         }
     }
@@ -50,7 +50,7 @@ class LanguagesTableViewModelSpec: QuickSpec {
                     location = CLLocation(latitude: 50.071277, longitude: 14.496287)
                 }
 
-                sink.sendNext(location)
+                sink.send(value: location)
                 sink.sendCompleted()
             }
         }
@@ -59,7 +59,7 @@ class LanguagesTableViewModelSpec: QuickSpec {
     class ErrorGeocoderStub: Geocoding {
         func locationForCountryAbbreviation(_ abbr: String) -> SignalProducer<CLLocation?, NSError> {
             return SignalProducer<CLLocation?, NSError> { sink, disposable in
-                sink.sendNext(nil)
+                sink.send(value: nil)
                 sink.sendCompleted()
             }
         }
@@ -90,7 +90,7 @@ class LanguagesTableViewModelSpec: QuickSpec {
             it("eventually sets cellModels after load") {
                 var cellModels: [LanguageDetailViewModeling]? = nil
                 viewModel.cellModels.producer
-                    .on(next: {
+                    .on(value: {
                         cellModels = $0
                 })
                     .start()
@@ -105,8 +105,8 @@ class LanguagesTableViewModelSpec: QuickSpec {
 
             it("updates loadLanguages.executing property.") {
                 var observedValues = [Bool]()
-                viewModel.loadLanguages.executing.producer
-                    .on(next: { observedValues.append($0) })
+                viewModel.loadLanguages.isExecuting.producer
+                    .on(value: { observedValues.append($0) })
                     .start()
 
                 viewModel.loadLanguages.apply().start()
@@ -118,7 +118,7 @@ class LanguagesTableViewModelSpec: QuickSpec {
                 it("reports loadLanguages error.") {
                     let viewModel = LanguagesTableViewModel(api: ErrorStubUnicornApi(), geocoder: GeocoderStub(), locationManager: LocationManagerStub(), detailModelFactory: self.detailFactory)
                     var error: LoadLanguagesError? = nil
-                    viewModel.loadLanguages.errors.observeNext { error = $0 }
+                    viewModel.loadLanguages.errors.observeValues { error = $0 }
                     viewModel.loadLanguages.apply().start()
                     expect(error).toEventuallyNot(beNil())
                 }
@@ -178,9 +178,8 @@ class LanguagesTableViewModelSpec: QuickSpec {
 
             it("persists its loadLanguages property") {
                 var executing: [Bool] = []
-                viewModel.loadLanguages.executing.producer
-                    .startWithNext {
-                        executing.append($0)
+                viewModel.loadLanguages.isExecuting.producer.startWithValues {
+                    executing.append($0)
                 }
                 viewModel.loadLanguages.apply().start()
                 expect(executing).toEventually(equal([false, true, false]))

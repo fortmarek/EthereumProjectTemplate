@@ -7,10 +7,10 @@
 //
 
 import Foundation
-import ReactiveCocoa
+import ReactiveSwift
 
 class AuthenticationAPIService: APIService, AuthenticationAPIServicing {
-    func login(username: String, password: String) -> SignalProducer<(UserEntity, Credentials), RequestError> {
+    func login(_ username: String, password: String) -> SignalProducer<(UserEntity, Credentials), RequestError> {
         //TODO: Implement login
         return SignalProducer.empty
     }

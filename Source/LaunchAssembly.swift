@@ -7,7 +7,6 @@
 //
 
 import Swinject
-import ACKSwinject
 
 class LaunchAssembly: AssemblyType {
     

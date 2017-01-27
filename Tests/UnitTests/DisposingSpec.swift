@@ -1,6 +1,7 @@
 import Quick
 import Nimble
-import ReactiveCocoa
+import ACKReactiveExtensions
+import ReactiveSwift
 @testable import ProjectSkeleton
 
 class DisposingSpec: QuickSpec {
@@ -13,11 +14,11 @@ class DisposingSpec: QuickSpec {
                 var disposed = false
                 var objectToDealloc : Disposing? = TestDisposingImpl()
                 SignalProducer<(),NoError> { _, dis in
-                    dis.addDisposable {
+                    dis.add {
                         disposed = true
                     }
                 }
-                    .takeUntil(objectToDealloc!.rac_willDeallocSignal)
+                    .take(until: objectToDealloc!.rac_lifetime.ended)
                     .start()
                 objectToDealloc = nil
                 

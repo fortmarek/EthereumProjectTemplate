@@ -27,15 +27,15 @@ extension UICollectionViewCell {
 }
 
 extension UITableView {
-	func dequeCellForIndexPath<T where T : UITableViewCell>(indexPath: NSIndexPath) -> T {
-		registerClass(T.classForCoder(), forCellReuseIdentifier: T.cellIdentifier)
-		return dequeueReusableCellWithIdentifier(T.cellIdentifier, forIndexPath: indexPath) as! T
+	func dequeCellForIndexPath<T>(_ indexPath: IndexPath) -> T where T : UITableViewCell {
+		register(T.classForCoder(), forCellReuseIdentifier: T.cellIdentifier)
+		return dequeueReusableCell(withIdentifier: T.cellIdentifier, for: indexPath) as! T
 	}
 }
 
 extension UICollectionView {
-	func dequeCellForIndexPath<T where T : UICollectionViewCell>(indexPath: NSIndexPath) -> T {
-		registerClass(T.classForCoder(), forCellWithReuseIdentifier: T.cellIdentifier)
-		return dequeueReusableCellWithReuseIdentifier(T.cellIdentifier, forIndexPath: indexPath) as! T
+	func dequeCellForIndexPath<T>(_ indexPath: IndexPath) -> T where T : UICollectionViewCell {
+		register(T.classForCoder(), forCellWithReuseIdentifier: T.cellIdentifier)
+		return dequeueReusableCell(withReuseIdentifier: T.cellIdentifier, for: indexPath) as! T
 	}
 }

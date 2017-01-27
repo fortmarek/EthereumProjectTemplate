@@ -1,42 +1,44 @@
 import Quick
 import Nimble
-import ReactiveCocoa
+import ReactiveSwift
 import Alamofire
 @testable import ProjectSkeleton
 
-private let networkQueue = dispatch_queue_create("networkQueue", DISPATCH_QUEUE_CONCURRENT)
-private let authHandlerQueue = dispatch_queue_create("authHandlerQueue", DISPATCH_QUEUE_CONCURRENT)
+private let networkQueue = DispatchQueue(label: "networkQueue", attributes: .concurrent)
+private let authHandlerQueue = DispatchQueue(label: "authHandlerQueue", attributes: .concurrent)
+
+private let testURLString = "http://example.com"
 
 class AuthenticatedAPIServiceSpec: QuickSpec {
     class AuthTestAPIService: AuthenticatedAPIService {
-        func testRequest(url: String, requestDelay: Int, responseDelay: Int) -> SignalProducer<String, RequestError> {
-            return request(url, method: .GET, parameters: ["requestDelay": requestDelay, "responseDelay": responseDelay], encoding: .URL, headers: [:])
+        func testRequest(_ url: String, requestDelay: Double, responseDelay: Double) -> SignalProducer<String, RequestError> {
+            return request(url, method: .get, parameters: ["requestDelay": requestDelay, "responseDelay": responseDelay], encoding: URLEncoding.default, headers: [:])
                 .map { $0 as! String }
-                .mapError { .Network($0) }
+                .mapError { .network($0) }
         }
     }
 
     class NetworkStub: Networking {
         var expectedToken: String = "firstToken"
 
-        func request(_ url: String, method: Alamofire.Method, parameters: [String: AnyObject]?, encoding: ParameterEncoding, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<AnyObject, NetworkError> {
+        func request(_ url: String, method: Alamofire.HTTPMethod, parameters: [String: Any]?, encoding: ParameterEncoding, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<Any, NetworkError> {
             let requestDelay = parameters?["requestDelay"] as! Double
             let responseDelay = parameters?["responseDelay"] as! Double
 
             return SignalProducer { [unowned self] sink, dis in
-                dispatch_async(networkQueue) {
+                networkQueue.async {
                     usleep(UInt32(requestDelay) * 1000)
                     switch headers?["Authorization"] {
-                    case .Some(let token) where token.stringByReplacingOccurrencesOfString("Dummytokentype ", withString: "", options: NSStringCompareOptions()) == self.expectedToken:
+                    case .some(let token) where token.replacingOccurrences(of: "Dummytokentype ", with: "", options: NSString.CompareOptions()) == self.expectedToken:
                         usleep(UInt32(requestDelay) * 1000)
-                        sink.sendNext(url); sink.sendCompleted()
+                        sink.send(value: url); sink.sendCompleted()
                     default: // didnt get correct token, return 401
-                        let theUrl = NSURL(string: url)!
-                        let originalRequest = NSMutableURLRequest(URL: theUrl) // mimic alamofire behaviour
+                        let theUrl = URL(string: url)!
+                        let originalRequest = NSMutableURLRequest(url: theUrl) // mimic alamofire behaviour
                         originalRequest.allHTTPHeaderFields = headers
-                        let response = NSHTTPURLResponse(URL: theUrl, statusCode: 401, HTTPVersion: nil, headerFields: nil)
+                        let response = HTTPURLResponse(url: theUrl, statusCode: 401, httpVersion: nil, headerFields: nil)
                         usleep(UInt32(requestDelay) * 1000)
-                        sink.sendFailed(NetworkError(error: NSError(domain: "ctyristajednicka", code: 0, userInfo: nil), request: originalRequest, response: response))
+                        sink.send(error: NetworkError(error: NSError(domain: "ctyristajednicka", code: 0, userInfo: nil), request: originalRequest as URLRequest, response: response))
                     }
 
                 }
@@ -77,7 +79,7 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
             authHandler = AuthHandler { _ in
                 let currentToken = expectedToken
                 return SignalProducer { sink, dis in
-                    dispatch_async(authHandlerQueue) {
+                    authHandlerQueue.async {
                         print("refreshing token")
                         usleep(10 * 1000)
                         let token = currentToken
@@ -100,13 +102,13 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
 
             it("refreshes token and retries a single failed request") {
                 var result: String? = nil
-                api.testRequest(url: "", requestDelay: 1, responseDelay: 1)
-                    .observeOn(QueueScheduler.mainQueueScheduler)
-                    .on(next: { result = $0 })
+                api.testRequest(testURLString, requestDelay: 1.0, responseDelay: 1.0)
+                    .observe(on: QueueScheduler.main)
+                    .on(value: { result = $0 })
                     .start()
                 expectedToken = "secondToken"
 
-                expect(authHandlerInvoked).toEventually(be(1))
+                expect(authHandlerInvoked == 1).toEventually(beTrue())
                 expect(result).toEventuallyNot(beNil())
             }
 
@@ -116,17 +118,17 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
 
                 waitUntil(timeout: 10) { done in
                     // req1
-                    api.testRequest(url: "", requestDelay: 1, responseDelay: 1)
-                        .observeOn(QueueScheduler.mainQueueScheduler)
-                        .on(next: {
+                    api.testRequest(testURLString, requestDelay: 1, responseDelay: 1)
+                        .observe(on: QueueScheduler.main)
+                        .on(value: {
                             result1 = $0
                             if result1 != nil && result2 != nil { done() }
                     })
                         .start()
                     // req2
-                    api.testRequest(url: "", requestDelay: 1, responseDelay: 1)
-                        .observeOn(QueueScheduler.mainQueueScheduler)
-                        .on(next: {
+                    api.testRequest(testURLString, requestDelay: 1, responseDelay: 1)
+                        .observe(on: QueueScheduler.main)
+                        .on(value: {
                             result2 = $0
                             if result1 != nil && result2 != nil { done() }
                     })
@@ -136,7 +138,7 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
 
                 }
 
-                expect(authHandlerInvoked).to(be(1))
+                expect(authHandlerInvoked == 1).to(beTrue())
             }
 
             it("refreshes token only once and retries requests when second request fails after token has been refreshed") {
@@ -145,17 +147,17 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
 
                 waitUntil(timeout: 10) { done in
                     // req1
-                    api.testRequest(url: "", requestDelay: 1, responseDelay: 1)
-                        .observeOn(QueueScheduler.mainQueueScheduler)
-                        .on(next: {
+                    api.testRequest(testURLString, requestDelay: 1, responseDelay: 1)
+                        .observe(on: QueueScheduler.main)
+                        .on(value: {
                             result1 = $0
                             if result1 != nil && result2 != nil { done() }
                     })
                         .start()
                     // req2
-                    api.testRequest(url: "", requestDelay: 200, responseDelay: 1)
-                        .observeOn(QueueScheduler.mainQueueScheduler)
-                        .on(next: {
+                    api.testRequest(testURLString, requestDelay: 200, responseDelay: 1)
+                        .observe(on: QueueScheduler.main)
+                        .on(value: {
                             result2 = $0
                             if result1 != nil && result2 != nil { done() }
                     })
@@ -165,7 +167,7 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
 
                 }
 
-                expect(authHandlerInvoked).to(be(1))
+                expect(authHandlerInvoked == 1).to(beTrue())
             }
 
             it("just works") {
@@ -193,28 +195,27 @@ class AuthenticatedAPIServiceSpec: QuickSpec {
 
                     changeExpectedToken()
 
-                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64((Double(arc4random_uniform(30)) / Double(1000)) * Double(NSEC_PER_SEC)))
-                    dispatch_after(delayTime, dispatch_get_main_queue()) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + Double(arc4random_uniform(30)) / Double(1000)) {
                         changeExpectedTokenAfterRandomDelay()
                     }
-
+                    
                 }
 
                 waitUntil(timeout: 10) { done in
 
-                    var token: dispatch_once_t = 0
+                    let once: () = {
+                        done()
+                    }()
 
                     for i in 0..<numberOfRequests {
-                        api.testRequest(url: "\(i)", requestDelay: Int(arc4random_uniform(50)), responseDelay: Int(arc4random_uniform(50)))
-                            .observeOn(QueueScheduler.mainQueueScheduler)
-                            .on(next: {
+                        api.testRequest("\(testURLString)/\(i)", requestDelay: Double(arc4random_uniform(50)), responseDelay: Double(arc4random_uniform(50)))
+                            .observe(on: QueueScheduler.main)
+                            .on(value: {
                                 results.append($0)
                                 },
                                 terminated: {
                                     if results.count == numberOfRequests {
-                                        dispatch_once(&token) { // the observeOn above causes next and completed to not be delivered serially, even though they were sent serially from another thread. So we can have req1.next, req2.next, req1.completed. Thus we need the dispatch_once to prevent done() from being called multiple times.
-                                            done()
-                                        }
+                                        _ = once // the observeOn above causes next and completed to not be delivered serially, even though they were sent serially from another thread. So we can have req1.next, req2.next, req1.completed. Thus we need the dispatch_once to prevent done() from being called multiple times.
                                     }
                         })
                             .start()

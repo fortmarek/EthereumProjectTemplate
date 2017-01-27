@@ -20,7 +20,7 @@ let objectKey = "factory"
 
 class MemoryLeakConfiguration: QuickConfiguration {
     override class func configure(_ configuration: Configuration) {
-        sharedExamples("object without leaks") { (sharedExampleContext: SharedExampleContext) in
+        sharedExamples("object without leaks") { (sharedExampleContext: @escaping SharedExampleContext) in
             it("gets deallocated") {
                 var object:AnyObject? = sharedExampleContext().objectCreate()
                 
@@ -42,7 +42,7 @@ extension NSDictionary{
     {
         fileprivate let closure:()->AnyObject
         
-        init(closure:()->AnyObject)
+        init(closure:@escaping ()->AnyObject)
         {
             self.closure = closure
         }
@@ -52,7 +52,7 @@ extension NSDictionary{
         }
     }
     
-    convenience init(objectClosure:()->AnyObject){
+    convenience init(objectClosure:@escaping ()->AnyObject){
         self.init(dictionary:[objectKey: ClosureWrapper(closure: objectClosure)])
     }
     

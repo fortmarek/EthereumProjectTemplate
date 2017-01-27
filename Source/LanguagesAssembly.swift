@@ -18,7 +18,7 @@ class LanguagesAssembly: AssemblyType {
         
         //MARK: View models
         //Example use of specific initializer
-        container.register(initializer: LanguagesTableViewModel.init(api:geocoder:locationManager:detailModelFactory:), service: LanguagesTableViewModeling.self)
+        container.autoregister(LanguagesTableViewModeling.self, initializer: LanguagesTableViewModel.init(api:geocoder:locationManager:detailModelFactory:))
 
         // For more specific cases you can use unary operator ~>
 //        container.register(LanguagesTableViewModeling.self) { r in
@@ -26,20 +26,20 @@ class LanguagesAssembly: AssemblyType {
 //        }
         
         //Example usage of dynamic argument passing
-        container.register(initializer:LanguageDetailViewModel.init, service: LanguageDetailViewModeling.self, argument: LanguageEntity.self)
+        container.autoregister(LanguageDetailViewModeling.self, argument: LanguageEntity.self, initializer: LanguageDetailViewModel.init(language:synthetizer:))
         
         //MARK: View model factories
         
         // Factory for creating detail model
-        container.registerFactory(LanguageDetailModelingFactory.self)
+        container.autoregisterFactory(factory: LanguageDetailModelingFactory.self)
         
         //MARK: View controllers
         
-        container.register(initializer: LanguagesTableViewController.init, service: LanguagesTableViewController.self)
-        container.register(initializer: LanguageDetailViewController.init, service: LanguageDetailViewController.self, argument: LanguageDetailViewModeling.self)
+        container.autoregister(LanguagesTableViewController.self, initializer: LanguagesTableViewController.init)
+        container.autoregister(LanguageDetailViewController.self, argument: LanguageDetailViewModeling.self, initializer: LanguageDetailViewController.init)
         
         //MARK: View controller factories
-        container.registerFactory(LanguageDetailTableViewControllerFactory.self)
+        container.autoregisterFactory(factory: LanguageDetailTableViewControllerFactory.self)
     }
 
 }

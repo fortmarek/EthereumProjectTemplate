@@ -1,6 +1,6 @@
 import Quick
 import Nimble
-import ReactiveCocoa
+import ReactiveSwift
 
 @testable import ProjectSkeleton
 
@@ -9,10 +9,10 @@ class LanguageTableViewCellSpec: QuickSpec {
     class LanguagesDetailViewModelStub : LanguageDetailViewModeling {
         let name = MutableProperty("")
         let sentence = MutableProperty("")
-        let flagURL = MutableProperty<NSURL>(NSURL())
+        let flagURL = MutableProperty<URL>(URL(string: "http://example.com")!)
         let isSpeaking = MutableProperty(false)
         
-        lazy var playSentence: Action<AnyObject, (), SpeakError> = Action { _ in SignalProducer.empty }
+        lazy var playSentence: Action<Void, (), SpeakError> = Action { _ in SignalProducer.empty }
 
         init() {}
     }
@@ -21,7 +21,7 @@ class LanguageTableViewCellSpec: QuickSpec {
         describe("Language table view cell"){
             
             it("only binds against its current viewModel") {
-                let cell = LanguageTableViewCell(style: .Default, reuseIdentifier: "id")
+                let cell = LanguageTableViewCell(style: .default, reuseIdentifier: "id")
                 let vm1 = LanguagesDetailViewModelStub()
                 let vm2 = LanguagesDetailViewModelStub()
 

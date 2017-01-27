@@ -7,23 +7,23 @@
 //
 
 import Foundation
-import ReactiveCocoa
+import ReactiveSwift
 import CoreData
 import Locksmith
 
-private let keyChainAccount = NSBundle.mainBundle().bundleIdentifier!
+private let keyChainAccount = Bundle.main.bundleIdentifier!
 
-enum UserError: ErrorType {
-    case Keychain(NSError)
-    case Encoding
-    case Request(RequestError)
+enum UserError: Error {
+    case keychain(NSError)
+    case encoding
+    case request(RequestError)
 }
 extension UserError: ErrorPresentable {
     var message: String {
         switch self {
-        case .Keychain(let e): return e.message
-        case .Request(let e): return e.message
-        case .Encoding: return L10n.GenericKeychainError.string
+        case .keychain(let e): return e.message
+        case .request(let e): return e.message
+        case .encoding: return L10n.genericKeychainError.string
         }
     }
 }
@@ -33,23 +33,23 @@ protocol UserManaging {
     var credentials: Credentials? { get }
     func logout() -> SignalProducer<(), NoError>
     func isLoggedIn() -> Bool
-    func login(username: String, password: String) -> SignalProducer<UserEntity, UserError>
+    func login(_ username: String, password: String) -> SignalProducer<UserEntity, UserError>
 }
 
 class UserManager: UserManaging {
-    private let api: AuthenticationAPIServicing
+    fileprivate let api: AuthenticationAPIServicing
 
     var user = MutableProperty<UserEntity?>(nil)
 
     lazy var credentials: Credentials? = {
-        guard let result = Locksmith.loadDataForUserAccount(keyChainAccount) else { return nil }
+        guard let result = Locksmith.loadDataForUserAccount(userAccount: keyChainAccount) else { return nil }
 
         if let credentials = Credentials(data: result) {
             return credentials
         } else {
             do {
                 // The data is in keychain but we were unable to decode it
-                try Locksmith.deleteDataForUserAccount(keyChainAccount)
+                try Locksmith.deleteDataForUserAccount(userAccount: keyChainAccount)
             } catch {
                 return nil
             }
@@ -62,33 +62,34 @@ class UserManager: UserManaging {
         self.api = api
     }
 
-    func saveCredentials(var credentials: Credentials, user: UserEntity) -> SignalProducer<Credentials, UserError> {
+    func saveCredentials(_ credentials: Credentials, user: UserEntity) -> SignalProducer<Credentials, UserError> {
+        var credentials = credentials
         return SignalProducer { sink, disposable in
             do {
                 credentials.id = user.id
 
                 if let _ = self.credentials {
-                    try Locksmith.deleteDataForUserAccount(keyChainAccount)
+                    try Locksmith.deleteDataForUserAccount(userAccount: keyChainAccount)
                 }
 
                 if let data = credentials.toKeychainData() {
-                    try Locksmith.saveData(data, forUserAccount: keyChainAccount)
-                    sink.sendNext(credentials)
+                    try Locksmith.saveData(data: data, forUserAccount: keyChainAccount)
+                    sink.send(value: credentials)
                     sink.sendCompleted()
                 } else {
                     // Unable to encode data to keychain
-                    sink.sendFailed(.Encoding)
+                    sink.send(error: .encoding)
                 }
             } catch let e as NSError {
-                sink.sendFailed(.Keychain(e))
+                sink.send(error: .keychain(e))
             }
         }
     }
 
-    private func saveUser(currentUser: UserEntity) -> SignalProducer<UserEntity, UserError> {
+    fileprivate func saveUser(_ currentUser: UserEntity) -> SignalProducer<UserEntity, UserError> {
         return SignalProducer { sink, disposable in
             self.user.value = currentUser
-            sink.sendNext(currentUser)
+            sink.send(value: currentUser)
             sink.sendCompleted()
         }
 // Alternatively save to core data
@@ -98,8 +99,8 @@ class UserManager: UserManaging {
 //        })
     }
 
-    private func save(currentUser: UserEntity, credentials: Credentials) -> SignalProducer<UserEntity, UserError> {
-        let saveCredentials = self.saveCredentials(credentials, user: currentUser).on(next: { credentials in self.credentials = credentials })
+    fileprivate func save(_ currentUser: UserEntity, credentials: Credentials) -> SignalProducer<UserEntity, UserError> {
+        let saveCredentials = self.saveCredentials(credentials, user: currentUser).on(value: { credentials in self.credentials = credentials })
         let saveUser = self.saveUser(currentUser)
 
         return saveCredentials.then(saveUser)
@@ -113,17 +114,17 @@ class UserManager: UserManaging {
 
     func logout() -> SignalProducer<(), NoError> {
         return SignalProducer { sink, disposable in
-            let _ = try? Locksmith.deleteDataForUserAccount(keyChainAccount)
+            let _ = try? Locksmith.deleteDataForUserAccount(userAccount: keyChainAccount)
             self.credentials = nil
             self.user.value = nil
 
-            sink.sendNext()
+            sink.send(value: ())
             sink.sendCompleted()
         }
     }
 
-    func login(username: String, password: String) -> SignalProducer<UserEntity, UserError> {
-        return self.api.login(username, password: password).mapError { .Request($0) }.flatMap(.Latest) { currentUser, credentials in
+    func login(_ username: String, password: String) -> SignalProducer<UserEntity, UserError> {
+        return self.api.login(username, password: password).mapError { .request($0) }.flatMap(.latest) { currentUser, credentials in
             return self.save(currentUser, credentials: credentials)
         }
     }
