@@ -36,7 +36,8 @@ class LanguageDetailViewController: BaseViewController {
     override func loadView() {
         super.loadView()
 
-        let titleLabel = Theme.label(size: 25)
+        let titleLabel = UILabel()
+        titleLabel.makeDefault(size: 25)
 
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { (make) -> Void in
@@ -55,7 +56,8 @@ class LanguageDetailViewController: BaseViewController {
         }
         self.imageView = imageView
 
-        let sentenceLabel = Theme.label(size: 17)
+        let sentenceLabel = UILabel()
+        sentenceLabel.makeDefault(size: 17)
         sentenceLabel.numberOfLines = 0
         sentenceLabel.textAlignment = .center
         view.addSubview(sentenceLabel)
@@ -70,7 +72,7 @@ class LanguageDetailViewController: BaseViewController {
         let playButton = UIButton()
         playButton.setTitleColor(UIColor.black, for: UIControlState())
         playButton.setTitleColor(UIColor.lightGray, for: .disabled)
-        playButton.titleLabel?.font = UIFont.FontStyle.Regular.font(withSize: 17)
+        playButton.titleLabel?.font = UIFont.FontStyle.regular.font(with: 17)
 
         playButton.setTitle("► Play sentence", for: UIControlState())
 
