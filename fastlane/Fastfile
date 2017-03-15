@@ -159,6 +159,11 @@ import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache:
       # Change environment plist
       replace_environment_plist(environment: environment)
 
+      environment_dict = {
+          "ACK_BUILD_NUMBER" => number_of_commits,
+      }
+
+      generate_preprocess_header(values: environment_dict)
   end
 
 

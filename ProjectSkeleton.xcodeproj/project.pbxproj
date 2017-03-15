@@ -1176,6 +1176,7 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 				);
 				INFOPLIST_FILE = Tests/UITests/Info.plist;
+				INFOPLIST_PREFIX_HEADER = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1228,6 +1229,7 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 				);
 				INFOPLIST_FILE = Tests/UITests/Info.plist;
+				INFOPLIST_PREFIX_HEADER = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -1279,6 +1281,7 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 				);
 				INFOPLIST_FILE = Tests/UITests/Info.plist;
+				INFOPLIST_PREFIX_HEADER = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -1351,9 +1354,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
-				INFOPLIST_PREFIX_HEADER = "";
+				INFOPLIST_PREFIX_HEADER = Environment/environment_preprocess.h;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "${ACK_BUNDLEID}";
 				PRODUCT_NAME = ProjectSkeleton;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
@@ -1490,10 +1493,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
-				INFOPLIST_PREFIX_HEADER = "";
+				INFOPLIST_PREFIX_HEADER = Environment/environment_preprocess.h;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DDEBUG -Xfrontend -debug-time-function-bodies";
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "${ACK_BUNDLEID}";
 				PRODUCT_NAME = ProjectSkeleton;
 				PROVISIONING_PROFILE = "2bfcc027-5151-4b96-a838-d00764a94a41";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development cz.ackee.enterprise.*";
@@ -1519,9 +1522,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
 				INFOPLIST_FILE = "Source/Project-Info.plist";
-				INFOPLIST_PREFIX_HEADER = "";
+				INFOPLIST_PREFIX_HEADER = Environment/environment_preprocess.h;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "${ACK_BUNDLEID}";
 				PRODUCT_NAME = ProjectSkeleton;
 				PROVISIONING_PROFILE = "461d3b36-aa18-468a-93bf-df13ae9f0e38";
 				PROVISIONING_PROFILE_SPECIFIER = "match InHouse cz.ackee.enterprise.*";
