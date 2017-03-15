@@ -45,6 +45,8 @@
 /* Begin PBXBuildFile section */
 		17A18CBF1DBFAD8E003B728E /* Swinject+Factories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A18CBE1DBFAD8E003B728E /* Swinject+Factories.swift */; };
 		5987A22F7A356606239994EF /* Pods_ProjectSkeleton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CA449F59B20C8B0BC375D5F /* Pods_ProjectSkeleton.framework */; };
+		696C56791E797FB200C1D1B0 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696C56781E797FB200C1D1B0 /* main.swift */; };
+		696C567B1E797FFB00C1D1B0 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696C567A1E797FFB00C1D1B0 /* TestingAppDelegate.swift */; };
 		69D5B7FC1C248694008F1A30 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D5B7FA1C248694008F1A30 /* Images.swift */; };
 		69D5B7FD1C248694008F1A30 /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D5B7FB1C248694008F1A30 /* LocalizedStrings.swift */; };
 		69D5B8061C24877D008F1A30 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 69D5B8041C24877D008F1A30 /* Model.xcdatamodeld */; };
@@ -167,6 +169,8 @@
 		59640930034913CD8675AE0D /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		5E36A7A845F1950279D9332A /* Pods_SampleTestingProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SampleTestingProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		68CBF6A3747C7413DE1CBC2E /* Pods_UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		696C56781E797FB200C1D1B0 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = ../main.swift; sourceTree = "<group>"; };
+		696C567A1E797FFB00C1D1B0 /* TestingAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
 		69D5B7FA1C248694008F1A30 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		69D5B7FB1C248694008F1A30 /* LocalizedStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		69D5B8051C24877D008F1A30 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -388,6 +392,7 @@
 				ACC810C21C624AEF0080266A /* APITests */,
 				ACF8D9F11C6236CD00D74377 /* UnitTests */,
 				ACF8D9ED1C6236CD00D74377 /* UITests */,
+				696C567A1E797FFB00C1D1B0 /* TestingAppDelegate.swift */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -569,6 +574,7 @@
 				B4EE778B1B2871F100ED956B /* View */,
 				6D40F83B1BB18E9F0079C917 /* ViewModel */,
 				B4ECD6111AD477910099D516 /* AppDelegate.swift */,
+				696C56781E797FB200C1D1B0 /* main.swift */,
 				AC22F0C51D6A446E00514668 /* Assemblies */,
 			);
 			path = Source;
@@ -1119,6 +1125,7 @@
 				B4F14CA61B20502000DDBE9B /* LanguagesTableViewController.swift in Sources */,
 				ACD479C41C5C301F00E85DD3 /* LocationManager.swift in Sources */,
 				AC386B691CBD205F002C9426 /* Credentials.swift in Sources */,
+				696C56791E797FB200C1D1B0 /* main.swift in Sources */,
 				69D5B7FD1C248694008F1A30 /* LocalizedStrings.swift in Sources */,
 				ACD8E8211C57D91300031D67 /* LanguageEntity.swift in Sources */,
 				ACD479CC1C5D4D6800E85DD3 /* SpeechSynthetizer.swift in Sources */,
@@ -1152,6 +1159,7 @@
 				794BB3431CA991A0004CC4D9 /* DisposingSpec.swift in Sources */,
 				ACF8DA091C6236F700D74377 /* DummyResponse.swift in Sources */,
 				794BB3401CA9917F004CC4D9 /* LanguageTableViewCellSpec.swift in Sources */,
+				696C567B1E797FFB00C1D1B0 /* TestingAppDelegate.swift in Sources */,
 				ACF8DA0B1C6236F700D74377 /* LanguagesViewControllerSpec.swift in Sources */,
 				79F0592C1D098D90005EFEFE /* AuthenticatedAPIServiceSpec.swift in Sources */,
 			);
