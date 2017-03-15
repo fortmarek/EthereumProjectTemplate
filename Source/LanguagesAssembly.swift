@@ -12,7 +12,7 @@ import SwinjectAutoregistration
 typealias LanguageDetailModelingFactory = (_ language: LanguageEntity) -> LanguageDetailViewModeling
 typealias LanguageDetailTableViewControllerFactory = (_ viewModel: LanguageDetailViewModeling) -> LanguageDetailViewController
 
-class LanguagesAssembly: AssemblyType {
+class LanguagesAssembly: Assembly {
     
     func assemble(container: Container) {
         

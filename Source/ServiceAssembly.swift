@@ -8,7 +8,7 @@
 
 import Swinject
 
-class ServiceAssembly: AssemblyType {
+class ServiceAssembly: Assembly {
     
     func assemble(container: Container) {
         //Uncomment for authenticated service
