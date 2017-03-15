@@ -1,23 +1,43 @@
 // Generated using SwiftGen, by O.Halligon — https://github.com/AliSoftware/SwiftGen
 
-import UIKit
+#if os(iOS) || os(tvOS) || os(watchOS)
+  import UIKit.UIImage
+  typealias Image = UIImage
+#elseif os(OSX)
+  import AppKit.NSImage
+  typealias Image = NSImage
+#endif
 
-extension UIImage {
-  enum Asset: String {
-    case Icon_60 = "Icon-60"
-    case Icon_72 = "Icon-72"
-    case Icon_Small_50 = "Icon-Small-50"
-    case Icon = "Icon"
-    case ITunesArtwork = "iTunesArtwork"
-    case LockOff = "LockOff"
-    case LockOn = "LockOn"
+// swiftlint:disable file_length
+// swiftlint:disable line_length
 
-    var image: UIImage {
-      return UIImage(asset: self)
-    }
-  }
+// swiftlint:disable type_body_length
+enum Asset: String {
+  case LockOff = "LockOff"
+  case LockOn = "LockOn"
 
-  convenience init!(asset: Asset) {
-    self.init(named: asset.rawValue)
+  var image: Image {
+    let bundle = NSBundle(forClass: BundleToken.self)
+    #if os(iOS) || os(tvOS) || os(watchOS)
+    let image = Image(named: rawValue, inBundle: bundle, compatibleWithTraitCollection: nil)
+    #elseif os(OSX)
+    let image = bundle.imageForResource(rawValue)
+    #endif
+    guard let result = image else { fatalError("Unable to load image \(rawValue).") }
+    return result
   }
 }
+// swiftlint:enable type_body_length
+
+extension Image {
+  convenience init!(asset: Asset) {
+    #if os(iOS) || os(tvOS) || os(watchOS)
+    let bundle = NSBundle(forClass: BundleToken.self)
+    self.init(named: asset.rawValue, inBundle: bundle, compatibleWithTraitCollection: nil)
+    #elseif os(OSX)
+    self.init(named: asset.rawValue)
+    #endif
+  }
+}
+
+private final class BundleToken {}

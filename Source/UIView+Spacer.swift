@@ -1,6 +1,6 @@
 //
 //  UIView+Spacer.swift
-//  Shark
+//  ProjectSkeleton
 //
 //  Created by Petr Šíma on 11/12/15.
 //  Copyright © 2015 Ackee s.r.o. All rights reserved.

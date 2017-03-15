@@ -1,6 +1,6 @@
 //
 //  ErrorWrapping.swift
-//  FofrVyhry
+//  ProjectSkeleton
 //
 //  Created by Petr Šíma on 28/11/2016.
 //  Copyright © 2016 Ackee s.r.o. All rights reserved.

@@ -1,9 +1,9 @@
 //
 //  Swinject+Factories.swift
-//  Pods
+//  ProjectSkeleton
 //
 //  Created by Tomas Kohout on 8/30/16.
-//
+//  Copyright © 2016 Ackee s.r.o. All rights reserved.
 //
 
 import Swinject

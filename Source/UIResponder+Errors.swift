@@ -1,6 +1,6 @@
 //
 //  UIResponder+Errors.swift
-//  Tipsy
+//  ProjectSkeleton
 //
 //  Created by Petr Šíma on Jun/22/15.
 //  Copyright © 2015 Petr Sima. All rights reserved.
