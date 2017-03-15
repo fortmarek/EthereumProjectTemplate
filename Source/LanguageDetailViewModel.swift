@@ -26,11 +26,11 @@ class LanguageDetailViewModel: LanguageDetailViewModeling {
     let language_code: MutableProperty<String?>
     let isSpeaking: MutableProperty<Bool>
 
-    fileprivate let language: LanguageEntity
+    fileprivate let language: Language
 
     fileprivate let synthetizer: SpeechSynthetizing
 
-    internal init(language: LanguageEntity, synthetizer: SpeechSynthetizing) {
+    internal init(language: Language, synthetizer: SpeechSynthetizing) {
         self.language = language
         self.name = MutableProperty(language.name)
         self.flagURL = MutableProperty(URL(string: language.flag)!)

@@ -29,17 +29,18 @@ extension UserError: ErrorPresentable {
 }
 
 protocol UserManaging {
-    var user: MutableProperty<UserEntity?> { get set }
+    var user: MutableProperty<User?> { get set }
     var credentials: Credentials? { get }
+    
     func logout() -> SignalProducer<(), NoError>
     func isLoggedIn() -> Bool
-    func login(_ username: String, password: String) -> SignalProducer<UserEntity, UserError>
+    func login(_ username: String, password: String) -> SignalProducer<User, UserError>
 }
 
 class UserManager: UserManaging {
     fileprivate let api: AuthenticationAPIServicing
 
-    var user = MutableProperty<UserEntity?>(nil)
+    var user = MutableProperty<User?>(nil)
 
     lazy var credentials: Credentials? = {
         guard let result = Locksmith.loadDataForUserAccount(userAccount: keyChainAccount) else { return nil }
@@ -62,7 +63,7 @@ class UserManager: UserManaging {
         self.api = api
     }
 
-    func saveCredentials(_ credentials: Credentials, user: UserEntity) -> SignalProducer<Credentials, UserError> {
+    func saveCredentials(_ credentials: Credentials, user: User) -> SignalProducer<Credentials, UserError> {
         var credentials = credentials
         return SignalProducer { sink, disposable in
             do {
@@ -86,7 +87,7 @@ class UserManager: UserManaging {
         }
     }
 
-    fileprivate func saveUser(_ currentUser: UserEntity) -> SignalProducer<UserEntity, UserError> {
+    fileprivate func saveUser(_ currentUser: User) -> SignalProducer<User, UserError> {
         return SignalProducer { sink, disposable in
             self.user.value = currentUser
             sink.send(value: currentUser)
@@ -99,7 +100,7 @@ class UserManager: UserManaging {
 //        })
     }
 
-    fileprivate func save(_ currentUser: UserEntity, credentials: Credentials) -> SignalProducer<UserEntity, UserError> {
+    fileprivate func save(_ currentUser: User, credentials: Credentials) -> SignalProducer<User, UserError> {
         let saveCredentials = self.saveCredentials(credentials, user: currentUser).on(value: { credentials in self.credentials = credentials })
         let saveUser = self.saveUser(currentUser)
 
@@ -123,7 +124,7 @@ class UserManager: UserManaging {
         }
     }
 
-    func login(_ username: String, password: String) -> SignalProducer<UserEntity, UserError> {
+    func login(_ username: String, password: String) -> SignalProducer<User, UserError> {
         return self.api.login(username, password: password).mapError { .request($0) }.flatMap(.latest) { currentUser, credentials in
             return self.save(currentUser, credentials: credentials)
         }

@@ -1,5 +1,5 @@
 //
-//  UserEntity.swift
+//  User.swift
 //  ProjectSkeleton
 //
 //  Created by Tomas Kohout on 2/8/16.
@@ -13,13 +13,13 @@ import Argo
 import Runes
 import Curry
 
-struct UserEntity {
+struct User {
     let id: Int
     //let username: String
 }
 
-extension UserEntity: Decodable {
-    static func decode(_ json: JSON) -> Decoded<UserEntity> {
+extension User: Decodable {
+    static func decode(_ json: JSON) -> Decoded<User> {
         return curry(self.init)
             <^> json <| "id"
     }
