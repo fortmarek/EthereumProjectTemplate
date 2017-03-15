@@ -852,7 +852,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH=${PATH}:/usr/local/bin/\nmogenerator -m Source/Model/Model.xcdatamodeld/Model.xcdatamodel --swift --human-dir Source/Model --machine-dir Source/Generated/Managed --template-var arc=true --template-path motemplates";
+			shellScript = "PATH=${PATH}:/usr/local/bin/\nmogenerator -m Source/Model/Model.xcdatamodeld/Model.xcdatamodel --swift --human-dir Source/Model --machine-dir Source/Generated/Managed --template-var arc=true";
 		};
 		69D5B7F91C24863C008F1A30 /* Generate enums */ = {
 			isa = PBXShellScriptBuildPhase;
