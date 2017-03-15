@@ -841,7 +841,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "Pods/SwiftGen/bin/swiftgen images --output \"Source/Generated/Images.swift\" \"Resources/Images.xcassets\"\nPods/SwiftGen/bin/swiftgen strings --output \"Source/Generated/LocalizedStrings.swift\" \"Resources/Base.lproj/Localizable.strings\"";
+			shellScript = "Pods/SwiftGen/bin/swiftgen images -t \"dot-syntax-swift3\" --output \"Source/Generated/Images.swift\" \"Resources/Images.xcassets\"\nPods/SwiftGen/bin/swiftgen strings -t \"dot-syntax-swift3\" --output \"Source/Generated/LocalizedStrings.swift\" \"Resources/Base.lproj/Localizable.strings\"";
 		};
 		8BD516E86F5B937685FF1464 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

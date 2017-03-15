@@ -16,7 +16,7 @@ enum LoadLanguagesError: Error {
 }
 extension LoadLanguagesError : ErrorPresentable {
     var title: String? { //custom title
-        return L10n.languageTableNetworkErrorTitle.string
+        return L10n.Languagetable.networkErrorTitle
     }
     var message: String { //underlying error description
         switch self {

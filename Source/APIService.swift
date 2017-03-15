@@ -16,12 +16,13 @@ import ReactiveSwift
 enum RequestError: Error {
     case network(NetworkError)
     case mapping(MappingError)
+    case unexpectedEmptyBody
 }
 extension RequestError: ErrorPresentable {
     var message: String {
         switch self {
         case .network(let e): return e.error.message
-        case .mapping(_): return L10n.genericMappingError.string
+        case .mapping, .unexpectedEmptyBody: return L10n.genericMappingError
         }
     }
 }
@@ -46,7 +47,7 @@ class APIService {
         return relativeURL
     }
     
-    func request(_ path: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String] = [:]) -> SignalProducer<Any, RequestError> {
+    func request(_ path: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String] = [:]) -> SignalProducer<RequestResult, RequestError> {
         let relativeURL = resourceURL(path)
         let headers = addCustomHeaders(toHeaders: headers)
         
@@ -91,14 +92,14 @@ class AuthenticatedAPIService: APIService {
         return headers
     }
     
-    override func request(_ path: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String] = [:]) -> SignalProducer<Any, RequestError> {
+    override func request(_ path: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String] = [:]) -> SignalProducer<RequestResult, RequestError> {
         let allHeaders = addAuthorization(toHeaders: headers)
         
         return super.request(path, method: method, parameters: parameters, encoding: encoding, headers: allHeaders)
             .flatMapError { [unowned self] e in self.unauthorizedHandler(e: e, path: path, method: method, parameters: parameters, encoding: encoding, headers: headers) }
     }
     
-    private func unauthorizedHandler(e: RequestError, path: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String]) -> SignalProducer<Any, RequestError> {
+    private func unauthorizedHandler(e: RequestError, path: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String]) -> SignalProducer<RequestResult, RequestError> {
         guard case .network(let networkError) = e, networkError.response?.statusCode == 401,
             let originalRequest = networkError.request
             else { return SignalProducer(error: e) }
@@ -127,7 +128,7 @@ class AuthenticatedAPIService: APIService {
                 }
             })
             .promoteErrors(RequestError.self)
-            .flatMap(.latest) { success -> SignalProducer<Any, RequestError> in
+            .flatMap(.latest) { success -> SignalProducer<RequestResult, RequestError> in
                 guard success else { return SignalProducer(error: .network(networkError)) }
                 return retry()
         }
@@ -137,5 +138,23 @@ class AuthenticatedAPIService: APIService {
     func requestUsedCurrentAuthData(request: NSURLRequest) -> Bool {
         guard let allHeaders = request.allHTTPHeaderFields else { return true }
         return allHeaders == addAuthorization(toHeaders: allHeaders)
+    }
+}
+
+extension SignalProducerProtocol where Value == RequestResult, Error == RequestError {
+    
+    /**
+     * Call this if you expect your request to return non empty body.
+     * If request returns empty body and it is unexpected (this method is called) RequestError.unexpectedEmptyBody is sent
+     */
+    func validateEmptyValue() -> SignalProducer<Any, RequestError> {
+        return flatMap(.latest) { requestResult -> SignalProducer<Any, RequestError> in
+            switch requestResult {
+            case .data(let data):
+                return SignalProducer(value: data)
+            case .noContent:
+                return SignalProducer(error: .unexpectedEmptyBody)
+            }
+        }
     }
 }

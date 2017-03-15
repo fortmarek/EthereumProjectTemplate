@@ -19,6 +19,7 @@ class LanguagesAPIService: APIService, LanguagesAPIServicing {
     func languages() -> SignalProducer<[LanguageEntity], RequestError> {
         
         return self.request("languages.json")
+            .validateEmptyValue()
             .flatMap(.latest) { json  -> SignalProducer<[LanguageEntity], RequestError> in
                 return rac_decode(object: json as AnyObject).mapError { .mapping(MappingError(underlyingError: $0)) }
         }

@@ -10,32 +10,51 @@
 
 // swiftlint:disable file_length
 // swiftlint:disable line_length
+// swiftlint:disable nesting
 
-// swiftlint:disable type_body_length
-enum Asset: String {
-  case LockOff = "LockOff"
-  case LockOn = "LockOn"
+struct AssetType: ExpressibleByStringLiteral {
+  fileprivate var value: String
 
   var image: Image {
-    let bundle = NSBundle(forClass: BundleToken.self)
+    let bundle = Bundle(for: BundleToken.self)
     #if os(iOS) || os(tvOS) || os(watchOS)
-    let image = Image(named: rawValue, inBundle: bundle, compatibleWithTraitCollection: nil)
+    let image = Image(named: value, in: bundle, compatibleWith: nil)
     #elseif os(OSX)
-    let image = bundle.imageForResource(rawValue)
+    let image = bundle.image(forResource: value)
     #endif
-    guard let result = image else { fatalError("Unable to load image \(rawValue).") }
+    guard let result = image else { fatalError("Unable to load image \(value).") }
     return result
+  }
+
+  init(stringLiteral value: String) {
+    self.value = value
+  }
+
+  init(extendedGraphemeClusterLiteral value: String) {
+    self.init(stringLiteral: value)
+  }
+
+  init(unicodeScalarLiteral value: String) {
+    self.init(stringLiteral: value)
+  }
+}
+
+// swiftlint:disable type_body_length
+enum Asset {
+  enum TabBar {
+    static let lockOff: AssetType = "LockOff"
+    static let lockOn: AssetType = "LockOn"
   }
 }
 // swiftlint:enable type_body_length
 
 extension Image {
-  convenience init!(asset: Asset) {
+  convenience init!(asset: AssetType) {
     #if os(iOS) || os(tvOS) || os(watchOS)
-    let bundle = NSBundle(forClass: BundleToken.self)
-    self.init(named: asset.rawValue, inBundle: bundle, compatibleWithTraitCollection: nil)
+    let bundle = Bundle(for: BundleToken.self)
+    self.init(named: asset.value, in: bundle, compatibleWith: nil)
     #elseif os(OSX)
-    self.init(named: asset.rawValue)
+    self.init(named: asset.value)
     #endif
   }
 }
