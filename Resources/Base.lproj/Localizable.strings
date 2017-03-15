@@ -1,3 +1,10 @@
+/* 
+  Localizable.strings
+  ProjectSkeleton
+
+  Created by Jakub Olejník on 15/03/2017.
+  Copyright © 2017 Ackee s.r.o. All rights reserved.
+*/
 "languageTable.network_error_title" = "Network error";
 "languageTable.network_error_message" = "Unable to download list of languages";
 "languageTable.network_error_dismiss" = "Close";
