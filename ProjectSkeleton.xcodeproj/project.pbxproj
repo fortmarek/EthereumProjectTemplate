@@ -226,7 +226,6 @@
 		B433E4A919530092006BEBF1 /* environment-Development.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "environment-Development.plist"; sourceTree = "<group>"; };
 		B433E4AA19530092006BEBF1 /* environment.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = environment.plist; sourceTree = "<group>"; };
 		B433E4B119530FD0006BEBF1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		B47536F51951A84E00DB8D6D /* ProjectHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectHeader.h; sourceTree = "<group>"; };
 		B4A0BA8E1AD4972300715A9F /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B4A8008C1B28688600453A28 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		B4A8008D1B28688600453A28 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
@@ -423,14 +422,6 @@
 			path = Libs;
 			sourceTree = "<group>";
 		};
-		B47536F41951A82C00DB8D6D /* Headers */ = {
-			isa = PBXGroup;
-			children = (
-				B47536F51951A84E00DB8D6D /* ProjectHeader.h */,
-			);
-			name = Headers;
-			sourceTree = "<group>";
-		};
 		B47536F61951A87A00DB8D6D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -524,7 +515,6 @@
 				B433E4A619530092006BEBF1 /* Environment */,
 				B4EE778C1B28A5AA00ED956B /* Extensions */,
 				69D5B7F21C2485CD008F1A30 /* Generated */,
-				B47536F41951A82C00DB8D6D /* Headers */,
 				B4EE77891B2871C800ED956B /* Model */,
 				B47536F91951AAFC00DB8D6D /* Services */,
 				B47536F71951A88A00DB8D6D /* Supporting Files */,
