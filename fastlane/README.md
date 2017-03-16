@@ -55,6 +55,16 @@ Additionally, this will add device frames around the screenshots
 fastlane copy
 ```
 Copies and renames the project into new directory
+### localization
+```
+fastlane localization
+```
+Download strings from Google spreadsheet
+### swiftgen
+```
+fastlane swiftgen
+```
+Generate SwiftGen enums
 ### provisioning
 ```
 fastlane provisioning

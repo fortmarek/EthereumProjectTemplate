@@ -18,6 +18,17 @@
 			name = mogenerator;
 			productName = mogenerator;
 		};
+		69CDF38B1E7AB97700BD2F18 /* Localization */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 69CDF38C1E7AB97700BD2F18 /* Build configuration list for PBXAggregateTarget "Localization" */;
+			buildPhases = (
+				69CDF3901E7AB98000BD2F18 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Localization;
+			productName = Localization;
+		};
 		69D5B7F41C24861E008F1A30 /* SwiftGen */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 69D5B7F51C24861E008F1A30 /* Build configuration list for PBXAggregateTarget "SwiftGen" */;
@@ -668,6 +679,10 @@
 					69148E1E1B78BFE300D83C0E = {
 						CreatedOnToolsVersion = 6.4;
 					};
+					69CDF38B1E7AB97700BD2F18 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
 					69D5B7F41C24861E008F1A30 = {
 						CreatedOnToolsVersion = 7.2;
 					};
@@ -708,6 +723,7 @@
 				69148E1E1B78BFE300D83C0E /* mogenerator */,
 				69D5B7F41C24861E008F1A30 /* SwiftGen */,
 				AC8F26401C64EC3A0011DC49 /* EnvironmentSwitch */,
+				69CDF38B1E7AB97700BD2F18 /* Localization */,
 			);
 		};
 /* End PBXProject section */
@@ -829,6 +845,19 @@
 			shellPath = /bin/sh;
 			shellScript = "PATH=${PATH}:/usr/local/bin/\nmogenerator -m Source/Model/Model.xcdatamodeld/Model.xcdatamodel --swift --human-dir Source/Model --machine-dir Source/Generated/Managed --template-var arc=true";
 		};
+		69CDF3901E7AB98000BD2F18 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "fastlane localization";
+		};
 		69D5B7F91C24863C008F1A30 /* Generate enums */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -841,7 +870,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "Pods/SwiftGen/bin/swiftgen images -t \"dot-syntax-swift3\" --output \"Source/Generated/Images.swift\" \"Resources/Images.xcassets\"\nPods/SwiftGen/bin/swiftgen strings -t \"dot-syntax-swift3\" --output \"Source/Generated/LocalizedStrings.swift\" \"Resources/Base.lproj/Localizable.strings\"";
+			shellScript = "fastlane swiftgen";
 		};
 		8BD516E86F5B937685FF1464 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1080,6 +1109,27 @@
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "461d3b36-aa18-468a-93bf-df13ae9f0e38";
+			};
+			name = AppStore;
+		};
+		69CDF38D1E7AB97700BD2F18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		69CDF38E1E7AB97700BD2F18 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = AdHoc;
+		};
+		69CDF38F1E7AB97700BD2F18 /* AppStore */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = AppStore;
 		};
@@ -1587,6 +1637,15 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = AdHoc;
+		};
+		69CDF38C1E7AB97700BD2F18 /* Build configuration list for PBXAggregateTarget "Localization" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				69CDF38D1E7AB97700BD2F18 /* Debug */,
+				69CDF38E1E7AB97700BD2F18 /* AdHoc */,
+				69CDF38F1E7AB97700BD2F18 /* AppStore */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		69D5B7F51C24861E008F1A30 /* Build configuration list for PBXAggregateTarget "SwiftGen" */ = {
 			isa = XCConfigurationList;
