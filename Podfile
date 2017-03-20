@@ -9,57 +9,51 @@ use_frameworks!
 
 target 'ProjectSkeleton' do
 
-# Extensions
-pod 'ACKategories', '~> 4.0'
-pod 'ACKReactiveExtensions', '~> 2.3'
-pod 'ACKReactiveExtensions/Argo', '~> 2.3'
-pod 'ACKReactiveExtensions/SDWebImage', '~> 2.3'
+    # Extensions
+    pod 'ACKategories', '~> 4.0'
+    pod 'ACKReactiveExtensions', '~> 2.3'
+    pod 'ACKReactiveExtensions/Argo', '~> 2.3'
 
-# Hockey
-pod 'HockeySDK', '~> 4.1'
+    # Hockey
+    pod 'HockeySDK', '~> 4.1'
 
-# UI
-pod 'SnapKit'
-pod 'SDWebImage', '~> 4.0'
-pod 'TPKeyboardAvoiding'
+    # UI
+    pod 'SnapKit'
+    pod 'TPKeyboardAvoiding'
+    pod 'AlamofireImage'
 
-# Networking
-pod 'Alamofire'
+    # Networking
+    pod 'Alamofire'
 
-# Model
-pod 'ReactiveCocoa', '~> 5.0'
-pod 'ReactiveSwift', '~> 1.0'
-pod 'Argo', '~> 4.1'
-pod 'Curry', '~> 3.0'
-pod 'Locksmith', '~> 3.0'
+    # Model
+    pod 'ReactiveCocoa', '~> 5.0'
+    pod 'ReactiveSwift', '~> 1.0'
+    pod 'Argo', '~> 4.1'
+    pod 'Curry', '~> 3.0'
+    pod 'Locksmith', '~> 3.0'
 
-# Dependency Injection
-pod 'Swinject', '~> 2.0'
-pod 'SwinjectAutoregistration', '~> 2.0'
+    # Dependency Injection
+    pod 'Swinject', '~> 2.0'
+    pod 'SwinjectAutoregistration', '~> 2.0'
 
-# Code Generation
-pod 'SwiftGen', '~> 4.0'
+    # Code Generation
+    pod 'SwiftGen', '~> 4.0'
 
-def testing_pods
-    pod 'Quick', '~> 1.0'
-    pod 'Nimble', '5.1'
-end
+    def testing_pods
+        pod 'Quick', '~> 1.0'
+        pod 'Nimble', '5.1'
+    end
 
 
-target 'Tests' do
-    inherit! :search_paths
-    testing_pods
-end
+    target 'Tests' do
+        inherit! :search_paths
+        testing_pods
+    end
 
-target 'UITests' do
-    inherit! :search_paths
-    testing_pods
-end
-
-target 'APITests' do
-    inherit! :search_paths
-    testing_pods
-end
+    target 'UITests' do
+        inherit! :search_paths
+        testing_pods
+    end
 
 end
 

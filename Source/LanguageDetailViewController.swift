@@ -9,6 +9,7 @@
 import UIKit
 import ReactiveSwift
 import ReactiveCocoa
+import AlamofireImage
 
 class LanguageDetailViewController: BaseViewController {
     let viewModel: LanguageDetailViewModeling
@@ -110,7 +111,7 @@ class LanguageDetailViewController: BaseViewController {
         self.titleLabel.reactive.text <~ viewModel.name
 
         viewModel.flagURL.producer.startWithValues({ [weak self] url in
-            self?.imageView.sd_setImage(with: url)
+            self?.imageView.af_setImage(withURL: url)
         })
 
 // Test leak check
