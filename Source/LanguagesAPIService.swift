@@ -11,15 +11,16 @@ import ReactiveSwift
 import ACKReactiveExtensions
 
 protocol LanguagesAPIServicing {
-    func languages() -> SignalProducer<[LanguageEntity], RequestError>
+    func languages() -> SignalProducer<[Language], RequestError>
 }
 
 class LanguagesAPIService: APIService, LanguagesAPIServicing {
     
-    func languages() -> SignalProducer<[LanguageEntity], RequestError> {
+    func languages() -> SignalProducer<[Language], RequestError> {
         
         return self.request("languages.json")
-            .flatMap(.latest) { json  -> SignalProducer<[LanguageEntity], RequestError> in
+            .validateEmptyValue()
+            .flatMap(.latest) { json  -> SignalProducer<[Language], RequestError> in
                 return rac_decode(object: json as AnyObject).mapError { .mapping(MappingError(underlyingError: $0)) }
         }
     }

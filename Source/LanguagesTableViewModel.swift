@@ -16,7 +16,7 @@ enum LoadLanguagesError: Error {
 }
 extension LoadLanguagesError : ErrorPresentable {
     var title: String? { //custom title
-        return L10n.languageTableNetworkErrorTitle.string
+        return L10n.Languagetable.networkErrorTitle
     }
     var message: String { //underlying error description
         switch self {
@@ -28,7 +28,7 @@ extension LoadLanguagesError : ErrorPresentable {
 
 protocol LanguagesTableViewModeling {
     var cellModels: MutableProperty<[LanguageDetailViewModeling]> { get }
-    var loadLanguages: Action<(), [LanguageEntity], LoadLanguagesError> { get }
+    var loadLanguages: Action<(), [Language], LoadLanguagesError> { get }
 }
 
 class LanguagesTableViewModel: LanguagesTableViewModeling {
@@ -66,40 +66,40 @@ class LanguagesTableViewModel: LanguagesTableViewModeling {
     
     //MARK: Action
     
-    lazy var loadLanguages: Action<(), [LanguageEntity], LoadLanguagesError> = Action { [unowned self] _ in
+    lazy var loadLanguages: Action<(), [Language], LoadLanguagesError> = Action { [unowned self] _ in
         return self.api.languages()
             .mapError { .request($0) }
-            .flatMap(.latest) { languages -> SignalProducer<[LanguageEntity], LoadLanguagesError> in
+            .flatMap(.latest) { languages -> SignalProducer<[Language], LoadLanguagesError> in
                 //The simulator user location works unexpectably in simulator
                 if let userLocation = self.locationManager.location , TARGET_OS_SIMULATOR == 0 {
                     return self.sortLanguageByDistanceFromUserLocation(languages.filter {$0.abbr.characters.first != "_"}, userLocation: userLocation).mapError { .geocoding($0) }
                 } else {
                     //Continue if we don't have user location
-                    return SignalProducer<[LanguageEntity], LoadLanguagesError>(value: languages)
+                    return SignalProducer<[Language], LoadLanguagesError>(value: languages)
                 }
         }
     }
     
     
-    fileprivate func sortLanguageByDistanceFromUserLocation(_ languages: [LanguageEntity], userLocation: CLLocation) -> SignalProducer<[LanguageEntity], NSError> {
+    fileprivate func sortLanguageByDistanceFromUserLocation(_ languages: [Language], userLocation: CLLocation) -> SignalProducer<[Language], NSError> {
         //Get geolocation for every language
-        let signalProducers: [SignalProducer<(LanguageEntity, CLLocation?), NSError>] = languages.map { language in
-            let languageProducer = SignalProducer<LanguageEntity, NSError>(value: language)
+        let signalProducers: [SignalProducer<(Language, CLLocation?), NSError>] = languages.map { language in
+            let languageProducer = SignalProducer<Language, NSError>(value: language)
             
             return SignalProducer.combineLatest(languageProducer, self.geocoder.locationForCountryAbbreviation(language.abbr))
         }
         
         //Check all geolocations in sequence
-        let geolocations = SignalProducer<SignalProducer<(LanguageEntity, CLLocation?), NSError>, NSError>(signalProducers)
+        let geolocations = SignalProducer<SignalProducer<(Language, CLLocation?), NSError>, NSError>(signalProducers)
             .flatten(.concat)
-            .reduce([], { (array: [(LanguageEntity, CLLocation?)], item: (LanguageEntity, CLLocation?)) -> [(LanguageEntity, CLLocation?)] in
+            .reduce([], { (array: [(Language, CLLocation?)], item: (Language, CLLocation?)) -> [(Language, CLLocation?)] in
                 var array = array
                 array.append(item)
                 return array
             })
         
         //Sort by closest
-        return geolocations.map { languages -> [LanguageEntity] in
+        return geolocations.map { languages -> [Language] in
             languages.sorted(by: { entityA, entityB in
                 let (_, locationA) = entityA; let (_, locationB) = entityB
                 return locationA?.distance(from: userLocation) ?? 0 < locationB?.distance(from: userLocation) ?? 0

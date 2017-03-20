@@ -1,5 +1,5 @@
 //
-//  StoriesUI.swift
+//  Theme.swift
 //  ProjectSkeleton
 //
 //  Created by Dominik Vesely on 08/04/15.
@@ -9,75 +9,27 @@
 import UIKit
 import ACKategories
 
-
-
-
-
 extension UIFont {
+    fileprivate static let defaultSize: CGFloat = 13
+    
     enum FontStyle: String {
-        case Regular = "Helvetica"
+        case regular = "Helvetica"
 
-        func font(withSize size: CGFloat = 13) -> UIFont {
+        func font(with size: CGFloat = UIFont.defaultSize) -> UIFont {
             return UIFont(name: rawValue, size: size)!
         }
     }
-    class func mainRegular(_ size: CGFloat) -> UIFont {
-        return FontStyle.Regular.font(withSize: size)
-    }
 }
-
-
-
 
 extension UIColor {
-
-	class func gayColor() -> UIColor {
-		return UIColor(hex: 0xFF1493)
-	}
-
-    class func defaultTextColor() -> UIColor {
-        return UIColor.black
-    }
-
+    static var gay: UIColor { return UIColor(hex: 0xFF1493) }
+    static var defaultText: UIColor { return .black }
 }
 
-extension UIImage {
-    enum ImagesForToggle: String {
-        case Lock = "Lock"
-    }
-
-    /**
-    Toggle on/off on UIButton image.
-
-    - parameter name: enum of names of the images.
-
-    - returns: tuple of images with on/off postfix.
-    */
-    class func toggleImage(_ name: ImagesForToggle) -> (on: UIImage?, off: UIImage?) {
-        let imageOn = UIImage(named: name.rawValue + "On")
-        let imageOff = UIImage(named: name.rawValue + "Off")
-        return (imageOn!, imageOff!)
-    }
-}
-
-
-/**
- Theme class for creating standard UI elements for the app
-
-*/
-class Theme {
-    class func blueButton() -> UIButton {
-        let button = UIButton()
-        button.backgroundColor = UIColor.blue
-        return button
-    }
-
-    class func label(_ style: UIFont.FontStyle = .Regular, size: CGFloat = 13, color: UIColor = UIColor.defaultTextColor()) -> UILabel {
-        let label = UILabel()
-
-        label.font = UIFont(name: style.rawValue, size: size)
-        label.textColor = color
-
-        return label
+extension UILabel {
+    func makeDefault(style: UIFont.FontStyle = .regular, size: CGFloat = UIFont.defaultSize, color: UIColor? = nil) {
+        font = style.font(with: size)
+        
+        if let color = color { textColor = color }
     }
 }

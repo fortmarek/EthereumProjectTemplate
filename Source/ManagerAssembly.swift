@@ -9,7 +9,7 @@
 import Swinject
 import CoreLocation
 
-class ManagerAssembly: AssemblyType {
+class ManagerAssembly: Assembly {
     
     func assemble(container: Container) {
         container.autoregister(Geocoding.self, initializer: Geocoder.init).inObjectScope(.container)

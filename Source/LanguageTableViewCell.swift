@@ -7,8 +7,7 @@
 //
 
 import ReactiveSwift
-import SDWebImage
-
+import AlamofireImage
 
 class LanguageTableViewCell: UITableViewCell {
 
@@ -53,7 +52,7 @@ class LanguageTableViewCell: UITableViewCell {
         nameLabel.reactive.text <~ vm.flatMap(.latest) { $0.name.producer } 
         
         vm.flatMap(.latest) { $0.flagURL.producer }.startWithValues { [weak self] url in
-            self?.flagImageView.sd_setImage(with: url)
+            self?.flagImageView.af_setImage(withURL: url)
         }
         
     }

@@ -17,7 +17,6 @@ import ACKategories
 import enum Result.NoError
 public typealias NoError = Result.NoError
 
-@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, BITHockeyManagerDelegate {
 
     var window: UIWindow?

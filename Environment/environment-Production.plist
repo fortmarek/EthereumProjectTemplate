@@ -9,6 +9,8 @@
 		<key>baseURL</key>
 		<string>https://www.whostolemyunicorn.com/api/</string>
 	</dict>
+	<key>hockey_allowLogging</key>
+	<true/>
 	<key>hockey_identifier</key>
 	<string>dd8bd33331d549b8a90807631e3a0a98</string>
 </dict>

@@ -9,10 +9,10 @@
 import Swinject
 import SwinjectAutoregistration
 
-typealias LanguageDetailModelingFactory = (_ language: LanguageEntity) -> LanguageDetailViewModeling
+typealias LanguageDetailModelingFactory = (_ language: Language) -> LanguageDetailViewModeling
 typealias LanguageDetailTableViewControllerFactory = (_ viewModel: LanguageDetailViewModeling) -> LanguageDetailViewController
 
-class LanguagesAssembly: AssemblyType {
+class LanguagesAssembly: Assembly {
     
     func assemble(container: Container) {
         
@@ -26,7 +26,7 @@ class LanguagesAssembly: AssemblyType {
 //        }
         
         //Example usage of dynamic argument passing
-        container.autoregister(LanguageDetailViewModeling.self, argument: LanguageEntity.self, initializer: LanguageDetailViewModel.init(language:synthetizer:))
+        container.autoregister(LanguageDetailViewModeling.self, argument: Language.self, initializer: LanguageDetailViewModel.init(language:synthetizer:))
         
         //MARK: View model factories
         

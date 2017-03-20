@@ -10,11 +10,11 @@ import Foundation
 import ReactiveSwift
 
 protocol AuthenticationAPIServicing {
-    func login(_ username: String, password: String) -> SignalProducer<(UserEntity, Credentials), RequestError>
+    func login(_ username: String, password: String) -> SignalProducer<(User, Credentials), RequestError>
 }
 
 class AuthenticationAPIService: APIService, AuthenticationAPIServicing {
-    func login(_ username: String, password: String) -> SignalProducer<(UserEntity, Credentials), RequestError> {
+    func login(_ username: String, password: String) -> SignalProducer<(User, Credentials), RequestError> {
         //TODO: Implement login
         return SignalProducer.empty
     }
