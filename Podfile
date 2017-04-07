@@ -9,32 +9,8 @@ use_frameworks!
 
 target 'ProjectSkeleton' do
 
-    # Extensions
-    pod 'ACKategories', '~> 4.0'
-    pod 'ACKReactiveExtensions', '~> 2.3'
-    pod 'ACKReactiveExtensions/Argo', '~> 2.3'
-
     # Hockey
     pod 'HockeySDK', '~> 4.1'
-
-    # UI
-    pod 'SnapKit'
-    pod 'TPKeyboardAvoiding'
-    pod 'AlamofireImage'
-
-    # Networking
-    pod 'Alamofire'
-
-    # Model
-    pod 'ReactiveCocoa', '~> 5.0'
-    pod 'ReactiveSwift', '~> 1.0'
-    pod 'Argo', '~> 4.1'
-    pod 'Curry', '~> 3.0'
-    pod 'Locksmith', '~> 3.0'
-
-    # Dependency Injection
-    pod 'Swinject', '~> 2.0'
-    pod 'SwinjectAutoregistration', '~> 2.0'
 
     # Code Generation
     pod 'SwiftGen', '~> 4.0'
@@ -55,6 +31,35 @@ target 'ProjectSkeleton' do
         testing_pods
     end
 
+end
+
+target 'ProjectSkeletonFramework' do
+
+    # Extensions
+    pod 'ACKategories', '~> 4.0'
+    pod 'ACKReactiveExtensions', '~> 2.3'
+    pod 'ACKReactiveExtensions/Argo', '~> 2.3'
+    
+    
+    
+    # UI
+    pod 'SnapKit'
+    pod 'TPKeyboardAvoiding'
+    pod 'AlamofireImage'
+    
+    # Networking
+    pod 'Alamofire'
+    
+    # Model
+    pod 'ReactiveCocoa', '~> 5.0'
+    pod 'ReactiveSwift', '~> 1.0'
+    pod 'Argo', '~> 4.1'
+    pod 'Curry', '~> 3.0'
+    pod 'Locksmith', '~> 3.0'
+    
+    # Dependency Injection
+    pod 'Swinject', '~> 2.0'
+    pod 'SwinjectAutoregistration', '~> 2.0'
 end
 
 post_install do |installer|

@@ -8,6 +8,9 @@
 
 import Swinject
 
+import enum Result.NoError
+public typealias NoError = Result.NoError
+
 class AppAssembly: Assembly {
     
     func assemble(container: Container) {

@@ -23,7 +23,7 @@ extension UserError: ErrorPresentable {
         switch self {
         case .keychain(let e): return e.message
         case .request(let e): return e.message
-        case .encoding: return L10n.genericKeychainError
+        case .encoding: return L10n.Basic.genericKeychainError
         }
     }
 }

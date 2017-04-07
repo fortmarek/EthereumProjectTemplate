@@ -8,8 +8,10 @@
 
 import Foundation
 
-enum Environment {
-	fileprivate static let plist : [String: AnyObject] = NSDictionary(contentsOfFile:(Bundle.main.path(forResource: "environment", ofType:"plist")!))! as! [String : AnyObject]
+private class BundleToken {}
+
+public enum Environment {
+    fileprivate static let plist : [String: AnyObject] = NSDictionary(contentsOfFile:(Bundle(for: BundleToken.self).path(forResource: "environment", ofType:"plist")!))! as! [String : AnyObject]
 	
 	enum Scheme : String {
 		case AppStore = "AppStore"
@@ -27,9 +29,8 @@ enum Environment {
         static var baseURL : String { return apiDict["baseURL"] as! String }
     }
 	
-    enum Hockey {
-        
-        static var identifier : String { return plist["hockey_identifier"] as! String }
-        static var allowLogging : Bool { return plist["hockey_allowLogging"] as? Bool ?? true }
+    public enum Hockey {
+        public static var identifier : String { return plist["hockey_identifier"] as! String }
+        public static var allowLogging : Bool { return plist["hockey_allowLogging"] as? Bool ?? true }
     }
 }
