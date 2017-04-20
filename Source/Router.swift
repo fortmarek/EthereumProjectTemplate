@@ -28,9 +28,7 @@ public struct Router<Base> {
     
     fileprivate init(_ base: Base) {
         self.base = base
-        //Jedina čunina pico
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        self.container = delegate.assembler.resolver as! Container
+        self.container = AppAssembler.resolver as! Container
     }
     
     

@@ -5,8 +5,14 @@
   Created by Jakub Olejník on 15/03/2017.
   Copyright © 2017 Ackee s.r.o. All rights reserved.
 */
+"basic.genericMappingError" = "There was a problem communicating with the server";
+"basic.genericKeychainError" = "Unable to save the user";
+"basic.ok" = "OK";
+"basic.show_more" = "Show more";
+"basic.cancel" = "Cancel";
+"basic.error" = "";
+
+//Remove this in your app
 "languageTable.network_error_title" = "Network error";
 "languageTable.network_error_message" = "Unable to download list of languages";
 "languageTable.network_error_dismiss" = "Close";
-"genericMappingError" = "There was a problem communicating with the server";
-"genericKeychainError" = "Unable to save the user";

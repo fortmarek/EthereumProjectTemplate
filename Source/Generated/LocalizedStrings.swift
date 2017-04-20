@@ -12,10 +12,21 @@ import Foundation
 // swiftlint:disable type_name
 
 enum L10n {
-  /// Unable to save the user
-  static let genericKeychainError = L10n.tr("genericKeychainError")
-  /// There was a problem communicating with the server
-  static let genericMappingError = L10n.tr("genericMappingError")
+
+  enum Basic {
+    /// Cancel
+    static let cancel = L10n.tr("basic.cancel")
+    /// 
+    static let error = L10n.tr("basic.error")
+    /// Unable to save the user
+    static let genericKeychainError = L10n.tr("basic.genericKeychainError")
+    /// There was a problem communicating with the server
+    static let genericMappingError = L10n.tr("basic.genericMappingError")
+    /// OK
+    static let ok = L10n.tr("basic.ok")
+    /// Show more
+    static let showMore = L10n.tr("basic.show_more")
+  }
 
   enum Languagetable {
     /// Close

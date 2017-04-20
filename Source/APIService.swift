@@ -22,7 +22,7 @@ extension RequestError: ErrorPresentable {
     var message: String {
         switch self {
         case .network(let e): return e.error.message
-        case .mapping, .unexpectedEmptyBody: return L10n.genericMappingError
+        case .mapping, .unexpectedEmptyBody: return L10n.Basic.genericMappingError
         }
     }
 }
