@@ -5,6 +5,9 @@ source 'https://github.com/CocoaPods/Specs.git' # Default Cocoapods repo
 platform :ios, '9.0'
 xcodeproj 'ProjectSkeleton', 'AdHoc' => :release,'AppStore' => :release, 'Development' => :debug
 
+# ignore all warnings from all pods
+inhibit_all_warnings!
+
 use_frameworks!
 
 target 'ProjectSkeleton' do
@@ -40,8 +43,6 @@ target 'ProjectSkeletonFramework' do
     pod 'ACKReactiveExtensions', '~> 2.3'
     pod 'ACKReactiveExtensions/Argo', '~> 2.3'
     
-    
-    
     # UI
     pod 'SnapKit'
     pod 'TPKeyboardAvoiding'
@@ -52,7 +53,7 @@ target 'ProjectSkeletonFramework' do
     
     # Model
     pod 'ReactiveCocoa', '~> 5.0'
-    pod 'ReactiveSwift', '~> 1.0'
+    pod 'ReactiveSwift', '~> 1.1'
     pod 'Argo', '~> 4.1'
     pod 'Curry', '~> 3.0'
     pod 'Locksmith', '~> 3.0'
