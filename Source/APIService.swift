@@ -10,8 +10,25 @@ import Foundation
 import Alamofire
 import ReactiveSwift
 
+// Base class which all API Services should inherit
 
-//Base class which all API Services should inherit
+struct RequestAddress {
+    let base: String
+    let path: String
+    
+    var url: URL {
+        let baseURL = URL(string: base)!
+        return URL(string: path, relativeTo: baseURL)!
+    }
+    
+    var urlString: String { return url.absoluteString }
+}
+extension RequestAddress {
+    init(path: String) {
+        self.base = Environment.Api.baseURL
+        self.path = path
+    }
+}
 
 enum RequestError: Error {
     case network(NetworkError)
@@ -40,27 +57,25 @@ class APIService {
         self.network = network
     }
     
-    func resourceURL(_ path: String) -> URL {
-        //TODO: get rid of this coeffect, pass baseURL to initializer
-        let URL = Foundation.URL(string: Environment.Api.baseURL)!
-        let relativeURL = Foundation.URL(string: path, relativeTo: URL)!
-        return relativeURL
-    }
-    
-    func request(_ path: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String] = [:]) -> SignalProducer<RequestResult, RequestError> {
-        let relativeURL = resourceURL(path)
+    func request(_ address: RequestAddress, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String] = [:]) -> SignalProducer<RequestResult, RequestError> {
         let headers = addCustomHeaders(toHeaders: headers)
         
-        return self.network.request(relativeURL.absoluteString, method: method, parameters: parameters, encoding: encoding, headers: headers, useDisposables: false).mapError { .network($0) }
+        return self.network.request(address.urlString, method: method, parameters: parameters, encoding: encoding, headers: headers, useDisposables: false).mapError { .network($0) }
     }
-
+    
     func addCustomHeaders(toHeaders headers: [String: String]) -> [String: String] {
-        var customHeaders = headers
+        let customHeaders = headers
         
         //customHeaders["X-DeviceId"] = UserDefaults.standard.deviceId
         //customHeaders["X-Api-Key"] = Environment.Api.apiKey
         
         return customHeaders
+    }
+}
+
+extension APIService {
+    func request(_ path: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String] = [:]) -> SignalProducer<RequestResult, RequestError> {
+        return request(RequestAddress(path: path), method: method, parameters: parameters, encoding: encoding, headers: headers)
     }
 }
 
@@ -92,20 +107,20 @@ class AuthenticatedAPIService: APIService {
         return headers
     }
     
-    override func request(_ path: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String] = [:]) -> SignalProducer<RequestResult, RequestError> {
+    override func request(_ address: RequestAddress, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String] = [:]) -> SignalProducer<RequestResult, RequestError> {
         let allHeaders = addAuthorization(toHeaders: headers)
         
-        return super.request(path, method: method, parameters: parameters, encoding: encoding, headers: allHeaders)
-            .flatMapError { [unowned self] e in self.unauthorizedHandler(e: e, path: path, method: method, parameters: parameters, encoding: encoding, headers: headers) }
+        return super.request(address, method: method, parameters: parameters, encoding: encoding, headers: allHeaders)
+            .flatMapError { [unowned self] e in self.unauthorizedHandler(e: e, address: address, method: method, parameters: parameters, encoding: encoding, headers: headers) }
     }
     
-    private func unauthorizedHandler(e: RequestError, path: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String]) -> SignalProducer<RequestResult, RequestError> {
+    private func unauthorizedHandler(e: RequestError, address: RequestAddress, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String]) -> SignalProducer<RequestResult, RequestError> {
         guard case .network(let networkError) = e, networkError.response?.statusCode == 401,
             let originalRequest = networkError.request
             else { return SignalProducer(error: e) }
         
         let retry = { [unowned self] in
-            self.request(path, method: method, parameters: parameters, encoding: encoding, headers: headers)
+            self.request(address, method: method, parameters: parameters, encoding: encoding, headers: headers)
         }
         
         guard self.requestUsedCurrentAuthData(request: originalRequest as NSURLRequest) else { return retry() } // check that we havent refreshed token while the request was running

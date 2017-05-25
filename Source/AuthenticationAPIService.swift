@@ -14,8 +14,10 @@ protocol AuthenticationAPIServicing {
 }
 
 class AuthenticationAPIService: APIService, AuthenticationAPIServicing {
+    
     func login(_ username: String, password: String) -> SignalProducer<(User, Credentials), RequestError> {
-        //TODO: Implement login
+        // TODO: Implement login
         return SignalProducer.empty
     }
+    
 }
