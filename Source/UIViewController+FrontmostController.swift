@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 extension UIViewController {
     fileprivate var frontmostChild: UIViewController? {
         switch self {

@@ -48,7 +48,6 @@ struct MappingError: ErrorWrapping {
     let underlyingError: Error
 }
 
-
 class APIService {
     // MARK: Dependencies
     private let network: Networking
@@ -148,7 +147,6 @@ class AuthenticatedAPIService: APIService {
                 return retry()
         }
     }
-    
     
     func requestUsedCurrentAuthData(request: NSURLRequest) -> Bool {
         guard let allHeaders = request.allHTTPHeaderFields else { return true }
