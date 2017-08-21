@@ -63,6 +63,10 @@
 		7A2FE95079FAE357F23A8DC1 /* Pods_UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68CBF6A3747C7413DE1CBC2E /* Pods_UITests.framework */; };
 		A31864901EE4485700BBEDC4 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A318648E1EE4484D00BBEDC4 /* TestingAppDelegate.swift */; };
 		A31864911EE4485700BBEDC4 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A318648E1EE4484D00BBEDC4 /* TestingAppDelegate.swift */; };
+		A3221F471F4B326B00249162 /* APIFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3221F431F4B326B00249162 /* APIFetcher.swift */; };
+		A3221F481F4B326B00249162 /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3221F441F4B326B00249162 /* Fetcher.swift */; };
+		A3221F491F4B326B00249162 /* FirebaseFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3221F451F4B326B00249162 /* FirebaseFetcher.swift */; };
+		A3221F4A1F4B326B00249162 /* VersionUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3221F461F4B326B00249162 /* VersionUpdateManager.swift */; };
 		ACC930071E979F9A00E6F60A /* ProjectSkeletonFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC930051E979F9A00E6F60A /* ProjectSkeletonFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACC9300A1E979F9A00E6F60A /* ProjectSkeletonFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACC930031E979F9900E6F60A /* ProjectSkeletonFramework.framework */; };
 		ACC9300B1E979F9A00E6F60A /* ProjectSkeletonFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = ACC930031E979F9900E6F60A /* ProjectSkeletonFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -214,6 +218,10 @@
 		94E77763070F047067743935 /* Pods-APITests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APITests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-APITests/Pods-APITests.appstore.xcconfig"; sourceTree = "<group>"; };
 		9D377152CF3F1EC98C175EB2 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A318648E1EE4484D00BBEDC4 /* TestingAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestingAppDelegate.swift; path = Tests/TestingAppDelegate.swift; sourceTree = SOURCE_ROOT; };
+		A3221F431F4B326B00249162 /* APIFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIFetcher.swift; sourceTree = "<group>"; };
+		A3221F441F4B326B00249162 /* Fetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetcher.swift; sourceTree = "<group>"; };
+		A3221F451F4B326B00249162 /* FirebaseFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseFetcher.swift; sourceTree = "<group>"; };
+		A3221F461F4B326B00249162 /* VersionUpdateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionUpdateManager.swift; sourceTree = "<group>"; };
 		A632E3F366F026D7D4ED7159 /* Pods-Tests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.appstore.xcconfig"; sourceTree = "<group>"; };
 		AC223D721C6B72860000A2F1 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/build/Development-iphoneos/Quick.framework"; sourceTree = "<group>"; };
 		AC223D741C6B728C0000A2F1 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Pods/build/Development-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
@@ -355,6 +363,17 @@
 				ACD8E81B1C569DB200031D67 /* LanguagesTableViewModel.swift */,
 			);
 			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		A3221F421F4B325900249162 /* Force Update */ = {
+			isa = PBXGroup;
+			children = (
+				A3221F431F4B326B00249162 /* APIFetcher.swift */,
+				A3221F441F4B326B00249162 /* Fetcher.swift */,
+				A3221F451F4B326B00249162 /* FirebaseFetcher.swift */,
+				A3221F461F4B326B00249162 /* VersionUpdateManager.swift */,
+			);
+			name = "Force Update";
 			sourceTree = "<group>";
 		};
 		AC22F0C51D6A446E00514668 /* DI */ = {
@@ -588,6 +607,7 @@
 				AC22F0C51D6A446E00514668 /* DI */,
 				ACC930431E97B3F000E6F60A /* AppDelegate */,
 				696C56781E797FB200C1D1B0 /* main.swift */,
+				A3221F421F4B325900249162 /* Force Update */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -1049,7 +1069,9 @@
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Argo/Argo.framework",
 				"${BUILT_PRODUCTS_DIR}/Curry/Curry.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Locksmith/Locksmith.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveCocoa/ReactiveCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
@@ -1058,6 +1080,7 @@
 				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
 				"${BUILT_PRODUCTS_DIR}/SwinjectAutoregistration/SwinjectAutoregistration.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1067,7 +1090,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Argo.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Curry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locksmith.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
@@ -1076,6 +1101,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwinjectAutoregistration.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1172,6 +1198,7 @@
 			files = (
 				ACC930101E97A05100E6F60A /* Environment.swift in Sources */,
 				ACC930111E97A05100E6F60A /* UIView+Spacer.swift in Sources */,
+				A3221F491F4B326B00249162 /* FirebaseFetcher.swift in Sources */,
 				ACC930121E97A05100E6F60A /* TableAndCollectionViewExtensions.swift in Sources */,
 				ACC930131E97A05100E6F60A /* UIResponder+Errors.swift in Sources */,
 				ACC930141E97A05100E6F60A /* UIViewController+FrontmostController.swift in Sources */,
@@ -1179,8 +1206,10 @@
 				ACC930161E97A05100E6F60A /* ErrorWrapping.swift in Sources */,
 				ACC930171E97A05100E6F60A /* Images.swift in Sources */,
 				ACC930181E97A05100E6F60A /* LocalizedStrings.swift in Sources */,
+				A3221F4A1F4B326B00249162 /* VersionUpdateManager.swift in Sources */,
 				ACC930191E97A05100E6F60A /* Credentials.swift in Sources */,
 				ACC9301A1E97A05100E6F60A /* User.swift in Sources */,
+				A3221F481F4B326B00249162 /* Fetcher.swift in Sources */,
 				ACC9301B1E97A05100E6F60A /* Language.swift in Sources */,
 				ACC9301C1E97A05100E6F60A /* APIService.swift in Sources */,
 				ACC9301D1E97A05100E6F60A /* LanguagesAPIService.swift in Sources */,
@@ -1194,6 +1223,7 @@
 				ACC930241E97A05100E6F60A /* Geocoding.swift in Sources */,
 				ACC930251E97A05100E6F60A /* LocationManager.swift in Sources */,
 				ACC930261E97A05100E6F60A /* SpeechSynthetizer.swift in Sources */,
+				A3221F471F4B326B00249162 /* APIFetcher.swift in Sources */,
 				ACC930271E97A05100E6F60A /* AuthHandler.swift in Sources */,
 				ACC930281E97A05100E6F60A /* Router.swift in Sources */,
 				ACC930291E97A05100E6F60A /* LanguageTableViewCell.swift in Sources */,

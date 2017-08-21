@@ -61,6 +61,8 @@ target 'ProjectSkeletonFramework' do
     # Dependency Injection
     pod 'Swinject', '~> 2.0'
     pod 'SwinjectAutoregistration', '~> 2.0'
+
+    pod 'Firebase/RemoteConfig'
 end
 
 post_install do |installer|
