@@ -67,6 +67,7 @@
 		A3221F481F4B326B00249162 /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3221F441F4B326B00249162 /* Fetcher.swift */; };
 		A3221F491F4B326B00249162 /* FirebaseFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3221F451F4B326B00249162 /* FirebaseFetcher.swift */; };
 		A3221F4A1F4B326B00249162 /* VersionUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3221F461F4B326B00249162 /* VersionUpdateManager.swift */; };
+		A3221F4C1F4B35CF00249162 /* VersionUpdateAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3221F4B1F4B35CF00249162 /* VersionUpdateAssembly.swift */; };
 		ACC930071E979F9A00E6F60A /* ProjectSkeletonFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC930051E979F9A00E6F60A /* ProjectSkeletonFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACC9300A1E979F9A00E6F60A /* ProjectSkeletonFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACC930031E979F9900E6F60A /* ProjectSkeletonFramework.framework */; };
 		ACC9300B1E979F9A00E6F60A /* ProjectSkeletonFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = ACC930031E979F9900E6F60A /* ProjectSkeletonFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -222,6 +223,7 @@
 		A3221F441F4B326B00249162 /* Fetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetcher.swift; sourceTree = "<group>"; };
 		A3221F451F4B326B00249162 /* FirebaseFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseFetcher.swift; sourceTree = "<group>"; };
 		A3221F461F4B326B00249162 /* VersionUpdateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionUpdateManager.swift; sourceTree = "<group>"; };
+		A3221F4B1F4B35CF00249162 /* VersionUpdateAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionUpdateAssembly.swift; sourceTree = "<group>"; };
 		A632E3F366F026D7D4ED7159 /* Pods-Tests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.appstore.xcconfig"; sourceTree = "<group>"; };
 		AC223D721C6B72860000A2F1 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/build/Development-iphoneos/Quick.framework"; sourceTree = "<group>"; };
 		AC223D741C6B728C0000A2F1 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Pods/build/Development-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 				A3221F441F4B326B00249162 /* Fetcher.swift */,
 				A3221F451F4B326B00249162 /* FirebaseFetcher.swift */,
 				A3221F461F4B326B00249162 /* VersionUpdateManager.swift */,
+				A3221F4B1F4B35CF00249162 /* VersionUpdateAssembly.swift */,
 			);
 			name = "Force Update";
 			sourceTree = "<group>";
@@ -902,7 +905,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ProjectSkeleton/Pods-ProjectSkeleton-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/HockeySDK/HockeySDKResources.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/HockeySDK/HockeySDKResources.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -1235,6 +1238,7 @@
 				ACC9302E1E97A05100E6F60A /* LanguagesTableViewModel.swift in Sources */,
 				ACC9302F1E97A05100E6F60A /* ServiceAssembly.swift in Sources */,
 				ACC930301E97A05100E6F60A /* ManagerAssembly.swift in Sources */,
+				A3221F4C1F4B35CF00249162 /* VersionUpdateAssembly.swift in Sources */,
 				ACC930311E97A05100E6F60A /* LanguagesAssembly.swift in Sources */,
 				ACC930321E97A05100E6F60A /* AppAssembly.swift in Sources */,
 			);
