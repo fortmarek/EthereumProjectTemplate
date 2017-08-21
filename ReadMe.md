@@ -666,8 +666,31 @@ swiftlint autocorrect
 # Todos
 - lepsi prace s NSError
 - Networking
-- Groot 
+- Groot
 
 # K Aplikaci
 
-Kdyby jste se divili k cemu je vlastne ta example aplikace, kouknete sem: http://whostolemyunicorn.com/
+Kdyby jste se divili k cemu je vlastne ta example aplikace, kouknete sem: [http://whostolemyunicorn.com/](http://whostolemyunicorn.com/)
+
+# Version Update Manager
+Zaregistruj `VersionUpdateAssembly` k ostatním `Assembly`. Ve `VersionUpdateAssembly` je potřeba zaregistrovat správný data source:
+
+- `APIFetcher`
+- `FirebaseFetcher`
+
+a adekvátně jej nastavit.
+
+Posledním krokem je nastavit samotný observing, nejpravděpodobněji v `AppDelegate`.
+
+```swift
+private func observeUpdate() {
+    updateManager.setup()
+    updateManager.updateRequired.producer
+        .take(during: reactive.lifetime)
+        .filter { $0 }
+        .startWithValues { [weak self] _ in
+            // There is new version of the app
+        }
+    }
+}
+```
