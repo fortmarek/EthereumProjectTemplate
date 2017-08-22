@@ -8,7 +8,7 @@
 
 import Swinject
 
-class UpdateAssembly: Assembly {
+class VersionUpdateAssembly: Assembly {
     
     func assemble(container: Container) {
         container.autoregister(VersionUpdateManaging.self, initializer: VersionUpdateManager.init)
