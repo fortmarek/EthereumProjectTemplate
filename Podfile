@@ -16,20 +16,12 @@ target 'ProjectSkeleton' do
     # Code Generation
     pod 'SwiftGen', '~> 4.0'
 
-    def testing_pods
-        pod 'Quick', '~> 1.0'
-        pod 'Nimble', '5.1'
-    end
-
-
     target 'Tests' do
         inherit! :search_paths
-        testing_pods
     end
 
     target 'UITests' do
         inherit! :search_paths
-        testing_pods
     end
 
 end
@@ -38,8 +30,7 @@ target 'ProjectSkeletonFramework' do
 
     # Extensions
     pod 'ACKategories', '~> 4.0'
-    pod 'ACKReactiveExtensions', '~> 2.3'
-    pod 'ACKReactiveExtensions/Argo', '~> 2.3'
+    pod 'ACKReactiveExtensions', :git => 'https://github.com/AckeeCZ/ACKReactiveExtensions.git', :branch => 'pod-update'
     
     # UI
     pod 'SnapKit'
@@ -50,10 +41,8 @@ target 'ProjectSkeletonFramework' do
     pod 'Alamofire'
     
     # Model
-    pod 'ReactiveCocoa', '~> 5.0'
-    pod 'ReactiveSwift', '~> 1.1'
-    pod 'Argo', '~> 4.1'
-    pod 'Curry', '~> 3.0'
+    pod 'ReactiveCocoa', '~> 6.0'
+    pod 'ReactiveSwift', '~> 2.0'
     pod 'Locksmith', '~> 3.0'
     
     # Dependency Injection
