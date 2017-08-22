@@ -17,7 +17,7 @@ public protocol ErrorPresentable {
 public extension ErrorPresentable {
     var title: String? { return nil }
     var debugString: String {
-        return "Error at \(Date()), title:\(title), message:\(message), instance: \(self)"
+        return "Error at \(Date()), title:\(String(describing: title)), message:\(message), instance: \(self)"
     }
 }
 extension NSError: ErrorPresentable {

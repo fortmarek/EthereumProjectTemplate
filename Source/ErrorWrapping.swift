@@ -8,20 +8,19 @@
 
 import Foundation
 
-//Using Error directly in Swift is problematic - we cannot use it as a type, it isnt strongly typed, cannot be extended. This ErrorWrapping protocol tries to aleviate some of these problems. This hasnt been properly tested and might turn out to be worse than the original state.
+// Using Error directly in Swift is problematic - we cannot use it as a type, it isnt strongly typed, cannot be extended. This ErrorWrapping protocol tries to aleviate some of these problems. This hasnt been properly tested and might turn out to be worse than the original state.
 protocol ErrorWrapping: Error, ErrorPresentable {
     var underlyingError: Error { get }
 }
+
 extension ErrorWrapping {
     var localizedDescription: String { return underlyingError.localizedDescription }
 }
 
 extension ErrorWrapping {
+    
     var message: String {
-        if let presentable = underlyingError as? ErrorPresentable {
-            return presentable.message //use .message if available, only default to .localizedDescription when needed
-        } else {
-            return localizedDescription
-        }
+        return (underlyingError as ErrorPresentable).message
     }
+    
 }

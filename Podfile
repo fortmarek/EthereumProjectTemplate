@@ -41,8 +41,6 @@ target 'ProjectSkeletonFramework' do
     pod 'ACKReactiveExtensions', '~> 2.3'
     pod 'ACKReactiveExtensions/Argo', '~> 2.3'
     
-    
-    
     # UI
     pod 'SnapKit'
     pod 'TPKeyboardAvoiding'
@@ -53,7 +51,7 @@ target 'ProjectSkeletonFramework' do
     
     # Model
     pod 'ReactiveCocoa', '~> 5.0'
-    pod 'ReactiveSwift', '~> 1.0'
+    pod 'ReactiveSwift', '~> 1.1'
     pod 'Argo', '~> 4.1'
     pod 'Curry', '~> 3.0'
     pod 'Locksmith', '~> 3.0'
@@ -61,6 +59,8 @@ target 'ProjectSkeletonFramework' do
     # Dependency Injection
     pod 'Swinject', '~> 2.0'
     pod 'SwinjectAutoregistration', '~> 2.0'
+
+    pod 'Firebase/RemoteConfig'
 end
 
 post_install do |installer|

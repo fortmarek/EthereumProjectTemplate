@@ -9,7 +9,6 @@
 import UIKit
 import CloudKit
 
-
 //This is just boiler plate - distributing delegate callbacks to all delegates
 
 open class BaseAppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,7 +26,6 @@ open class BaseAppDelegate: UIResponder, UIApplicationDelegate {
             service.applicationDidFinishLaunching?(application)
         }
     }
-    
     
     @available(iOS 6.0, *)
     public func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
@@ -58,7 +56,6 @@ open class BaseAppDelegate: UIResponder, UIApplicationDelegate {
         
         return result
     }
-    
     
     @available(iOS 2.0, *)
     public func applicationDidBecomeActive(_ application: UIApplication) {

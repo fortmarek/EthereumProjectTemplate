@@ -41,7 +41,7 @@ public class PlaygroundController: UIViewController {
                 language: String? = nil,
                 scale scaleFactor: CGFloat = 1.0,
                 additionalTraits: UITraitCollection = .init(),
-                child: UIViewController){
+                child: UIViewController) {
         self.device = device
         self.orientation = orientation
         self.language = language
@@ -54,7 +54,7 @@ public class PlaygroundController: UIViewController {
         setupChild()
     }
     
-    func setupChild(){
+    private func setupChild() {
         let child = self.child
         
         self.addChildViewController(child)
@@ -131,7 +131,7 @@ public class PlaygroundController: UIViewController {
         self.setOverrideTraitCollection(allTraits, forChildViewController: child)
     }
     
-    func scale(rect: CGRect, by scale: CGFloat) -> CGRect {
+    private func scale(rect: CGRect, by scale: CGFloat) -> CGRect {
         return CGRect(origin: rect.origin, size: CGSize(width: rect.size.width * scale, height: rect.size.height * scale))
     }
     
