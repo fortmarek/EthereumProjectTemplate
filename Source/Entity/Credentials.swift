@@ -7,12 +7,9 @@
 //
 
 import Foundation
-import Argo
-import Runes
-import Curry
 import Locksmith
 
-struct Credentials {
+struct Credentials: Codable {
     let access_token: String
     let expires_in: Int
     let token_type: String
@@ -43,18 +40,5 @@ struct Credentials {
             return ["access_token": access_token as AnyObject, "refresh_token": refresh_token as AnyObject, "expires_in": expires_in as AnyObject, "scope": scope as AnyObject, "token_type": token_type as AnyObject, "id": id as AnyObject]
         }
         return nil
-    }
-}
-
-extension Credentials: Decodable {
-    static func decode(_ json: JSON) -> Decoded<Credentials> {
-        return
-            curry(self.init)
-                <^> json <| "access_token"
-                <*> json <| "expires_in"
-                <*> json <| "token_type"
-                <*> json <| "scope"
-                <*> json <| "refresh_token"
-                <*> .success(nil)
     }
 }

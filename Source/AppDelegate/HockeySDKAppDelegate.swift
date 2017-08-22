@@ -8,7 +8,6 @@
 
 import Foundation
 import HockeySDK
-import ProjectSkeletonFramework
 
 public class HockeySDKAppDelegate: NSObject, UIApplicationDelegate, BITHockeyManagerDelegate {
     

@@ -18,19 +18,14 @@ extension RoutingProvider {
     }
 }
 
-extension UIViewController : RoutingProvider {}
-
-
 public struct Router<Base> {
     public let base: Base
     private let container : Container
     
-    
     fileprivate init(_ base: Base) {
         self.base = base
-        self.container = AppAssembler.resolver as! Container
+        self.container = AppContainer
     }
-    
     
     //Destinations to Controllers
     func prepare<VC>(vc: VC.Type) -> VC where VC : UIViewController {
@@ -48,7 +43,6 @@ public struct Router<Base> {
     func prepare<VC, Arg1, Arg2, Arg3>(vc: VC.Type, arguments arg1: Arg1, _ arg2: Arg2, _ arg3 : Arg3) -> VC where VC : UIViewController {
         return container.resolve(vc, arguments: arg1, arg2, arg3)!
     }
-    
     
     //Destination to Factories
     func prepare<VC>(factoryType: (()->VC).Type) -> VC where VC : UIViewController {
@@ -71,14 +65,3 @@ public struct Router<Base> {
         return factory(arg,arg2,arg3)
     }
 }
-
-
-/* Example Extension
- extension Router where Base : AdDetailViewController {
- 
- func myFuckingSpecialRoute() -> UIViewController {
- let vm = self.base.viewModel
- return destination(vc: UIViewController.self)
- }
- 
- }*/

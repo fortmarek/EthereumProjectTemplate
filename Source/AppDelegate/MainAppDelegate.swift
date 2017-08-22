@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 public class MainAppDelegate: NSObject, UIApplicationDelegate {
     
@@ -16,10 +17,6 @@ public class MainAppDelegate: NSObject, UIApplicationDelegate {
         
         let assembler = AppAssembler
         
-        // Start location manager
-        let locationManager = assembler.resolver.resolve(LocationManager.self)!
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
         
         // Resolve initial controller with all its dependencies
         let controller = assembler.resolver.resolve(LanguagesTableViewController.self)!

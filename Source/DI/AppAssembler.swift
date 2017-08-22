@@ -16,10 +16,7 @@ public let (AppAssembler, AppContainer) = {
     
     //Register all assemblies in here
     let assembler = try! Assembler(assemblies: [
-        AppAssembly(),
-        ServiceAssembly(),
-        ManagerAssembly(),
-        LanguagesAssembly()
+        AppAssembly()
         ], container: container)
     
     return (assembler, container)

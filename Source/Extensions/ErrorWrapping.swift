@@ -18,9 +18,7 @@ extension ErrorWrapping {
 }
 
 extension ErrorWrapping {
-    
     var message: String {
         return (underlyingError as ErrorPresentable).message
     }
-    
 }

@@ -14,9 +14,5 @@ public typealias NoError = Result.NoError
 class AppAssembly: Assembly {
     
     func assemble(container: Container) {
-        
-        // LifeCycleManaging etc ...
-        
     }
-
 }

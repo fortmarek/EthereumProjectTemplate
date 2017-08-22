@@ -11,7 +11,6 @@ import UIKit
 class BaseViewController: UIViewController {
     override func loadView() {
         super.loadView()
-        
         view.backgroundColor = .white
     }
 }

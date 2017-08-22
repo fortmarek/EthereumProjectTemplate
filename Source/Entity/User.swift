@@ -6,21 +6,8 @@
 //  Copyright © 2016 Ackee s.r.o. All rights reserved.
 //
 
-//import CoreValue
 import Foundation
-import CoreData
-import Argo
-import Runes
-import Curry
 
-struct User {
+struct User: Codable {
     let id: Int
-    //let username: String
-}
-
-extension User: Decodable {
-    static func decode(_ json: JSON) -> Decoded<User> {
-        return curry(self.init)
-            <^> json <| "id"
-    }
 }

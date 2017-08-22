@@ -8,9 +8,6 @@
 
 import UIKit
 import ReactiveSwift
-import HockeySDK
-import Swinject
-import ProjectSkeletonFramework
 import ACKReactiveExtensions
 import ACKategories
 

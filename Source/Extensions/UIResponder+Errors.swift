@@ -79,3 +79,11 @@ extension UIResponder {
         }
     }
 }
+
+extension Reactive where Base:UIResponder {
+    func errors<Error>() -> BindingTarget<Error> where Error: ErrorPresentable {
+        return makeBindingTarget { (base, value) in
+            base.displayError(value)
+        }
+    }
+}
