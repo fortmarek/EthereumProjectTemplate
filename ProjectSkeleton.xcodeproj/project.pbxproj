@@ -95,9 +95,9 @@
 		AC9953431F4DAA0A003AE61C /* Theme+Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9953421F4DAA0A003AE61C /* Theme+Fonts.swift */; };
 		AC9953451F4DAA22003AE61C /* Theme+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9953441F4DAA22003AE61C /* Theme+Colors.swift */; };
 		AC9953471F4DAA34003AE61C /* Theme+UIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9953461F4DAA34003AE61C /* Theme+UIElements.swift */; };
+		AC9953481F4DB838003AE61C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B433E4B119530FD0006BEBF1 /* Images.xcassets */; };
 		ACC9303F1E97AD7500E6F60A /* BaseAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC9303C1E97AD3D00E6F60A /* BaseAppDelegate.swift */; };
 		ACC930461E97B44600E6F60A /* HockeySDKAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC930441E97B41500E6F60A /* HockeySDKAppDelegate.swift */; };
-		ACC930491E97BCCC00E6F60A /* AppImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACC930471E97BC9400E6F60A /* AppImages.xcassets */; };
 		ACF8DA111C62370D00D74377 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8D9EF1C6236CD00D74377 /* SnapshotHelper.swift */; };
 		B4ABA1E0195193330069FAD4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4ABA1DF195193330069FAD4 /* Foundation.framework */; };
 		B4ABA1E2195193330069FAD4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4ABA1E1195193330069FAD4 /* CoreGraphics.framework */; };
@@ -212,7 +212,6 @@
 		ACC9303C1E97AD3D00E6F60A /* BaseAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseAppDelegate.swift; sourceTree = "<group>"; };
 		ACC930401E97AEE700E6F60A /* MainAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainAppDelegate.swift; sourceTree = "<group>"; };
 		ACC930441E97B41500E6F60A /* HockeySDKAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HockeySDKAppDelegate.swift; sourceTree = "<group>"; };
-		ACC930471E97BC9400E6F60A /* AppImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppImages.xcassets; sourceTree = "<group>"; };
 		ACD4798A1C582BFC00E85DD3 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Network.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ACD4799B1C5A39E800E85DD3 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACE564B81CBCF2E300B6CBDF /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = APIService.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -477,7 +476,6 @@
 			isa = PBXGroup;
 			children = (
 				B433E4B119530FD0006BEBF1 /* Images.xcassets */,
-				ACC930471E97BC9400E6F60A /* AppImages.xcassets */,
 				696C56881E798EC800C1D1B0 /* Launch.storyboard */,
 				696C568E1E798F7100C1D1B0 /* Localizable.strings */,
 			);
@@ -733,7 +731,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACC930491E97BCCC00E6F60A /* AppImages.xcassets in Resources */,
+				AC9953481F4DB838003AE61C /* Images.xcassets in Resources */,
 				696C56861E798EC800C1D1B0 /* Launch.storyboard in Resources */,
 				AC39655F1F4C812A00DEBADC /* environment.plist in Resources */,
 			);
