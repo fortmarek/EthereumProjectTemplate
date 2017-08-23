@@ -53,9 +53,9 @@ PODS:
   - Result (3.2.3)
   - SnapKit (3.2.0)
   - SwiftGen (4.2.0)
-  - Swinject (2.0.0)
-  - SwinjectAutoregistration (2.0.0):
-    - Swinject (~> 2.0.0)
+  - Swinject (2.1.1)
+  - SwinjectAutoregistration (2.1.0):
+    - Swinject (~> 2.1)
   - TPKeyboardAvoiding (1.3.1)
 
 DEPENDENCIES:
@@ -71,18 +71,24 @@ DEPENDENCIES:
   - SnapKit
   - SwiftGen (~> 4.0)
   - Swinject (~> 2.0)
-  - SwinjectAutoregistration (~> 2.0)
+  - SwinjectAutoregistration (from `https://github.com/Swinject/SwinjectAutoregistration.git`, branch `swift4`)
   - TPKeyboardAvoiding
 
 EXTERNAL SOURCES:
   ACKReactiveExtensions:
     :branch: pod-update
     :git: https://github.com/AckeeCZ/ACKReactiveExtensions.git
+  SwinjectAutoregistration:
+    :branch: swift4
+    :git: https://github.com/Swinject/SwinjectAutoregistration.git
 
 CHECKOUT OPTIONS:
   ACKReactiveExtensions:
     :commit: 585b3e2f2bc4c68bf088bf5838a9204a3bddd03c
     :git: https://github.com/AckeeCZ/ACKReactiveExtensions.git
+  SwinjectAutoregistration:
+    :commit: ef8574264926117c62d92c4cb2872649496f6c21
+    :git: https://github.com/Swinject/SwinjectAutoregistration.git
 
 SPEC CHECKSUMS:
   ACKategories: 951e12ce64b884a220d4939027954f270f54b3f5
@@ -104,10 +110,10 @@ SPEC CHECKSUMS:
   Result: 128640a6347e8d2ae48b142556739a2d13f90ce6
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   SwiftGen: b6bfed151243348e4603b91bf5bc4eb2486c9d5b
-  Swinject: 2e964a80d70ab09b3949c99032711f89147bfd60
-  SwinjectAutoregistration: 0e52cf80253af252bb5421c06950eac8460565ae
+  Swinject: afea49fd95f392b41171669f165842879c48fad6
+  SwinjectAutoregistration: 5923637a0f8c14c80f69e3301631c19abe9f29c7
   TPKeyboardAvoiding: 0d6af20e95e2850f4c621841225b59ec7d8dd852
 
-PODFILE CHECKSUM: 90262208f4dd06aad7dcc67ee630085703916858
+PODFILE CHECKSUM: 6cbde944e0f8337f44065b4f974f5cde1f7b6323
 
 COCOAPODS: 1.2.1
