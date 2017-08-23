@@ -208,8 +208,6 @@
 		AC9953441F4DAA22003AE61C /* Theme+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Theme+Colors.swift"; sourceTree = "<group>"; };
 		AC9953461F4DAA34003AE61C /* Theme+UIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Theme+UIElements.swift"; sourceTree = "<group>"; };
 		AC9DB8F81F4C702B007DEF06 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		ACC930051E979F9A00E6F60A /* ProjectSkeletonFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectSkeletonFramework.h; sourceTree = "<group>"; };
-		ACC930061E979F9A00E6F60A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACC930371E97A34500E6F60A /* AppAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppAssembler.swift; sourceTree = "<group>"; };
 		ACC9303C1E97AD3D00E6F60A /* BaseAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseAppDelegate.swift; sourceTree = "<group>"; };
 		ACC930401E97AEE700E6F60A /* MainAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainAppDelegate.swift; sourceTree = "<group>"; };
@@ -427,15 +425,6 @@
 			path = Source/View/Controllers;
 			sourceTree = SOURCE_ROOT;
 		};
-		ACC930041E979F9A00E6F60A /* ProjectSkeletonFramework */ = {
-			isa = PBXGroup;
-			children = (
-				ACC930051E979F9A00E6F60A /* ProjectSkeletonFramework.h */,
-				ACC930061E979F9A00E6F60A /* Info.plist */,
-			);
-			path = ProjectSkeletonFramework;
-			sourceTree = "<group>";
-		};
 		ACF8D9EC1C6236B700D74377 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -502,7 +491,6 @@
 				B433E4B019530FD0006BEBF1 /* Resources */,
 				ACF8D9EC1C6236B700D74377 /* Tests */,
 				A318648E1EE4484D00BBEDC4 /* TestingAppDelegate.swift */,
-				ACC930041E979F9A00E6F60A /* ProjectSkeletonFramework */,
 				B4ABA1DE195193330069FAD4 /* Frameworks */,
 				B4ABA1DD195193330069FAD4 /* Products */,
 				FB0955EAF172155BB3580EA6 /* Pods */,
