@@ -92,6 +92,7 @@
 		AC3965681F4C819300DEBADC /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3965671F4C819300DEBADC /* RequestError.swift */; };
 		AC3965691F4C81EF00DEBADC /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE564B81CBCF2E300B6CBDF /* APIService.swift */; };
 		AC39656C1F4C843200DEBADC /* RoutingAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC39656B1F4C843200DEBADC /* RoutingAction.swift */; };
+		AC829CE11F4DD491000FAE31 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 696C568E1E798F7100C1D1B0 /* Localizable.strings */; };
 		AC9953431F4DAA0A003AE61C /* Theme+Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9953421F4DAA0A003AE61C /* Theme+Fonts.swift */; };
 		AC9953451F4DAA22003AE61C /* Theme+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9953441F4DAA22003AE61C /* Theme+Colors.swift */; };
 		AC9953471F4DAA34003AE61C /* Theme+UIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9953461F4DAA34003AE61C /* Theme+UIElements.swift */; };
@@ -732,6 +733,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC9953481F4DB838003AE61C /* Images.xcassets in Resources */,
+				AC829CE11F4DD491000FAE31 /* Localizable.strings in Resources */,
 				696C56861E798EC800C1D1B0 /* Launch.storyboard in Resources */,
 				AC39655F1F4C812A00DEBADC /* environment.plist in Resources */,
 			);
