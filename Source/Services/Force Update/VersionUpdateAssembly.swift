@@ -7,6 +7,7 @@
 //
 
 import Swinject
+import SwinjectAutoregistration
 
 class VersionUpdateAssembly: Assembly {
     

@@ -71,7 +71,7 @@ class AuthenticatedAPIService: APIService {
                     self.authHandler.refreshAction.apply(networkError).start() // sideeffect
                 }
             })
-            .promoteErrors(RequestError.self)
+            .promoteError(RequestError.self)
             .flatMap(.latest) { success -> SignalProducer<RequestResult, RequestError> in
                 guard success else { return SignalProducer(error: .network(networkError)) }
                 return retry()

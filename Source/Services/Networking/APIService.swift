@@ -60,7 +60,7 @@ extension APIService {
     }
 }
 
-extension SignalProducerProtocol where Value == RequestResult, Error == RequestError {
+extension SignalProducer where Value == RequestResult, Error == RequestError {
     
     /**
      * Call this if you expect your request to return non empty body.
@@ -70,9 +70,9 @@ extension SignalProducerProtocol where Value == RequestResult, Error == RequestE
         return flatMap(.latest) { requestResult -> SignalProducer<Any, RequestError> in
             switch requestResult {
             case .data(let data):
-                return SignalProducer(value: data)
+                return SignalProducer<Any, RequestError>(value: data)
             case .noContent:
-                return SignalProducer(error: .unexpectedEmptyBody)
+                return SignalProducer<Any, RequestError>(error: RequestError.unexpectedEmptyBody)
             }
         }
     }

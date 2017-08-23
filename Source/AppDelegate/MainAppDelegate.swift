@@ -8,25 +8,20 @@
 
 import Foundation
 import UIKit
+import SwinjectAutoregistration
 
 public class MainAppDelegate: NSObject, UIApplicationDelegate {
     
     public var window: UIWindow?
     
+    private let assembler = AppAssembler
+    private lazy var appFlowController: AppFlowController = self.assembler.resolver ~> (AppFlowController.self, argument: self.window!)
+    
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        let assembler = AppAssembler
-        
-        
-        // Resolve initial controller with all its dependencies
-        let controller = assembler.resolver.resolve(LanguagesTableViewController.self)!
-        
-        let vc = UINavigationController(rootViewController: controller)
-        
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = vc
+        appFlowController.start()
         window?.makeKeyAndVisible()
-        window?.tintColor = UIColor.black
         
         return true
     }

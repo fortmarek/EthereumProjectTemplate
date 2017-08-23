@@ -70,7 +70,6 @@
 		AC3965471F4C7C4600DEBADC /* MainAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC930401E97AEE700E6F60A /* MainAppDelegate.swift */; };
 		AC39654A1F4C7C9D00DEBADC /* FlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3965491F4C7C9D00DEBADC /* FlowController.swift */; };
 		AC39654C1F4C7CA600DEBADC /* AppFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC39654B1F4C7CA600DEBADC /* AppFlowController.swift */; };
-		AC39654D1F4C7E9B00DEBADC /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A0BA8E1AD4972300715A9F /* Theme.swift */; };
 		AC39654E1F4C7EA400DEBADC /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B6E1CBD2F3C002C9426 /* UserManager.swift */; };
 		AC39654F1F4C7EAD00DEBADC /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD4798A1C582BFC00E85DD3 /* Network.swift */; };
 		AC3965501F4C7EE300DEBADC /* AuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC273A181E3B848F00648E82 /* AuthHandler.swift */; };
@@ -96,6 +95,9 @@
 		AC3965681F4C819300DEBADC /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3965671F4C819300DEBADC /* RequestError.swift */; };
 		AC3965691F4C81EF00DEBADC /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE564B81CBCF2E300B6CBDF /* APIService.swift */; };
 		AC39656C1F4C843200DEBADC /* RoutingAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC39656B1F4C843200DEBADC /* RoutingAction.swift */; };
+		AC9953431F4DAA0A003AE61C /* Theme+Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9953421F4DAA0A003AE61C /* Theme+Fonts.swift */; };
+		AC9953451F4DAA22003AE61C /* Theme+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9953441F4DAA22003AE61C /* Theme+Colors.swift */; };
+		AC9953471F4DAA34003AE61C /* Theme+UIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9953461F4DAA34003AE61C /* Theme+UIElements.swift */; };
 		ACC9303F1E97AD7500E6F60A /* BaseAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC9303C1E97AD3D00E6F60A /* BaseAppDelegate.swift */; };
 		ACC930461E97B44600E6F60A /* HockeySDKAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC930441E97B41500E6F60A /* HockeySDKAppDelegate.swift */; };
 		ACC930491E97BCCC00E6F60A /* AppImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACC930471E97BC9400E6F60A /* AppImages.xcassets */; };
@@ -214,6 +216,9 @@
 		AC3965651F4C818400DEBADC /* AuthenticatedAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatedAPIService.swift; sourceTree = "<group>"; };
 		AC3965671F4C819300DEBADC /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
 		AC39656B1F4C843200DEBADC /* RoutingAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingAction.swift; sourceTree = "<group>"; };
+		AC9953421F4DAA0A003AE61C /* Theme+Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Theme+Fonts.swift"; sourceTree = "<group>"; };
+		AC9953441F4DAA22003AE61C /* Theme+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Theme+Colors.swift"; sourceTree = "<group>"; };
+		AC9953461F4DAA34003AE61C /* Theme+UIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Theme+UIElements.swift"; sourceTree = "<group>"; };
 		AC9DB8F81F4C702B007DEF06 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		ACC930051E979F9A00E6F60A /* ProjectSkeletonFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectSkeletonFramework.h; sourceTree = "<group>"; };
 		ACC930061E979F9A00E6F60A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -240,7 +245,6 @@
 		B433E4A919530092006BEBF1 /* environment-Development.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "environment-Development.plist"; sourceTree = "<group>"; };
 		B433E4AA19530092006BEBF1 /* environment.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = environment.plist; sourceTree = "<group>"; };
 		B433E4B119530FD0006BEBF1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		B4A0BA8E1AD4972300715A9F /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B4A8008C1B28688600453A28 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		B4A8008D1B28688600453A28 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		B4A8008E1B28688600453A28 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
@@ -324,6 +328,16 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
+		AC9953411F4DA9F5003AE61C /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				AC9953421F4DAA0A003AE61C /* Theme+Fonts.swift */,
+				AC9953441F4DAA22003AE61C /* Theme+Colors.swift */,
+				AC9953461F4DAA34003AE61C /* Theme+UIElements.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
 		AC9DB8E71F4C6D45007DEF06 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -340,10 +354,10 @@
 		AC9DB8E91F4C6D84007DEF06 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				AC9953411F4DA9F5003AE61C /* Theme */,
 				AC39656A1F4C820800DEBADC /* Networking */,
 				AC9DB8F31F4C6EF3007DEF06 /* Force Update */,
 				AC9DB8EA1F4C6DB0007DEF06 /* APIService */,
-				B4A0BA8E1AD4972300715A9F /* Theme.swift */,
 				AC386B6E1CBD2F3C002C9426 /* UserManager.swift */,
 				AC273A1A1E3B854100648E82 /* Router.swift */,
 			);
@@ -1077,6 +1091,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC9953431F4DAA0A003AE61C /* Theme+Fonts.swift in Sources */,
 				696C56791E797FB200C1D1B0 /* main.swift in Sources */,
 				AC3965691F4C81EF00DEBADC /* APIService.swift in Sources */,
 				B4ECD6121AD477910099D516 /* AppDelegate.swift in Sources */,
@@ -1101,8 +1116,8 @@
 				AC3965521F4C7F6C00DEBADC /* LocalizedStrings.swift in Sources */,
 				AC3965441F4C7C0000DEBADC /* BaseViewController.swift in Sources */,
 				AC3965531F4C7F7000DEBADC /* Images.swift in Sources */,
-				AC39654D1F4C7E9B00DEBADC /* Theme.swift in Sources */,
 				AC39654C1F4C7CA600DEBADC /* AppFlowController.swift in Sources */,
+				AC9953471F4DAA34003AE61C /* Theme+UIElements.swift in Sources */,
 				AC3965581F4C807400DEBADC /* UIView+Spacer.swift in Sources */,
 				AC39654F1F4C7EAD00DEBADC /* Network.swift in Sources */,
 				AC39655A1F4C807400DEBADC /* UIResponder+Errors.swift in Sources */,
@@ -1111,6 +1126,7 @@
 				AC3965561F4C802000DEBADC /* User.swift in Sources */,
 				AC39655C1F4C807400DEBADC /* Swinject+Factories.swift in Sources */,
 				AC3965591F4C807400DEBADC /* TableAndCollectionViewExtensions.swift in Sources */,
+				AC9953451F4DAA22003AE61C /* Theme+Colors.swift in Sources */,
 				AC3965681F4C819300DEBADC /* RequestError.swift in Sources */,
 				AC3965641F4C813900DEBADC /* VersionUpdateAssembly.swift in Sources */,
 			);

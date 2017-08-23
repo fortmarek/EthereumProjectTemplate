@@ -38,8 +38,7 @@ protocol UserManaging {
 }
 
 class UserManager: UserManaging {
-    fileprivate let api: AuthenticationAPIServicing
-
+    
     var user = MutableProperty<User?>(nil)
 
     lazy var credentials: Credentials? = {
@@ -58,10 +57,6 @@ class UserManager: UserManaging {
 
         return nil
     }()
-
-    init(api: AuthenticationAPIServicing) {
-        self.api = api
-    }
 
     func saveCredentials(_ credentials: Credentials, user: User) -> SignalProducer<Credentials, UserError> {
         var credentials = credentials
@@ -93,11 +88,6 @@ class UserManager: UserManaging {
             sink.send(value: currentUser)
             sink.sendCompleted()
         }
-// Alternatively save to core data
-//        rac_save(currentUser, context: self.context).on(
-//            next: {user in
-//                self.user.value = user
-//        })
     }
 
     fileprivate func save(_ currentUser: User, credentials: Credentials) -> SignalProducer<User, UserError> {
@@ -125,9 +115,8 @@ class UserManager: UserManaging {
     }
 
     func login(_ username: String, password: String) -> SignalProducer<User, UserError> {
-        return self.api.login(username, password: password).mapError { .request($0) }.flatMap(.latest) { currentUser, credentials in
-            return self.save(currentUser, credentials: credentials)
-        }
+        assertionFailure("Implement login")
+        return .empty
     }
 
 }
