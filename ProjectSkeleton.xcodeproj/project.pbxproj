@@ -57,9 +57,6 @@
 		5987A22F7A356606239994EF /* Pods_ProjectSkeleton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CA449F59B20C8B0BC375D5F /* Pods_ProjectSkeleton.framework */; };
 		696C56791E797FB200C1D1B0 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696C56781E797FB200C1D1B0 /* main.swift */; };
 		696C56861E798EC800C1D1B0 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 696C56881E798EC800C1D1B0 /* Launch.storyboard */; };
-		794BB3401CA9917F004CC4D9 /* LanguageTableViewCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79419A5B1CA9848A00C767F1 /* LanguageTableViewCellSpec.swift */; };
-		794BB3431CA991A0004CC4D9 /* DisposingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794BB3411CA9919D004CC4D9 /* DisposingSpec.swift */; };
-		79F0592C1D098D90005EFEFE /* AuthenticatedAPIServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F0592B1D098D90005EFEFE /* AuthenticatedAPIServiceSpec.swift */; };
 		7A2FE95079FAE357F23A8DC1 /* Pods_UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68CBF6A3747C7413DE1CBC2E /* Pods_UITests.framework */; };
 		A31864901EE4485700BBEDC4 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A318648E1EE4484D00BBEDC4 /* TestingAppDelegate.swift */; };
 		A31864911EE4485700BBEDC4 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A318648E1EE4484D00BBEDC4 /* TestingAppDelegate.swift */; };
@@ -101,13 +98,7 @@
 		ACC9303F1E97AD7500E6F60A /* BaseAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC9303C1E97AD3D00E6F60A /* BaseAppDelegate.swift */; };
 		ACC930461E97B44600E6F60A /* HockeySDKAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC930441E97B41500E6F60A /* HockeySDKAppDelegate.swift */; };
 		ACC930491E97BCCC00E6F60A /* AppImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACC930471E97BC9400E6F60A /* AppImages.xcassets */; };
-		ACF8DA071C6236ED00D74377 /* LanguageDetailViewModelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8D9F61C6236CD00D74377 /* LanguageDetailViewModelSpec.swift */; };
-		ACF8DA091C6236F700D74377 /* DummyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8D9F21C6236CD00D74377 /* DummyResponse.swift */; };
-		ACF8DA0A1C6236F700D74377 /* LanguagesTableViewModelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8D9F71C6236CD00D74377 /* LanguagesTableViewModelSpec.swift */; };
-		ACF8DA0B1C6236F700D74377 /* LanguagesViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8D9F81C6236CD00D74377 /* LanguagesViewControllerSpec.swift */; };
-		ACF8DA0C1C6236F700D74377 /* MemoryLeakConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8D9F91C6236CD00D74377 /* MemoryLeakConfiguration.swift */; };
 		ACF8DA111C62370D00D74377 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8D9EF1C6236CD00D74377 /* SnapshotHelper.swift */; };
-		ACF8DA121C62370D00D74377 /* UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8D9F01C6236CD00D74377 /* UITests.swift */; };
 		B4ABA1E0195193330069FAD4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4ABA1DF195193330069FAD4 /* Foundation.framework */; };
 		B4ABA1E2195193330069FAD4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4ABA1E1195193330069FAD4 /* CoreGraphics.framework */; };
 		B4ABA1E4195193330069FAD4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4ABA1E3195193330069FAD4 /* UIKit.framework */; };
@@ -182,10 +173,7 @@
 		6D95BB7E1B3BF81100B00B19 /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjackSwift.framework; path = Carthage/Build/iOS/CocoaLumberjackSwift.framework; sourceTree = "<group>"; };
 		73351E014C03B79FD3C1D7A6 /* Pods_APITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7554DDC0C8AE5A664636FF5C /* Pods-SampleTestingProject.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleTestingProject.development.xcconfig"; path = "Pods/Target Support Files/Pods-SampleTestingProject/Pods-SampleTestingProject.development.xcconfig"; sourceTree = "<group>"; };
-		79419A5B1CA9848A00C767F1 /* LanguageTableViewCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LanguageTableViewCellSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		794BB3411CA9919D004CC4D9 /* DisposingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DisposingSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		794BB3441CA9A21C004CC4D9 /* UIViewController+FrontmostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+FrontmostController.swift"; sourceTree = "<group>"; };
-		79F0592B1D098D90005EFEFE /* AuthenticatedAPIServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AuthenticatedAPIServiceSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		79FB0C121C1AD2D50025C600 /* UIView+Spacer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Spacer.swift"; sourceTree = "<group>"; };
 		7B367BDB18B050F2B4726DE1 /* Pods-ProjectSkeletonFramework.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectSkeletonFramework.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProjectSkeletonFramework/Pods-ProjectSkeletonFramework.debug.xcconfig"; sourceTree = "<group>"; };
 		802AF58D4FA019EF4E18CC8E /* Pods-ProjectSkeleton.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectSkeleton.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProjectSkeleton/Pods-ProjectSkeleton.debug.xcconfig"; sourceTree = "<group>"; };
@@ -227,18 +215,11 @@
 		ACC930401E97AEE700E6F60A /* MainAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainAppDelegate.swift; sourceTree = "<group>"; };
 		ACC930441E97B41500E6F60A /* HockeySDKAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HockeySDKAppDelegate.swift; sourceTree = "<group>"; };
 		ACC930471E97BC9400E6F60A /* AppImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppImages.xcassets; sourceTree = "<group>"; };
-		ACC9304B1E97BD4D00E6F60A /* ProjectSkeletonPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ProjectSkeletonPlayground.playground; sourceTree = "<group>"; };
 		ACD4798A1C582BFC00E85DD3 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Network.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ACD4799B1C5A39E800E85DD3 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACE564B81CBCF2E300B6CBDF /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = APIService.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ACF8D9EE1C6236CD00D74377 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACF8D9EF1C6236CD00D74377 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
-		ACF8D9F01C6236CD00D74377 /* UITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITests.swift; sourceTree = "<group>"; };
-		ACF8D9F21C6236CD00D74377 /* DummyResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DummyResponse.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		ACF8D9F61C6236CD00D74377 /* LanguageDetailViewModelSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LanguageDetailViewModelSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		ACF8D9F71C6236CD00D74377 /* LanguagesTableViewModelSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LanguagesTableViewModelSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		ACF8D9F81C6236CD00D74377 /* LanguagesViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LanguagesViewControllerSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		ACF8D9F91C6236CD00D74377 /* MemoryLeakConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MemoryLeakConfiguration.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ACF8D9FA1C6236CD00D74377 /* ProjectTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ProjectTests-Info.plist"; sourceTree = "<group>"; };
 		B433E4A719530092006BEBF1 /* environment-Stage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "environment-Stage.plist"; sourceTree = "<group>"; };
 		B433E4A819530092006BEBF1 /* environment-Production.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "environment-Production.plist"; sourceTree = "<group>"; };
@@ -455,14 +436,6 @@
 			path = ProjectSkeletonFramework;
 			sourceTree = "<group>";
 		};
-		ACC9304A1E97BD4D00E6F60A /* Playgrounds */ = {
-			isa = PBXGroup;
-			children = (
-				ACC9304B1E97BD4D00E6F60A /* ProjectSkeletonPlayground.playground */,
-			);
-			path = Playgrounds;
-			sourceTree = "<group>";
-		};
 		ACF8D9EC1C6236B700D74377 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -477,7 +450,6 @@
 			children = (
 				ACF8D9EE1C6236CD00D74377 /* Info.plist */,
 				ACF8D9EF1C6236CD00D74377 /* SnapshotHelper.swift */,
-				ACF8D9F01C6236CD00D74377 /* UITests.swift */,
 			);
 			name = UITests;
 			path = Tests/UITests;
@@ -487,13 +459,6 @@
 			isa = PBXGroup;
 			children = (
 				ACF8DA291C6237D900D74377 /* Helpers */,
-				79F0592B1D098D90005EFEFE /* AuthenticatedAPIServiceSpec.swift */,
-				794BB3411CA9919D004CC4D9 /* DisposingSpec.swift */,
-				ACF8D9F21C6236CD00D74377 /* DummyResponse.swift */,
-				ACF8D9F61C6236CD00D74377 /* LanguageDetailViewModelSpec.swift */,
-				ACF8D9F71C6236CD00D74377 /* LanguagesTableViewModelSpec.swift */,
-				ACF8D9F81C6236CD00D74377 /* LanguagesViewControllerSpec.swift */,
-				79419A5B1CA9848A00C767F1 /* LanguageTableViewCellSpec.swift */,
 				ACF8D9FA1C6236CD00D74377 /* ProjectTests-Info.plist */,
 			);
 			name = UnitTests;
@@ -503,7 +468,6 @@
 		ACF8DA291C6237D900D74377 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				ACF8D9F91C6236CD00D74377 /* MemoryLeakConfiguration.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -534,7 +498,6 @@
 		B4ABA1D3195193330069FAD4 = {
 			isa = PBXGroup;
 			children = (
-				ACC9304A1E97BD4D00E6F60A /* Playgrounds */,
 				B4ABA238195195F60069FAD4 /* Source */,
 				B433E4B019530FD0006BEBF1 /* Resources */,
 				ACF8D9EC1C6236B700D74377 /* Tests */,
@@ -715,7 +678,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Ackee s.r.o.";
 				TargetAttributes = {
 					69148E1E1B78BFE300D83C0E = {
@@ -738,7 +701,7 @@
 					};
 					B4ABA1DB195193330069FAD4 = {
 						DevelopmentTeam = PXDF48X6VX;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Manual;
 					};
 					B4ABA1FC195193330069FAD4 = {
@@ -1082,7 +1045,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A31864911EE4485700BBEDC4 /* TestingAppDelegate.swift in Sources */,
-				ACF8DA121C62370D00D74377 /* UITests.swift in Sources */,
 				ACF8DA111C62370D00D74377 /* SnapshotHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1136,15 +1098,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACF8DA0C1C6236F700D74377 /* MemoryLeakConfiguration.swift in Sources */,
-				ACF8DA0A1C6236F700D74377 /* LanguagesTableViewModelSpec.swift in Sources */,
-				ACF8DA071C6236ED00D74377 /* LanguageDetailViewModelSpec.swift in Sources */,
-				794BB3431CA991A0004CC4D9 /* DisposingSpec.swift in Sources */,
-				ACF8DA091C6236F700D74377 /* DummyResponse.swift in Sources */,
-				794BB3401CA9917F004CC4D9 /* LanguageTableViewCellSpec.swift in Sources */,
 				A31864901EE4485700BBEDC4 /* TestingAppDelegate.swift in Sources */,
-				ACF8DA0B1C6236F700D74377 /* LanguagesViewControllerSpec.swift in Sources */,
-				79F0592C1D098D90005EFEFE /* AuthenticatedAPIServiceSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1460,14 +1414,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1509,7 +1469,8 @@
 				PRODUCT_NAME = ProjectSkeleton;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1546,14 +1507,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1597,14 +1564,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1650,7 +1623,8 @@
 				PROVISIONING_PROFILE_SPECIFIER = "match Development cz.ackee.enterprise.*";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1676,7 +1650,8 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "match InHouse cz.ackee.enterprise.*";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

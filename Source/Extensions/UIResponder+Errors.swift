@@ -55,12 +55,12 @@ extension UIWindow: ErrorPresenting {
                 let detailAlertController = UIAlertController(title: "Error Detail", message: "\(e)", preferredStyle: .alert)
                 let detailOkAction = UIAlertAction(title: L10n.Basic.ok, style: .cancel) { _ in }
                 detailAlertController.addAction(detailOkAction)
-                window.rootViewController?.frontmostController.present(detailAlertController, animated: true) { _ in }
+                window.rootViewController?.frontmostController.present(detailAlertController, animated: true, completion: nil)
             }
             alertController.addAction(showMoreAction)
         #endif
         
-        window.rootViewController?.frontmostController.present(alertController, animated: true) { _ in }
+        window.rootViewController?.frontmostController.present(alertController, animated: true, completion: nil)
         return true
     }
     

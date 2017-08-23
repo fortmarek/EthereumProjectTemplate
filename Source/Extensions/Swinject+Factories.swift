@@ -26,7 +26,7 @@ public extension Container {
      - Important: Fails on unresolvable service.
      */
     @discardableResult
-    public func autoregisterFactory<Service>(factory: (() -> Service).Type) -> ServiceEntry<(() -> Service)> {
+    public func autoregisterFactory<Service>(factory: ((()) -> Service).Type) -> ServiceEntry<(() -> Service)> {
         return self.register(factory.self) { r in { arg in
             self.synchronize().resolve(Service.self)!
             }
