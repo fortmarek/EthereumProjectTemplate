@@ -1,7 +1,3 @@
-# Podfile
-source 'git@gitlab.ack.ee:Ackee/AckeePods.git' # Ackee private repo
-source 'https://github.com/CocoaPods/Specs.git' # Default Cocoapods repo
-
 platform :ios, '9.0'
 project 'ProjectSkeleton', 'AdHoc' => :release,'AppStore' => :release, 'Development' => :debug
 
@@ -12,7 +8,7 @@ target 'ProjectSkeleton' do
     
     # Extensions
     pod 'ACKategories', '~> 4.0'
-    pod 'ACKReactiveExtensions', :git => 'https://github.com/AckeeCZ/ACKReactiveExtensions.git', :branch => 'pod-update'
+    pod 'ACKReactiveExtensions', :git => 'https://github.com/AckeeCZ/ACKReactiveExtensions.git'
     
     # UI
     pod 'SnapKit'
