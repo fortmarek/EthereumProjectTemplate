@@ -9,37 +9,10 @@ inhibit_all_warnings!
 use_frameworks!
 
 target 'ProjectSkeleton' do
-
-    # Hockey
-    pod 'HockeySDK', '~> 4.1'
-
-    # Code Generation
-    pod 'SwiftGen', '~> 4.0'
-
-    def testing_pods
-        pod 'Quick', '~> 1.0'
-        pod 'Nimble', '5.1'
-    end
-
-
-    target 'Tests' do
-        inherit! :search_paths
-        testing_pods
-    end
-
-    target 'UITests' do
-        inherit! :search_paths
-        testing_pods
-    end
-
-end
-
-target 'ProjectSkeletonFramework' do
-
+    
     # Extensions
     pod 'ACKategories', '~> 4.0'
-    pod 'ACKReactiveExtensions', '~> 2.3'
-    pod 'ACKReactiveExtensions/Argo', '~> 2.3'
+    pod 'ACKReactiveExtensions', :git => 'https://github.com/AckeeCZ/ACKReactiveExtensions.git', :branch => 'pod-update'
     
     # UI
     pod 'SnapKit'
@@ -50,20 +23,44 @@ target 'ProjectSkeletonFramework' do
     pod 'Alamofire'
     
     # Model
-    pod 'ReactiveCocoa', '~> 5.0'
-    pod 'ReactiveSwift', '~> 1.1'
-    pod 'Argo', '~> 4.1'
-    pod 'Curry', '~> 3.0'
+    pod 'ReactiveCocoa', '~> 6.0'
+    pod 'ReactiveSwift', '~> 2.0'
     pod 'Locksmith', '~> 3.0'
     
     # Dependency Injection
     pod 'Swinject', '~> 2.0'
-    pod 'SwinjectAutoregistration', '~> 2.0'
-
+    pod 'SwinjectAutoregistration', :git => 'https://github.com/Swinject/SwinjectAutoregistration.git', :branch => 'swift4'
+    
     pod 'Firebase/RemoteConfig'
+
+    # Hockey
+    pod 'HockeySDK', '~> 4.1'
+
+    # Code Generation
+    pod 'SwiftGen', '~> 4.0'
+
+    target 'Tests' do
+        inherit! :search_paths
+    end
+
+    target 'UITests' do
+        inherit! :search_paths
+    end
 end
 
 post_install do |installer|
+
+    #Legacy swift targets
+    legacy_swift_targets = ["ReactiveCocoa", "SnapKit", "ACKategories", "AlamofireImage", "ACKReactiveExtensions"]
+    
+    installer.pods_project.targets.each do |target|
+        if legacy_swift_targets.include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['SWIFT_VERSION'] = '3.2'
+            end
+        end
+    end
+
 
     puts 'Setting appropriate code signing identities'
     installer.pods_project.targets.each { |target|
