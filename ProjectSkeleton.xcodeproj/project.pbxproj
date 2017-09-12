@@ -60,13 +60,13 @@
 		7A2FE95079FAE357F23A8DC1 /* Pods_UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68CBF6A3747C7413DE1CBC2E /* Pods_UITests.framework */; };
 		A31864901EE4485700BBEDC4 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A318648E1EE4484D00BBEDC4 /* TestingAppDelegate.swift */; };
 		A31864911EE4485700BBEDC4 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A318648E1EE4484D00BBEDC4 /* TestingAppDelegate.swift */; };
+		A38FBCB91F67EB9E00352BB5 /* AppFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38FBCB81F67EB9E00352BB5 /* AppFlowController.swift */; };
+		A38FBCBB1F67EC3A00352BB5 /* FlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38FBCBA1F67EC3A00352BB5 /* FlowController.swift */; };
 		AC3965421F4C7BC600DEBADC /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3965411F4C7BC600DEBADC /* MainViewController.swift */; };
 		AC3965441F4C7C0000DEBADC /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9DB8F81F4C702B007DEF06 /* BaseViewController.swift */; };
 		AC3965451F4C7C2900DEBADC /* AppAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC22F0CC1D6A44E600514668 /* AppAssembly.swift */; };
 		AC3965461F4C7C2E00DEBADC /* AppAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC930371E97A34500E6F60A /* AppAssembler.swift */; };
 		AC3965471F4C7C4600DEBADC /* MainAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC930401E97AEE700E6F60A /* MainAppDelegate.swift */; };
-		AC39654A1F4C7C9D00DEBADC /* FlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3965491F4C7C9D00DEBADC /* FlowController.swift */; };
-		AC39654C1F4C7CA600DEBADC /* AppFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC39654B1F4C7CA600DEBADC /* AppFlowController.swift */; };
 		AC39654E1F4C7EA400DEBADC /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC386B6E1CBD2F3C002C9426 /* UserManager.swift */; };
 		AC39654F1F4C7EAD00DEBADC /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD4798A1C582BFC00E85DD3 /* Network.swift */; };
 		AC3965501F4C7EE300DEBADC /* AuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC273A181E3B848F00648E82 /* AuthHandler.swift */; };
@@ -189,6 +189,8 @@
 		A3221F451F4B326B00249162 /* FirebaseFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseFetcher.swift; sourceTree = "<group>"; };
 		A3221F461F4B326B00249162 /* VersionUpdateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionUpdateManager.swift; sourceTree = "<group>"; };
 		A3221F4B1F4B35CF00249162 /* VersionUpdateAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionUpdateAssembly.swift; sourceTree = "<group>"; };
+		A38FBCB81F67EB9E00352BB5 /* AppFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowController.swift; sourceTree = "<group>"; };
+		A38FBCBA1F67EC3A00352BB5 /* FlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowController.swift; sourceTree = "<group>"; };
 		A632E3F366F026D7D4ED7159 /* Pods-Tests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.appstore.xcconfig"; sourceTree = "<group>"; };
 		AC223D721C6B72860000A2F1 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/build/Development-iphoneos/Quick.framework"; sourceTree = "<group>"; };
 		AC223D741C6B728C0000A2F1 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Pods/build/Development-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
@@ -198,8 +200,6 @@
 		AC273A1A1E3B854100648E82 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		AC386B6E1CBD2F3C002C9426 /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		AC3965411F4C7BC600DEBADC /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		AC3965491F4C7C9D00DEBADC /* FlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlowController.swift; path = ../../../kosik/Source/FlowController.swift; sourceTree = "<group>"; };
-		AC39654B1F4C7CA600DEBADC /* AppFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppFlowController.swift; path = ../../../kosik/Source/AppFlowController.swift; sourceTree = "<group>"; };
 		AC3965541F4C7F7F00DEBADC /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		AC3965551F4C7F7F00DEBADC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AC3965651F4C818400DEBADC /* AuthenticatedAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatedAPIService.swift; sourceTree = "<group>"; };
@@ -285,11 +285,32 @@
 			path = Generated;
 			sourceTree = "<group>";
 		};
+		A38FBCBE1F67ED7600352BB5 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		A38FBCBF1F67ED9300352BB5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A38FBCC01F67EDB000352BB5 /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = APIService;
+			sourceTree = "<group>";
+		};
 		AC3965481F4C7C6A00DEBADC /* Flow Controller */ = {
 			isa = PBXGroup;
 			children = (
-				AC3965491F4C7C9D00DEBADC /* FlowController.swift */,
-				AC39654B1F4C7CA600DEBADC /* AppFlowController.swift */,
+				A38FBCBA1F67EC3A00352BB5 /* FlowController.swift */,
+				A38FBCB81F67EB9E00352BB5 /* AppFlowController.swift */,
 				AC39656B1F4C843200DEBADC /* RoutingAction.swift */,
 			);
 			path = "Flow Controller";
@@ -333,38 +354,23 @@
 		AC9DB8E91F4C6D84007DEF06 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				A38FBCC01F67EDB000352BB5 /* APIService */,
 				AC9953411F4DA9F5003AE61C /* Theme */,
 				AC39656A1F4C820800DEBADC /* Networking */,
 				AC9DB8F31F4C6EF3007DEF06 /* Force Update */,
-				AC9DB8EA1F4C6DB0007DEF06 /* APIService */,
 				AC386B6E1CBD2F3C002C9426 /* UserManager.swift */,
 				AC273A1A1E3B854100648E82 /* Router.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
 		};
-		AC9DB8EA1F4C6DB0007DEF06 /* APIService */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = APIService;
-			sourceTree = "<group>";
-		};
 		AC9DB8EB1F4C6DF1007DEF06 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				AC9DB8F41F4C7027007DEF06 /* Cells */,
-				AC9DB8F61F4C7028007DEF06 /* Views */,
-				AC9DB8F71F4C702B007DEF06 /* Controllers */,
+				A38FBCBF1F67ED9300352BB5 /* Views */,
+				A38FBCBE1F67ED7600352BB5 /* Cells */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		AC9DB8EF1F4C6E3B007DEF06 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		AC9DB8F01F4C6E54007DEF06 /* DI */ = {
@@ -399,30 +405,14 @@
 			path = "Force Update";
 			sourceTree = "<group>";
 		};
-		AC9DB8F41F4C7027007DEF06 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Cells;
-			path = Source/View/Cells;
-			sourceTree = SOURCE_ROOT;
-		};
-		AC9DB8F61F4C7028007DEF06 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Views;
-			path = Source/View/Views;
-			sourceTree = SOURCE_ROOT;
-		};
-		AC9DB8F71F4C702B007DEF06 /* Controllers */ = {
+		AC9DB8F71F4C702B007DEF06 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				AC9DB8F81F4C702B007DEF06 /* BaseViewController.swift */,
 				AC3965411F4C7BC600DEBADC /* MainViewController.swift */,
 			);
-			name = Controllers;
-			path = Source/View/Controllers;
+			name = ViewControllers;
+			path = Source/ViewControllers;
 			sourceTree = SOURCE_ROOT;
 		};
 		ACF8D9EC1C6236B700D74377 /* Tests */ = {
@@ -542,7 +532,7 @@
 				AC9DB8E91F4C6D84007DEF06 /* Services */,
 				AC3965481F4C7C6A00DEBADC /* Flow Controller */,
 				AC9DB8EB1F4C6DF1007DEF06 /* View */,
-				AC9DB8EF1F4C6E3B007DEF06 /* ViewModel */,
+				AC9DB8F71F4C702B007DEF06 /* ViewControllers */,
 				AC9DB8F01F4C6E54007DEF06 /* DI */,
 				AC9DB8F11F4C6E70007DEF06 /* AppDelegate */,
 				696C56781E797FB200C1D1B0 /* main.swift */,
@@ -907,7 +897,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9D99C044816FAA4B50F4F478 /* [CP] Embed Pods Frameworks */ = {
@@ -921,15 +911,12 @@
 				"${BUILT_PRODUCTS_DIR}/ACKategories/ACKategories.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
-				"${BUILT_PRODUCTS_DIR}/Argo/Argo.framework",
-				"${BUILT_PRODUCTS_DIR}/Curry/Curry.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Locksmith/Locksmith.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveCocoa/ReactiveCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
-				"${BUILT_PRODUCTS_DIR}/Runes/Runes.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
 				"${BUILT_PRODUCTS_DIR}/SwinjectAutoregistration/SwinjectAutoregistration.framework",
@@ -942,15 +929,12 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ACKategories.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Argo.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Curry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locksmith.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Runes.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwinjectAutoregistration.framework",
@@ -1004,7 +988,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D35D8193D6E400ECA505C69E /* [CP] Check Pods Manifest.lock */ = {
@@ -1022,7 +1006,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1047,7 +1031,9 @@
 				B4ECD6121AD477910099D516 /* AppDelegate.swift in Sources */,
 				AC3965661F4C818400DEBADC /* AuthenticatedAPIService.swift in Sources */,
 				AC3965571F4C802200DEBADC /* Credentials.swift in Sources */,
+				A38FBCB91F67EB9E00352BB5 /* AppFlowController.swift in Sources */,
 				ACC930461E97B44600E6F60A /* HockeySDKAppDelegate.swift in Sources */,
+				A38FBCBB1F67EC3A00352BB5 /* FlowController.swift in Sources */,
 				AC39654E1F4C7EA400DEBADC /* UserManager.swift in Sources */,
 				AC39655B1F4C807400DEBADC /* UIViewController+FrontmostController.swift in Sources */,
 				AC39656C1F4C843200DEBADC /* RoutingAction.swift in Sources */,
@@ -1055,7 +1041,6 @@
 				AC3965601F4C813900DEBADC /* APIFetcher.swift in Sources */,
 				AC3965631F4C813900DEBADC /* VersionUpdateManager.swift in Sources */,
 				AC39655D1F4C807400DEBADC /* ErrorWrapping.swift in Sources */,
-				AC39654A1F4C7C9D00DEBADC /* FlowController.swift in Sources */,
 				ACC9303F1E97AD7500E6F60A /* BaseAppDelegate.swift in Sources */,
 				AC3965461F4C7C2E00DEBADC /* AppAssembler.swift in Sources */,
 				AC3965621F4C813900DEBADC /* FirebaseFetcher.swift in Sources */,
@@ -1066,7 +1051,6 @@
 				AC3965521F4C7F6C00DEBADC /* LocalizedStrings.swift in Sources */,
 				AC3965441F4C7C0000DEBADC /* BaseViewController.swift in Sources */,
 				AC3965531F4C7F7000DEBADC /* Images.swift in Sources */,
-				AC39654C1F4C7CA600DEBADC /* AppFlowController.swift in Sources */,
 				AC9953471F4DAA34003AE61C /* Theme+UIElements.swift in Sources */,
 				AC3965581F4C807400DEBADC /* UIView+Spacer.swift in Sources */,
 				AC39654F1F4C7EAD00DEBADC /* Network.swift in Sources */,
