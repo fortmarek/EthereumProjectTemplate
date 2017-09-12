@@ -285,6 +285,27 @@
 			path = Generated;
 			sourceTree = "<group>";
 		};
+		A38FBCBE1F67ED7600352BB5 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		A38FBCBF1F67ED9300352BB5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A38FBCC01F67EDB000352BB5 /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = APIService;
+			sourceTree = "<group>";
+		};
 		AC3965481F4C7C6A00DEBADC /* Flow Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -333,38 +354,23 @@
 		AC9DB8E91F4C6D84007DEF06 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				A38FBCC01F67EDB000352BB5 /* APIService */,
 				AC9953411F4DA9F5003AE61C /* Theme */,
 				AC39656A1F4C820800DEBADC /* Networking */,
 				AC9DB8F31F4C6EF3007DEF06 /* Force Update */,
-				AC9DB8EA1F4C6DB0007DEF06 /* APIService */,
 				AC386B6E1CBD2F3C002C9426 /* UserManager.swift */,
 				AC273A1A1E3B854100648E82 /* Router.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
 		};
-		AC9DB8EA1F4C6DB0007DEF06 /* APIService */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = APIService;
-			sourceTree = "<group>";
-		};
 		AC9DB8EB1F4C6DF1007DEF06 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				AC9DB8F41F4C7027007DEF06 /* Cells */,
-				AC9DB8F61F4C7028007DEF06 /* Views */,
-				AC9DB8F71F4C702B007DEF06 /* Controllers */,
+				A38FBCBF1F67ED9300352BB5 /* Views */,
+				A38FBCBE1F67ED7600352BB5 /* Cells */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		AC9DB8EF1F4C6E3B007DEF06 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		AC9DB8F01F4C6E54007DEF06 /* DI */ = {
@@ -399,30 +405,14 @@
 			path = "Force Update";
 			sourceTree = "<group>";
 		};
-		AC9DB8F41F4C7027007DEF06 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Cells;
-			path = Source/View/Cells;
-			sourceTree = SOURCE_ROOT;
-		};
-		AC9DB8F61F4C7028007DEF06 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Views;
-			path = Source/View/Views;
-			sourceTree = SOURCE_ROOT;
-		};
-		AC9DB8F71F4C702B007DEF06 /* Controllers */ = {
+		AC9DB8F71F4C702B007DEF06 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				AC9DB8F81F4C702B007DEF06 /* BaseViewController.swift */,
 				AC3965411F4C7BC600DEBADC /* MainViewController.swift */,
 			);
-			name = Controllers;
-			path = Source/View/Controllers;
+			name = ViewControllers;
+			path = Source/ViewControllers;
 			sourceTree = SOURCE_ROOT;
 		};
 		ACF8D9EC1C6236B700D74377 /* Tests */ = {
@@ -542,7 +532,7 @@
 				AC9DB8E91F4C6D84007DEF06 /* Services */,
 				AC3965481F4C7C6A00DEBADC /* Flow Controller */,
 				AC9DB8EB1F4C6DF1007DEF06 /* View */,
-				AC9DB8EF1F4C6E3B007DEF06 /* ViewModel */,
+				AC9DB8F71F4C702B007DEF06 /* ViewControllers */,
 				AC9DB8F01F4C6E54007DEF06 /* DI */,
 				AC9DB8F11F4C6E70007DEF06 /* AppDelegate */,
 				696C56781E797FB200C1D1B0 /* main.swift */,
