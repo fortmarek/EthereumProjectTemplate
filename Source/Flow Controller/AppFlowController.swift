@@ -22,13 +22,13 @@ final class AppFlowController: FlowController {
     // MARK: Flow controller
     
     func start() {
-        let circuitNav = UINavigationController()
+        let baseController = UINavigationController()
         
         // Create flow controller for given flow and
         // append children array with new flow controller
         // add(child: newFlowController)
         
-        window.rootViewController = circuitNav
+        window.rootViewController = baseController
     }
 
 }

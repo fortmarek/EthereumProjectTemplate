@@ -6,7 +6,7 @@
 //  Copyright © 2017 Ackee s.r.o. All rights reserved.
 //
 
-protocol FlowController: class {
+protocol FlowController: class, RoutingProvider {
     var children: [FlowController] { get set }
     
     func start()
