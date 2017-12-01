@@ -12,6 +12,10 @@
 		696CEE521F8D19A5007C6DF7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 696CEE501F8D19A5007C6DF7 /* Images.xcassets */; };
 		696CEE631F8D1ADE007C6DF7 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696CEE621F8D1ADE007C6DF7 /* Environment.swift */; };
 		6977BB521FD19D2800F6EB94 /* environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6977BB511FD19D2800F6EB94 /* environment.plist */; };
+		6977BB551FD19F6700F6EB94 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6977BB541FD19F6700F6EB94 /* Network.swift */; };
+		6977BB581FD1A1B300F6EB94 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6977BB561FD1A1B300F6EB94 /* Result.framework */; };
+		6977BB591FD1A1B300F6EB94 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6977BB571FD1A1B300F6EB94 /* ReactiveSwift.framework */; };
+		6977BB5C1FD1A6BD00F6EB94 /* NetworkStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6977BB5B1FD1A6BD00F6EB94 /* NetworkStructs.swift */; };
 		698B3D091F8D337600F87651 /* SkeletonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F3C1FE1F8D169A00DB2B5C /* SkeletonTests.swift */; };
 		699DD5A11F8D249700C7080D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 699DD59F1F8D249700C7080D /* Localizable.strings */; };
 		699DD5A91F8D24FF00C7080D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 699DD5A81F8D24FF00C7080D /* LaunchScreen.storyboard */; };
@@ -49,6 +53,10 @@
 		696CEE5C1F8D1ABC007C6DF7 /* environment.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = environment.plist; sourceTree = "<group>"; };
 		696CEE621F8D1ADE007C6DF7 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		6977BB511FD19D2800F6EB94 /* environment.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = environment.plist; sourceTree = "<group>"; };
+		6977BB541FD19F6700F6EB94 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		6977BB561FD1A1B300F6EB94 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
+		6977BB571FD1A1B300F6EB94 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
+		6977BB5B1FD1A6BD00F6EB94 /* NetworkStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStructs.swift; sourceTree = "<group>"; };
 		699DD5A71F8D24C600C7080D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		699DD5A81F8D24FF00C7080D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		699DD5AB1F8D269B00C7080D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
@@ -71,6 +79,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA25BDE99E13F778B6AAC1BA /* Pods_Skeleton.framework in Frameworks */,
+				6977BB581FD1A1B300F6EB94 /* Result.framework in Frameworks */,
+				6977BB591FD1A1B300F6EB94 /* ReactiveSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +219,15 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		6977BB531FD19F5700F6EB94 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				6977BB541FD19F6700F6EB94 /* Network.swift */,
+				6977BB5B1FD1A6BD00F6EB94 /* NetworkStructs.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		699DD5AA1F8D269B00C7080D /* Generated */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,6 +295,7 @@
 				696CEE641F8D1BF3007C6DF7 /* ViewController */,
 				696CEE691F8D1BF3007C6DF7 /* ViewModel */,
 				696CEE4F1F8D19A5007C6DF7 /* Resources */,
+				6977BB531FD19F5700F6EB94 /* Services */,
 				69F4A6C61F8BD5C5003481A3 /* Info.plist */,
 			);
 			path = Skeleton;
@@ -284,6 +304,8 @@
 		9AFDE9C028D41DE8253C47ED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6977BB571FD1A1B300F6EB94 /* ReactiveSwift.framework */,
+				6977BB561FD1A1B300F6EB94 /* Result.framework */,
 				6F73735F21BEAAADBB6C5C78 /* Pods_Skeleton.framework */,
 			);
 			name = Frameworks;
@@ -305,6 +327,7 @@
 				69F4A6B51F8BD5C5003481A3 /* Resources */,
 				6CFD3EF384EC05669B8DBD83 /* [CP] Embed Pods Frameworks */,
 				D7767D8611E5604D91E49109 /* [CP] Copy Pods Resources */,
+				6977BB5A1FD1A1C800F6EB94 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -438,6 +461,25 @@
 			shellPath = /bin/sh;
 			shellScript = "CURRENT_ENV_FILE=\"${ACK_ENVIRONMENT_DIR}/.current\"\nENVIRONMENT=`cat ${CURRENT_ENV_FILE} || echo \"Development\"`\nSELECTED_ENV_DIR=\"${ACK_ENVIRONMENT_DIR}/${ENVIRONMENT}\"\nCURRENT_ENV_DIR=\"${ACK_ENVIRONMENT_DIR}/Current\"\n\nrm -r \"${CURRENT_ENV_DIR}\" || true\ncp -r \"${SELECTED_ENV_DIR}\" \"${CURRENT_ENV_DIR}\"";
 		};
+		6977BB5A1FD1A1C800F6EB94 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Result.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ReactiveSwift.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
 		698258FE1F8E9B46004BBCB7 /* Generate environment file */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -523,6 +565,8 @@
 			files = (
 				6900359A1FD17EA6002EB20F /* ViewController.swift in Sources */,
 				690035981FD17E9D002EB20F /* AppDelegate.swift in Sources */,
+				6977BB551FD19F6700F6EB94 /* Network.swift in Sources */,
+				6977BB5C1FD1A6BD00F6EB94 /* NetworkStructs.swift in Sources */,
 				696CEE631F8D1ADE007C6DF7 /* Environment.swift in Sources */,
 				699DD5AD1F8D269B00C7080D /* Assets.swift in Sources */,
 				699DD5AE1F8D269B00C7080D /* LocalizedStrings.swift in Sources */,
@@ -638,6 +682,10 @@
 				DEVELOPMENT_TEAM = PXDF48X6VX;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -710,6 +758,10 @@
 				DEVELOPMENT_TEAM = PXDF48X6VX;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -775,6 +827,10 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
