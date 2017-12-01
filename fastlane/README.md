@@ -29,63 +29,31 @@ xcode-select --install
 </table>
 
 # Available Actions
-### xcode
+### pods
 ```
-fastlane xcode
+fastlane pods
 ```
-Installs templates and snippets 
-### analyze
-```
-fastlane analyze
-```
-Runs linting (and eventually static analysis)
-### test
-```
-fastlane test
-```
-Runs unit, api and ui tests.
-### screenshots
-```
-fastlane screenshots
-```
-Create new screenshots for the App Store in all languages and device types
 
-Additionally, this will add device frames around the screenshots
-### copy
-```
-fastlane copy
-```
-Copies and renames the project into new directory
-### localization
-```
-fastlane localization
-```
-Download strings from Google spreadsheet
-### swiftgen
-```
-fastlane swiftgen
-```
-Generate SwiftGen enums
 ### provisioning
 ```
 fastlane provisioning
 ```
-Downloads provisioning for all environments
+
 ### beta
 ```
 fastlane beta
 ```
-Submit new **beta** build to Hockey app
+
+### test
+```
+fastlane test
+```
+
 ### appstore
 ```
 fastlane appstore
 ```
-Deploy new version to the App Store (and also hockey app)
-### set_environment
-```
-fastlane set_environment
-```
-Switches environment and sets app_name and app_identifier in plist
+
 
 ----
 

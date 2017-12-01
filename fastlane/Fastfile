@@ -1,174 +1,66 @@
+ENV["GYM_OUTPUT_DIRECTORY"] = "./fastlane/outputs/"
 
+xcversion version: "~> 9.0"
 
-##################################### SETTINGS #####################################
+lane :pods do
+    sh "pod install || pod install --repo-update"
+end
 
-inhouse_apple_id = 'unicorn@ackee.cz'
-production_apple_id = 'ios@ackee.cz'
-connect_apple_id = 'ios@ackee.cz'
-connect_team_id = "xxx"
+lane :provisioning do |options|
+    SCHEME = options[:scheme] || UI.select("Select environment: ", ["Development", "Stage", "Production"])
 
-####################################################################################
-
-ENV["ACK_BACKTOBASICS"] = "1"
-
-#import "../../fastlane/fastlane/Fastfile"
-import(download_from_git(url: 'git@gitlab.ack.ee:Ackee/fastlane.git', use_cache: is_xcode ))
-
-
-  desc "Downloads provisioning for all environments"
-  lane :provisioning do |options|
-    environment = options[:environment]
-
-    if environment && !(is_environment(environment: environment))
-      raise "Unknown environment #{environment}"
+    if SCHEME == "Development" then
+        # match
+    elsif SCHEME == "Stage" then
+        # match
+    elsif SCHEME == "Production" then
+        # match
     end
+end
 
-    if !environment || environment == "Development"
-      provisioning_match(configuration: "Debug",
-                        type: "development",
-                        use_wildcard: true, #uncomment to use app id
-                        app_identifier: app_identifier("Development"),
-                        username: inhouse_apple_id,
-                        team_id: team_id("Development"),
-                        readonly: true)
+lane :beta do
+    SCHEME = "Stage"
+    CONFIGURATION = "AdHoc"
+
+    # badge
+
+    gym(scheme: SCHEME,
+        configuration: CONFIGURATION,
+        export_options: {
+            method: "enterprise",
+            provisioningProfiles: provisioning_mapping()
+        }
+    )
+
+    # hockey
+end
+
+lane :test do |options|
+    TYPE = options[:type] || UI.select("Select test type: ", ["ui", "unit"])
+
+    if TYPE == "ui" then
+        scan(scheme: "UITests")
+    elsif TYPE == "unit"
+        scan(scheme: "Development")
     end
+end
 
-    if !environment || environment == "Stage"
-      provisioning_match(configuration: "AdHoc",
-                        type: "enterprise",
-                        use_wildcard: true, #uncomment to use app id
-                        app_identifier: app_identifier("Stage"),
-                        username: inhouse_apple_id,
-                        team_id: team_id("Stage"),
-                        readonly: true)
-    end
+lane :appstore do
+    SCHEME = "Production"
+    CONFIGURATION = "AppStore"
 
-    if !environment || environment == "Production"
-      provisioning_match(configuration: "AppStore",
-                        type: "appstore",
-                        app_identifier: app_identifier("Production"),
-                        username: production_apple_id,
-                        git_url: ENV["ACK_PRODUCTION_MATCH_GIT"],
-                        team_id: team_id("Production"),
-                        readonly: true)
+    gym(scheme: SCHEME,
+        configuration: CONFIGURATION,
+        clean: true,
+        export_options: {
+            method: "app-store",
+            provisioningProfiles: provisioning_mapping()
+        }
+    )
 
-      #Use sigh only for client accounts (on our account you would use match)
-      # provisioning_sigh(configuration: "AppStore",
-      #                   username: production_apple_id,
-      #                   team_id: team_id("Production"),
-      #                   app_identifier: app_identifier("Production"))
-    end
+    # deliver
+end
 
-  end
-
-  desc "Submit new **beta** build to Hockey app"
-  lane :beta do
-
-    environment = "Stage"
-
-    #Pods
-  	pod_install
-
-    #Build number
-  	build_number = number_of_commits
-		set_build_number(build_number: build_number)
-
-    #Download provisioning
-    provisioning(environment: environment)
-
-    #Setup environments, app identifier and app name
-    set_environment(environment: environment)
-
-    #Setup badge for beta
-    badge(shield: "#{get_version_number}-#{number_of_commits}-blue", dark: true, shield_no_resize: true)
-
-    begin
-      gym(
-      	scheme: environment,
-  		  configuration: "AdHoc",
-        provisioning_profile_path: lane_context[SharedValues::SIGH_PROFILE_PATH],
-        #export_team_id: inhouse_team_id
-  		)
-    ensure
-      # Put badge back to original
-      sh "git checkout -- ../Resources/Images.xcassets/"
-    end
-
-    if !is_ci
-        hockey_identifier = get_environment_plist_value(key: "hockey_identifier", environment: environment)
-
-        hockey(
-              public_identifier: hockey_identifier,
-              notify: '0'
-        )
-    end
-  end
-
-
-  desc "Deploy new version to the App Store (and also hockey app)"
-  lane :appstore do |options|
-
-      environment = "Production"
-
-      pod_install
-
-    	build_number = number_of_commits
-  		set_build_number(build_number: build_number)
-
-      #Setup environments, app identifier and app name
-      set_environment(environment: environment)
-
-      if !options[:skip_snapshot]
-        snapshot
-      end
-
-      provisioning(environment:environment)
-
-      gym(
-  		  scheme: environment,
-        configuration: "AppStore",
-  		  clean: true
-  		)
-
-      deliver(
-      		username: connect_apple_id,
-          team_id: connect_team_id,
-          force: is_ci
-      )
-  end
-
-
-
-  desc "Switches environment and sets app_name and app_identifier in plist"
-  lane :set_environment do |options|
-      if is_xcode
-          UI.message "Xcode run script phase"
-      end
-
-      environment = options[:environment]
-
-      if !is_environment(environment: environment)
-          raise "Unknown environment #{environment}"
-      end
-
-      display_name = app_name(environment)
-      app_identifier =  app_identifier(environment)
-
-      UI.message "Setting environment for #{environment}"
-
-      # Change environment plist
-      replace_environment_plist(environment: environment)
-
-      environment_dict = {
-          "ACK_BUILD_NUMBER" => number_of_commits,
-      }
-
-      generate_preprocess_header(values: environment_dict)
-  end
-
-
-
-
-
-
-#end
+def provisioning_mapping()
+    return nil
+end

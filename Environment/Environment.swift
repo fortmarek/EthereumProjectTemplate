@@ -1,26 +1,17 @@
-//
-//  Environment.swift
-//  ProjectSkeleton
-//
-//  Created by Petr Šíma on Jun/24/15.
-//  Copyright (c) 2015 Ackee s.r.o. All rights reserved.
-//
+// Automatically generated
 
 import Foundation
 
-private class BundleToken {}
+enum Environment {
+    enum API {
+        static let baseURL = URL(string: "https://cookbook-dev.ack.ee")!
+    }
 
-public enum Environment {
-    fileprivate static let plist : [String: AnyObject] = NSDictionary(contentsOfFile:(Bundle(for: BundleToken.self).path(forResource: "environment", ofType:"plist")!))! as! [String : AnyObject]
-	
-    enum Api {
-        fileprivate static let apiDict = plist["api"] as! [String : AnyObject]
-        
-        static var baseURL : String { return apiDict["baseURL"] as! String }
-    }
-	
-    public enum Hockey {
-        public static var identifier : String { return plist["hockey_identifier"] as! String }
-        public static var allowLogging : Bool { return plist["hockey_allowLogging"] as? Bool ?? true }
-    }
+    static let data = Data(base64Encoded: "EjRWeA==")!
+    static let double = 0.1
+    static let isBool = false
+    static let date = Date(timeIntervalSince1970: 1507749931.0)
+    static let isInt = 10
+    static let string = "test string"
 }
+

@@ -54,7 +54,6 @@ Pods/
 Carthage/Checkouts
 !Carthage/Build
 
-
 #Fastlane
 
 # fastlane specific
@@ -79,6 +78,9 @@ screenshots
 /outputs
 
 #Environment
-Environment/.current_environment
-environment_preprocess.h
-environment.plist
+Environment/Current
+Environment/.current
+Environment/.environment_preprocess.h
+
+#generated files
+*/Model/Generated
