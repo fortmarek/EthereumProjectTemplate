@@ -17,6 +17,11 @@ struct RequestResponse {
     let data: Data?
 }
 
+enum RequestError: Error {
+    case network(NetworkError)
+    case upload(Error)
+}
+
 struct NetworkError: Error {
     let error: Error
     let request: URLRequest?

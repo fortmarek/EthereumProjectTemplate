@@ -9,7 +9,8 @@ import Alamofire
 import ReactiveSwift
 
 protocol Networking {
-    func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String: Any], encoding: ParameterEncoding, headers: HTTPHeaders) -> SignalProducer<RequestResponse, NetworkError>
+    func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String: Any], encoding: ParameterEncoding, headers: HTTPHeaders) -> SignalProducer<RequestResponse, RequestError>
+    func upload(_ address: RequestAddress, method: HTTPMethod, parameters: [NetworkUploadable], headers: HTTPHeaders) -> SignalProducer<RequestResponse, RequestError>
 }
 
 final class Network: Networking {
@@ -18,35 +19,64 @@ final class Network: Networking {
         return SessionManager.default
     }()
     
-    private let networkCallbackQueue = DispatchQueue.global(qos: .background)
+    fileprivate static let networkCallbackQueue = DispatchQueue.global(qos: .background)
     
     // MARK: Public methods
     
-    func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String : Any], encoding: ParameterEncoding, headers: HTTPHeaders) -> SignalProducer<RequestResponse, NetworkError> {
-        
+    func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String : Any], encoding: ParameterEncoding, headers: HTTPHeaders) -> SignalProducer<RequestResponse, RequestError> {
         return SignalProducer { [weak self] observer, lifetime in
             guard let `self` = self else { observer.sendInterrupted(); return }
             
-            let dataRequest = self.sessionManager.request(address.url, method: method, parameters: parameters, encoding: encoding, headers: headers)
+            let task = self.sessionManager.request(address.url, method: method, parameters: parameters, encoding: encoding, headers: headers)
                 .validate()
-                .responseData(queue: self.networkCallbackQueue) { response in
-                    if let error = response.error {
-                        let networkError = NetworkError(error: error, request: response.request, response: response.response, data: response.data)
-                        
-                        observer.send(error: networkError)
-                    } else if let httpResponse = response.response {
-                        let headers = httpResponse.allHeaderFields as? HTTPHeaders ?? [:]
-                        let requestResponse = RequestResponse(statusCode: httpResponse.statusCode, headers: headers, data: response.data)
-                        
-                        observer.send(value: requestResponse)
-                        observer.sendCompleted()
-                    } else {
-                        observer.sendInterrupted()
-                    }
-            }
+                .handleResponse(observer: observer)
             
             lifetime.observeEnded {
-                dataRequest.cancel()
+                task.cancel()
+            }
+        }
+    }
+    
+    func upload(_ address: RequestAddress, method: HTTPMethod, parameters: [NetworkUploadable], headers: HTTPHeaders) -> SignalProducer<RequestResponse, RequestError> {
+        return SignalProducer { [weak self] observer, lifetime in
+            guard let `self` = self else { observer.sendInterrupted(); return }
+            
+            self.sessionManager.upload(
+                multipartFormData: { multipart in parameters.forEach { $0.append(multipart: multipart) } },
+                usingThreshold: SessionManager.multipartFormDataEncodingMemoryThreshold,
+                to: address.url,
+                method: method,
+                headers: headers) { encodingResult in
+                    switch encodingResult {
+                    case .success(let uploadRequest, _, _):
+                        uploadRequest
+                            .validate()
+                            .handleResponse(observer: observer)
+                        
+                    case .failure(let error):
+                        observer.send(error: .upload(error))
+                    }
+            }
+        }
+    }
+}
+
+private extension DataRequest  {
+    @discardableResult
+    func handleResponse(observer: Signal<RequestResponse, RequestError>.Observer) -> Self {
+        return responseData(queue: Network.networkCallbackQueue) { response in
+            if let error = response.error {
+                let networkError = NetworkError(error: error, request: response.request, response: response.response, data: response.data)
+                
+                observer.send(error: .network(networkError))
+            } else if let httpResponse = response.response {
+                let headers = httpResponse.allHeaderFields as? HTTPHeaders ?? [:]
+                let requestResponse = RequestResponse(statusCode: httpResponse.statusCode, headers: headers, data: response.data)
+                
+                observer.send(value: requestResponse)
+                observer.sendCompleted()
+            } else {
+                observer.sendInterrupted()
             }
         }
     }
