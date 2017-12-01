@@ -11,6 +11,7 @@
 		6900359A1FD17EA6002EB20F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690035991FD17EA6002EB20F /* ViewController.swift */; };
 		696CEE521F8D19A5007C6DF7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 696CEE501F8D19A5007C6DF7 /* Images.xcassets */; };
 		696CEE631F8D1ADE007C6DF7 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696CEE621F8D1ADE007C6DF7 /* Environment.swift */; };
+		6977BB521FD19D2800F6EB94 /* environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6977BB511FD19D2800F6EB94 /* environment.plist */; };
 		698B3D091F8D337600F87651 /* SkeletonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F3C1FE1F8D169A00DB2B5C /* SkeletonTests.swift */; };
 		699DD5A11F8D249700C7080D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 699DD59F1F8D249700C7080D /* Localizable.strings */; };
 		699DD5A91F8D24FF00C7080D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 699DD5A81F8D24FF00C7080D /* LaunchScreen.storyboard */; };
@@ -47,6 +48,7 @@
 		696CEE5A1F8D1AB7007C6DF7 /* environment.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = environment.plist; sourceTree = "<group>"; };
 		696CEE5C1F8D1ABC007C6DF7 /* environment.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = environment.plist; sourceTree = "<group>"; };
 		696CEE621F8D1ADE007C6DF7 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		6977BB511FD19D2800F6EB94 /* environment.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = environment.plist; sourceTree = "<group>"; };
 		699DD5A71F8D24C600C7080D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		699DD5A81F8D24FF00C7080D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		699DD5AB1F8D269B00C7080D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
@@ -122,8 +124,8 @@
 			children = (
 				696CEE5F1F8D1AC9007C6DF7 /* Current */,
 				696CEE551F8D1A20007C6DF7 /* Development */,
-				696CEE561F8D1A20007C6DF7 /* Production */,
 				696CEE571F8D1A20007C6DF7 /* Stage */,
+				696CEE561F8D1A20007C6DF7 /* Production */,
 				696CEE621F8D1ADE007C6DF7 /* Environment.swift */,
 			);
 			path = Environment;
@@ -156,6 +158,7 @@
 		696CEE5F1F8D1AC9007C6DF7 /* Current */ = {
 			isa = PBXGroup;
 			children = (
+				6977BB511FD19D2800F6EB94 /* environment.plist */,
 			);
 			path = Current;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6977BB521FD19D2800F6EB94 /* environment.plist in Resources */,
 				696CEE521F8D19A5007C6DF7 /* Images.xcassets in Resources */,
 				699DD5A91F8D24FF00C7080D /* LaunchScreen.storyboard in Resources */,
 				699DD5A11F8D249700C7080D /* Localizable.strings in Resources */,
@@ -657,7 +661,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.skeleton.dev;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "Skeleton Δ";
-				PROVISIONING_PROFILE = "41f0a840-1932-4eb5-aeb0-995534a38e88";
+				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development cz.ackee.enterprise.*";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -699,8 +703,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -723,7 +726,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.skeleton.beta;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "Skeleton β";
-				PROVISIONING_PROFILE = "7f86a139-1fa6-49fb-a444-a60035e0db00";
+				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "match InHouse cz.ackee.enterprise.*";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -765,7 +768,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
