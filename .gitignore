@@ -51,8 +51,7 @@ DerivedData
 #
 Pods/
 
-Carthage/Checkouts
-!Carthage/Build
+Carthage
 
 #Fastlane
 
