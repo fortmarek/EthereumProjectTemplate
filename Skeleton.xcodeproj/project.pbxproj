@@ -21,6 +21,7 @@
 		699DD5A91F8D24FF00C7080D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 699DD5A81F8D24FF00C7080D /* LaunchScreen.storyboard */; };
 		699DD5AD1F8D269B00C7080D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699DD5AB1F8D269B00C7080D /* Assets.swift */; };
 		699DD5AE1F8D269B00C7080D /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699DD5AC1F8D269B00C7080D /* LocalizedStrings.swift */; };
+		69A646C41FD1B6A100BD4A98 /* JSONAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A646C31FD1B6A100BD4A98 /* JSONAPIService.swift */; };
 		69CFBB521FD1AAC4006E2402 /* NetworkUploadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CFBB511FD1AAC4006E2402 /* NetworkUploadable.swift */; };
 		69F3C2031F8D16A700DB2B5C /* SkeletonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F3C1FB1F8D169A00DB2B5C /* SkeletonUITests.swift */; };
 		CA25BDE99E13F778B6AAC1BA /* Pods_Skeleton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F73735F21BEAAADBB6C5C78 /* Pods_Skeleton.framework */; };
@@ -62,6 +63,7 @@
 		699DD5A81F8D24FF00C7080D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		699DD5AB1F8D269B00C7080D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		699DD5AC1F8D269B00C7080D /* LocalizedStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
+		69A646C31FD1B6A100BD4A98 /* JSONAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIService.swift; sourceTree = "<group>"; };
 		69CFBB511FD1AAC4006E2402 /* NetworkUploadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUploadable.swift; sourceTree = "<group>"; };
 		69F3C1FA1F8D169A00DB2B5C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69F3C1FB1F8D169A00DB2B5C /* SkeletonUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkeletonUITests.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				6977BB541FD19F6700F6EB94 /* Network.swift */,
 				6977BB5B1FD1A6BD00F6EB94 /* NetworkStructs.swift */,
 				69CFBB511FD1AAC4006E2402 /* NetworkUploadable.swift */,
+				69A646C31FD1B6A100BD4A98 /* JSONAPIService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 				696CEE631F8D1ADE007C6DF7 /* Environment.swift in Sources */,
 				69CFBB521FD1AAC4006E2402 /* NetworkUploadable.swift in Sources */,
 				699DD5AD1F8D269B00C7080D /* Assets.swift in Sources */,
+				69A646C41FD1B6A100BD4A98 /* JSONAPIService.swift in Sources */,
 				699DD5AE1F8D269B00C7080D /* LocalizedStrings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

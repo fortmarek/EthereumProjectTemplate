@@ -7,14 +7,17 @@
 
 import Alamofire
 
+typealias DataResponse = RequestResponse<Data>
+typealias JSONResponse = RequestResponse<Any>
+
 struct RequestAddress {
     var url: URL
 }
 
-struct RequestResponse {
+struct RequestResponse<Value> {
     let statusCode: Int
     let headers: HTTPHeaders
-    let data: Data?
+    let data: Value?
 }
 
 enum RequestError: Error {
@@ -30,3 +33,13 @@ struct NetworkError: Error {
     
     var statusCode: Int? { return response?.statusCode }
 }
+
+extension RequestResponse where Value == Data {
+    func jsonResponse() throws -> JSONResponse {
+        let json = try data.map { try JSONSerialization.jsonObject(with: $0, options: .allowFragments) }
+        
+        return JSONResponse(statusCode: statusCode, headers: headers, data: json)
+    }
+}
+
+

@@ -9,8 +9,8 @@ import Alamofire
 import ReactiveSwift
 
 protocol Networking {
-    func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String: Any], encoding: ParameterEncoding, headers: HTTPHeaders) -> SignalProducer<RequestResponse, RequestError>
-    func upload(_ address: RequestAddress, method: HTTPMethod, parameters: [NetworkUploadable], headers: HTTPHeaders) -> SignalProducer<RequestResponse, RequestError>
+    func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String: Any], encoding: ParameterEncoding, headers: HTTPHeaders) -> SignalProducer<DataResponse, RequestError>
+    func upload(_ address: RequestAddress, method: HTTPMethod, parameters: [NetworkUploadable], headers: HTTPHeaders) -> SignalProducer<DataResponse, RequestError>
 }
 
 final class Network: Networking {
@@ -23,7 +23,7 @@ final class Network: Networking {
     
     // MARK: Public methods
     
-    func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String : Any], encoding: ParameterEncoding, headers: HTTPHeaders) -> SignalProducer<RequestResponse, RequestError> {
+    func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String : Any], encoding: ParameterEncoding, headers: HTTPHeaders) -> SignalProducer<DataResponse, RequestError> {
         return SignalProducer { [weak self] observer, lifetime in
             guard let `self` = self else { observer.sendInterrupted(); return }
             
@@ -37,7 +37,7 @@ final class Network: Networking {
         }
     }
     
-    func upload(_ address: RequestAddress, method: HTTPMethod, parameters: [NetworkUploadable], headers: HTTPHeaders) -> SignalProducer<RequestResponse, RequestError> {
+    func upload(_ address: RequestAddress, method: HTTPMethod, parameters: [NetworkUploadable], headers: HTTPHeaders) -> SignalProducer<DataResponse, RequestError> {
         return SignalProducer { [weak self] observer, lifetime in
             guard let `self` = self else { observer.sendInterrupted(); return }
             
@@ -63,7 +63,7 @@ final class Network: Networking {
 
 private extension DataRequest  {
     @discardableResult
-    func handleResponse(observer: Signal<RequestResponse, RequestError>.Observer) -> Self {
+    func handleResponse(observer: Signal<DataResponse, RequestError>.Observer) -> Self {
         return responseData(queue: Network.networkCallbackQueue) { response in
             if let error = response.error {
                 let networkError = NetworkError(error: error, request: response.request, response: response.response, data: response.data)
