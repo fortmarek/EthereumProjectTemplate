@@ -17,5 +17,5 @@ protocol AuthHandlingActions {
 
 final class AuthHandler: AuthHandling, AuthHandlingActions {
     var actions: AuthHandlingActions { return self }
-    let refresh: Action<RequestError, Credentials, RequestError> = Action { _ in .empty }
+    let refresh: Action<RequestError, Credentials, RequestError> = Action { SignalProducer(error: $0) }
 }

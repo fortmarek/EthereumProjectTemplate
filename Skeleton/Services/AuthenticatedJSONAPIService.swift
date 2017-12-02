@@ -26,14 +26,26 @@ final class AuthenticatedJSONAPIService {
     
     func request(_ address: RequestAddress, method: HTTPMethod = .get, parameters: [String: Any] = [:], encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders = [:]) -> SignalProducer<JSONResponse, RequestError> {
         let jsonAPI = self.jsonAPI
+        
         return authorizationHeadersProducer()
             .flatMap(.latest) { jsonAPI.request(address, method: method, parameters: parameters, encoding: encoding, headers: headers + $0) }
+            .flatMapError { [unowned self] in
+                self.unauthorizedHandler(error: $0) { [unowned self] in
+                    self.request(address, method: method, parameters: parameters, encoding: encoding, headers: headers)
+                }
+        }
     }
     
     func upload(_ address: RequestAddress, method: HTTPMethod = .get, parameters: [NetworkUploadable], headers: HTTPHeaders = [:]) -> SignalProducer<JSONResponse, RequestError> {
         let jsonAPI = self.jsonAPI
+        
         return authorizationHeadersProducer()
             .flatMap(.latest) { jsonAPI.upload(address, method: method, parameters: parameters, headers: headers + $0) }
+            .flatMapError { [unowned self] in
+                self.unauthorizedHandler(error: $0) { [unowned self] in
+                    self.upload(address, method: method, parameters: parameters, headers: headers)
+                }
+        }
     }
     
     // MARK: Private helpers
@@ -46,5 +58,25 @@ final class AuthenticatedJSONAPIService {
             observer.send(value: headers)
             observer.sendCompleted()
         }
+    }
+    
+    private func unauthorizedHandler<Value>(error: RequestError, retryFactory: @escaping () -> SignalProducer<Value, RequestError>) -> SignalProducer<Value, RequestError> {
+        guard case .network(let networkError) = error, networkError.statusCode == 401 else { return SignalProducer(error: error) }
+        
+        let usedCurrentAuthData = networkError.request?.allHTTPHeaderFields?["Authorization"] == "Bearer " + (credentialsProvider.credentials?.accessToken ?? "")
+        let authHandler = self.authHandler
+        
+        guard usedCurrentAuthData else { return retryFactory() }
+        
+        return SignalProducer(authHandler.actions.refresh.events)
+            .filter { $0.isTerminating }
+            .map { $0.isCompleted }
+            .flatMap(.latest) { refreshSuccessful -> SignalProducer<Value, RequestError> in
+                if refreshSuccessful { return SignalProducer(error: error) }
+                else { return retryFactory() }
+            }
+            .on(started: {
+                authHandler.actions.refresh.apply(error).start()
+            })
     }
 }
