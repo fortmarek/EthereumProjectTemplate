@@ -9,8 +9,16 @@ import ReactiveSwift
 
 import enum Alamofire.HTTPMethod
 import protocol Alamofire.ParameterEncoding
+import struct Alamofire.URLEncoding
+import struct Alamofire.JSONEncoding
 import struct Alamofire.HTTPHeaders
 import enum Result.Result
+
+typealias HTTPMethod = Alamofire.HTTPMethod
+typealias ParameterEncoding = Alamofire.ParameterEncoding
+typealias HTTPHeaders = Alamofire.HTTPHeaders
+typealias URLEncoding = Alamofire.URLEncoding
+typealias JSONEncoding = Alamofire.JSONEncoding
 
 final class JSONAPIService {
     
@@ -24,11 +32,11 @@ final class JSONAPIService {
     
     // MARK: Public methods
     
-    func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String: Any], encoding: ParameterEncoding, headers: HTTPHeaders) -> SignalProducer<JSONResponse, RequestError> {
+    func request(_ address: RequestAddress, method: HTTPMethod = .get, parameters: [String: Any] = [:], encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders = [:]) -> SignalProducer<JSONResponse, RequestError> {
         return network.request(address, method: method, parameters: parameters, encoding: encoding, headers: headers).toJSON()
     }
     
-    func upload(_ address: RequestAddress, method: HTTPMethod, parameters: [NetworkUploadable], headers: HTTPHeaders) -> SignalProducer<JSONResponse, RequestError> {
+    func upload(_ address: RequestAddress, method: HTTPMethod = .get, parameters: [NetworkUploadable], headers: HTTPHeaders = [:]) -> SignalProducer<JSONResponse, RequestError> {
         return network.upload(address, method: method, parameters: parameters, headers: headers).toJSON()
     }
 }
