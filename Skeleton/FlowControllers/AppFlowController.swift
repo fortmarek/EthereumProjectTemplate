@@ -16,4 +16,8 @@ final class AppFlowController: FlowController {
     func start() {
         window.rootViewController = AckeeViewController()
     }
+    
+    func handle(routingAction action: RoutingAction) {
+        
+    }
 }

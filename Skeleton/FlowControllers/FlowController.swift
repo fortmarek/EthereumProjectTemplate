@@ -3,8 +3,9 @@ import Foundation
 protocol FlowController: class {
     var childControllers: [FlowController] { get set }
     
-    func addChild(_ flowController: FlowController)
     func start()
+    func handle(routingAction action: RoutingAction)
+    func addChild(_ flowController: FlowController)
 }
 
 extension FlowController {
