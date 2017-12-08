@@ -14,6 +14,8 @@
 		691EF7051FDAFB2900135FBC /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691EF7011FDAFA6100135FBC /* TestingAppDelegate.swift */; };
 		693F90801FDB3D3000A18975 /* BaseAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693F907F1FDB3D3000A18975 /* BaseAppDelegate.swift */; };
 		693F90821FDB3D8900A18975 /* MainAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693F90811FDB3D8900A18975 /* MainAppDelegate.swift */; };
+		693F90871FDB449700A18975 /* AppFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693F90861FDB449700A18975 /* AppFlowController.swift */; };
+		693F90891FDB449E00A18975 /* FlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693F90881FDB449E00A18975 /* FlowController.swift */; };
 		6964364B1FDAE979000D5CAA /* UnauthorizedHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6964364A1FDAE979000D5CAA /* UnauthorizedHandling.swift */; };
 		6964364E1FDAEC04000D5CAA /* UIViewController+FrontmostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6964364D1FDAEC04000D5CAA /* UIViewController+FrontmostController.swift */; };
 		696436511FDAECEA000D5CAA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696436501FDAECEA000D5CAA /* BaseViewController.swift */; };
@@ -66,6 +68,8 @@
 		691EF7031FDAFAEF00135FBC /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		693F907F1FDB3D3000A18975 /* BaseAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAppDelegate.swift; sourceTree = "<group>"; };
 		693F90811FDB3D8900A18975 /* MainAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppDelegate.swift; sourceTree = "<group>"; };
+		693F90861FDB449700A18975 /* AppFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowController.swift; sourceTree = "<group>"; };
+		693F90881FDB449E00A18975 /* FlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowController.swift; sourceTree = "<group>"; };
 		6964364A1FDAE979000D5CAA /* UnauthorizedHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnauthorizedHandling.swift; sourceTree = "<group>"; };
 		6964364D1FDAEC04000D5CAA /* UIViewController+FrontmostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+FrontmostController.swift"; sourceTree = "<group>"; };
 		696436501FDAECEA000D5CAA /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -147,6 +151,15 @@
 				693F90811FDB3D8900A18975 /* MainAppDelegate.swift */,
 			);
 			path = AppDelegates;
+			sourceTree = "<group>";
+		};
+		693F90851FDB448200A18975 /* FlowControllers */ = {
+			isa = PBXGroup;
+			children = (
+				693F90861FDB449700A18975 /* AppFlowController.swift */,
+				693F90881FDB449E00A18975 /* FlowController.swift */,
+			);
+			path = FlowControllers;
 			sourceTree = "<group>";
 		};
 		6964364C1FDAEBF1000D5CAA /* Extensions */ = {
@@ -347,6 +360,7 @@
 			children = (
 				690035961FD17E9D002EB20F /* AppDelegates */,
 				6964364C1FDAEBF1000D5CAA /* Extensions */,
+				693F90851FDB448200A18975 /* FlowControllers */,
 				696CEE651F8D1BF3007C6DF7 /* Model */,
 				696CEE661F8D1BF3007C6DF7 /* View */,
 				696CEE641F8D1BF3007C6DF7 /* ViewController */,
@@ -517,7 +531,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "CURRENT_ENV_FILE=\"${ACK_ENVIRONMENT_DIR}/.current\"\nENVIRONMENT=`cat ${CURRENT_ENV_FILE} || echo \"Development\"`\nSELECTED_ENV_DIR=\"${ACK_ENVIRONMENT_DIR}/${ENVIRONMENT}\"\nCURRENT_ENV_DIR=\"${ACK_ENVIRONMENT_DIR}/Current\"\n\nrm -r \"${CURRENT_ENV_DIR}\" || true\ncp -r \"${SELECTED_ENV_DIR}\" \"${CURRENT_ENV_DIR}\"\ntouch \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+			shellScript = "CURRENT_ENV_FILE=\"${ACK_ENVIRONMENT_DIR}/.current\"\nENVIRONMENT=`cat ${CURRENT_ENV_FILE} || echo \"Development\"`\nSELECTED_ENV_DIR=\"${ACK_ENVIRONMENT_DIR}/${ENVIRONMENT}\"\nCURRENT_ENV_DIR=\"${ACK_ENVIRONMENT_DIR}/Current\"\n\nrm -r \"${CURRENT_ENV_DIR}\" || true\ncp -r \"${SELECTED_ENV_DIR}\" \"${CURRENT_ENV_DIR}\"\ntouch \"${INFOPLIST_FILE}\"";
 		};
 		6977BB5A1FD1A1C800F6EB94 /* Carthage stuff */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -629,6 +643,8 @@
 				6964364B1FDAE979000D5CAA /* UnauthorizedHandling.swift in Sources */,
 				69F927121FD2244E001D7592 /* AuthenticatedJSONAPIService.swift in Sources */,
 				6900359A1FD17EA6002EB20F /* AckeeViewController.swift in Sources */,
+				693F90891FDB449E00A18975 /* FlowController.swift in Sources */,
+				693F90871FDB449700A18975 /* AppFlowController.swift in Sources */,
 				690035981FD17E9D002EB20F /* AppDelegate.swift in Sources */,
 				6977BB551FD19F6700F6EB94 /* Network.swift in Sources */,
 				693F90801FDB3D3000A18975 /* BaseAppDelegate.swift in Sources */,
