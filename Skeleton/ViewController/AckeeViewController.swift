@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  AckeeViewController.swift
 //  Skeleton
 //
 //  Created by Jakub Olejník on 09/10/2017.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class ViewController: UIViewController {
+final class AckeeViewController: UIViewController {
 
     // MARK: View life cycle
     

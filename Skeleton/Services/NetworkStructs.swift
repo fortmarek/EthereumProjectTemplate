@@ -16,8 +16,11 @@ struct RequestAddress {
 
 struct RequestResponse<Value> {
     let statusCode: Int
-    let headers: HTTPHeaders
+    let request: URLRequest?
+    let response: HTTPURLResponse?
     let data: Value?
+    
+    var headers: HTTPHeaders { return response?.allHeaderFields as? HTTPHeaders ?? [:] }
 }
 
 enum RequestError: Error {
@@ -38,7 +41,7 @@ extension RequestResponse where Value == Data {
     func jsonResponse() throws -> JSONResponse {
         let json = try data.map { try JSONSerialization.jsonObject(with: $0, options: .allowFragments) }
         
-        return JSONResponse(statusCode: statusCode, headers: headers, data: json)
+        return JSONResponse(statusCode: statusCode, request: request, response: response, data: json)
     }
 }
 

@@ -70,8 +70,7 @@ private extension DataRequest  {
                 
                 observer.send(error: .network(networkError))
             } else if let httpResponse = response.response {
-                let headers = httpResponse.allHeaderFields as? HTTPHeaders ?? [:]
-                let requestResponse = RequestResponse(statusCode: httpResponse.statusCode, headers: headers, data: response.data)
+                let requestResponse = RequestResponse(statusCode: httpResponse.statusCode, request: response.request, response: httpResponse, data: response.data)
                 
                 observer.send(value: requestResponse)
                 observer.sendCompleted()

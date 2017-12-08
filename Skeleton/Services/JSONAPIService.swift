@@ -42,7 +42,6 @@ final class JSONAPIService {
 }
 
 extension SignalProducer where Value == DataResponse, Error == RequestError {
-    
     func toJSON() -> SignalProducer<JSONResponse, Error> {
         return attemptMap { dataResponse in
             do {
@@ -54,5 +53,4 @@ extension SignalProducer where Value == DataResponse, Error == RequestError {
             }
         }
     }
-    
 }
