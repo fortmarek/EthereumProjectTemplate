@@ -7,16 +7,18 @@
 
 import UIKit
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+final class AppDelegate: BaseAppDelegate {
 
-    var window: UIWindow?
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = AckeeViewController()
-        window?.makeKeyAndVisible()
-        return true
+    private let mainDelegate = MainAppDelegate()
+    
+    override var window: UIWindow? {
+        get { return mainDelegate.window }
+        set { mainDelegate.window = newValue }
     }
-
+    
+    override var delegates: [UIApplicationDelegate] {
+        return [
+            mainDelegate
+        ]
+    }
 }
