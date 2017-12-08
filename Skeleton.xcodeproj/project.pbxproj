@@ -162,6 +162,7 @@
 			children = (
 				693F90861FDB449700A18975 /* AppFlowController.swift */,
 				693F90881FDB449E00A18975 /* FlowController.swift */,
+				6965AED91FDB4E34001A08C5 /* RoutingAction.swift */,
 			);
 			path = FlowControllers;
 			sourceTree = "<group>";
@@ -183,6 +184,27 @@
 				691EF6FF1FDAF7D000135FBC /* BaseCollectionViewController.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		6965AEDB1FDB509C001A08C5 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				6977BB541FD19F6700F6EB94 /* Network.swift */,
+				6977BB5B1FD1A6BD00F6EB94 /* NetworkStructs.swift */,
+				69CFBB511FD1AAC4006E2402 /* NetworkUploadable.swift */,
+				69F9270D1FD223AD001D7592 /* AuthHandler.swift */,
+				6964364A1FDAE979000D5CAA /* UnauthorizedHandling.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		6965AEDC1FDB50A4001A08C5 /* BaseAPI */ = {
+			isa = PBXGroup;
+			children = (
+				69A646C31FD1B6A100BD4A98 /* JSONAPIService.swift */,
+				69F927111FD2244E001D7592 /* AuthenticatedJSONAPIService.swift */,
+			);
+			path = BaseAPI;
 			sourceTree = "<group>";
 		};
 		696CEE4F1F8D19A5007C6DF7 /* Resources */ = {
@@ -253,7 +275,6 @@
 			children = (
 				699DD5AA1F8D269B00C7080D /* Generated */,
 				69F9270F1FD223EB001D7592 /* Credentials.swift */,
-				6965AED91FDB4E34001A08C5 /* RoutingAction.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -291,13 +312,8 @@
 		6977BB531FD19F5700F6EB94 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				6977BB541FD19F6700F6EB94 /* Network.swift */,
-				6977BB5B1FD1A6BD00F6EB94 /* NetworkStructs.swift */,
-				69CFBB511FD1AAC4006E2402 /* NetworkUploadable.swift */,
-				69A646C31FD1B6A100BD4A98 /* JSONAPIService.swift */,
-				69F9270D1FD223AD001D7592 /* AuthHandler.swift */,
-				69F927111FD2244E001D7592 /* AuthenticatedJSONAPIService.swift */,
-				6964364A1FDAE979000D5CAA /* UnauthorizedHandling.swift */,
+				6965AEDB1FDB509C001A08C5 /* Network */,
+				6965AEDC1FDB50A4001A08C5 /* BaseAPI */,
 			);
 			path = Services;
 			sourceTree = "<group>";
