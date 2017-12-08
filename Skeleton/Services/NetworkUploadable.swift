@@ -26,16 +26,25 @@ struct PrimitiveUploadable: NetworkUploadable {
 }
 
 struct ImageUploadable: NetworkUploadable {
+    enum Defaults {
+        static let maxDimension: CGFloat = 1_024
+        static let compressionQuality: CGFloat = 0.95
+    }
+    
     let key: String
     let fileName: String
     let mimeType: String
     let image: UIImage
     
-    static let maxDimension: CGFloat = 1_024
-    static let compressionQuality: CGFloat = 0.95
+    var maxDimension = Defaults.maxDimension
+    var compressionQuality = Defaults.compressionQuality
     
     func append(multipart: MultipartFormData) {
-        guard let resizedImage = image.fixedOrientation().resized(maxDimension: ImageUploadable.maxDimension), let imageData = UIImageJPEGRepresentation(resizedImage, ImageUploadable.compressionQuality) else { return }
-        multipart.append(imageData, withName: key, fileName: fileName, mimeType: mimeType)
+        let fixedOrientationImage = image.fixedOrientation()
+        let resizedImage = fixedOrientationImage.resized(maxDimension: maxDimension) ?? image
+        
+        if let imageData = UIImageJPEGRepresentation(resizedImage, compressionQuality) {
+            multipart.append(imageData, withName: key, fileName: fileName, mimeType: mimeType)
+        }
     }
 }
