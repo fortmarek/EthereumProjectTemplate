@@ -14,6 +14,8 @@ final class AuthenticatedJSONAPIService {
     private let authHandler: AuthHandling
     private let credentialsProvider: CredentialsProvider
     
+    private var authorizationHeaders: HTTPHeaders { return credentialsProvider.credentials.map { ["Authorization": "Bearer " + $0.accessToken] } ?? [:] }
+    
     // MARK: Initializers
     
     init(jsonAPI: JSONAPIService, authHandler: AuthHandling, credentialsProvider: CredentialsProvider) {
@@ -51,11 +53,9 @@ final class AuthenticatedJSONAPIService {
     // MARK: Private helpers
     
     private func authorizationHeadersProducer() -> SignalProducer<HTTPHeaders, RequestError> {
-        let credentialsProvider = self.credentialsProvider
-        return SignalProducer { observer, _ in
-            let headers = credentialsProvider.credentials.map { ["Authorization": "Bearer " + $0.accessToken] } ?? [:]
-            
-            observer.send(value: headers)
+        return SignalProducer { [weak self] observer, _ in
+            guard let `self` = self else { observer.sendInterrupted(); return }
+            observer.send(value: self.authorizationHeaders)
             observer.sendCompleted()
         }
     }
@@ -63,7 +63,7 @@ final class AuthenticatedJSONAPIService {
     private func unauthorizedHandler<Value>(error: RequestError, retryFactory: @escaping () -> SignalProducer<Value, RequestError>) -> SignalProducer<Value, RequestError> {
         guard case .network(let networkError) = error, networkError.statusCode == 401 else { return SignalProducer(error: error) }
         
-        let usedCurrentAuthData = networkError.request?.allHTTPHeaderFields?["Authorization"] == "Bearer " + (credentialsProvider.credentials?.accessToken ?? "")
+        let usedCurrentAuthData = authorizationHeaders.map { networkError.request?.allHTTPHeaderFields?[$0] == $1 }.reduce(true) { $0 && $1 }
         let authHandler = self.authHandler
         
         guard usedCurrentAuthData else { return retryFactory() }
