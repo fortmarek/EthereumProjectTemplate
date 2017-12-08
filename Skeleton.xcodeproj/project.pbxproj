@@ -10,6 +10,8 @@
 		690035981FD17E9D002EB20F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690035971FD17E9D002EB20F /* AppDelegate.swift */; };
 		6900359A1FD17EA6002EB20F /* AckeeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690035991FD17EA6002EB20F /* AckeeViewController.swift */; };
 		691EF7001FDAF7D000135FBC /* BaseCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691EF6FF1FDAF7D000135FBC /* BaseCollectionViewController.swift */; };
+		691EF7041FDAFAEF00135FBC /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691EF7031FDAFAEF00135FBC /* main.swift */; };
+		691EF7051FDAFB2900135FBC /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691EF7011FDAFA6100135FBC /* TestingAppDelegate.swift */; };
 		6964364B1FDAE979000D5CAA /* UnauthorizedHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6964364A1FDAE979000D5CAA /* UnauthorizedHandling.swift */; };
 		6964364E1FDAEC04000D5CAA /* UIViewController+FrontmostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6964364D1FDAEC04000D5CAA /* UIViewController+FrontmostController.swift */; };
 		696436511FDAECEA000D5CAA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696436501FDAECEA000D5CAA /* BaseViewController.swift */; };
@@ -58,6 +60,8 @@
 		690035971FD17E9D002EB20F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		690035991FD17EA6002EB20F /* AckeeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AckeeViewController.swift; sourceTree = "<group>"; };
 		691EF6FF1FDAF7D000135FBC /* BaseCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewController.swift; sourceTree = "<group>"; };
+		691EF7011FDAFA6100135FBC /* TestingAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
+		691EF7031FDAFAEF00135FBC /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		6964364A1FDAE979000D5CAA /* UnauthorizedHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnauthorizedHandling.swift; sourceTree = "<group>"; };
 		6964364D1FDAEC04000D5CAA /* UIViewController+FrontmostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+FrontmostController.swift"; sourceTree = "<group>"; };
 		696436501FDAECEA000D5CAA /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -317,6 +321,7 @@
 			children = (
 				69F3C1FD1F8D169A00DB2B5C /* Info.plist */,
 				69F3C1FE1F8D169A00DB2B5C /* SkeletonTests.swift */,
+				691EF7011FDAFA6100135FBC /* TestingAppDelegate.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";
@@ -343,6 +348,7 @@
 				696CEE4F1F8D19A5007C6DF7 /* Resources */,
 				6977BB531FD19F5700F6EB94 /* Services */,
 				69F4A6C61F8BD5C5003481A3 /* Info.plist */,
+				691EF7031FDAFAEF00135FBC /* main.swift */,
 			);
 			path = Skeleton;
 			sourceTree = "<group>";
@@ -627,6 +633,7 @@
 				696436531FDAED5D000D5CAA /* BaseTableViewController.swift in Sources */,
 				6964364E1FDAEC04000D5CAA /* UIViewController+FrontmostController.swift in Sources */,
 				699DD5AD1F8D269B00C7080D /* Assets.swift in Sources */,
+				691EF7041FDAFAEF00135FBC /* main.swift in Sources */,
 				69A646C41FD1B6A100BD4A98 /* JSONAPIService.swift in Sources */,
 				69F9270E1FD223AD001D7592 /* AuthHandler.swift in Sources */,
 				699DD5AE1F8D269B00C7080D /* LocalizedStrings.swift in Sources */,
@@ -638,6 +645,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				698B3D091F8D337600F87651 /* SkeletonTests.swift in Sources */,
+				691EF7051FDAFB2900135FBC /* TestingAppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
