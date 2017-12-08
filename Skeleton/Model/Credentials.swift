@@ -5,12 +5,9 @@
 //  Created by Jakub Olejník on 02/12/2017.
 //
 
-import ReactiveSwift
+import Foundation
 
-import enum Result.NoError
-typealias NoError = Result.NoError
-
-protocol CredentialsProvider: ReactiveExtensionsProvider {
+protocol CredentialsProvider {
     var credentials: Credentials? { get }
 }
 
