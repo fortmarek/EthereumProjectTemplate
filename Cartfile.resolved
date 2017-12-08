@@ -1,5 +1,6 @@
 github "AckeeCZ/ACKategories" "1c6207cc6da11a82e3c6aadaebd62735a91b2dd2"
-github "Alamofire/Alamofire" "4.5.1"
+github "Alamofire/Alamofire" "4.6.0"
+github "ReactiveCocoa/ReactiveCocoa" "7.0.1"
 github "ReactiveCocoa/ReactiveSwift" "3.0.0"
 github "SnapKit/SnapKit" "4.0.0"
 github "antitypical/Result" "3.2.4"

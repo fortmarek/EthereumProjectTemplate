@@ -16,6 +16,7 @@
 		693F90821FDB3D8900A18975 /* MainAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693F90811FDB3D8900A18975 /* MainAppDelegate.swift */; };
 		693F90871FDB449700A18975 /* AppFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693F90861FDB449700A18975 /* AppFlowController.swift */; };
 		693F90891FDB449E00A18975 /* FlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693F90881FDB449E00A18975 /* FlowController.swift */; };
+		693F908B1FDB484E00A18975 /* UIResponder+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693F908A1FDB484E00A18975 /* UIResponder+Errors.swift */; };
 		6964364B1FDAE979000D5CAA /* UnauthorizedHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6964364A1FDAE979000D5CAA /* UnauthorizedHandling.swift */; };
 		6964364E1FDAEC04000D5CAA /* UIViewController+FrontmostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6964364D1FDAEC04000D5CAA /* UIViewController+FrontmostController.swift */; };
 		696436511FDAECEA000D5CAA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696436501FDAECEA000D5CAA /* BaseViewController.swift */; };
@@ -70,6 +71,7 @@
 		693F90811FDB3D8900A18975 /* MainAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppDelegate.swift; sourceTree = "<group>"; };
 		693F90861FDB449700A18975 /* AppFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowController.swift; sourceTree = "<group>"; };
 		693F90881FDB449E00A18975 /* FlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowController.swift; sourceTree = "<group>"; };
+		693F908A1FDB484E00A18975 /* UIResponder+Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Errors.swift"; sourceTree = "<group>"; };
 		6964364A1FDAE979000D5CAA /* UnauthorizedHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnauthorizedHandling.swift; sourceTree = "<group>"; };
 		6964364D1FDAEC04000D5CAA /* UIViewController+FrontmostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+FrontmostController.swift"; sourceTree = "<group>"; };
 		696436501FDAECEA000D5CAA /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				6964364D1FDAEC04000D5CAA /* UIViewController+FrontmostController.swift */,
+				693F908A1FDB484E00A18975 /* UIResponder+Errors.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ACKategories.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
 			);
 			name = "Carthage stuff";
 			outputPaths = (
@@ -552,6 +556,7 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ACKategories.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SnapKit.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ReactiveCocoa.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -659,6 +664,7 @@
 				699DD5AD1F8D269B00C7080D /* Assets.swift in Sources */,
 				691EF7041FDAFAEF00135FBC /* main.swift in Sources */,
 				69A646C41FD1B6A100BD4A98 /* JSONAPIService.swift in Sources */,
+				693F908B1FDB484E00A18975 /* UIResponder+Errors.swift in Sources */,
 				693F90821FDB3D8900A18975 /* MainAppDelegate.swift in Sources */,
 				69F9270E1FD223AD001D7592 /* AuthHandler.swift in Sources */,
 				699DD5AE1F8D269B00C7080D /* LocalizedStrings.swift in Sources */,
