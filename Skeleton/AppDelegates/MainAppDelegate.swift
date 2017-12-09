@@ -1,10 +1,3 @@
-//
-//  MainAppDelegate.swift
-//  Skeleton
-//
-//  Created by Jakub Olejník on 08/12/2017.
-//
-
 import UIKit
 
 final class MainAppDelegate: UIResponder, UIApplicationDelegate {

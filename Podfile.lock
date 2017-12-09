@@ -4,6 +4,9 @@ PODS:
   - Firebase/Core (4.7.0):
     - FirebaseAnalytics (= 4.0.5)
     - FirebaseCore (= 4.0.12)
+  - Firebase/Messaging (4.7.0):
+    - Firebase/Core
+    - FirebaseMessaging (= 2.0.7)
   - Firebase/Performance (4.7.0):
     - Firebase/Core
     - FirebasePerformance (= 1.0.7)
@@ -21,6 +24,12 @@ PODS:
   - FirebaseCore (4.0.12):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
   - FirebaseInstanceID (2.0.7)
+  - FirebaseMessaging (2.0.7):
+    - FirebaseAnalytics (~> 4.0)
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - Protobuf (~> 3.1)
   - FirebasePerformance (1.0.7):
     - FirebaseAnalytics (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
@@ -52,6 +61,7 @@ PODS:
 
 DEPENDENCIES:
   - Firebase/Analytics (~> 4.0)
+  - Firebase/Messaging (~> 4.0)
   - Firebase/Performance (~> 4.0)
   - Firebase/RemoteConfig (~> 4.0)
   - SwiftGen (~> 5.2)
@@ -62,6 +72,7 @@ SPEC CHECKSUMS:
   FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
   FirebaseCore: 6cf108b63997bc08c04a1ffa55a3ac0d71a59ffc
   FirebaseInstanceID: 148c25c986c8699e67304b114e365713dce467f2
+  FirebaseMessaging: 1a11d1c0a9ed9b3f75a0685bb0ae5932e1062f5f
   FirebasePerformance: de71cd3093d4cf579d8a65326557cbe67bad6e80
   FirebaseRemoteConfig: 451fe8e9c43ac1e7a137ad2a42189bfc8c2c3ebc
   FirebaseSwizzlingUtilities: f1c49a5a372ac852c853722a5891a0a5e2344a6c
@@ -71,6 +82,6 @@ SPEC CHECKSUMS:
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
 
-PODFILE CHECKSUM: 64cbbbcb832910091fabfa4fa7e83dcf49ceeed0
+PODFILE CHECKSUM: 93c55d8cd932f74cc5546ca062a2cf8960b6308b
 
 COCOAPODS: 1.3.1

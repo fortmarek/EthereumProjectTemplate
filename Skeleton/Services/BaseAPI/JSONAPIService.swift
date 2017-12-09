@@ -20,7 +20,12 @@ typealias HTTPHeaders = Alamofire.HTTPHeaders
 typealias URLEncoding = Alamofire.URLEncoding
 typealias JSONEncoding = Alamofire.JSONEncoding
 
-final class JSONAPIService {
+protocol JSONAPIServicing {
+    func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String: Any], encoding: ParameterEncoding, headers: HTTPHeaders) -> SignalProducer<JSONResponse, RequestError>
+    func upload(_ address: RequestAddress, method: HTTPMethod, parameters: [NetworkUploadable], headers: HTTPHeaders) -> SignalProducer<JSONResponse, RequestError>
+}
+
+final class JSONAPIService: JSONAPIServicing {
     
     private let network: Networking
     
@@ -32,11 +37,11 @@ final class JSONAPIService {
     
     // MARK: Public methods
     
-    func request(_ address: RequestAddress, method: HTTPMethod = .get, parameters: [String: Any] = [:], encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders = [:]) -> SignalProducer<JSONResponse, RequestError> {
+    func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String: Any], encoding: ParameterEncoding, headers: HTTPHeaders) -> SignalProducer<JSONResponse, RequestError> {
         return network.request(address, method: method, parameters: parameters, encoding: encoding, headers: headers).toJSON()
     }
     
-    func upload(_ address: RequestAddress, method: HTTPMethod = .get, parameters: [NetworkUploadable], headers: HTTPHeaders = [:]) -> SignalProducer<JSONResponse, RequestError> {
+    func upload(_ address: RequestAddress, method: HTTPMethod, parameters: [NetworkUploadable], headers: HTTPHeaders) -> SignalProducer<JSONResponse, RequestError> {
         return network.upload(address, method: method, parameters: parameters, headers: headers).toJSON()
     }
 }
@@ -52,5 +57,23 @@ extension SignalProducer where Value == DataResponse, Error == RequestError {
                 return Result.failure(.network(NetworkError(error: error, request: nil, response: nil, data: dataResponse.data)))
             }
         }
+    }
+}
+
+extension JSONAPIServicing {
+    func request(_ address: RequestAddress) -> SignalProducer<JSONResponse, RequestError> {
+        return request(address, method: .get)
+    }
+    
+    func request(_ address: RequestAddress, method: HTTPMethod) -> SignalProducer<JSONResponse, RequestError> {
+        return request(address, method: method, parameters: [:])
+    }
+    
+    func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String: Any]) -> SignalProducer<JSONResponse, RequestError> {
+        return request(address, method: method, parameters: parameters, encoding: URLEncoding.default)
+    }
+    
+    func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String: Any], encoding: ParameterEncoding) -> SignalProducer<JSONResponse, RequestError> {
+        return request(address, method: method, parameters: parameters, encoding: encoding, headers: [:])
     }
 }

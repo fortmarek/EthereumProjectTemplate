@@ -8,9 +8,9 @@
 import ACKategories
 import ReactiveSwift
 
-final class AuthenticatedJSONAPIService: UnauthorizedHandling {
+final class AuthenticatedJSONAPIService: UnauthorizedHandling, JSONAPIServicing {
     
-    private let jsonAPI: JSONAPIService
+    private let jsonAPI: JSONAPIServicing
     private let authHandler: AuthHandling
     private let credentialsProvider: CredentialsProvider
     
@@ -18,7 +18,7 @@ final class AuthenticatedJSONAPIService: UnauthorizedHandling {
     
     // MARK: Initializers
     
-    init(jsonAPI: JSONAPIService, authHandler: AuthHandling, credentialsProvider: CredentialsProvider) {
+    init(jsonAPI: JSONAPIServicing, authHandler: AuthHandling, credentialsProvider: CredentialsProvider) {
         self.jsonAPI = jsonAPI
         self.authHandler = authHandler
         self.credentialsProvider = credentialsProvider
@@ -26,7 +26,7 @@ final class AuthenticatedJSONAPIService: UnauthorizedHandling {
     
     // MARK: Public methods
     
-    func request(_ address: RequestAddress, method: HTTPMethod = .get, parameters: [String: Any] = [:], encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders = [:]) -> SignalProducer<JSONResponse, RequestError> {
+    func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String: Any], encoding: ParameterEncoding, headers: HTTPHeaders) -> SignalProducer<JSONResponse, RequestError> {
         let jsonAPI = self.jsonAPI
         
         return authorizationHeadersProducer()

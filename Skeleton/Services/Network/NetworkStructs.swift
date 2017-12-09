@@ -11,7 +11,13 @@ typealias DataResponse = RequestResponse<Data>
 typealias JSONResponse = RequestResponse<Any>
 
 struct RequestAddress {
-    var url: URL
+    let url: URL
+}
+
+extension RequestAddress {
+    init(path: String, baseURL: URL = Environment.API.baseURL) {
+        url = URL(string: path, relativeTo: baseURL)!
+    }
 }
 
 struct RequestResponse<Value> {
