@@ -51,6 +51,10 @@
 		69D13B2C1FDC377C00315517 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69D13B2B1FDC377C00315517 /* Fabric.framework */; };
 		69D13B2E1FDC383D00315517 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D13B2D1FDC383D00315517 /* UserManager.swift */; };
 		69D13B301FDC38EC00315517 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D13B2F1FDC38EC00315517 /* User.swift */; };
+		69D13B351FDC3BC800315517 /* APIFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D13B311FDC3BC700315517 /* APIFetcher.swift */; };
+		69D13B361FDC3BC800315517 /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D13B321FDC3BC700315517 /* Fetcher.swift */; };
+		69D13B371FDC3BC800315517 /* FirebaseFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D13B331FDC3BC700315517 /* FirebaseFetcher.swift */; };
+		69D13B381FDC3BC800315517 /* VersionUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D13B341FDC3BC700315517 /* VersionUpdateManager.swift */; };
 		69F3C2031F8D16A700DB2B5C /* SkeletonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F3C1FB1F8D169A00DB2B5C /* SkeletonUITests.swift */; };
 		69F9270E1FD223AD001D7592 /* AuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F9270D1FD223AD001D7592 /* AuthHandler.swift */; };
 		69F927101FD223EB001D7592 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F9270F1FD223EB001D7592 /* Credentials.swift */; };
@@ -124,6 +128,10 @@
 		69D13B2B1FDC377C00315517 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Carthage/Build/iOS/Fabric.framework; sourceTree = "<group>"; };
 		69D13B2D1FDC383D00315517 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		69D13B2F1FDC38EC00315517 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		69D13B311FDC3BC700315517 /* APIFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIFetcher.swift; sourceTree = "<group>"; };
+		69D13B321FDC3BC700315517 /* Fetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetcher.swift; sourceTree = "<group>"; };
+		69D13B331FDC3BC700315517 /* FirebaseFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseFetcher.swift; sourceTree = "<group>"; };
+		69D13B341FDC3BC700315517 /* VersionUpdateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionUpdateManager.swift; sourceTree = "<group>"; };
 		69F3C1FA1F8D169A00DB2B5C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69F3C1FB1F8D169A00DB2B5C /* SkeletonUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkeletonUITests.swift; sourceTree = "<group>"; };
 		69F3C1FD1F8D169A00DB2B5C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -362,6 +370,7 @@
 		6977BB531FD19F5700F6EB94 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				69D13B391FDC3BCC00315517 /* VersionUpdate */,
 				6965AEDB1FDB509C001A08C5 /* Network */,
 				6965AEDC1FDB50A4001A08C5 /* BaseAPI */,
 				69D13B2D1FDC383D00315517 /* UserManager.swift */,
@@ -397,6 +406,17 @@
 				690035971FD17E9D002EB20F /* AppDelegate.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		69D13B391FDC3BCC00315517 /* VersionUpdate */ = {
+			isa = PBXGroup;
+			children = (
+				69D13B311FDC3BC700315517 /* APIFetcher.swift */,
+				69D13B321FDC3BC700315517 /* Fetcher.swift */,
+				69D13B331FDC3BC700315517 /* FirebaseFetcher.swift */,
+				69D13B341FDC3BC700315517 /* VersionUpdateManager.swift */,
+			);
+			path = VersionUpdate;
 			sourceTree = "<group>";
 		};
 		69F3C1F81F8D169A00DB2B5C /* Tests */ = {
@@ -762,8 +782,10 @@
 			files = (
 				6964364B1FDAE979000D5CAA /* UnauthorizedHandling.swift in Sources */,
 				69F927121FD2244E001D7592 /* AuthenticatedJSONAPIService.swift in Sources */,
+				69D13B371FDC3BC800315517 /* FirebaseFetcher.swift in Sources */,
 				6900359A1FD17EA6002EB20F /* AckeeViewController.swift in Sources */,
 				69D13B2A1FDC34F500315517 /* FirebaseAppDelegate.swift in Sources */,
+				69D13B381FDC3BC800315517 /* VersionUpdateManager.swift in Sources */,
 				69D13B301FDC38EC00315517 /* User.swift in Sources */,
 				693F90891FDB449E00A18975 /* FlowController.swift in Sources */,
 				6965AEDF1FDB5104001A08C5 /* ThemeProvider.swift in Sources */,
@@ -771,9 +793,11 @@
 				690035981FD17E9D002EB20F /* AppDelegate.swift in Sources */,
 				6977BB551FD19F6700F6EB94 /* Network.swift in Sources */,
 				693F90801FDB3D3000A18975 /* BaseAppDelegate.swift in Sources */,
+				69D13B351FDC3BC800315517 /* APIFetcher.swift in Sources */,
 				696436511FDAECEA000D5CAA /* BaseViewController.swift in Sources */,
 				691EF7001FDAF7D000135FBC /* BaseCollectionViewController.swift in Sources */,
 				69F927101FD223EB001D7592 /* Credentials.swift in Sources */,
+				69D13B361FDC3BC800315517 /* Fetcher.swift in Sources */,
 				6977BB5C1FD1A6BD00F6EB94 /* NetworkStructs.swift in Sources */,
 				696CEE631F8D1ADE007C6DF7 /* Environment.swift in Sources */,
 				69CFBB521FD1AAC4006E2402 /* NetworkUploadable.swift in Sources */,
