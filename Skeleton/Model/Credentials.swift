@@ -1,10 +1,3 @@
-//
-//  Credentials.swift
-//  Skeleton
-//
-//  Created by Jakub Olejník on 02/12/2017.
-//
-
 import Foundation
 
 protocol CredentialsProvider {
@@ -14,4 +7,8 @@ protocol CredentialsProvider {
 struct Credentials {
     let accessToken: String
     let refreshToken: String
+}
+
+enum LoginCredentials {
+    case password(username: String, password: String)
 }
