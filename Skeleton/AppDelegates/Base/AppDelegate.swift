@@ -18,6 +18,7 @@ final class AppDelegate: BaseAppDelegate {
     
     override var delegates: [UIApplicationDelegate] {
         return [
+            FirebaseAppDelegate(),
             mainDelegate
         ]
     }

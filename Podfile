@@ -8,5 +8,7 @@ inhibit_all_warnings!
 use_frameworks!
 
 target 'Skeleton' do
-    pod 'SwiftGen'
+    pod 'SwiftGen', '~> 5.2'
+
+    pod 'Firebase', '~> 4.0', :subspecs => ["RemoteConfig", "Performance", "Analytics"]
 end

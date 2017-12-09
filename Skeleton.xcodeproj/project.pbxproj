@@ -41,6 +41,14 @@
 		699DD5AE1F8D269B00C7080D /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699DD5AC1F8D269B00C7080D /* LocalizedStrings.swift */; };
 		69A646C41FD1B6A100BD4A98 /* JSONAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A646C31FD1B6A100BD4A98 /* JSONAPIService.swift */; };
 		69CFBB521FD1AAC4006E2402 /* NetworkUploadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CFBB511FD1AAC4006E2402 /* NetworkUploadable.swift */; };
+		69D13B201FDC329E00315517 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69D13B1B1FDC329E00315517 /* Alamofire.framework */; };
+		69D13B211FDC329E00315517 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69D13B1C1FDC329E00315517 /* SnapKit.framework */; };
+		69D13B221FDC329E00315517 /* ACKategories.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69D13B1D1FDC329E00315517 /* ACKategories.framework */; };
+		69D13B231FDC329E00315517 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69D13B1E1FDC329E00315517 /* ReactiveCocoa.framework */; };
+		69D13B241FDC329E00315517 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69D13B1F1FDC329E00315517 /* Crashlytics.framework */; };
+		69D13B271FDC34CA00315517 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69D13B261FDC34C900315517 /* GoogleService-Info.plist */; };
+		69D13B2A1FDC34F500315517 /* FirebaseAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D13B291FDC34F500315517 /* FirebaseAppDelegate.swift */; };
+		69D13B2C1FDC377C00315517 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69D13B2B1FDC377C00315517 /* Fabric.framework */; };
 		69F3C2031F8D16A700DB2B5C /* SkeletonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F3C1FB1F8D169A00DB2B5C /* SkeletonUITests.swift */; };
 		69F9270E1FD223AD001D7592 /* AuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F9270D1FD223AD001D7592 /* AuthHandler.swift */; };
 		69F927101FD223EB001D7592 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F9270F1FD223EB001D7592 /* Credentials.swift */; };
@@ -104,6 +112,14 @@
 		699DD5AC1F8D269B00C7080D /* LocalizedStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		69A646C31FD1B6A100BD4A98 /* JSONAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIService.swift; sourceTree = "<group>"; };
 		69CFBB511FD1AAC4006E2402 /* NetworkUploadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUploadable.swift; sourceTree = "<group>"; };
+		69D13B1B1FDC329E00315517 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		69D13B1C1FDC329E00315517 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
+		69D13B1D1FDC329E00315517 /* ACKategories.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACKategories.framework; path = Carthage/Build/iOS/ACKategories.framework; sourceTree = "<group>"; };
+		69D13B1E1FDC329E00315517 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
+		69D13B1F1FDC329E00315517 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Carthage/Build/iOS/Crashlytics.framework; sourceTree = "<group>"; };
+		69D13B261FDC34C900315517 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		69D13B291FDC34F500315517 /* FirebaseAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAppDelegate.swift; sourceTree = "<group>"; };
+		69D13B2B1FDC377C00315517 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Carthage/Build/iOS/Fabric.framework; sourceTree = "<group>"; };
 		69F3C1FA1F8D169A00DB2B5C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69F3C1FB1F8D169A00DB2B5C /* SkeletonUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkeletonUITests.swift; sourceTree = "<group>"; };
 		69F3C1FD1F8D169A00DB2B5C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -124,6 +140,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69D13B2C1FDC377C00315517 /* Fabric.framework in Frameworks */,
+				69D13B201FDC329E00315517 /* Alamofire.framework in Frameworks */,
+				69D13B211FDC329E00315517 /* SnapKit.framework in Frameworks */,
+				69D13B221FDC329E00315517 /* ACKategories.framework in Frameworks */,
+				69D13B231FDC329E00315517 /* ReactiveCocoa.framework in Frameworks */,
+				69D13B241FDC329E00315517 /* Crashlytics.framework in Frameworks */,
 				CA25BDE99E13F778B6AAC1BA /* Pods_Skeleton.framework in Frameworks */,
 				6977BB581FD1A1B300F6EB94 /* Result.framework in Frameworks */,
 				6977BB591FD1A1B300F6EB94 /* ReactiveSwift.framework in Frameworks */,
@@ -160,9 +182,9 @@
 		690035961FD17E9D002EB20F /* AppDelegates */ = {
 			isa = PBXGroup;
 			children = (
-				693F907F1FDB3D3000A18975 /* BaseAppDelegate.swift */,
-				690035971FD17E9D002EB20F /* AppDelegate.swift */,
+				69D13B281FDC34E500315517 /* Base */,
 				693F90811FDB3D8900A18975 /* MainAppDelegate.swift */,
+				69D13B291FDC34F500315517 /* FirebaseAppDelegate.swift */,
 			);
 			path = AppDelegates;
 			sourceTree = "<group>";
@@ -278,6 +300,7 @@
 		696CEE5F1F8D1AC9007C6DF7 /* Current */ = {
 			isa = PBXGroup;
 			children = (
+				69D13B261FDC34C900315517 /* GoogleService-Info.plist */,
 				6977BB511FD19D2800F6EB94 /* environment.plist */,
 			);
 			path = Current;
@@ -361,6 +384,15 @@
 			);
 			sourceTree = "<group>";
 		};
+		69D13B281FDC34E500315517 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				693F907F1FDB3D3000A18975 /* BaseAppDelegate.swift */,
+				690035971FD17E9D002EB20F /* AppDelegate.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		69F3C1F81F8D169A00DB2B5C /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -421,6 +453,12 @@
 		9AFDE9C028D41DE8253C47ED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				69D13B2B1FDC377C00315517 /* Fabric.framework */,
+				69D13B1D1FDC329E00315517 /* ACKategories.framework */,
+				69D13B1B1FDC329E00315517 /* Alamofire.framework */,
+				69D13B1F1FDC329E00315517 /* Crashlytics.framework */,
+				69D13B1E1FDC329E00315517 /* ReactiveCocoa.framework */,
+				69D13B1C1FDC329E00315517 /* SnapKit.framework */,
 				6977BB571FD1A1B300F6EB94 /* ReactiveSwift.framework */,
 				6977BB561FD1A1B300F6EB94 /* Result.framework */,
 				6F73735F21BEAAADBB6C5C78 /* Pods_Skeleton.framework */,
@@ -445,6 +483,7 @@
 				6CFD3EF384EC05669B8DBD83 /* [CP] Embed Pods Frameworks */,
 				D7767D8611E5604D91E49109 /* [CP] Copy Pods Resources */,
 				6977BB5A1FD1A1C800F6EB94 /* Carthage stuff */,
+				69D13B251FDC337200315517 /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -542,6 +581,7 @@
 			files = (
 				6977BB521FD19D2800F6EB94 /* environment.plist in Resources */,
 				696CEE521F8D19A5007C6DF7 /* Images.xcassets in Resources */,
+				69D13B271FDC34CA00315517 /* GoogleService-Info.plist in Resources */,
 				699DD5A91F8D24FF00C7080D /* LaunchScreen.storyboard in Resources */,
 				699DD5A11F8D249700C7080D /* Localizable.strings in Resources */,
 			);
@@ -590,6 +630,8 @@
 				"$(SRCROOT)/Carthage/Build/iOS/ACKategories.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Crashlytics.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Fabric.framework",
 			);
 			name = "Carthage stuff";
 			outputPaths = (
@@ -599,6 +641,8 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ACKategories.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SnapKit.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ReactiveCocoa.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Crashlytics.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Fabric.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -632,15 +676,38 @@
 			shellPath = /bin/sh;
 			shellScript = "export PATH=\"${PODS_ROOT}/SwiftGen/bin:$PATH\"\n\nswiftgen strings -t structured-swift4 \"${PROJECT_DIR}/${TARGET_NAME}/Resources/Base.lproj/Localizable.strings\" -o \"${PROJECT_DIR}/${TARGET_NAME}/Model/Generated/LocalizedStrings.swift\"\nswiftgen xcassets -t swift4 \"${PROJECT_DIR}/${TARGET_NAME}/Resources/Images.xcassets\" -o \"${PROJECT_DIR}/${TARGET_NAME}/Model/Generated/Assets.swift\"";
 		};
-		6CFD3EF384EC05669B8DBD83 /* [CP] Embed Pods Frameworks */ = {
+		69D13B251FDC337200315517 /* Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = Crashlytics;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PROJECT_DIR}/Carthage/Build/iOS/Fabric.framework/run\"\n";
+		};
+		6CFD3EF384EC05669B8DBD83 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Skeleton/Pods-Skeleton-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -690,6 +757,7 @@
 				6964364B1FDAE979000D5CAA /* UnauthorizedHandling.swift in Sources */,
 				69F927121FD2244E001D7592 /* AuthenticatedJSONAPIService.swift in Sources */,
 				6900359A1FD17EA6002EB20F /* AckeeViewController.swift in Sources */,
+				69D13B2A1FDC34F500315517 /* FirebaseAppDelegate.swift in Sources */,
 				693F90891FDB449E00A18975 /* FlowController.swift in Sources */,
 				6965AEDF1FDB5104001A08C5 /* ThemeProvider.swift in Sources */,
 				693F90871FDB449700A18975 /* AppFlowController.swift in Sources */,
@@ -899,7 +967,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = PXDF48X6VX;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
