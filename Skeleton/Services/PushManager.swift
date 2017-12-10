@@ -4,6 +4,10 @@ import UserNotifications
 import enum Result.NoError
 typealias NoError = Result.NoError
 
+protocol HasPushManager {
+    var pushManager: PushManaging { get }
+}
+
 protocol PushManagingNotifications {
     var received: Signal<PushNotification, NoError> { get }
     var opened: Signal<PushNotification, NoError> { get }
@@ -21,6 +25,8 @@ protocol PushManaging {
 }
 
 final class PushManager: NSObject, PushManaging, PushManagingNotifications, PushManagingActions {
+    typealias Dependencies = HasPushAPI
+    
     var notifications: PushManagingNotifications { return self }
     var actions: PushManagingActions { return self }
 
@@ -30,8 +36,8 @@ final class PushManager: NSObject, PushManaging, PushManagingNotifications, Push
     
     // MARK: Initializers
     
-    init(pushAPI: PushAPIServicing) {
-        registerToken = Action { pushAPI.registerToken($0) }
+    init(dependencies: Dependencies) {
+        registerToken = Action { dependencies.pushAPI.registerToken($0) }
     }
     
     // MARK: Public interface

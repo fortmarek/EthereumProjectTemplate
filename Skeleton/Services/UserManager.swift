@@ -4,6 +4,10 @@ typealias LoginResult = (Credentials, User)
 typealias LoginAction = Action<LoginCredentials, LoginResult, RequestError>
 typealias LogoutAction = Action<Void, Void, RequestError>
 
+protocol HasUserManager {
+    var userManager: UserManaging { get }
+}
+
 protocol UserManagingActions {
     var login: LoginAction { get }
     var logout: LogoutAction { get }

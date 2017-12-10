@@ -1,21 +1,26 @@
 import ReactiveSwift
 
+protocol HasPushAPI {
+    var pushAPI: PushAPIServicing { get }
+}
+
 protocol PushAPIServicing {
     func registerToken(_ token: String) -> SignalProducer<Void, RequestError>
 }
 
 final class PushAPIService: PushAPIServicing {
+    typealias Dependencies = HasJSONAPI
     
-    private let jsonAPI: JSONAPIServicing
+    private let dependencies: Dependencies
     
     // MARK: Initializers
     
-    init(jsonAPI: JSONAPIServicing) {
-        self.jsonAPI = jsonAPI
+    init(dependencies: Dependencies) {
+        self.dependencies = dependencies
     }
     
     func registerToken(_ token: String) -> SignalProducer<Void, RequestError> {
-        return jsonAPI.request(RequestAddress(path: "devices/token"), method: .put, parameters: ["token": token])
+        return dependencies.jsonAPI.request(RequestAddress(path: "devices/token"), method: .put, parameters: ["token": token])
             .map { _ in }
     }
 }

@@ -1,10 +1,6 @@
 import Foundation
 
-protocol CredentialsProvider {
-    var credentials: Credentials? { get }
-}
-
-struct Credentials {
+struct Credentials: Codable {
     let accessToken: String
     let refreshToken: String
 }

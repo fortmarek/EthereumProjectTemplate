@@ -1,5 +1,9 @@
 import ReactiveSwift
 
+public protocol HasVersionUpdateManager {
+    var versionUpdateManager: VersionUpdateManaging { get }
+}
+
 public protocol VersionUpdateManaging {
     var updateRequired: Property<Bool> { get }
     
@@ -7,16 +11,18 @@ public protocol VersionUpdateManaging {
 }
 
 public class VersionUpdateManager: VersionUpdateManaging {
+    public typealias Dependencies = HasFetcher
+    
     public let updateRequired: Property<Bool>
     
+    private let dependencies: Dependencies
     private let _updateRequired = MutableProperty(false)
-    private let fetcher: Fetcher
     
     // MARK: Initializers 
     
-    public init(fetcher: Fetcher) {
+    public init(dependencies: Dependencies) {
         updateRequired = Property(capturing: _updateRequired)
-        self.fetcher = fetcher
+        self.dependencies = dependencies
     }
     
     // MARK: Public interface
@@ -24,7 +30,7 @@ public class VersionUpdateManager: VersionUpdateManaging {
     public func setup() {
         update()
         
-        fetcher.fetch { [weak self] in self?.update() }
+        dependencies.fetcher.fetch { [weak self] in self?.update() }
     }
     
     // MARK: Private helpers
@@ -32,7 +38,7 @@ public class VersionUpdateManager: VersionUpdateManaging {
     private func update() {
         guard
             let currentVersion = Bundle.main.infoDictionary?["CFBundleVersion"].flatMap({ $0 as? String }).flatMap({ Int($0) }),
-            let configVersion = fetcher.version
+            let configVersion = dependencies.fetcher.version
         else { return }
         
         _updateRequired.value = currentVersion < configVersion

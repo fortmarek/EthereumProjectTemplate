@@ -7,6 +7,10 @@
 
 import ReactiveSwift
 
+protocol HasAuthHandler {
+    var authHandler: AuthHandling { get }
+}
+
 protocol AuthHandling {
     var actions: AuthHandlingActions { get }
 }

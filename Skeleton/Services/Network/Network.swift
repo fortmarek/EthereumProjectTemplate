@@ -8,6 +8,10 @@
 import Alamofire
 import ReactiveSwift
 
+protocol HasNetwork {
+    var network: Networking { get }
+}
+
 protocol Networking {
     func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String: Any], encoding: ParameterEncoding, headers: HTTPHeaders) -> SignalProducer<DataResponse, RequestError>
     func upload(_ address: RequestAddress, method: HTTPMethod, parameters: [NetworkUploadable], headers: HTTPHeaders) -> SignalProducer<DataResponse, RequestError>

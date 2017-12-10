@@ -20,29 +20,34 @@ typealias HTTPHeaders = Alamofire.HTTPHeaders
 typealias URLEncoding = Alamofire.URLEncoding
 typealias JSONEncoding = Alamofire.JSONEncoding
 
+protocol HasJSONAPI {
+    var jsonAPI: JSONAPIServicing { get }
+}
+
 protocol JSONAPIServicing {
     func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String: Any], encoding: ParameterEncoding, headers: HTTPHeaders) -> SignalProducer<JSONResponse, RequestError>
     func upload(_ address: RequestAddress, method: HTTPMethod, parameters: [NetworkUploadable], headers: HTTPHeaders) -> SignalProducer<JSONResponse, RequestError>
 }
 
 final class JSONAPIService: JSONAPIServicing {
+    typealias Dependencies = HasNetwork
     
-    private let network: Networking
+    private let dependencies: Dependencies
     
     // MARK: Initializers
     
-    init(network: Networking) {
-        self.network = network
+    init(dependencies: Dependencies) {
+        self.dependencies = dependencies
     }
     
     // MARK: Public methods
     
     func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String: Any], encoding: ParameterEncoding, headers: HTTPHeaders) -> SignalProducer<JSONResponse, RequestError> {
-        return network.request(address, method: method, parameters: parameters, encoding: encoding, headers: headers).toJSON()
+        return dependencies.network.request(address, method: method, parameters: parameters, encoding: encoding, headers: headers).toJSON()
     }
     
     func upload(_ address: RequestAddress, method: HTTPMethod, parameters: [NetworkUploadable], headers: HTTPHeaders) -> SignalProducer<JSONResponse, RequestError> {
-        return network.upload(address, method: method, parameters: parameters, headers: headers).toJSON()
+        return dependencies.network.upload(address, method: method, parameters: parameters, headers: headers).toJSON()
     }
 }
 
