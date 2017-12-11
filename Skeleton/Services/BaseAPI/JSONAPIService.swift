@@ -68,19 +68,19 @@ extension SignalProducer where Value == DataResponse, Error == RequestError {
 }
 
 extension JSONAPIServicing {
-    func request(_ address: RequestAddress) -> SignalProducer<JSONResponse, RequestError> {
-        return request(address, method: .get)
+    func request(_ address: RequestAddress, method: HTTPMethod = .get, parameters: [String: Any] = [:], encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders = [:]) -> SignalProducer<JSONResponse, RequestError> {
+        return request(address, method: method, parameters: parameters, encoding: encoding, headers: headers)
     }
-
-    func request(_ address: RequestAddress, method: HTTPMethod) -> SignalProducer<JSONResponse, RequestError> {
-        return request(address, method: method, parameters: [:])
+    
+    func upload(_ address: RequestAddress, method: HTTPMethod = .get, parameters: [NetworkUploadable], headers: HTTPHeaders = [:]) -> SignalProducer<JSONResponse, RequestError> {
+        return upload(address, method: method, parameters: parameters, headers: headers)
     }
-
-    func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String: Any]) -> SignalProducer<JSONResponse, RequestError> {
-        return request(address, method: method, parameters: parameters, encoding: URLEncoding.default)
+    
+    func request(path: String, method: HTTPMethod = .get, parameters: [String: Any] = [:], encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders = [:]) -> SignalProducer<JSONResponse, RequestError> {
+        return request(RequestAddress(path: path), method: method, parameters: parameters, encoding: encoding, headers: headers)
     }
-
-    func request(_ address: RequestAddress, method: HTTPMethod, parameters: [String: Any], encoding: ParameterEncoding) -> SignalProducer<JSONResponse, RequestError> {
-        return request(address, method: method, parameters: parameters, encoding: encoding, headers: [:])
+    
+    func upload(path: String, method: HTTPMethod = .get, parameters: [NetworkUploadable], headers: HTTPHeaders = [:]) -> SignalProducer<JSONResponse, RequestError> {
+        return upload(RequestAddress(path: path), method: method, parameters: parameters, headers: headers)
     }
 }
