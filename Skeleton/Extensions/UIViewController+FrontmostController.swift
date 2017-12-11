@@ -10,7 +10,7 @@ extension UIViewController {
         default: return nil
         }
     }
-    
+
     var frontmostController: UIViewController {
         return presentedViewController?.frontmostController ?? frontmostChild?.frontmostController ?? self
     }

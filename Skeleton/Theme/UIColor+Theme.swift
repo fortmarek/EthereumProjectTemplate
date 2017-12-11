@@ -17,4 +17,3 @@ extension Theme where Base: UIColor { // all app colors should be available in U
 //extension UIColor { // if you want to use short dot syntax, it should be just a shortcut to Theme namespace
 //    static var ackeeBlue: UIColor { return UIColor.theme.ackeeBlue }
 //}
-

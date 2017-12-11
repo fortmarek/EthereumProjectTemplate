@@ -27,4 +27,3 @@ extension UITextField: TextStyling {
     var ack_font: UIFont! { get { return font } set { font = newValue } }
     var ack_textColor: UIColor! { get { return textColor } set { textColor = newValue } }
 }
-

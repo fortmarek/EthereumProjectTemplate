@@ -11,7 +11,7 @@ extension Theme where Base: UIFont {
     static func regular(_ size: CGFloat) -> UIFont {
         return UIFont.systemFont(ofSize: size, weight: .regular)
     }
-    
+
     static func bold(_ size: CGFloat) -> UIFont {
         return UIFont.systemFont(ofSize: size, weight: .bold)
     }

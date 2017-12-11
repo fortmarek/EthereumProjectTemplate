@@ -58,6 +58,7 @@ PODS:
   - nanopb/encode (0.3.8)
   - Protobuf (3.5.0)
   - SwiftGen (5.2.1)
+  - SwiftLint (0.24.0)
 
 DEPENDENCIES:
   - Firebase/Analytics (~> 4.0)
@@ -65,6 +66,7 @@ DEPENDENCIES:
   - Firebase/Performance (~> 4.0)
   - Firebase/RemoteConfig (~> 4.0)
   - SwiftGen (~> 5.2)
+  - SwiftLint (~> 0.24)
 
 SPEC CHECKSUMS:
   Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
@@ -81,7 +83,8 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
+  SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
 
-PODFILE CHECKSUM: 93c55d8cd932f74cc5546ca062a2cf8960b6308b
+PODFILE CHECKSUM: 35f329e569fd010ca48d2c506eb4487ead2b4a12
 
 COCOAPODS: 1.3.1

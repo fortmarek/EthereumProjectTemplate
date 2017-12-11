@@ -525,6 +525,7 @@
 				698258FE1F8E9B46004BBCB7 /* Generate environment file */,
 				699DD5941F8D23D300C7080D /* SwiftGen */,
 				69F4A6B31F8BD5C5003481A3 /* Sources */,
+				69BB13E91FDEC10D008BAAE6 /* Swiftlint */,
 				69F4A6B41F8BD5C5003481A3 /* Frameworks */,
 				69F4A6B51F8BD5C5003481A3 /* Resources */,
 				6CFD3EF384EC05669B8DBD83 /* [CP] Embed Pods Frameworks */,
@@ -722,6 +723,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export PATH=\"${PODS_ROOT}/SwiftGen/bin:$PATH\"\n\nswiftgen strings -t structured-swift4 \"${PROJECT_DIR}/${TARGET_NAME}/Resources/Base.lproj/Localizable.strings\" -o \"${PROJECT_DIR}/${TARGET_NAME}/Model/Generated/LocalizedStrings.swift\"\nswiftgen xcassets -t swift4 \"${PROJECT_DIR}/${TARGET_NAME}/Resources/Images.xcassets\" -o \"${PROJECT_DIR}/${TARGET_NAME}/Model/Generated/Assets.swift\"";
+		};
+		69BB13E91FDEC10D008BAAE6 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$PODS_ROOT\"/SwiftLint/swiftlint autocorrect\n\"$PODS_ROOT\"/SwiftLint/swiftlint";
 		};
 		69D13B251FDC337200315517 /* Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;

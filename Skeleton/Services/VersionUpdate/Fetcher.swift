@@ -6,6 +6,6 @@ public protocol HasFetcher {
 
 public protocol Fetcher {
     var version: Int? { get }
-    
+
     func fetch(completion: @escaping () -> Void)
 }

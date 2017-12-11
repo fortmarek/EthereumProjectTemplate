@@ -37,24 +37,25 @@ extension UIWindow: ErrorPresenting {
             logError(e)
         }
         guard let window = UIApplication.shared.keyWindow else { return false }
-        let alertController = UIAlertController(title: e.title ?? L10n.Basic.error, message: e.message, preferredStyle: .alert)
+        let title = e.title ?? L10n.Basic.error
+        let alertController = UIAlertController(title: title, message: e.message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: L10n.Basic.ok, style: .cancel) { _ in }
         alertController.addAction(okAction)
-        
+
         #if DEBUG
             let showMoreAction = UIAlertAction(title: L10n.Basic.showMore, style: .default) { _ in
-                let detailAlertController = UIAlertController(title: "Error Detail", message: "\(e)", preferredStyle: .alert)
+                let detailAlert = UIAlertController(title: "Error Detail", message: "\(e)", preferredStyle: .alert)
                 let detailOkAction = UIAlertAction(title: L10n.Basic.ok, style: .cancel) { _ in }
-                detailAlertController.addAction(detailOkAction)
-                window.rootViewController?.frontmostController.present(detailAlertController, animated: true)
+                detailAlert.addAction(detailOkAction)
+                window.rootViewController?.frontmostController.present(detailAlert, animated: true)
             }
             alertController.addAction(showMoreAction)
         #endif
-        
+
         window.rootViewController?.frontmostController.present(alertController, animated: true)
         return true
     }
-    
+
     fileprivate func logError(_ e: ErrorPresentable) {
         print(e.debugString)
         // if you use any console or logger library, call it here...

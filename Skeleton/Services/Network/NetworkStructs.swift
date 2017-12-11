@@ -16,6 +16,7 @@ struct RequestAddress {
 
 extension RequestAddress {
     init(path: String, baseURL: URL = Environment.API.baseURL) {
+        // swiftlint:disable force_unwrapping
         url = URL(string: path, relativeTo: baseURL)!
     }
 }
@@ -25,7 +26,7 @@ struct RequestResponse<Value> {
     let request: URLRequest?
     let response: HTTPURLResponse?
     let data: Value?
-    
+
     var headers: HTTPHeaders { return response?.allHeaderFields as? HTTPHeaders ?? [:] }
 }
 
@@ -39,16 +40,14 @@ struct NetworkError: Error {
     let request: URLRequest?
     let response: HTTPURLResponse?
     let data: Data?
-    
+
     var statusCode: Int? { return response?.statusCode }
 }
 
 extension RequestResponse where Value == Data {
     func jsonResponse() throws -> JSONResponse {
         let json = try data.map { try JSONSerialization.jsonObject(with: $0, options: .allowFragments) }
-        
+
         return JSONResponse(statusCode: statusCode, request: request, response: response, data: json)
     }
 }
-
-

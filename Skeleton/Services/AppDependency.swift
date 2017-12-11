@@ -8,17 +8,17 @@ typealias HasManagerDependencies = HasPushManager & HasUserManager & HasFirebase
 final class AppDependency: HasBaseAPIDependecies, HasCredentialsDependencies, HasManagerDependencies, HasAPIDependencies {
     lazy var network: Networking = Network()
     lazy var authHandler: AuthHandling = AuthHandler()
-    
+
     lazy var credentialsProvider: CredentialsProvider = UserDefaults.credentials
     lazy var credentialsStore: CredentialsStore = UserDefaults.credentials
-    
+
     lazy var jsonAPI: JSONAPIServicing = JSONAPIService(dependencies: self)
     lazy var authJSONAPI: JSONAPIServicing = AuthenticatedJSONAPIService(dependencies: self)
     lazy var pushAPI: PushAPIServicing = PushAPIService(dependencies: self)
 
     lazy var fetcher: Fetcher = FirebaseFetcher(key: "min_version")
     lazy var firebasePushObserver: FirebasePushObserving = FirebasePushObserver(dependencies: self)
-    
+
     lazy var pushManager: PushManaging = PushManager(dependencies: self)
     lazy var userManager: UserManaging = UserManager()
     lazy var versionUpdateManager: VersionUpdateManaging = VersionUpdateManager(dependencies: self)

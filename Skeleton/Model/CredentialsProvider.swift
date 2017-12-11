@@ -20,7 +20,7 @@ extension UserDefaults: CredentialsProvider, CredentialsStore {
     private enum Keys {
         static var credentials = "credentials"
     }
-    
+
     var credentials: Credentials? {
         get {
             guard let data = object(forKey: Keys.credentials) as? Data else { return nil }
@@ -41,5 +41,6 @@ extension UserDefaults: CredentialsProvider, CredentialsStore {
 }
 
 extension UserDefaults {
+    // swiftlint:disable force_unwrapping
     static let credentials = UserDefaults(suiteName: (Bundle.main.bundleIdentifier ?? "") + ".credentials")!
 }
