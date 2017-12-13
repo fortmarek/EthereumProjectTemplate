@@ -43,16 +43,31 @@ lane :beta do
 
     SCHEME = "Stage"
     CONFIGURATION = "AdHoc"
+    TARGET_RESOURCES = "../Skeleton/Resources/Images.xcassets/"
 
-    # badge
+    if is_ci then
+        provisioning(environment: environment)
+    else
+        UI.message("Running locally, not running :provisioning lane, if needed run manually")
+    end
 
-    gym(scheme: SCHEME,
-        configuration: CONFIGURATION,
-        export_options: {
-            method: "enterprise",
-            provisioningProfiles: provisioning_mapping()
-        }
-    )
+    begin
+        add_badge(shield: "#{get_version_number}-#{number_of_commits}-blue", dark: true, shield_no_resize: false)
+    rescue
+        UI.error("Unable to add badges to app icon")
+        # Put badge back to original
+        sh "git checkout -- #{TARGET_RESOURCES}"
+    end
+
+    sh "git checkout -- #{TARGET_RESOURCES}"
+
+    # gym(scheme: SCHEME,
+    #     configuration: CONFIGURATION,
+    #     export_options: {
+    #         method: "enterprise",
+    #         provisioningProfiles: provisioning_mapping()
+    #     }
+    # )
 
     # hockey
 end
