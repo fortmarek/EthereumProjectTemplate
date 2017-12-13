@@ -110,7 +110,7 @@ lane :release do
     )
 
     testflight(username: itc_apple_id,
-                dev_portal_team_id: PRODUCTION_TEAM_ID,
+                team_id: PRODUCTION_TEAM_ID2,
                 skip_submission: true,
                 skip_waiting_for_build_processing: true)
 end
@@ -120,7 +120,7 @@ def provisioning_mapping()
 end
 
 def git_user_email()
-    return `git config user.email`
+    return `git config user.email`.strip
 end
 
 def itc_apple_id()
