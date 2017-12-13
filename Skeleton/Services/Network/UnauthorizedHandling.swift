@@ -1,10 +1,3 @@
-//
-//  UnauthorizedHandling.swift
-//  Skeleton
-//
-//  Created by Jakub Olejník on 08/12/2017.
-//
-
 import ReactiveSwift
 
 protocol UnauthorizedHandling { }

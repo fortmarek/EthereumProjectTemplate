@@ -1,10 +1,3 @@
-//
-//  Network.swift
-//  Skeleton
-//
-//  Created by Jakub Olejník on 01/12/2017.
-//
-
 import Alamofire
 import ReactiveSwift
 

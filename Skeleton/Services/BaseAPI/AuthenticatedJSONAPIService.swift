@@ -1,10 +1,3 @@
-//
-//  AuthenticatedJSONAPIService.swift
-//  Skeleton
-//
-//  Created by Jakub Olejník on 02/12/2017.
-//
-
 import ACKategories
 import ReactiveSwift
 

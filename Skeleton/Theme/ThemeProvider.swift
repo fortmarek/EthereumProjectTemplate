@@ -1,10 +1,3 @@
-//
-//  ThemeProvider.swift
-//  Skeleton
-//
-//  Created by Jakub Olejník on 09/12/2017.
-//
-
 import Foundation
 
 struct Theme<Base> { }

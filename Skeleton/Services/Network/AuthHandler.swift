@@ -1,10 +1,3 @@
-//
-//  AuthHandler.swift
-//  Skeleton
-//
-//  Created by Jakub Olejník on 02/12/2017.
-//
-
 import ReactiveSwift
 
 protocol HasAuthHandler {

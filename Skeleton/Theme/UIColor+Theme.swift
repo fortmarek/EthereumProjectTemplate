@@ -1,10 +1,3 @@
-//
-//  UIColor+Theme.swift
-//  Skeleton
-//
-//  Created by Jakub Olejník on 09/12/2017.
-//
-
 import UIKit
 
 extension UIColor: ThemeProvider { }

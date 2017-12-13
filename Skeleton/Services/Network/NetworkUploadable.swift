@@ -1,10 +1,3 @@
-//
-//  NetworkUploadable.swift
-//  Skeleton
-//
-//  Created by Jakub Olejník on 01/12/2017.
-//
-
 import UIKit
 import Alamofire
 import ACKategories

@@ -1,10 +1,3 @@
-//
-//  JSONAPIService.swift
-//  Skeleton
-//
-//  Created by Jakub Olejník on 01/12/2017.
-//
-
 import ReactiveSwift
 
 import enum Alamofire.HTTPMethod

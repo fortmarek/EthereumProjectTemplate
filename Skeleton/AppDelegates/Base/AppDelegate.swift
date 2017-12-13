@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  Skeleton
-//
-//  Created by Jakub Olejník on 09/10/2017.
-//
-
 import UIKit
 
 final class AppDelegate: BaseAppDelegate {
