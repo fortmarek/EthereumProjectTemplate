@@ -64,6 +64,11 @@ fastlane test
 fastlane release
 ```
 
+### rename
+```
+fastlane rename
+```
+
 
 ----
 
