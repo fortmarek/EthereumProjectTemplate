@@ -82,4 +82,5 @@ Environment/.current
 Environment/.environment_preprocess.h
 
 #generated files
-*/Model/Generated
+Skeleton/Model/Generated
+!Skeleton/Model/Generated/.gitkeep
