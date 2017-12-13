@@ -14,7 +14,7 @@ final class AppFlowController: FlowController {
     // MARK: Public interface
 
     func start() {
-        window.rootViewController = AckeeViewController()
+        window.rootViewController = AckeeViewController(viewModel: AckeeViewModel())
     }
 
     func handle(routingAction action: RoutingAction) {
