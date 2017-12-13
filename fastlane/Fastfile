@@ -115,6 +115,16 @@ lane :release do
                 skip_waiting_for_build_processing: true)
 end
 
+lane :rename do |options|
+    name = options[:name] || UI.prompt("Enter new name:")
+
+    source_file_types = [".swift", ".h", ".m"]
+    change_project_name_recursively("./Skeleton", source_file_types, "Skeleton", name)
+    sh "mv Skeleton #{name}"
+    change_project_name_recursively("./Skeleton.xcodeproj", [".pbxproj", ".xcscheme"], "Skeleton", name)
+    change_project_name_recursively("./Podfile", nil, "Skeleton", name)
+end
+
 def provisioning_mapping()
     return nil
 end
@@ -142,3 +152,28 @@ end
 def get_version_string
     return get_build_settings(key: "ACK_PROJECT_VERSION", build_configuration: "AppStore")
 end
+
+def change_project_name_recursively (path, file_types, replace_from, replace_to)
+    if File.directory? path
+        file_names = (Dir.entries(path) - %w{ . ..})
+    else
+        file_names = [path]
+    end
+
+    file_names.each do |file_name|
+        if file_name != path
+            file_name = File.expand_path(file_name, path)
+        end
+
+        UI.message  "#{file_name}"
+
+        if !file_types || file_types.include?(File.extname(file_name))
+            text = File.read(file_name)
+            new_contents = text.gsub(/#{replace_from}/, replace_to)
+
+            File.open(file_name, "w") {|file| file.puts new_contents }
+        elsif File.directory? file_name
+            change_project_name_recursively(file_name, file_types, replace_from, replace_to)
+        end
+    end
+  end
