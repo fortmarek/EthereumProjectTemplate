@@ -2,6 +2,9 @@ ENV["GYM_OUTPUT_DIRECTORY"] = "./fastlane/outputs/"
 
 xcversion version: "~> 9.0"
 
+lane :carthage do
+end
+
 lane :pods do
     sh "pod install || pod install --repo-update"
 end
