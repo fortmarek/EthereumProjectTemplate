@@ -118,14 +118,17 @@ end
 lane :rename do |options|
     name = options[:name] || UI.prompt("Enter new name:")
 
-    sh "rm -r ../Skeleton.xcworkspace"
+    sh "rm -r ../#{name} || true"
+    sh "mv ../Skeleton ../#{name} || true"
 
+    sh "rm -r ../Skeleton.xcworkspace || true"
+
+    sh "rm -r ../#{name}.xcodeproj"
     change_project_name_recursively("../Skeleton.xcodeproj", [".pbxproj", ".xcscheme"], "Skeleton", name)
-
-    change_project_name_recursively("../Skeleton", [".swift", ".h", ".m"], "Skeleton", name)
-    sh "mv ../Skeleton ../#{name}"
+    sh "mv ../Skeleton.xcodeproj ../#{name}.xcodeproj || true"
 
     change_project_name_recursively("../Podfile", nil, "Skeleton", name)
+    change_project_name_recursively("../.swiftlint.yml", nil, "Skeleton", name)
 end
 
 def provisioning_mapping()
