@@ -80,6 +80,7 @@ screenshots
 Environment/Current
 Environment/.current
 Environment/.environment_preprocess.h
+Environment/Environment.swift
 
 #generated files
 */Model/Generated/*
