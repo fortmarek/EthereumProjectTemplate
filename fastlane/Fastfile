@@ -4,11 +4,18 @@ ENV["MATCH_GIT_URL"] = ENV["ACK_INHOUSE_MATCH_GIT"] # Default git is set to inho
 ENV["MATCH_TYPE"] = "development" #Default match type
 ENV["MATCH_DEFAULT_TEAM_ID"] = "PXDF48X6VX" #Team ID that is saved in the master branch in the inhouse repository
 
+ENV["XCODE_VERSION"] = "~> 9.2"
 
-XCODE_VERSION = "~> 9.0"
 INHOUSE_APPLE_ID = "unicorn@ackee.cz"
-PRODUCTION_TEAM_ID = "XXX"
-PRODUCTION_APP_ID = "123"
+PRODUCTION_TEAM_ID = "XXX" # string identifier
+PRODUCTION_TEAM_ID2 = "1588142" # number identifier, anyone idea for better name?
+HOCKEY_APP_ID = ""
+
+before_all do |lane|
+    if lane == :beta || lane == :release then
+        xcversion(version: ENV["XCODE_VERSION"])
+    end
+end
 
 lane :cart do
     sh "cd ..; carthage bootstrap --platform iOS --cache-builds; cd -"
@@ -39,20 +46,18 @@ lane :provisioning do |options|
 end
 
 lane :beta do
-    xcversion(version: XCODE_VERSION)
-
     SCHEME = "Stage"
     CONFIGURATION = "AdHoc"
     TARGET_RESOURCES = "../Skeleton/Resources/Images.xcassets/"
 
     if is_ci then
-        provisioning(environment: environment)
+        provisioning(configuration: CONFIGURATION)
     else
         UI.message("Running locally, not running :provisioning lane, if needed run manually")
     end
 
     begin
-        add_badge(shield: "#{get_version_number}-#{number_of_commits}-blue", dark: true, shield_no_resize: false)
+        add_badge(shield: "#{get_version_string()}-#{number_of_commits}-blue", dark: true, shield_no_resize: false)
     rescue
         UI.error("Unable to add badges to app icon")
         # Put badge back to original
@@ -61,34 +66,39 @@ lane :beta do
 
     sh "git checkout -- #{TARGET_RESOURCES}"
 
-    # gym(scheme: SCHEME,
-    #     configuration: CONFIGURATION,
-    #     export_options: {
-    #         method: "enterprise",
-    #         provisioningProfiles: provisioning_mapping()
-    #     }
-    # )
+    gym(scheme: SCHEME,
+        configuration: CONFIGURATION,
+        clean: false,
+        export_options: {
+            method: "enterprise",
+            provisioningProfiles: provisioning_mapping()
+        }
+    )
 
-    # hockey
+    if !is_ci
+        hockey(public_identifier: HOCKEY_APP_ID, notify: '0' )
+    end
 end
 
 lane :test do |options|
-    xcversion(version: XCODE_VERSION)
-
     TYPE = options[:type] || UI.select("Select test type: ", ["ui", "unit"])
 
     if TYPE == "ui" then
-        scan(scheme: "UITests")
+        scan(scheme: "UITests", clean: false)
     elsif TYPE == "unit"
-        scan(scheme: "Development")
+        scan(scheme: "Development", clean: false)
     end
 end
 
 lane :release do
-    xcversion(version: XCODE_VERSION)
-
     SCHEME = "Production"
     CONFIGURATION = "AppStore"
+
+    if is_ci then
+        provisioning(configuration: CONFIGURATION)
+    else
+        UI.message("Running locally, not running :provisioning lane, if needed run manually")
+    end
 
     gym(scheme: SCHEME,
         configuration: CONFIGURATION,
@@ -99,7 +109,10 @@ lane :release do
         }
     )
 
-    # deliver
+    testflight(username: itc_apple_id,
+                dev_portal_team_id: PRODUCTION_TEAM_ID,
+                skip_submission: true,
+                skip_waiting_for_build_processing: true)
 end
 
 def provisioning_mapping()
@@ -124,4 +137,8 @@ end
 
 def team_id(configuration)
     get_build_settings(key: "DEVELOPMENT_TEAM", build_configuration: configuration)
+end
+
+def get_version_string
+    return get_build_settings(key: "ACK_PROJECT_VERSION", build_configuration: "AppStore")
 end
