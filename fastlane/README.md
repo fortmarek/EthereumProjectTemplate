@@ -29,14 +29,19 @@ xcode-select --install
 </table>
 
 # Available Actions
-### carthage
+### cart
 ```
-fastlane carthage
+fastlane cart
 ```
 
 ### pods
 ```
 fastlane pods
+```
+
+### dependencies
+```
+fastlane dependencies
 ```
 
 ### provisioning
@@ -54,9 +59,9 @@ fastlane beta
 fastlane test
 ```
 
-### appstore
+### release
 ```
-fastlane appstore
+fastlane release
 ```
 
 

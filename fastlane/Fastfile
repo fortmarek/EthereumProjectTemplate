@@ -1,27 +1,46 @@
 ENV["GYM_OUTPUT_DIRECTORY"] = "./fastlane/outputs/"
+ENV["ACK_INHOUSE_MATCH_GIT"] = "git@gitlab.ack.ee:Ackee/ios-inhouse-certificates.git"
+ENV["MATCH_GIT_URL"] = ENV["ACK_INHOUSE_MATCH_GIT"] # Default git is set to inhouse
+ENV["MATCH_TYPE"] = "development" #Default match type
+ENV["MATCH_DEFAULT_TEAM_ID"] = "PXDF48X6VX" #Team ID that is saved in the master branch in the inhouse repository
 
-xcversion version: "~> 9.0"
 
-lane :carthage do
+XCODE_VERSION = "~> 9.0"
+INHOUSE_APPLE_ID = "unicorn@ackee.cz"
+PRODUCTION_TEAM_ID = "XXX"
+PRODUCTION_APP_ID = "123"
+
+lane :cart do
+    sh "cd ..; carthage bootstrap --platform iOS --cache-builds; cd -"
 end
 
 lane :pods do
     sh "pod install || pod install --repo-update"
 end
 
-lane :provisioning do |options|
-    SCHEME = options[:scheme] || UI.select("Select environment: ", ["Development", "Stage", "Production"])
+lane :dependencies do
+    cart
+    pods
+end
 
-    if SCHEME == "Development" then
-        # match
-    elsif SCHEME == "Stage" then
-        # match
-    elsif SCHEME == "Production" then
-        # match
+lane :provisioning do |options|
+    CONFIGURATION = options[:configuration] || UI.select("Select configuration: ", ["Debug", "AdHoc", "AppStore"])
+
+    if CONFIGURATION == "Debug" then
+        provisioning_match(configuration: CONFIGURATION, type: "development", app_identifier: [app_identifier(CONFIGURATION), app_identifier("AdHoc")],
+                            username: INHOUSE_APPLE_ID, team_id: team_id(CONFIGURATION), readonly: true)
+    elsif CONFIGURATION == "AdHoc" then
+        provisioning_match(configuration: CONFIGURATION, type: "enterprise", app_identifier: app_identifier(CONFIGURATION),
+                            username: INHOUSE_APPLE_ID, team_id: team_id(CONFIGURATION), readonly: true)
+    elsif CONFIGURATION == "AppStore" then
+        provisioning_match(configuration: CONFIGURATION, type: "appstore", app_identifier: app_identifier(CONFIGURATION),
+                            username: dev_portal_apple_id(), team_id: PRODUCTION_TEAM_ID, readonly: true)
     end
 end
 
 lane :beta do
+    xcversion(version: XCODE_VERSION)
+
     SCHEME = "Stage"
     CONFIGURATION = "AdHoc"
 
@@ -39,6 +58,8 @@ lane :beta do
 end
 
 lane :test do |options|
+    xcversion(version: XCODE_VERSION)
+
     TYPE = options[:type] || UI.select("Select test type: ", ["ui", "unit"])
 
     if TYPE == "ui" then
@@ -48,7 +69,9 @@ lane :test do |options|
     end
 end
 
-lane :appstore do
+lane :release do
+    xcversion(version: XCODE_VERSION)
+
     SCHEME = "Production"
     CONFIGURATION = "AppStore"
 
@@ -66,4 +89,24 @@ end
 
 def provisioning_mapping()
     return nil
+end
+
+def git_user_email()
+    return `git config user.email`
+end
+
+def itc_apple_id()
+    return git_user_email()
+end
+
+def dev_portal_apple_id()
+    return git_user_email()
+end
+
+def app_identifier(configuration)
+    get_build_settings(key: "PRODUCT_BUNDLE_IDENTIFIER", build_configuration: configuration)
+end
+
+def team_id(configuration)
+    get_build_settings(key: "DEVELOPMENT_TEAM", build_configuration: configuration)
 end
