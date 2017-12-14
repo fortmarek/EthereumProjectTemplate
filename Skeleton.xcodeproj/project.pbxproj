@@ -399,7 +399,7 @@
 				69902FBA1FDC3E8600182939 /* PushManager.swift */,
 				69902FC01FDC61B600182939 /* PushAPIService.swift */,
 				69902FC41FDC657400182939 /* FirebasePushObserver.swift */,
-				69C9D0F91FE1ED90008A1155 /* Dependencies */,
+				69C9D0F91FE1ED90008A1155 /* DI */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -425,13 +425,13 @@
 			);
 			sourceTree = "<group>";
 		};
-		69C9D0F91FE1ED90008A1155 /* Dependencies */ = {
+		69C9D0F91FE1ED90008A1155 /* DI */ = {
 			isa = PBXGroup;
 			children = (
 				69902FC61FDCAFBA00182939 /* AppDependency.swift */,
 				69C9D0FA1FE1EDA4008A1155 /* AppDependency+Factories.swift */,
 			);
-			path = Dependencies;
+			path = DI;
 			sourceTree = "<group>";
 		};
 		69D13B281FDC34E500315517 /* Base */ = {
