@@ -168,7 +168,7 @@
 		69F3C1FB1F8D169A00DB2B5C /* SkeletonUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkeletonUITests.swift; sourceTree = "<group>"; };
 		69F3C1FD1F8D169A00DB2B5C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69F3C1FE1F8D169A00DB2B5C /* SkeletonTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkeletonTests.swift; sourceTree = "<group>"; };
-		69F4A6B71F8BD5C5003481A3 /* Skeleton Δ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Skeleton Δ.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		69F4A6B71F8BD5C5003481A3 /* Skeleton.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skeleton.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69F4A6C61F8BD5C5003481A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69F4A6CB1F8BD5C5003481A3 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		69F4A6D61F8BD5C5003481A3 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -499,7 +499,7 @@
 		69F4A6B81F8BD5C5003481A3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				69F4A6B71F8BD5C5003481A3 /* Skeleton Δ.app */,
+				69F4A6B71F8BD5C5003481A3 /* Skeleton.app */,
 				69F4A6CB1F8BD5C5003481A3 /* UnitTests.xctest */,
 				69F4A6D61F8BD5C5003481A3 /* UITests.xctest */,
 			);
@@ -567,7 +567,7 @@
 			);
 			name = Skeleton;
 			productName = Skeleton;
-			productReference = 69F4A6B71F8BD5C5003481A3 /* Skeleton Δ.app */;
+			productReference = 69F4A6B71F8BD5C5003481A3 /* Skeleton.app */;
 			productType = "com.apple.product-type.application";
 		};
 		69F4A6CA1F8BD5C5003481A3 /* UnitTests */ = {
@@ -1079,6 +1079,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DBA320E0E4B46C241CF4502F /* Pods-Skeleton.debug.xcconfig */;
 			buildSettings = {
+				ACK_APPNAME = "Skeleton Δ";
 				ACK_ENV_PREPROCESS_HEADER = "$(ACK_ENVIRONMENT_DIR)/.environment_preprocess.h";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1140,7 +1141,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.dev;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "Skeleton Δ";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development cz.ackee.enterprise.*";
 				SDKROOT = iphoneos;
@@ -1155,6 +1156,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 35454DA5A985147A38EEA0A4 /* Pods-Skeleton.adhoc.xcconfig */;
 			buildSettings = {
+				ACK_APPNAME = "Skeleton β";
 				ACK_ENV_PREPROCESS_HEADER = "$(ACK_ENVIRONMENT_DIR)/.environment_preprocess.h";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1209,7 +1211,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = cz.ackee.enterprise.sampletesting.beta;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "Skeleton β";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "match InHouse cz.ackee.enterprise.*";
 				SDKROOT = iphoneos;
@@ -1224,6 +1226,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 34B118B34187408CAA1B4052 /* Pods-Skeleton.appstore.xcconfig */;
 			buildSettings = {
+				ACK_APPNAME = Skeleton;
 				ACK_ENV_PREPROCESS_HEADER = "$(ACK_ENVIRONMENT_DIR)/.environment_preprocess.h";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
