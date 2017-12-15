@@ -13,4 +13,12 @@ target 'Skeleton' do
     pod 'ACKLocalization', '~> 0.2'
 
     pod 'Firebase', '~> 4.0', :subspecs => ["RemoteConfig", "Performance", "Analytics", "Messaging"]
+    
+    target 'UnitTests' do
+        inherit! :complete
+    end
+    
+    target 'UITests' do
+        inherit! :complete
+    end
 end
