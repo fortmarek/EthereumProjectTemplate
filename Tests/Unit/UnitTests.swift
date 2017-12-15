@@ -1,6 +1,6 @@
 //
-//  SkeletonTests.swift
-//  SkeletonTests
+//  UnitTests.swift
+//  UnitTests
 //
 //  Created by Jakub Olejník on 09/10/2017.
 //
