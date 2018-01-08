@@ -14,7 +14,7 @@ extension UnauthorizedHandling {
             .filter { $0.isTerminating }
             .map { $0.isCompleted }
             .flatMap(.latest) { refreshSuccessful -> SignalProducer<Value, RequestError> in
-                if refreshSuccessful { return SignalProducer(error: error) } else { return retryFactory() }
+                if refreshSuccessful { return retryFactory() } else { return SignalProducer(error: error) }
             }
             .on(started: {
                 authHandler.actions.refresh.apply(error).start()
