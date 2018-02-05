@@ -115,6 +115,7 @@
 		691EF6FF1FDAF7D000135FBC /* BaseCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewController.swift; sourceTree = "<group>"; };
 		691EF7011FDAFA6100135FBC /* TestingAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
 		691EF7031FDAFAEF00135FBC /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		6924774520289818008F53A9 /* Cartfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = Cartfile; sourceTree = "<group>"; };
 		693F907F1FDB3D3000A18975 /* BaseAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAppDelegate.swift; sourceTree = "<group>"; };
 		693F90811FDB3D8900A18975 /* MainAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppDelegate.swift; sourceTree = "<group>"; };
 		693F90861FDB449700A18975 /* AppFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowController.swift; sourceTree = "<group>"; };
@@ -448,6 +449,7 @@
 		69C879351F8BD516006D38A0 = {
 			isa = PBXGroup;
 			children = (
+				6924774520289818008F53A9 /* Cartfile */,
 				696CEE541F8D1A20007C6DF7 /* Environment */,
 				69F4A6B91F8BD5C5003481A3 /* Skeleton */,
 				69F3C1F81F8D169A00DB2B5C /* Tests */,
@@ -569,6 +571,7 @@
 			buildConfigurationList = 69F4A6DD1F8BD5C5003481A3 /* Build configuration list for PBXNativeTarget "Skeleton" */;
 			buildPhases = (
 				DD5E414B6684D67C0C1F30B4 /* [CP] Check Pods Manifest.lock */,
+				6924774D202898BD008F53A9 /* [Carthage] Check installed versions */,
 				696CEE6A1F8D1E5C007C6DF7 /* Environment switch */,
 				698258FE1F8E9B46004BBCB7 /* Generate environment file */,
 				699DD5941F8D23D300C7080D /* SwiftGen */,
@@ -578,7 +581,7 @@
 				69F4A6B51F8BD5C5003481A3 /* Resources */,
 				6CFD3EF384EC05669B8DBD83 /* [CP] Embed Pods Frameworks */,
 				D7767D8611E5604D91E49109 /* [CP] Copy Pods Resources */,
-				6977BB5A1FD1A1C800F6EB94 /* Carthage stuff */,
+				6977BB5A1FD1A1C800F6EB94 /* [Carthage] Copy frameworks */,
 				69D13B251FDC337200315517 /* Crashlytics */,
 			);
 			buildRules = (
@@ -729,6 +732,20 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6924774D202898BD008F53A9 /* [Carthage] Check installed versions */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[Carthage] Check installed versions";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n#\n# This script verifies that the commitish values in the Cartfile.resolved are in\n# sync with the commitish values in the Carthage/Build/*.version files.\n#\n# Usage:\n#   cd ProjectFolder && /path/to/carthage-verify\n\nsed -E 's/(github|git|binary) \\\"([^\\\"]+)\\\" \\\"([^\\\"]+)\\\"/\\2 \\3/g' Cartfile.resolved | while read line\ndo\nread -a array <<< \"$line\"\n\n# Handles:\n# - ReactiveCocoa/ReactiveSwift > ReactiveSwift\n# - https://github.com/Carthage/Carthage.git > Carthage\n# - https://www.mapbox.com/ios-sdk/Mapbox-iOS-SDK.json > Mapbox-iOS-SDK\ndependency=`basename ${array[0]} | awk -F'.' '{ print $1 }'`\n\nresolved_commitish=${array[1]}\n\necho -e \"Cartfile.resolved[$dependency] at $resolved_commitish\"\n\nversion_file=\"Carthage/Build/.$dependency.version\"\n\nif [ ! -f \"$version_file\" ]\nthen\necho -e \"No version file found for $dependency at $version_file, skipping.\"\necho\ncontinue\nfi\n\nversion_file_commitish=`grep -o '\"commitish\".*\"' \"$version_file\" | awk -F'\"' '{ print $4 }'`\n\necho -e \"$version_file at $version_file_commitish\"\n\nif [ \"$resolved_commitish\" != \"$version_file_commitish\" ]\nthen\necho\necho -e \"$dependency commitish ($version_file_commitish) does not match resolved commitish ($resolved_commitish)\"\nexit 1\nfi\n\necho\ndone";
+		};
 		696CEE6A1F8D1E5C007C6DF7 /* Environment switch */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -756,7 +773,7 @@
 			shellPath = /bin/sh;
 			shellScript = "\"$PROJECT_DIR/Pods/ACKLocalization/Localization\" \"<gdoc_id>\" \"key_ios\" '{\"CS\": \"Base\"}' \"$PROJECT_DIR/Skeleton/Resources\" \"Localizable.strings\" ";
 		};
-		6977BB5A1FD1A1C800F6EB94 /* Carthage stuff */ = {
+		6977BB5A1FD1A1C800F6EB94 /* [Carthage] Copy frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -769,7 +786,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
 			);
-			name = "Carthage stuff";
+			name = "[Carthage] Copy frameworks";
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Result.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ReactiveSwift.framework",
@@ -836,7 +853,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PROJECT_DIR}/Carthage/Build/iOS/Fabric.framework/run\"\n";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\"";
 		};
 		6CFD3EF384EC05669B8DBD83 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

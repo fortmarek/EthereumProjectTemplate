@@ -11,6 +11,7 @@ target 'Skeleton' do
     pod 'SwiftGen', '~> 5.2'
     pod 'SwiftLint', '~> 0.24'
     pod 'ACKLocalization', '~> 0.2'
+    pod 'Crashlytics', '~> 3.9'
 
     pod 'Firebase', '~> 4.0', :subspecs => ["RemoteConfig", "Performance", "Analytics", "Messaging"]
     

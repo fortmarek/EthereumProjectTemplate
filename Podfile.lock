@@ -1,5 +1,8 @@
 PODS:
   - ACKLocalization (0.2.1)
+  - Crashlytics (3.9.3):
+    - Fabric (~> 1.7.2)
+  - Fabric (1.7.2)
   - Firebase/Analytics (4.7.0):
     - Firebase/Core
   - Firebase/Core (4.7.0):
@@ -63,6 +66,7 @@ PODS:
 
 DEPENDENCIES:
   - ACKLocalization (~> 0.2)
+  - Crashlytics (~> 3.9)
   - Firebase/Analytics (~> 4.0)
   - Firebase/Messaging (~> 4.0)
   - Firebase/Performance (~> 4.0)
@@ -72,6 +76,8 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   ACKLocalization: 2dcde3f5b3b9def00d53d5b8aa02e8700609361b
+  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
+  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
   FirebaseABTesting: d07d0ee833b842d5153549e4c7e2e2cb1c23a3f9
   FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
@@ -88,6 +94,6 @@ SPEC CHECKSUMS:
   SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
 
-PODFILE CHECKSUM: 834fd4659fa2ab1558167c4c5d1fbcc4bf2f8880
+PODFILE CHECKSUM: a35f089fb9042c2ad28f4c3cb12283de8e2b59ed
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0
