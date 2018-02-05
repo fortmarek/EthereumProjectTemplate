@@ -26,6 +26,7 @@ struct RequestResponse<Value> {
 enum RequestError: Error {
     case network(NetworkError)
     case upload(Error)
+    case missingRefreshToken
 }
 
 struct NetworkError: Error {
