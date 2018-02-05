@@ -9,10 +9,10 @@ protocol AuthHandling {
 }
 
 protocol AuthHandlingActions {
-    var refresh: Action<RequestError, Credentials, RequestError> { get }
+    var refresh: Action<RequestError?, Credentials, RequestError> { get }
 }
 
 final class AuthHandler: AuthHandling, AuthHandlingActions {
     var actions: AuthHandlingActions { return self }
-    let refresh: Action<RequestError, Credentials, RequestError> = Action { SignalProducer(error: $0) }
+    let refresh: Action<RequestError?, Credentials, RequestError> = Action { SignalProducer(error: $0 ?? .missingRefreshToken) }
 }
