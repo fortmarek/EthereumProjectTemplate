@@ -5,12 +5,14 @@
 iOS project skeleton uses [Carthage](https://github.com/Carthage/Carthage) and Ruby [Bundler](http://bundler.io).
 
 I recommend always running on latest Carthage version. Carthage could be installed by running:
+
 ```bash
 brew update
 brew install carthage
 ```
 
 Bundler should be a part of your Ruby installation. I recommend ruby version greater than 2.4.x. If you don't have bundler than it can be installed by running:
+
 ```bash
 sudo gem install bundler
 ```
@@ -32,14 +34,17 @@ bundle exec fastlane ...
 When creating new project, desired steps should be
 1. copy skeleton content into new directory and open it
 2. remove `.git` directory
+
 ```bash
 rm -rf .git
 ```
 3. create new git repository
+
 ```bash
 git init
 ```
 4. rename skeleton files
+
 ```bash
 bundle exec fastlane rename name:NewProject
 ```
@@ -63,6 +68,7 @@ Generally Carthage uses two main files - **Cartfile** which holds list of depend
 #### Installing resolved versions
 
 To install previously resolved versions of dependencies (all in Cartfile.resolved) run:
+
 ```bash
 carthage bootstrap --platform iOS --cache-builds
 ```
@@ -74,6 +80,7 @@ This will install all dependencies in Cartfile.resolved and build them for the i
 #### Installing new dependency
 
 If you're adding a new dependency - you want Carthage to add it to the Cartfile.resolved file, you should run:
+
 ```bash
 carthage update --platform iOS --cache-builds <dependency_name>
 ```
