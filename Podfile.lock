@@ -1,118 +1,102 @@
 PODS:
-  - ACKategories (4.0.0)
-  - ACKReactiveExtensions (2.5.2):
-    - ACKReactiveExtensions/Core (= 2.5.2)
-    - ACKReactiveExtensions/UIKit (= 2.5.2)
-    - ReactiveCocoa (~> 6.0)
-  - ACKReactiveExtensions/Core (2.5.2):
-    - ReactiveCocoa (~> 6.0)
-  - ACKReactiveExtensions/UIKit (2.5.2):
-    - ACKReactiveExtensions/Core
-    - ReactiveCocoa (~> 6.0)
-  - Alamofire (4.4.0)
-  - AlamofireImage (3.2.0):
-    - Alamofire (~> 4.1)
-  - Firebase/Core (4.1.0):
-    - FirebaseAnalytics (= 4.0.3)
-    - FirebaseCore (= 4.0.5)
-  - Firebase/RemoteConfig (4.1.0):
+  - ACKLocalization (0.2.1)
+  - Crashlytics (3.9.3):
+    - Fabric (~> 1.7.2)
+  - Fabric (1.7.2)
+  - Firebase/Analytics (4.7.0):
     - Firebase/Core
-    - FirebaseRemoteConfig (= 2.0.2)
-  - FirebaseAnalytics (4.0.3):
+  - Firebase/Core (4.7.0):
+    - FirebaseAnalytics (= 4.0.5)
+    - FirebaseCore (= 4.0.12)
+  - Firebase/Messaging (4.7.0):
+    - Firebase/Core
+    - FirebaseMessaging (= 2.0.7)
+  - Firebase/Performance (4.7.0):
+    - Firebase/Core
+    - FirebasePerformance (= 1.0.7)
+  - Firebase/RemoteConfig (4.7.0):
+    - Firebase/Core
+    - FirebaseRemoteConfig (= 2.1.0)
+  - FirebaseABTesting (1.0.0):
+    - FirebaseCore (~> 4.0)
+    - Protobuf (~> 3.1)
+  - FirebaseAnalytics (4.0.5):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseCore (4.0.5):
+  - FirebaseCore (4.0.12):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-    - nanopb (~> 0.3)
-  - FirebaseInstanceID (2.0.1):
+  - FirebaseInstanceID (2.0.7)
+  - FirebaseMessaging (2.0.7):
+    - FirebaseAnalytics (~> 4.0)
     - FirebaseCore (~> 4.0)
-  - FirebaseRemoteConfig (2.0.2):
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - Protobuf (~> 3.1)
+  - FirebasePerformance (1.0.7):
+    - FirebaseAnalytics (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - FirebaseSwizzlingUtilities (~> 1.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - GTMSessionFetcher/Core (~> 1.1)
+    - Protobuf (~> 3.1)
+  - FirebaseRemoteConfig (2.1.0):
+    - FirebaseABTesting (~> 1.0)
     - FirebaseAnalytics (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - Protobuf (~> 3.1)
-  - GoogleToolboxForMac/Defines (2.1.1)
-  - GoogleToolboxForMac/NSData+zlib (2.1.1):
-    - GoogleToolboxForMac/Defines (= 2.1.1)
-  - HockeySDK (4.1.4):
-    - HockeySDK/DefaultLib (= 4.1.4)
-  - HockeySDK/DefaultLib (4.1.4)
-  - Locksmith (3.0.0)
+  - FirebaseSwizzlingUtilities (1.0.0)
+  - GoogleToolboxForMac/Defines (2.1.3)
+  - GoogleToolboxForMac/Logger (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/NSData+zlib (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GTMSessionFetcher/Core (1.1.12)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - Protobuf (3.4.0)
-  - ReactiveCocoa (6.0.1):
-    - ReactiveSwift (~> 2.0)
-  - ReactiveSwift (2.0.1):
-    - Result (~> 3.2)
-  - Result (3.2.3)
-  - SnapKit (3.2.0)
-  - SwiftGen (4.2.0)
-  - Swinject (2.1.1)
-  - SwinjectAutoregistration (2.1.0):
-    - Swinject (~> 2.1)
-  - TPKeyboardAvoiding (1.3.1)
+  - Protobuf (3.5.0)
+  - Smartling.i18n (1.0.14)
+  - SwiftGen (5.2.1)
+  - SwiftLint (0.24.0)
 
 DEPENDENCIES:
-  - ACKategories (~> 4.0)
-  - ACKReactiveExtensions (from `https://github.com/AckeeCZ/ACKReactiveExtensions.git`)
-  - Alamofire
-  - AlamofireImage
-  - Firebase/RemoteConfig
-  - HockeySDK (~> 4.1)
-  - Locksmith (~> 3.0)
-  - ReactiveCocoa (~> 6.0)
-  - ReactiveSwift (~> 2.0)
-  - SnapKit
-  - SwiftGen (~> 4.0)
-  - Swinject (~> 2.0)
-  - SwinjectAutoregistration (from `https://github.com/Swinject/SwinjectAutoregistration.git`, branch `swift4`)
-  - TPKeyboardAvoiding
-
-EXTERNAL SOURCES:
-  ACKReactiveExtensions:
-    :git: https://github.com/AckeeCZ/ACKReactiveExtensions.git
-  SwinjectAutoregistration:
-    :branch: swift4
-    :git: https://github.com/Swinject/SwinjectAutoregistration.git
-
-CHECKOUT OPTIONS:
-  ACKReactiveExtensions:
-    :commit: bec78544e11caa27987be53d85f988184dde49c8
-    :git: https://github.com/AckeeCZ/ACKReactiveExtensions.git
-  SwinjectAutoregistration:
-    :commit: ef8574264926117c62d92c4cb2872649496f6c21
-    :git: https://github.com/Swinject/SwinjectAutoregistration.git
+  - ACKLocalization (~> 0.2)
+  - Crashlytics (~> 3.9)
+  - Firebase/Analytics (~> 4.0)
+  - Firebase/Messaging (~> 4.0)
+  - Firebase/Performance (~> 4.0)
+  - Firebase/RemoteConfig (~> 4.0)
+  - Smartling.i18n (~> 1.0)
+  - SwiftGen (~> 5.2)
+  - SwiftLint (~> 0.24)
 
 SPEC CHECKSUMS:
-  ACKategories: 951e12ce64b884a220d4939027954f270f54b3f5
-  ACKReactiveExtensions: e6965d2608936d2146035af00c685d648108f28f
-  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
-  AlamofireImage: 157ed682cc81d3b9db4fb90c1f12180ac552d93b
-  Firebase: ebebf41db7f10e0c7668b6eaaa857fbe599aa478
-  FirebaseAnalytics: 76f754d37ca5b04f36856729b6af3ca0152d1069
-  FirebaseCore: 7d876ea97a830cbe62ba7fbbe7670c833a324ba0
-  FirebaseInstanceID: 0500e3cb54a1a4e01a8cffcc09323b8bb8fc7e1e
-  FirebaseRemoteConfig: 5b3e3301ef2f237b1b588e8ef3211b5a22e9e15d
-  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
-  HockeySDK: 78a3f8bb9100277b531defc56c970369a3ca267a
-  Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
+  ACKLocalization: 2dcde3f5b3b9def00d53d5b8aa02e8700609361b
+  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
+  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
+  Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
+  FirebaseABTesting: d07d0ee833b842d5153549e4c7e2e2cb1c23a3f9
+  FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
+  FirebaseCore: 6cf108b63997bc08c04a1ffa55a3ac0d71a59ffc
+  FirebaseInstanceID: 148c25c986c8699e67304b114e365713dce467f2
+  FirebaseMessaging: 1a11d1c0a9ed9b3f75a0685bb0ae5932e1062f5f
+  FirebasePerformance: de71cd3093d4cf579d8a65326557cbe67bad6e80
+  FirebaseRemoteConfig: 451fe8e9c43ac1e7a137ad2a42189bfc8c2c3ebc
+  FirebaseSwizzlingUtilities: f1c49a5a372ac852c853722a5891a0a5e2344a6c
+  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
+  GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
-  ReactiveCocoa: cf6595131c832c468fe3f84a2d7f74ed68eb3058
-  ReactiveSwift: 60a29ff35988a964fd2bb759755cb6594de523fc
-  Result: 128640a6347e8d2ae48b142556739a2d13f90ce6
-  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
-  SwiftGen: b6bfed151243348e4603b91bf5bc4eb2486c9d5b
-  Swinject: afea49fd95f392b41171669f165842879c48fad6
-  SwinjectAutoregistration: 5923637a0f8c14c80f69e3301631c19abe9f29c7
-  TPKeyboardAvoiding: 0d6af20e95e2850f4c621841225b59ec7d8dd852
+  Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
+  Smartling.i18n: 0d508b89a2a12f0e070e6369e4dcdcf46ae2d59f
+  SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
+  SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
 
-PODFILE CHECKSUM: 3d7e8637ce33338679307d0eddb10c4018c7e18d
+PODFILE CHECKSUM: 229a174ce6781b21b130dd55a00ea60c5bb77afb
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0

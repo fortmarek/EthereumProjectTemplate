@@ -12,9 +12,9 @@ xcode-select --install
 
 <table width="100%" >
 <tr>
-<th width="33%"><a href="http://brew.sh">Homebrew</a></td>
-<th width="33%">Installer Script</td>
-<th width="33%">Rubygems</td>
+<th width="33%"><a href="http://brew.sh">Homebrew</a></th>
+<th width="33%">Installer Script</th>
+<th width="33%">RubyGems</th>
 </tr>
 <tr>
 <td width="33%" align="center">macOS</td>
@@ -29,63 +29,46 @@ xcode-select --install
 </table>
 
 # Available Actions
-### xcode
+### cart
 ```
-fastlane xcode
+fastlane cart
 ```
-Installs templates and snippets 
-### analyze
-```
-fastlane analyze
-```
-Runs linting (and eventually static analysis)
-### test
-```
-fastlane test
-```
-Runs unit, api and ui tests.
-### screenshots
-```
-fastlane screenshots
-```
-Create new screenshots for the App Store in all languages and device types
 
-Additionally, this will add device frames around the screenshots
-### copy
+### pods
 ```
-fastlane copy
+fastlane pods
 ```
-Copies and renames the project into new directory
-### localization
+
+### dependencies
 ```
-fastlane localization
+fastlane dependencies
 ```
-Download strings from Google spreadsheet
-### swiftgen
-```
-fastlane swiftgen
-```
-Generate SwiftGen enums
+
 ### provisioning
 ```
 fastlane provisioning
 ```
-Downloads provisioning for all environments
+
 ### beta
 ```
 fastlane beta
 ```
-Submit new **beta** build to Hockey app
-### appstore
+
+### test
 ```
-fastlane appstore
+fastlane test
 ```
-Deploy new version to the App Store (and also hockey app)
-### set_environment
+
+### release
 ```
-fastlane set_environment
+fastlane release
 ```
-Switches environment and sets app_name and app_identifier in plist
+
+### rename
+```
+fastlane rename
+```
+
 
 ----
 

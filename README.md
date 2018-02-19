@@ -1,696 +1,176 @@
-Project Skeleton
-===================
+# Ackee iOS project skeleton
 
-# Instalace
+## Installation
 
-Nainstaluj fastlane
-```
-sudo gem install fastlane
-```
-
-### Stáhni fixcode a file templaty
-```
-fastlane xcode
-```
-
-# Použití Fastlane
-
-#### Posláni beta verze na hockey app
-```
-fastlane beta
-```
-
-### Posláni verze do appstore
-```
-fastlane appstore
-```
-
-Další lane lze najít v [shared fastlane repu](https://gitlab.ack.ee/Ackee/fastlane)
-
-
-## Nastavení
-Většína konstant souvisejících s prostředím se nastavuje v Environment.plist
-
-* appIdentifier - bundle identifieru který bude nastaven při každém buildu aplikace
-* appName - název aplikace který se nastaví  při každém buildu aplikace
-* teamIdentifier - team který se nastaví v Xcode projektu při každém buildu
-
-
-# Provisioning
-
-```
-fastlane provisioning
-```
-
-mi stáhne všechny provisioning profily, certifikáty a nastaví je do Xcode
-
-
-> Při prvním spuštění se Match zeptá na heslo ke git repu  najdete ho na [passwd.ack.ee] (https://passwd.ack.ee/) (Ackee Match InHouse Repo a Ackee Match Production Repo)
-
-
-Pokud chci použít provisioning bez fastlane šablony můžu přímo použít `match` nebo `sigh` viz. dále.
-
-
-## Match
-> Pozn.: Pokud používám fastlane šablonu, neměl bych tohle vůbec potřebovat
-
-Instalace
-
-```
-sudo gem install match
-```
-
-Provisioning profily a certifikáty na naších účtech řeší [Match] (https://github.com/fastlane/fastlane/tree/master/match).
-
-Má několik výhod:
-
-1. Certifikáty a jejich klíče jsou uloženy bezpečně na githubu 
-2. Používá jeden certifikát pro všechny developery
-3. Pokud neexistuje provisioning profile dokáže ho automaticky vytvořit
-
-
-Pro každý account je vytvořeno git repo na našem gitlabu. Na enterprise i produkcni account se lze prihlasit pres unicorn@ackee.cz. Je to normalni developersky account pridany pro (ios@ackee.cz i enterprise@ackee.cz) a prihlasuje se pres nej i Jenkins. Heslo k nemu najdete na passwd.
-
-*Enterprise (unicorn@ackee.cz)*
-
-```
-git@gitlab.ack.ee:Ackee/ios-inhouse-certificates.git
-```
-
-*Production (unicorn@ackee.cz)*
-
-```
-git@gitlab.ack.ee:Ackee/ios-production-certificates.git
-```
-
-### Enterprise
-
-> Při prvním spuštění se Match zeptá na heslo ke git repu  najdete ho na [passwd.ack.ee] (https://passwd.ack.ee/) (Ackee Match InHouse Repo)
-
-#### Development
-
-Pro development používá match narozdil od puvodniho stavu pro všechny uživatele stejný certifikát (Martin Pulpitel). 
-
-Následujícím příkazem ho match stáhne a nainstaluje s provisioning profile pro Development Enterprise Wildcard `cz.ackee.enterprise.*`
-
-```
-match development --git_url git@gitlab.ack.ee:Ackee/ios-inhouse-certificates.git --app_identifier cz.ackee.enterprise.*
-```
-
-#### AdHoc
-
-Match implicitně zakazuje používat match s enterprise účty pro potenciální možnost zneužítí pokud by se nám někdo dostal k našemu gitu. Pořád je to ale lepší řešení než ukládat klíče na Google Drive. Je potřeba nastavit `MATCH_FORCE_ENTERPRISE=1`. 
-
-Následujícím příkazem stáhnu a nainstaluji certifikát pro AdHoc Enterprise Wildcard
-
-```
-MATCH_FORCE_ENTERPRISE=1 match enterprise --git_url git@gitlab.ack.ee:Ackee/ios-inhouse-certificates.git --app_identifier cz.ackee.enterprise.*
-```
-
-### Production
-Pro stažení certifikátu a provisioning profilu pro aplikaci na produkčním profilu můžu zavolat
-
-```
-match appstore --git_url git@gitlab.ack.ee:Ackee/ios-production-certificates.git --app_identifier cz.ackee.someapplication
-```
-
-Pokud neexistuje aplikace v developer portálu  můžu jí vytvořit přes tool `produce`
-
-```
-sudo gem install produce
-```
-
-```
-produce -u ios@ackee.cz -a cz.ackee.someapplication --skip_itc
-```
-
-Pokud chci vytvořit aplikaci i na iTunes Connect
-
-```
-produce -u ios@ackee.cz -a cz.ackee.someapplication
-```
-
-### Klientské účty
-Pokud potřebuju použít klientský účet e.g. k nahrání aplikace na store mám několik možností
-
-#### Match
-Pro klientský účet vytvořím nový git repositář na gitlabu 
-
-```
-git@gitlab.ack.ee:Ackee/ios-clientname-certificates.git
-```
-
-A match za mě vytvoří nový certifikát a uloží ho k nám do repa.
-
-```
-match appstore --git_url git@gitlab.ack.ee:Ackee/ios-clientname-certificates.git --app_identifier cz.clientname.someapp
-```
-
-Další člen týmu nebo jenkins pak může zavolat match appstore a certifikát a provisioning profile se mu sám stáhne.
-
-## Sigh
-
-Pokud by klient z nějakého důvodu nechtěl vytvořit nový certifikát pro match můžeme stále použít `sigh`. Sigh se stará pouze o provisioning, takže certifikát od klienta musí být klasicky stažený a nainstalovaný v keychain.
-
-```
-sudo gem install sigh
-```
-
-Stáhni provisioning profile
-
-```
-sigh -a cz.clientname.someapp -u clientname@email.com
-```
-
-
-Pokud chci použít sigh s fastlane šablonou je potřeba upravit fastlane provisioning lane z:
-
-```
-  desc "Downloads provisioning for all environments"
-  lane :provisioning do |options|
-	provisioning_match("Development", "development", enterprise_wildcard, inhouse_certificate_git, inhouse_apple_id, true)
-    provisioning_match("AdHoc", "enterprise", enterprise_wildcard, inhouse_certificate_git, inhouse_apple_id, true)
-    provisioning_match("AppStore", "appstore", app_identifier_appstore, production_certificate_git, connect_apple_id, false)
-  end
-```
-
-např. na:
-
-```
-provisioning_sigh("AppStore", "appstore", app_identifier_appstore, connect_apple_id, connect_team_id)
-```
-
-
-
-
-
-# Testování
-
-## Typy a spouštění testů
-Máme tři typy testů
-
-### UnitTests
-Většina z testů, data si mockuju přes dummy objekty (nepřipojuju se k API)
-### APITests
-Testy které mají za úkol zajistit že API jede v pořádku. Budou se na jenkinsovi pouštět periodicky
-### UITests
-UI testy použité mimo jiné na generování screenshotů
-
-
-### Spouštění
-Test spustím přes `Command+U`
-
-Protože APITesty a UITesty trvají dlouho, na `Development` scheme se mi defaultně spustí jenom `UnitTests`. 
-
-Pokud chci otestovat APITests a UnitTests spustím je přes jejich scheme
-
-
-
-## Quick
-Používáme framework **Quick** 
-https://github.com/Quick/Quick
-
-Testy se píšou do specifikací
-
-```
-import Quick
-import Nimble
-import ReactiveCocoa
-
-//@testable To get access to non-public interface
-@testable import SampleTestingProject
-
-class ViewModelSpec: QuickSpec {
-
-	override func spec() {
-		describe("View model"){
-			var viewModel: ViewModeling!
-			context("on network error") {
-				beforeEach{
-					viewModel = ViewModel(api: ErrorStubApi())
-				}
-			    it("sets errorMessage property") {
-		            viewModel.downloadData()
-			        expect(viewModel.errorMessage.value).toEventuallyNot(beNil())
-		        }
-		}
-	}
-}
-
-```
+iOS project skeleton uses [Carthage](https://github.com/Carthage/Carthage) and Ruby [Bundler](http://bundler.io).
 
-**describe** - co testujeme
+I recommend always running on latest Carthage version. Carthage could be installed by running:
 
-**context** - vstupni podminky
-
-**it** - samotny test je tady
-
-Myslenka je abych pri failujicim testu vedel co se presne deje. Zaroven syntaxe quicku vede k tomu aby programator popisovat chovani aplikace (Behaviour Driven Testing).  Z jednotlivych popisku se pak vytvori dlouhy nazev xctest v tomhle pripade:
-
-```
-View_model__on_network_error__sets_errorMessage_property
-```
-
-Pro nastaveni promennych pred testy muzeme pouzit **beforeEach** a **afterEach** 
-
-Pokud chci delat neco casove narocnejsiho napr. vytvoreni in-memory databaze pouziju **beforeSuite** a **afterSuite**. S MagicRecord je to easy:
-
-```
-	beforeSuite {
-	        MagicalRecord.setDefaultModelFromClass(ViewModelSpec.self)
-            MagicalRecord.cleanUp()
-            MagicalRecord.setupCoreDataStackWithInMemoryStore()
-            
-            //Create dummy data
-   }
-        
-  afterSuite {
-      MagicalRecord.cleanUp()
-  }
-```
-
-
-
-## Mocking
-
-Mam view model co zavisi na CLLocationManager a chci otestovat co stane kdyz se zmeni poloha
-
-Pokud udelam neco takoveho:
-
-```
-	class ViewModel: ViewModeling{
-		static let locationManager: CLLocationManager = {
-	        return CLLocationManager()
-	    }() 
-	}
-```
-
-tak ViewModel nemuzu otestovat, protoze nemam zpusob jak se dostat k locationManageru. Misto toho si ho predam jako zavislost.
-
-```
-class ViewModel: ViewModeling{
-	init(locationManager: LocationManager){
-	    self.locationManager = locationManager
-    }
-}
-```
-
-Abych ho mohl pozdeji mocknout, musim ho conformnout ke svemu protokolu:
-
-```
-protocol LocationManager{
-	var location: CLLocation? { get }
-}
-
-extension CLLocationManager:LocationManager{}
-``` 
-
-A pri testovani uz jen predam nejaky svuj mock:
-
-```
-class LocationManagerMock: LocationManager{
-    var location: CLLocation? = nil
-}
-
-beforeEach {
-	viewModel = ViewModel(locationManager: LocationManagerMock())
-}
-```
-
-## SharedExample
-Pokud nejaka kriteria pouzivam vicekrat, muzu si usetrit psani a pouzit Configuration. 
-
-```
-class SharedExamplesConfiguration: QuickConfiguration {
-  override class func configure(configuration: Configuration) {
-	    sharedExamples("something edible") { (sharedExampleContext: SharedExampleContext) in
-	    
-      it("makes dolphins happy") {
-        let dolphin = Dolphin(happy: false)
-        let edible = sharedExampleContext()["edible"]
-        dolphin.eat(edible)
-        expect(dolphin.isHappy).to(beTruthy())
-      }
-    }
-  }
-}
-```
-
-Pak uz se jenom zavola
-
-```
-itBehavesLike("something edible") { ["edible": cod] }
+```bash
+brew update
+brew install carthage
 ```
-
-A na predanem objektu se spusti vsechny testy z konfigurace
-
-
-Typickym prikladem je testovani jestli objekt leakuje, konfigurace je v: **MemoryLeakConfiguration.swift**, coz muze byt obcas hodne uzitecny. Staci pridat v closure vytvoreni objektu ktery se ma otestovat. 
-
-```
-itBehavesLike("object without leaks"){
-	MemoryLeakContext{
-		LanguagesTableViewModel(api: GoodStubApi())
-     }
-}
-```
-
-Vevnitr se netestuje nic slozityho, jenom se objektu odeberou reference na nej a testuje se jestli bude nil.
-
 
-Daji se tak testovat i viewcontrollery:
+Bundler should be a part of your Ruby installation. I recommend ruby version greater than 2.4.x. If you don't have bundler than it can be installed by running:
 
+```bash
+sudo gem install bundler
 ```
-itBehavesLike("object without leaks"){
-   MemoryLeakContext{
-       let controller = ViewController(viewModel: ViewModelStub())
-       
-       //Make it load view
-       let _ = controller.view
-       
-       return controller
-   }
-}
-```
-
-## Testing Troubleshooting
-Xcode má občas svoje dny a komplikuje nám testování. Tady je pár věcí který se můžou stát:
-
-Xcode hlásí že nemůže načíst Quick, Nimble nebo jiný framework. Pokud ale spustím testy, vše proběhne v pořádku.
-
-* Podívám se jestli mám vybraný správný scheme (`Development` pro Unit Testy, `APITests` pro APITesty, a `UITests` pro UITesty)
-* Pokud se pořád nechytá, udělám Clean a Build `Development` scheme a také testovací scheme.
-* Zabiju kozu jako obět bohům XCode
-* Podívám se do `Podfile`, jestli se testovací pody načítají i pro hlavní target
-* Smažu `Pods/` a dám znovu `pod install`
-
-
-XCode spustí testy ale výsledek jenom rychle problikne a hned zmizí v Test Navigatoru
-
-* Po cestě do práce začnu přispívat bezdomovcům abych si zlepšil karmu 
-* Zrestartuju XCode, většinou to pomůže 
-
 
+After checking out the project run
 
-# ViewModel a ViewModeling
-
-Vzhledem k tomu ze chceme testovat i view modely, zavedeme konvenci ze kazdy ViewModel implementuje protokol. Abychom nemuseli psat ViewModelProtocol, ViewModelInterface atd ..., pouzijeme konvenci -ing.
- 
-
+```bash
+bundle install
 ```
-protocol ViewModeling{
-	var name: MutableProperty<String> { get } 
-}
-
-class ViewModel: ViewModeling{
-	let name: MutableProperty<String>
-}
-```
-
-Protocol a tridu je lepsi mit v jednom souboru, kvuli proklikavani z jinych trid kde bude jako reference vzdycky Protocol.
-
-Zaroven je -ing dobra konvence i pro ostatni protokoly napr. Service: Servicing. Geocoder: Geocoding atd. 
-
-Aby jste si nemysleli ze si to vsechno vymejslim, vetsina konvenci vychazi z:
-https://github.com/Swinject/SwinjectMVVMExample 
-
-Kouknete do Templatu, pridal jsem tam sablony ktery nam to trochu ulehci.
-
 
-# Dependency Injection
-Jeste nekoncime, tady teprv zacina opravdovy "deep shit". Pokud ma ale nekdo zkusenosti z webu (treba Nette) muze to preskocit :).
+This will install all needed gems to run the skeleton and maintain their versions appropriately. From now on fastlane shouldn't be run directly but through Bundler.
 
-Pokud chci otestovat celou aplikaci, kazda sluzba by mela byt idealne predana jako zavislost abych si ji mohl mocknout. To znamena ze uz nemuzeme pouzivat Singletony, Enumy, Staticke promenne na AppDelegatu atd... 
-
-Ok, proc ale potrebuju Dependency Injection Framework?
-
-Rekneme ze mam sluzbu ImageSearch definovanou takhle:
-
+```bash
+bundle exec fastlane ...
 ```
-class ImageSearch: ImageSearching{
-	init(api: API, imageResizer: ImageResizing)
-}
-```
-
-API:
 
-```
-class SomeAPI: API{
-	init(network: Networking)
-}
-```
+## Project setup
 
-Network:
+When creating new project, desired steps should be
+1. copy skeleton content into new directory and open it
+2. remove `.git` directory
 
+```bash
+rm -rf .git
 ```
-class Network: Networking{
-	init(baseURL: String, jsonSerializer: JSONSerializing)
-}
-```
-
-Pro vytvoreni ImageSearch musim zavolat neco takoveho
+3. create new git repository
 
+```bash
+git init
 ```
-init(){
-	ImageSearch(api: API(network: Network(baseURL: baseURL, jsonSerializer: JSONSerializer())), imageResizer: ImageResizer() )
-	}
-```
-
-Mohl bych si API a ImageResizer predat jako zavislost
+4. rename skeleton files
 
+```bash
+bundle exec fastlane rename name:NewProject
 ```
-init(api: API, imageResizer: ImageResizing){
-	ImageSearch(api: api, imageResizer: resizer)
-}
-```
+if the `name` argument is ommitted, the script will prompt for it.
 
-To ale znamena predavani dalsich zavislosti, a spousta psani kodu. A kazda dalsi vrstva si musi zavislosti predavat. Pri vetsim mnozstvi zavislosti pak nepisu nic jinyho nez injekty.
+5. Update `Jenkinsfile` with correct Slack channel for CI and correct HockeyApp app identifier
+6. Update `Fastfile` with correct HockyApp app identifier (used when calling `bundle exec fastlane beta` on local machine), if you already have production developer account and iTC account, you can fill also those credentials
 
+Now project should be ready to start.
 
-## Swinject
-https://github.com/Swinject/Swinject
+## Dependency management
 
-Misto  toho si zavislosti nadefinuju vsechny na jednom miste:
+Now preferred way of dependency management is [Carthage](https://github.com/Carthage/Carthage). Only dependencies which do not support it can be integrated using [Cocoapods](https://cocoapods.org).
 
-```
-let container = Container()
-	container.register(ImageResizing.self) { _ in ImageResizer() }
-	container.register(API.self) { _ in SomeAPI(network: Networking.self) }
-	container.register(ImageSearching.self) { r in 
-	ImageSearch(api:r.resolve(API.self), imageResizer: r.resolve(ImageResizing.self) }
-	// ... atd
-}
-```
+### Carthage
 
-A pak uz jenom zavolam 
+At first I recommend [the official Carthage README](https://github.com/Carthage/Carthage/blob/master/README.md). This is just a basic tutorial for most common commands.
 
-```
-let imageSearch = container.resolve(ImageSearching.self)
-```
+Generally Carthage uses two main files - **Cartfile** which holds list of dependencies (equal to *Podfile* in *Cocoapods*) and **Cartfile.resolved** which holds real versions that were installed (equal to *Podfile.lock* in *Cocoapods*)
 
-ktery uz za me vsechno vyresi. Zavislosti se vytvari line, az ve chvili kdy je potrebuje nejaky dalsi objekt.
+#### Installing resolved versions
 
-Jde jim specifikovat Scope
+To install previously resolved versions of dependencies (all in Cartfile.resolved) run:
 
+```bash
+carthage bootstrap --platform iOS --cache-builds
 ```
-container.register(AnimalType.self) { _ in Cat() }
-    .inObjectScope(.Container)
-```
-
-- ObjectScope.Container - Singleton
-- ObjectScope.None - vzdy se vytvori novy objekt
-- ObjectScope.Graph (Default) - pres container.resolve() se vytvari novy ale primo ve vytvarejicich closure (pres r.resolve()) se sdileji
-
-Typicky se container inicializuje v AppDelegate, ale pokud je toho tam víc hůř se v tom orientuje.
-
-Proto jsem jsem to dal do speciální třídy `AppContainer`
-
-
-## Factories
 
-Tohle je fajn, ale to nam uplne neresi problem s vytvarenim novych objektu uvnitr zavislosti
+This will install all dependencies in Cartfile.resolved and build them for the iOS platform.
 
-Dejme tomu ze mam ze mam UITableViewController a po kliknuti na radek by se mel otevrit DetailViewController.
+***NOTE: If you have added any dependency to Cartfile, it will not be installed as it is not yet in the Cartfile.resolved file, so it isn't equivalent to `pod install` command***
 
-Udelam to jednoduse: 
-```
-let detailViewModel = self.viewModel.cellModels[0]
-let controller = DetailViewController(viewModel:detailViewModel)
-// ...  pushController(controller)
-```
+#### Installing new dependency
 
-Pak si ale vzpomenu ze bych chtel DetailViewController v testu mocknout, jak to udelam? A taky, co kdyby mel DetailViewController vice zavislosti? Pak si je budu muset predat z TableViewControlleru a jsme tam kde jsme byli.
-
-Muzu si AppContainer ulozit do staticke promenne a zavolat 
-```
-AppContainer.container.resolve(DetailViewController.self)
-```
-To mi ale neresi problem s mockovanim ...
+If you're adding a new dependency - you want Carthage to add it to the Cartfile.resolved file, you should run:
 
-Ok, tak si predam AppContainer jako zavislost do TableViewControlleru a zavolam
-```
-self.container.resolve(DetailViewController.self)
+```bash
+carthage update --platform iOS --cache-builds <dependency_name>
 ```
-Akorat ze objekty by idealne o containeru vubec nemeli vedet a obecne se to oznacuje za anti-pattern. To neni uplne #rokKvality
 
-Lepsi reseni jsou factories.  Misto objektu predam jako zavislost closure (tedy factory) ktera pak na vyzadani objekt vytvori. 
+If the dependency already existed it will be updated according to specified version in Cartfile. If the `dependency_name` argument is omitted, Carthage will install the newest versions of all dependencies according to Cartfile so be careful.
 
-Nadefinuju si typealias
-
-```
-typealias DetailViewControllerFactory = (viewModel:DetailViewModeling) -> DetailViewController
-```
+`carthage update` should be equivalent to calling `pod update` in Cocoapods.
 
-Parametrem closure budou zavislosti ktere chci dynamicky predat
-```
-container.register(DetailViewControllerFactory.self){ r in
-            return { viewModel in
-                return DetailViewController(viewModel: viewModel, somethingElse: r.resolve(SomethingElsing.self) )
-            }
-        }
-```
+#### Updating dependencies
 
-V kodu pak uz jenom zavolam:
+This will update all dependecies from Cartfile (like if Cartfile.resolved never existed)
 
+```bash
+carthage update --platform iOS --cache-builds
 ```
-let detailViewModel = self.viewModel.cellModels[0]
-let controller = self.detailFactory(viewModel:detailViewModel)
-```
 
-I Tvrdik by nad tim zaplesal
+#### Useful stuff for Carthage
 
-Vyhodou DI je taky ze pohledem na zavislosti ziskam dobrou predstavu co vlastne ta trida dela. Napr. v prikladu je view model s initem:
+I use some aliases for bash which simplify Carthage calls
 
-```
-init(api: API, geocoder: Geocoding, locationManager: LocationManager, detailModelFactory: LanguageDetailModelingFactory) 
+```bash
+alias cb='carthage bootstrap --platform iOS --cache-builds --no-use-binaries'
+alias cu='carthage update --platform iOS --cache-builds --no-use-binaries'
 ```
-
-Z toho vim, ze se pripojuje k API, deje se tam geocoding, pouziva se lokace a pushuje se do detailu.
-
-Pozn: Samozrejme nepocitam ze bysme vsude pouzivali Factory pro kazdej pushnutej controller, tohle je trochu extremni pripad. Zalezi na tom co chci testovat, a pocitam ze controllery budeme testovat minimalne.
 
+The `--no-use-binaries` option might be omitted, right now I'm not sure what exactly suits our needs.
 
-# Templaty
-
-Vzhledem k tomu ze vytvareni ViewControlleru s ViewModelem delame furt dokola, udelal jsem na to File Template. 
-
-Pridal jsem tam taky templaty od Quick na vytvareni testu.
-
-Pokud byste chteli pridat dalsi file templaty, staci je pridat do slozky `fastlane\userdata\FileTemplates` a zavolat
-
+For complete dependency management there is a lane `cart` which runs `carthage bootstrap` with some default parameters so you don't have to care really.
+```bash
+bundle exec fastlane cart
 ```
-fastlane xcode
-```
-coz prekopiruje vsechny templaty do xcode slozky.
-
-![enter image description here](http://new.tinygrab.com/1430ee533229194c0d2c5ad0c127e28e9f2310ad06.png)
-
-![enter image description here](http://new.tinygrab.com/1430ee5332d82817dfa2e51130b5fd2a2a3afa2af1.png)
-
-# Snippety
 
-Stejne tak jde vytvaret CodeSnippety najdete je ve slozce `fastlane\userdata\CodeSnippets`
-
-Pak nezapomente zavolat
-
+To resolve all dependencies at once you can use `dependencies` lane
+```bash
+bundle exec fastlane dependencies
 ```
-fastlane xcode 
-```
-
 
-# Snapshot
-Fastlane nám taky dokáže ulehčit pořízování snapshotů.
+### Cocopoads
 
-Dejme tomu že chci pořídit screenshoty aplikace ve 3 různých jazycích na 3 zařízeních. To je práce tak na hodinu. A musím to dělat znova s každou verzí.
+If your dependency doesn't support Carthage or it doesn't make sense (SwiftGen, ACKLocalization, ...) just integrate it using Cocoapods.
 
+## Project structure
 
-Místo toho použiju snapshot
-
-
-Napřed je potřeba napsat UI Test
-A přidat `snapshot("JmenoVyslednehoSouboruSeScreenshotem")` na mista kde chci vyfotit obrazovku
-
-```
-func testMainScreen() {
-        let app = XCUIApplication()
-        
-        //Wait for pictures to load
-        let images = app.images
-        let stoppedLoading = NSPredicate(format: "count != 0")
-        
-        expectationForPredicate(stoppedLoading, evaluatedWithObject: images, handler: nil)
-        waitForExpectationsWithTimeout(5, handler: nil)
-        
-		snapshot("01MainScreenList")
-        
-        let tablesQuery = app.tables
-        tablesQuery.cells.elementBoundByIndex(0).tap()
-        
-        snapshot("02DetailScreenFirst")
-    }
-```
+The project structure should be more-targets-ready so every target has its own folder.
 
-Pro nahrání interakcí s aplikací můžu použít record funkci v XCode (když otevřu uitest je to vlevo dole)
+### Bundle identifier
 
-Pak už jenom zavolám
+We are back to the pattern where bundle identifier is driven by configuration. (`PRODUCT_BUNDLE_IDENTIFIER` variable in build settings). This approach simplifies the code signing process significantly.
 
-```
-fastlane screenshots
-```
+### Build number
 
-který mi spustí testy a vygeneruje mi obrázky ve složce fastlane/screenshots
-na nich ještě zavolá `frameit` který screenshotům přidá iPhone/iPad rámečky 
+Build number was moved back to preprocess header which is ignored in git so changing environment doesn't trigger any changes in it.
 
-Pokud zavolám
+### Project version name
 
-```
-fastlane appstore
-```
+Project version name is defined top project itself using `ACK_PROJECT_VERSION` build setting, because e.g. push notification extensions require that the extension has the same version as main app, so it can be held on a single place and inherited.
 
-fastlane automaticky screenshoty vygeneruje a pošle je do iTunes Connect
+### Environment switch
 
-# Swiftlint
+Environment switch has moved from separate aggregate target to a build phase of the app target, because in multiple target environment it becomes a bit confusing.
 
-Když zbuilduju aplikaci, swiftlint mi automaticky zkontroluje `Source` a zobrazi mi warningy
+Also environment is now a directory so all environment specific files should be inside, this allows adding another environment specific files without touching the Fastfile or the environment switch build phase. All you have to do is just to add it to Xcode project under current environment.
 
-Seznam povolenych a zakazanych pravidel nastavim v `.swiftlint.yml`
+Also current environment is ignored in git so environment changes don't trigger changes in it.
 
-Pokud ho z nejakyho duvodu nechci spoustet vyhodim Swiftlint Run Phase u Project targetu
+Current environment for concrete scheme is selected in its pre-build action.
 
-Pokud chci opravit nalezene chyby (ty co jsou opravitelne)
+#### Access environment values from code
 
-```
-swiftlint autocorrect
-```
+In code environment values are now accessed using generated `Environment` enum. The generator script supports almost all value types that plist can hold, but there are some conventions.
 
-# Todos
-- lepsi prace s NSError
-- Networking
-- Groot
+Supported types:
+- `Dictionary` - generated as nested `enum`, first letter is capitalized
+- `URL` - string whose key has suffix `URL` and can be converted to `URL`
+- `Bool` - bool or number whose key has prefix `is` and can be converted to `Bool` (plist serialization cannot determine between `true`/`false` and `0`/`1`)
+- `Int`
+- `Double`
+- `Date`
+- `Data`
 
-# K Aplikaci
+The generated file is checked by compilator in compile time.
 
-Kdyby jste se divili k cemu je vlastne ta example aplikace, kouknete sem: [http://whostolemyunicorn.com/](http://whostolemyunicorn.com/)
+### Google plists
 
-# Version Update Manager
-Zaregistruj `VersionUpdateAssembly` k ostatním `Assembly`. Ve `VersionUpdateAssembly` je potřeba zaregistrovat správný data source:
+Google plists are switch in a build phase according to current build configuration (they depend on bundle identifier) and then there are copied into current environment directory.
 
-- `APIFetcher`
-- `FirebaseFetcher`
+## App release
 
-a adekvátně jej nastavit.
+The `appstore` lane was renamed to `release` lane so it doesn't interfere with built-in fastlane action.
 
-Posledním krokem je nastavit samotný observing, nejpravděpodobněji v `AppDelegate`.
+According to #procesy the username used to access developer portal and iTC should be the same as your git username. If you need to customize this behavior you can override the `itc_apple_id()` or `dev_portal_apple_id()` function.
 
-```swift
-private func observeUpdate() {
-    updateManager.setup()
-    updateManager.updateRequired.producer
-        .take(during: reactive.lifetime)
-        .filter { $0 }
-        .startWithValues { [weak self] _ in
-            // There is new version of the app
-        }
-    }
-}
-```
+Release lane just uploads build to iTC (it uses `testflight` action instead of `deliver`) so it just requires *Developer* permission on iTC.
