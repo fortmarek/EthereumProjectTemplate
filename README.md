@@ -102,11 +102,9 @@ carthage update --platform iOS --cache-builds
 I use some aliases for bash which simplify Carthage calls
 
 ```bash
-alias cb='carthage bootstrap --platform iOS --cache-builds --no-use-binaries'
-alias cu='carthage update --platform iOS --cache-builds --no-use-binaries'
+alias cb='carthage bootstrap --platform iOS --cache-builds'
+alias cu='carthage update --platform iOS --cache-builds'
 ```
-
-The `--no-use-binaries` option might be omitted, right now I'm not sure what exactly suits our needs.
 
 For complete dependency management there is a lane `cart` which runs `carthage bootstrap` with some default parameters so you don't have to care really.
 ```bash
