@@ -1,102 +1,28 @@
 PODS:
-  - ACKLocalization (0.2.1)
-  - Crashlytics (3.9.3):
-    - Fabric (~> 1.7.2)
-  - Fabric (1.7.2)
-  - Firebase/Analytics (4.7.0):
-    - Firebase/Core
-  - Firebase/Core (4.7.0):
-    - FirebaseAnalytics (= 4.0.5)
-    - FirebaseCore (= 4.0.12)
-  - Firebase/Messaging (4.7.0):
-    - Firebase/Core
-    - FirebaseMessaging (= 2.0.7)
-  - Firebase/Performance (4.7.0):
-    - Firebase/Core
-    - FirebasePerformance (= 1.0.7)
-  - Firebase/RemoteConfig (4.7.0):
-    - Firebase/Core
-    - FirebaseRemoteConfig (= 2.1.0)
-  - FirebaseABTesting (1.0.0):
-    - FirebaseCore (~> 4.0)
-    - Protobuf (~> 3.1)
-  - FirebaseAnalytics (4.0.5):
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-    - nanopb (~> 0.3)
-  - FirebaseCore (4.0.12):
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseInstanceID (2.0.7)
-  - FirebaseMessaging (2.0.7):
-    - FirebaseAnalytics (~> 4.0)
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/Logger (~> 2.1)
-    - Protobuf (~> 3.1)
-  - FirebasePerformance (1.0.7):
-    - FirebaseAnalytics (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - FirebaseSwizzlingUtilities (~> 1.0)
-    - GoogleToolboxForMac/Logger (~> 2.1)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-    - GTMSessionFetcher/Core (~> 1.1)
-    - Protobuf (~> 3.1)
-  - FirebaseRemoteConfig (2.1.0):
-    - FirebaseABTesting (~> 1.0)
-    - FirebaseAnalytics (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-    - Protobuf (~> 3.1)
-  - FirebaseSwizzlingUtilities (1.0.0)
-  - GoogleToolboxForMac/Defines (2.1.3)
-  - GoogleToolboxForMac/Logger (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/NSData+zlib (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GTMSessionFetcher/Core (1.1.12)
-  - nanopb (0.3.8):
-    - nanopb/decode (= 0.3.8)
-    - nanopb/encode (= 0.3.8)
-  - nanopb/decode (0.3.8)
-  - nanopb/encode (0.3.8)
-  - Protobuf (3.5.0)
+  - ACKLocalization (0.2.2)
   - Smartling.i18n (1.0.14)
-  - SwiftGen (5.2.1)
-  - SwiftLint (0.24.0)
+  - SwiftGen (5.3.0)
+  - SwiftLint (0.25.1)
 
 DEPENDENCIES:
   - ACKLocalization (~> 0.2)
-  - Crashlytics (~> 3.9)
-  - Firebase/Analytics (~> 4.0)
-  - Firebase/Messaging (~> 4.0)
-  - Firebase/Performance (~> 4.0)
-  - Firebase/RemoteConfig (~> 4.0)
   - Smartling.i18n (~> 1.0)
   - SwiftGen (~> 5.2)
   - SwiftLint (~> 0.24)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - ACKLocalization
+    - Smartling.i18n
+    - SwiftGen
+    - SwiftLint
+
 SPEC CHECKSUMS:
-  ACKLocalization: 2dcde3f5b3b9def00d53d5b8aa02e8700609361b
-  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
-  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
-  Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
-  FirebaseABTesting: d07d0ee833b842d5153549e4c7e2e2cb1c23a3f9
-  FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
-  FirebaseCore: 6cf108b63997bc08c04a1ffa55a3ac0d71a59ffc
-  FirebaseInstanceID: 148c25c986c8699e67304b114e365713dce467f2
-  FirebaseMessaging: 1a11d1c0a9ed9b3f75a0685bb0ae5932e1062f5f
-  FirebasePerformance: de71cd3093d4cf579d8a65326557cbe67bad6e80
-  FirebaseRemoteConfig: 451fe8e9c43ac1e7a137ad2a42189bfc8c2c3ebc
-  FirebaseSwizzlingUtilities: f1c49a5a372ac852c853722a5891a0a5e2344a6c
-  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
-  GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
-  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
+  ACKLocalization: 8368afc5022a5eba5daaef25f00e35745e45497e
   Smartling.i18n: 0d508b89a2a12f0e070e6369e4dcdcf46ae2d59f
-  SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
-  SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
+  SwiftGen: 4379bd3640b0a212a0f6ea3c494adba385513d10
+  SwiftLint: ce933681be10c3266e82576dad676fa815a602e9
 
-PODFILE CHECKSUM: 229a174ce6781b21b130dd55a00ea60c5bb77afb
+PODFILE CHECKSUM: b6c561fba596e7b12a0fd3f8e7363ab69add3113
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.2
