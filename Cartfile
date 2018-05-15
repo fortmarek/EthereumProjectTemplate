@@ -1,16 +1,8 @@
-github "ReactiveCocoa/ReactiveSwift" ~> 3.1
-github "ReactiveCocoa/ReactiveCocoa" ~> 7.2
+github "ReactiveCocoa/ReactiveSwift" ~> 3.0
+github "ReactiveCocoa/ReactiveCocoa" ~> 7.0
 
-github "Alamofire/Alamofire" ~> 4.7
+github "Alamofire/Alamofire" ~> 4.5
 
-github "AckeeCZ/ACKategories" ~> 5.3
+github "AckeeCZ/ACKategories" ~> 5.1
 
 github "SnapKit/SnapKit" ~> 4.0
-
-binary "https://raw.githubusercontent.com/Building42/Specs/master/Carthage/Fabric.json" ~> 1.7
-binary "https://raw.githubusercontent.com/Building42/Specs/master/Carthage/Crashlytics.json" ~> 3.10
-
-binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseAnalyticsBinary.json" ~> 4.0
-binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseRemoteConfigBinary.json" ~> 4.0
-binary "https://dl.google.com/dl/firebase/ios/carthage/FirebasePerformanceBinary.json" ~> 4.0
-binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseMessagingBinary.json" ~> 4.0

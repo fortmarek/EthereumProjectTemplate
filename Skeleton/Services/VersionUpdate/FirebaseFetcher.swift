@@ -1,4 +1,4 @@
-import FirebaseRemoteConfig
+import Firebase
 
 public class FirebaseFetcher: Fetcher {
 
