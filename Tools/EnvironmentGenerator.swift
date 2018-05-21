@@ -27,7 +27,7 @@ func handleItem(_ item: [String: Any], name: String, level: Int) {
 
     item.forEach { key, value in
         switch value {
-        case let string as String where URL(string: string) != nil:
+        case let string as String where URL(string: string) != nil && key.lowercased().hasSuffix("url"):
             addRow("static let " + key + " = URL(string: \"" + string + "\")!", level: level + 1)
         case let bool as Bool where key.hasPrefix("is"):
             addRow("static let " + key + " = " + (bool ? "true" : "false"), level: level + 1)
