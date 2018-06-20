@@ -1,7 +1,23 @@
 PODS:
   - ACKLocalization (0.2.1)
+  - BigInt (3.0.1):
+    - SipHash (~> 1.2)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
+  - CryptoSwift (0.9.0)
+  - EtherKit (0.1.3):
+    - EtherKit/Core (= 0.1.3)
+    - EtherKit/PromiseKit (= 0.1.3)
+  - EtherKit/Core (0.1.3):
+    - BigInt
+    - CryptoSwift
+    - Marshal
+    - Result (~> 4.0.0)
+    - secp256k1.swift
+    - Starscream
+  - EtherKit/PromiseKit (0.1.3):
+    - EtherKit/Core
+    - PromiseKit/CorePromise
   - Fabric (1.7.2)
   - Firebase/Analytics (4.7.0):
     - Firebase/Core
@@ -23,10 +39,10 @@ PODS:
   - FirebaseAnalytics (4.0.5):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - nanopb (~> 0.3)
   - FirebaseCore (4.0.12):
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseInstanceID (2.0.7)
   - FirebaseMessaging (2.0.7):
     - FirebaseAnalytics (~> 4.0)
@@ -39,35 +55,42 @@ PODS:
     - FirebaseInstanceID (~> 2.0)
     - FirebaseSwizzlingUtilities (~> 1.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - GTMSessionFetcher/Core (~> 1.1)
     - Protobuf (~> 3.1)
   - FirebaseRemoteConfig (2.1.0):
     - FirebaseABTesting (~> 1.0)
     - FirebaseAnalytics (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - Protobuf (~> 3.1)
   - FirebaseSwizzlingUtilities (1.0.0)
   - GoogleToolboxForMac/Defines (2.1.3)
   - GoogleToolboxForMac/Logger (2.1.3):
     - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/NSData+zlib (2.1.3):
+  - "GoogleToolboxForMac/NSData+zlib (2.1.3)":
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - GTMSessionFetcher/Core (1.1.12)
+  - Marshal (1.2.4)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - PromiseKit/CorePromise (6.2.7)
   - Protobuf (3.5.0)
+  - Result (4.0.0)
+  - secp256k1.swift (0.1.4)
+  - SipHash (1.2.0)
   - Smartling.i18n (1.0.14)
+  - Starscream (3.0.5)
   - SwiftGen (5.2.1)
   - SwiftLint (0.24.0)
 
 DEPENDENCIES:
   - ACKLocalization (~> 0.2)
   - Crashlytics (~> 3.9)
+  - EtherKit (= 0.1.3)
   - Firebase/Analytics (~> 4.0)
   - Firebase/Messaging (~> 4.0)
   - Firebase/Performance (~> 4.0)
@@ -76,9 +99,43 @@ DEPENDENCIES:
   - SwiftGen (~> 5.2)
   - SwiftLint (~> 0.24)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - ACKLocalization
+    - BigInt
+    - Crashlytics
+    - CryptoSwift
+    - EtherKit
+    - Fabric
+    - Firebase
+    - FirebaseABTesting
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseInstanceID
+    - FirebaseMessaging
+    - FirebasePerformance
+    - FirebaseRemoteConfig
+    - FirebaseSwizzlingUtilities
+    - GoogleToolboxForMac
+    - GTMSessionFetcher
+    - Marshal
+    - nanopb
+    - PromiseKit
+    - Protobuf
+    - Result
+    - secp256k1.swift
+    - SipHash
+    - Smartling.i18n
+    - Starscream
+    - SwiftGen
+    - SwiftLint
+
 SPEC CHECKSUMS:
   ACKLocalization: 2dcde3f5b3b9def00d53d5b8aa02e8700609361b
+  BigInt: 8e8a52161c745cd3ab78e3dc346a9fbee51e6cf6
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
+  CryptoSwift: bca8c5b653dcc2d9734409242a070ff53bafac86
+  EtherKit: 43e8ea748e04a4276c1d0fae49ae3812e1148d89
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
   FirebaseABTesting: d07d0ee833b842d5153549e4c7e2e2cb1c23a3f9
@@ -91,12 +148,18 @@ SPEC CHECKSUMS:
   FirebaseSwizzlingUtilities: f1c49a5a372ac852c853722a5891a0a5e2344a6c
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
+  Marshal: 8e04e6624e506921db7143b0bfd83caee03f32d6
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  PromiseKit: 12b9d87748b170714247d8b2677146ca57e488f2
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
+  Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
+  secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
+  SipHash: c6e9e43e9c531b5bc6602545130c26194a6d31ce
   Smartling.i18n: 0d508b89a2a12f0e070e6369e4dcdcf46ae2d59f
+  Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
   SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
 
-PODFILE CHECKSUM: 229a174ce6781b21b130dd55a00ea60c5bb77afb
+PODFILE CHECKSUM: 8a7bb4eacb06fad4ddc75d0c26e475ffeeea6ef0
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3
