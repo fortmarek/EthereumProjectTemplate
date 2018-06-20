@@ -5,7 +5,7 @@ class BaseViewController: UIViewController {
 
     /// Navigation bar is shown/hidden in viewWillAppear according to this flag
     var hasNavigationBar: Bool = true
-    
+
     // MARK: Initializers
 
     init() {
@@ -23,7 +23,7 @@ class BaseViewController: UIViewController {
 
         view.backgroundColor = .white
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(!hasNavigationBar, animated: animated)
