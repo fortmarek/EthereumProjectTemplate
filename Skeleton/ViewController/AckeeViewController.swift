@@ -10,14 +10,19 @@ import SnapKit
 import ReactiveSwift
 import EtherKit
 
-// MARK: ethereum project template notes
+// MARK: notes
 // - EtherKit is still in development. Currently its unusable in production.
 // - EtherKit known issues:
-//    EtherKit.request method has an error callback, but if an error occurs,
+//   - EtherKit.request method has an error callback, but if an error occurs,
 //      it gets lost in the underlying URLRequestManager and the callback is never called
+//   - There are more potential places where a method's callback might not get called.
 // MARK: -----------
-
-
+// MARK: other (less important) notes:
+// - Ive signed up for Infura.io, which should let us test communication with the ethereum network without running a node.
+//    I signed up with petr.sima@ackee.cz, theres no password and no login screen wtf
+//    Infura API Key: EcrxWYU15S7Yu5vJNDzX , you can access e.g. the Ropsten testnet using the url https://ropsten.infura.io/EcrxWYU15S7Yu5vJNDzX
+//    Unfortunatelly, Infura doesnt adhere to the JSONRPC spec (doesnt support String id's), so it cant be used with the currect version of EtherKit
+//
 
 final class AckeeViewController: BaseViewController {
 
@@ -56,31 +61,35 @@ final class AckeeViewController: BaseViewController {
 
         setupBindings()
 
-      etherKit.createKeyPair { [weak self] addressResult in
-        guard let `self` = self else { assertionFailure(); return }
-        switch addressResult {
-        case let .failure(error):
-          self.showError(error.localizedDescription)
-        case let .success(address):
-          print("--------------")
-          print(address)
-
-          self.etherKit.request(self.etherKit.balanceOf(address)) { [weak self] balanceResult in
-            guard let `self` = self else { assertionFailure(); return }
-            switch balanceResult {
-            case let .failure(error):
-              self.showError(error.localizedDescription)
-            case let .success(balance):
-              print("--------------")
-              print(balance)
-            }
-          }
-        }
+      etherKit.request(etherKit.networkVersion()) {
+          print($0)
       }
+
+//      etherKit.createKeyPair { [weak self] addressResult in
+//        guard let `self` = self else { assertionFailure(); return }
+//        switch addressResult {
+//        case let .failure(error):
+//          self.showError(error.localizedDescription)
+//        case let .success(address):
+//          print("--------------")
+//          print(address)
+//
+//          self.etherKit.request(self.etherKit.balanceOf(address)) { [weak self] balanceResult in
+//            guard let `self` = self else { assertionFailure(); return }
+//            switch balanceResult {
+//            case let .failure(error):
+//              self.showError(error.localizedDescription)
+//            case let .success(balance):
+//              print("--------------")
+//              print(balance)
+//            }
+//          }
+//        }
+//      }
     }
 
   let etherKit = EtherKit(
-    URL(string: "http://localhost:8545")!,
+    URL(string: "https://ropsten.infura.io/EcrxWYU15S7Yu5vJNDzX")!,
     connectionMode: .http,
     applicationTag: "cz.ackee.etherkit.example"
   )
