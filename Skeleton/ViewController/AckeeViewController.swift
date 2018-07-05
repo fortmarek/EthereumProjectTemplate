@@ -60,10 +60,55 @@ final class AckeeViewController: BaseViewController {
         super.viewDidLoad()
 
         setupBindings()
+//
+//      etherKit.request(etherKit.networkVersion()) {
+//        print($0)
+//      }
 
-      etherKit.request(etherKit.networkVersion()) {
-          print($0)
-      }
+      //afaik etherkit cant import wallets (e.g. by mnemonic), but can generate new wallets.
+      //upon reinstalling the app, call etherKit.createKeyPair. Write down the public address like below.
+      //etherKit will be able to lookup the privateKey for this address in the keychain and sign transactions with it.
+      //to make transactions from this address, you need some ether.
+      //request it from the rinkeby faucet by following https://gist.github.com/cryptogoth/10a98e8078cfd69f7ca892ddbdcf26bc
+      let myAddress = try! Address(describing: "0x2f3B8f93686e2864b6cB1b4DB43fC6DfaA1642DD")
+
+//      etherKit.request(self.etherKit.transactionCount(myAddress)) { result in
+//        switch result {
+//        case let .failure(error):
+//          self.showError(error.localizedDescription)
+//        case let .success(count):
+//          print(count)
+//        }
+//
+//      }
+
+      let toAddress = try! Address(describing: "0xE9af3D5fB212ebfDA5785B8E7dfA2dB6dB3FEf44")
+
+//      etherKit.send(with: myAddress, to: toAddress, value: UInt256(0x131c00000000000)) { result in
+//        switch result {
+//        case let .failure(error):
+//          self.showError(error.localizedDescription)
+//        case let .success(value):
+//          print(value)
+//        }
+//      }
+//      self.etherKit.request(self.etherKit.balanceOf(myAddress)) { [weak self] balanceResult in
+//        guard let `self` = self else { assertionFailure(); return }
+//        switch balanceResult {
+//        case let .failure(error):
+//          self.showError(error.localizedDescription)
+//        case let .success(balance):
+//          print("--------------")
+//          print(balance)
+//        }
+//      }
+//      do {
+//        try etherKit.keyManager.sign(Data(), for: myAddress) { data, godKnows in
+//          print(data, godKnows)
+//        }
+//      } catch {
+//        print(error)
+//      }
 
 //      etherKit.createKeyPair { [weak self] addressResult in
 //        guard let `self` = self else { assertionFailure(); return }
@@ -74,18 +119,6 @@ final class AckeeViewController: BaseViewController {
 //          print("--------------")
 //          print(address)
 //
-//          let toAddress = try! Address(describing: "f4989d262ec4a8fa31bc87faac45518e6810ac9d")
-//
-//          self.etherKit.request(self.etherKit.balanceOf(toAddress)) { [weak self] balanceResult in
-//            guard let `self` = self else { assertionFailure(); return }
-//            switch balanceResult {
-//            case let .failure(error):
-//              self.showError(error.localizedDescription)
-//            case let .success(balance):
-//              print("--------------")
-//              print(balance)
-//            }
-//          }
 //        }
 //      }
 
