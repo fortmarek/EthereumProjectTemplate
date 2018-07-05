@@ -74,7 +74,9 @@ final class AckeeViewController: BaseViewController {
 //          print("--------------")
 //          print(address)
 //
-//          self.etherKit.request(self.etherKit.balanceOf(address)) { [weak self] balanceResult in
+//          let toAddress = try! Address(describing: "f4989d262ec4a8fa31bc87faac45518e6810ac9d")
+//
+//          self.etherKit.request(self.etherKit.balanceOf(toAddress)) { [weak self] balanceResult in
 //            guard let `self` = self else { assertionFailure(); return }
 //            switch balanceResult {
 //            case let .failure(error):
@@ -86,10 +88,12 @@ final class AckeeViewController: BaseViewController {
 //          }
 //        }
 //      }
+
     }
 
   let etherKit = EtherKit(
-    URL(string: "http://localhost:8545")!,
+//    URL(string: "http://localhost:8545")!,
+    URL(string: "https://geth-infrastruktura-master.ack.ee")!,
     connectionMode: .http,
     applicationTag: "cz.ackee.etherkit.example"
   )
