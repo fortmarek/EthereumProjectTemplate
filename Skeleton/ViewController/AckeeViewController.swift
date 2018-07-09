@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import ReactiveSwift
 import EtherKit
+import Result
 
 // MARK: notes
 // - EtherKit is still in development. Currently its unusable in production.
@@ -122,6 +123,14 @@ final class AckeeViewController: BaseViewController {
 //        }
 //      }
 
+      // I have a HelloWorld contract running at this address, it has the following ABI:
+      // [ { "constant": true, "inputs": [ { "name": "message", "type": "string" } ], "name": "say", "outputs": [ { "name": "result", "type": "string", "value": "" } ], "payable": false, "stateMutability": "pure", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" } ]
+      // We want to be able to call its "say" function with a String parameter. It should return a String.
+      let helloWorldContractAddress = try! Address(describing: "0x4a1CC51e501c4FaC88087B0F83aDfdA77c46Aaee")
+      etherKit.sayHi(with: myAddress, to: helloWorldContractAddress, value: UInt256(0x100000000000000)) { result in
+          print(result)
+      }
+
     }
 
   let etherKit = EtherKit(
@@ -136,6 +145,63 @@ final class AckeeViewController: BaseViewController {
     private func setupBindings() {
         imageView.reactive.image <~ viewModel.image
     }
+}
+
+// This is a basic example. We will want to find a nicer API for this. Im thinking, nest function of each contract inside its own namespace, i.e:
+// let producer: SignalProducer<Value, EtherKitError> = etherKit.helloWorldContract.sayHi(sender:to:value:parameters:),
+// where parameters is a tuple of parameters of the function and Value is the return type
+// Maybe even explore something like etherKit.helloWorldContract(at:/*ContractAddressHere*/).sayHi(.....)
+
+extension EtherKit {
+  public func sayHi(
+    with sender: Address,
+    to: Address,
+    value: UInt256,
+    completion: @escaping (Result<Hash, EtherKitError>) -> Void
+    ) {
+    request(
+      networkVersion(),
+      transactionCount(sender, blockNumber: .pending)
+    ) { result in
+      switch result {
+      case let .success(items):
+
+        let (network, nonce) = items
+        self.sign(
+          with: sender,
+          transaction: TransactionCall(
+            nonce: UInt256(nonce.describing),
+            to: to,
+            gasLimit: UInt256(22000),
+            // 21000 is the current base value for any transaction (e.g. just sending ether)
+            // if the transaction includes data, it needs more gat depending on how many bytes are used
+            // see https://ethereum.stackexchange.com/questions/1570/mist-what-does-intrinsic-gas-too-low-mean
+            // TODO: calculate and use the right ammount of gas
+            // TODO: find out how this value changes overtime, maybe EtherKit shouldnt be hardcoding the 21000 constant
+//            gasLimit: UInt256(21000),
+            gasPrice: UInt256(20_000_000_000),
+            value: value
+            // TODO: pass serialized function selector and parameters
+            // Currently we'd have to serialize the function selector and argument as per https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI
+            // Im hoping to get EtherKit to support this for us (https://github.com/Vaultio/EtherKit/issues/19)
+//            data: try! GeneralData.value(from: contractFunctionNameAndParams)
+          ),
+          network: network
+        ) {
+          switch $0 {
+          case let .success(signedTransaction):
+            let encodedData = RLPData.encode(from: signedTransaction)
+            let sendRequest = SendRawTransactionRequest(SendRawTransactionRequest.Parameters(data: encodedData))
+            self.request(sendRequest) { completion($0) }
+          case let .failure(error):
+            completion(.failure(error))
+          }
+        }
+      case let .failure(error):
+        completion(.failure(error))
+      }
+    }
+  }
 }
 
 extension UIViewController {
