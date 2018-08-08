@@ -61,38 +61,38 @@ final class AckeeViewController: BaseViewController {
         super.viewDidLoad()
 
         setupBindings()
-//
-//      etherKit.request(etherKit.networkVersion()) {
-//        print($0)
-//      }
+
+      query.request(query.networkVersion()) {
+        print($0)
+      }
 
       //afaik etherkit cant import wallets (e.g. by mnemonic), but can generate new wallets.
-      //upon reinstalling the app, call etherKit.createKeyPair. Write down the public address like below.
+      //upon reinstalling the app, call keyManager.createKeyPair. Write down the public address like below.
       //etherKit will be able to lookup the privateKey for this address in the keychain and sign transactions with it.
       //to make transactions from this address, you need some ether.
       //request it from the rinkeby faucet by following https://gist.github.com/cryptogoth/10a98e8078cfd69f7ca892ddbdcf26bc
       let myAddress = try! Address(describing: "0x2f3B8f93686e2864b6cB1b4DB43fC6DfaA1642DD")
 
-//      etherKit.request(self.etherKit.transactionCount(myAddress)) { result in
-//        switch result {
-//        case let .failure(error):
-//          self.showError(error.localizedDescription)
-//        case let .success(count):
-//          print(count)
-//        }
-//
-//      }
+      query.request(query.transactionCount(myAddress)) { result in
+        switch result {
+        case let .failure(error):
+          self.showError(error.localizedDescription)
+        case let .success(count):
+          print(count)
+        }
+
+      }
 
       let toAddress = try! Address(describing: "0xE9af3D5fB212ebfDA5785B8E7dfA2dB6dB3FEf44")
 
-//      etherKit.send(with: myAddress, to: toAddress, value: UInt256(0x131c00000000000)) { result in
-//        switch result {
-//        case let .failure(error):
-//          self.showError(error.localizedDescription)
-//        case let .success(value):
-//          print(value)
-//        }
-//      }
+      query.send(using: keyManager, from: myAddress, to: toAddress, value: UInt256(0x131c00000000000)) { result in
+        switch result {
+        case let .failure(error):
+          self.showError(error.localizedDescription)
+        case let .success(value):
+          print(value)
+        }
+      }
 //      self.etherKit.request(self.etherKit.balanceOf(myAddress)) { [weak self] balanceResult in
 //        guard let `self` = self else { assertionFailure(); return }
 //        switch balanceResult {
@@ -126,19 +126,17 @@ final class AckeeViewController: BaseViewController {
       // I have a HelloWorld contract running at this address, it has the following ABI:
       // [ { "constant": true, "inputs": [ { "name": "message", "type": "string" } ], "name": "say", "outputs": [ { "name": "result", "type": "string", "value": "" } ], "payable": false, "stateMutability": "pure", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" } ]
       // We want to be able to call its "say" function with a String parameter. It should return a String.
-      let helloWorldContractAddress = try! Address(describing: "0x4a1CC51e501c4FaC88087B0F83aDfdA77c46Aaee")
-      etherKit.sayHi(with: myAddress, to: helloWorldContractAddress, value: UInt256(0x100000000000000)) { result in
-          print(result)
-      }
+//      let helloWorldContractAddress = try! Address(describing: "0x4a1CC51e501c4FaC88087B0F83aDfdA77c46Aaee")
+//      query.sayHi(with: myAddress, to: helloWorldContractAddress, value: UInt256(0x100000000000000)) { result in
+//          print(result)
+//      }
 
     }
 
-  let etherKit = EtherKit(
+  let keyManager = EtherKeyManager(applicationTag: "cz.ackee.etherkit.example")
+
+  let query = EtherQuery(URL(string: "https://geth-infrastruktura-master.ack.ee")!, connectionMode: .http)
 //    URL(string: "http://localhost:8545")!,
-    URL(string: "https://geth-infrastruktura-master.ack.ee")!,
-    connectionMode: .http,
-    applicationTag: "cz.ackee.etherkit.example"
-  )
 
     // MARK: Private helpers
 
@@ -152,55 +150,56 @@ final class AckeeViewController: BaseViewController {
 // where parameters is a tuple of parameters of the function and Value is the return type
 // Maybe even explore something like etherKit.helloWorldContract(at:/*ContractAddressHere*/).sayHi(.....)
 
-extension EtherKit {
+extension EtherQuery {
   public func sayHi(
     with sender: Address,
     to: Address,
     value: UInt256,
     completion: @escaping (Result<Hash, EtherKitError>) -> Void
     ) {
-    request(
-      networkVersion(),
-      transactionCount(sender, blockNumber: .pending)
-    ) { result in
-      switch result {
-      case let .success(items):
-
-        let (network, nonce) = items
-        self.sign(
-          with: sender,
-          transaction: TransactionCall(
-            nonce: UInt256(nonce.describing),
-            to: to,
-            gasLimit: UInt256(22000),
-            // 21000 is the current base value for any transaction (e.g. just sending ether)
-            // if the transaction includes data, it needs more gat depending on how many bytes are used
-            // see https://ethereum.stackexchange.com/questions/1570/mist-what-does-intrinsic-gas-too-low-mean
-            // TODO: calculate and use the right ammount of gas
-            // TODO: find out how this value changes overtime, maybe EtherKit shouldnt be hardcoding the 21000 constant
-//            gasLimit: UInt256(21000),
-            gasPrice: UInt256(20_000_000_000),
-            value: value
-            // TODO: pass serialized function selector and parameters
-            // Currently we'd have to serialize the function selector and argument as per https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI
-            // Im hoping to get EtherKit to support this for us (https://github.com/Vaultio/EtherKit/issues/19)
-//            data: try! GeneralData.value(from: contractFunctionNameAndParams)
-          ),
-          network: network
-        ) {
-          switch $0 {
-          case let .success(signedTransaction):
-            let encodedData = RLPData.encode(from: signedTransaction)
-            let sendRequest = SendRawTransactionRequest(SendRawTransactionRequest.Parameters(data: encodedData))
-            self.request(sendRequest) { completion($0) }
-          case let .failure(error):
-            completion(.failure(error))
-          }
-        }
-      case let .failure(error):
-        completion(.failure(error))
-      }
-    }
+    fatalError()
+//    request(
+//      networkVersion(),
+//      transactionCount(sender, blockNumber: .pending)
+//    ) { result in
+//      switch result {
+//      case let .success(items):
+//
+//        let (network, nonce) = items
+//        self.sign(
+//          with: sender,
+//          transaction: TransactionCall(
+//            nonce: UInt256(nonce.describing),
+//            to: to,
+//            gasLimit: UInt256(22000),
+//            // 21000 is the current base value for any transaction (e.g. just sending ether)
+//            // if the transaction includes data, it needs more gat depending on how many bytes are used
+//            // see https://ethereum.stackexchange.com/questions/1570/mist-what-does-intrinsic-gas-too-low-mean
+//            // TODO: calculate and use the right ammount of gas
+//            // TODO: find out how this value changes overtime, maybe EtherKit shouldnt be hardcoding the 21000 constant
+////            gasLimit: UInt256(21000),
+//            gasPrice: UInt256(20_000_000_000),
+//            value: value
+//            // TODO: pass serialized function selector and parameters
+//            // Currently we'd have to serialize the function selector and argument as per https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI
+//            // Im hoping to get EtherKit to support this for us (https://github.com/Vaultio/EtherKit/issues/19)
+////            data: try! GeneralData.value(from: contractFunctionNameAndParams)
+//          ),
+//          network: network
+//        ) {
+//          switch $0 {
+//          case let .success(signedTransaction):
+//            let encodedData = RLPData.encode(from: signedTransaction)
+//            let sendRequest = SendRawTransactionRequest(SendRawTransactionRequest.Parameters(data: encodedData))
+//            self.request(sendRequest) { completion($0) }
+//          case let .failure(error):
+//            completion(.failure(error))
+//          }
+//        }
+//      case let .failure(error):
+//        completion(.failure(error))
+//      }
+//    }
   }
 }
 

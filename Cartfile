@@ -1,5 +1,5 @@
-github "ReactiveCocoa/ReactiveSwift" ~> 3.0
-github "ReactiveCocoa/ReactiveCocoa" ~> 7.0
+github "ReactiveCocoa/ReactiveSwift" ~> 4.0
+github "ReactiveCocoa/ReactiveCocoa"
 
 github "Alamofire/Alamofire" ~> 4.5
 

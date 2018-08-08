@@ -1,21 +1,21 @@
 PODS:
   - ACKLocalization (0.2.1)
-  - BigInt (3.0.1):
+  - BigInt (3.1.0):
     - SipHash (~> 1.2)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
-  - CryptoSwift (0.9.0)
-  - EtherKit (0.1.3):
-    - EtherKit/Core (= 0.1.3)
-    - EtherKit/PromiseKit (= 0.1.3)
-  - EtherKit/Core (0.1.3):
+  - CryptoSwift (0.10.0)
+  - EtherKit (0.1.5):
+    - EtherKit/Core (= 0.1.5)
+    - EtherKit/PromiseKit (= 0.1.5)
+  - EtherKit/Core (0.1.5):
     - BigInt
     - CryptoSwift
     - Marshal
     - Result (~> 4.0.0)
     - secp256k1.swift
     - Starscream
-  - EtherKit/PromiseKit (0.1.3):
+  - EtherKit/PromiseKit (0.1.5):
     - EtherKit/Core
     - PromiseKit/CorePromise
   - Fabric (1.7.2)
@@ -77,11 +77,11 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - PromiseKit/CorePromise (6.2.7)
+  - PromiseKit/CorePromise (6.3.4)
   - Protobuf (3.5.0)
   - Result (4.0.0)
   - secp256k1.swift (0.1.4)
-  - SipHash (1.2.0)
+  - SipHash (1.2.2)
   - Smartling.i18n (1.0.14)
   - Starscream (3.0.5)
   - SwiftGen (5.2.1)
@@ -90,7 +90,7 @@ PODS:
 DEPENDENCIES:
   - ACKLocalization (~> 0.2)
   - Crashlytics (~> 3.9)
-  - EtherKit (= 0.1.3)
+  - "EtherKit (from `git@github.com:Vaultio/EtherKit.git`)"
   - Firebase/Analytics (~> 4.0)
   - Firebase/Messaging (~> 4.0)
   - Firebase/Performance (~> 4.0)
@@ -105,7 +105,6 @@ SPEC REPOS:
     - BigInt
     - Crashlytics
     - CryptoSwift
-    - EtherKit
     - Fabric
     - Firebase
     - FirebaseABTesting
@@ -130,12 +129,21 @@ SPEC REPOS:
     - SwiftGen
     - SwiftLint
 
+EXTERNAL SOURCES:
+  EtherKit:
+    :git: "git@github.com:Vaultio/EtherKit.git"
+
+CHECKOUT OPTIONS:
+  EtherKit:
+    :commit: a4f9a31688007b122708e7fbfc2c7edcb7e6fc72
+    :git: "git@github.com:Vaultio/EtherKit.git"
+
 SPEC CHECKSUMS:
   ACKLocalization: 2dcde3f5b3b9def00d53d5b8aa02e8700609361b
-  BigInt: 8e8a52161c745cd3ab78e3dc346a9fbee51e6cf6
+  BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
-  CryptoSwift: bca8c5b653dcc2d9734409242a070ff53bafac86
-  EtherKit: 43e8ea748e04a4276c1d0fae49ae3812e1148d89
+  CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
+  EtherKit: fadac89cb9a78fb3aa4956095cf2bbeacebdeaa3
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
   FirebaseABTesting: d07d0ee833b842d5153549e4c7e2e2cb1c23a3f9
@@ -150,16 +158,16 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
   Marshal: 8e04e6624e506921db7143b0bfd83caee03f32d6
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  PromiseKit: 12b9d87748b170714247d8b2677146ca57e488f2
+  PromiseKit: e1425568123ec844a944c93f2bcb29d511d39cf5
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
   secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
-  SipHash: c6e9e43e9c531b5bc6602545130c26194a6d31ce
+  SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   Smartling.i18n: 0d508b89a2a12f0e070e6369e4dcdcf46ae2d59f
   Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
   SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
 
-PODFILE CHECKSUM: 8a7bb4eacb06fad4ddc75d0c26e475ffeeea6ef0
+PODFILE CHECKSUM: e156aabd04e66ec29e8d5baacb129518cc15a493
 
 COCOAPODS: 1.5.3

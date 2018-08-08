@@ -8,7 +8,7 @@ inhibit_all_warnings!
 use_frameworks!
 
 target 'Skeleton' do
-    pod 'EtherKit', '0.1.3'
+    pod 'EtherKit', :git => 'git@github.com:Vaultio/EtherKit.git'
     pod 'SwiftGen', '~> 5.2'
     pod 'SwiftLint', '~> 0.24'
     pod 'ACKLocalization', '~> 0.2'
